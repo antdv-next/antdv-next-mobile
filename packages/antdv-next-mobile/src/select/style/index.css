@@ -63,13 +63,11 @@
   display: none;
 }
 
+/* the scroll container is a VirtualList: it owns overflow / scrolling */
 .am-select-list {
   flex: 1;
   min-height: var(--am-select-list-min-height);
   max-height: var(--am-select-list-max-height);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
 }
 
 .am-select-group {

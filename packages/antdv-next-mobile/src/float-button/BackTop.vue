@@ -2,7 +2,7 @@
 import type { BackTopEmits, BackTopProps, BackTopSlots } from './interface'
 import { VerticalAlignTopOutlined } from '@antdv-next/icons'
 import { onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
-import { cancelRaf, raf } from '../_util'
+import { cancelRaf, getScrollTop, isRenderable, raf, setScrollTop } from '../_util'
 import { useEventListener } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import FloatButton from './FloatButton.vue'
@@ -21,26 +21,9 @@ const props = withDefaults(defineProps<BackTopProps>(), {
 const emit = defineEmits<BackTopEmits>()
 defineSlots<BackTopSlots>()
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
 const visible = ref(false)
 const scrollTarget = shallowRef<HTMLElement | Window>()
 let rafId = -1
-
-function isWindow(target: HTMLElement | Window): target is Window {
-  return target === window
-}
-
-function getScrollTop(target: HTMLElement | Window) {
-  return Math.max(isWindow(target) ? target.scrollY : target.scrollTop, 0)
-}
-
-function setScrollTop(target: HTMLElement | Window, value: number) {
-  if (isWindow(target))
-    target.scrollTo(target.scrollX, value)
-  else
-    target.scrollTop = value
-}
 
 function getTarget() {
   return props.target?.() ?? window
@@ -107,7 +90,7 @@ function onClick(event: MouseEvent) {
     >
       <template #icon>
         <slot name="icon">
-          <RenderNode v-if="isNode(icon)" :node="icon" />
+          <RenderNode v-if="isRenderable(icon)" :node="icon" />
           <VerticalAlignTopOutlined v-else />
         </slot>
       </template>

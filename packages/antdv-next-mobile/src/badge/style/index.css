@@ -42,41 +42,23 @@
   transform-origin: 0% 0%;
 }
 
-.am-badge-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: var(--am-badge-size);
-  height: var(--am-badge-size);
-  padding: 0 5px;
-  color: var(--am-badge-text-color);
-  font-weight: normal;
-  font-size: var(--am-badge-font-size);
-  font-variant-numeric: tabular-nums;
-  line-height: var(--am-badge-size);
-  white-space: nowrap;
-  text-align: center;
-  background: var(--am-badge-color);
-  border-radius: calc(var(--am-badge-size) / 2);
+/* the bubble itself is BaseBadge; Badge only feeds its tokens and adds the outline */
+.am-badge-count,
+.am-badge-dot {
+  --am-base-badge-size: var(--am-badge-size);
+  --am-base-badge-dot-size: var(--am-badge-dot-size);
+  --am-base-badge-font-size: var(--am-badge-font-size);
+  --am-base-badge-bg: var(--am-badge-color);
+  --am-base-badge-color: var(--am-badge-text-color);
+
   box-shadow: 0 0 0 1px var(--am-badge-border-color);
 }
 
 .am-badge-count-sm {
-  min-width: var(--am-badge-size-sm);
-  height: var(--am-badge-size-sm);
-  padding: 0 3px;
-  font-size: var(--am-badge-font-size-sm);
-  line-height: var(--am-badge-size-sm);
-  border-radius: calc(var(--am-badge-size-sm) / 2);
-}
+  --am-base-badge-size: var(--am-badge-size-sm);
+  --am-base-badge-font-size: var(--am-badge-font-size-sm);
 
-.am-badge-dot {
-  width: var(--am-badge-dot-size);
-  min-width: var(--am-badge-dot-size);
-  height: var(--am-badge-dot-size);
-  background: var(--am-badge-color);
-  border-radius: 100%;
-  box-shadow: 0 0 0 1px var(--am-badge-border-color);
+  padding: 0 3px;
 }
 
 .am-badge-custom-count {

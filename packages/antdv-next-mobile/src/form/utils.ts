@@ -1,6 +1,7 @@
 import type { ValidateMessages } from '../locale/interface'
 import type { FormInternalNamePath, FormNamePath, FormRuleObject } from './interface'
 import RawAsyncValidator from '@v-c/async-validator'
+import { toArray } from '../_util'
 
 // The original type definitions are stricter than what the library accepts.
 const AsyncValidator: any = RawAsyncValidator
@@ -11,9 +12,7 @@ export interface FormRuleError {
 }
 
 export function getNamePath(name?: FormNamePath | null): FormInternalNamePath {
-  if (name === undefined || name === null)
-    return []
-  return Array.isArray(name) ? name : [name]
+  return toArray(name)
 }
 
 export function isSameNamePath(a: FormInternalNamePath, b: FormInternalNamePath) {

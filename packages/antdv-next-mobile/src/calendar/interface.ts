@@ -66,6 +66,8 @@ export interface CalendarProps {
   /** Default six months after today */
   maxDate?: CalendarDate
   disabledDate?: (date: Dayjs) => boolean
+  /** Only mount the months around the visible window. `false` renders every month. Default `true`. */
+  virtual?: boolean
   /** range: max number of days; multiple: max number of dates */
   maxRange?: number
   /** Show the built-in tip when `maxRange` is exceeded */

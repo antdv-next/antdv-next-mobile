@@ -61,7 +61,7 @@ describe('Toast', () => {
   it('loading is persistent and blocks the page until closed', async () => {
     const handler = Toast.loading('loading')
     await nextTick()
-    expect(toast()!.querySelector('.am-spin-icon')).not.toBeNull()
+    expect(toast()!.querySelector('.am-spinner.am-spin-icon')).not.toBeNull()
     expect(document.querySelector('.am-toast-root')!.classList.contains('am-toast-root-block')).toBe(true)
     await vi.advanceTimersByTimeAsync(10000)
     expect(toast()).not.toBeNull()

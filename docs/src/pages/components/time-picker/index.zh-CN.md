@@ -58,6 +58,7 @@ API 与 antdv-next 的 `TimePicker` 对齐：`value` 默认收发 dayjs 对象�
 | suffixIcon | 触发器后缀图标，同名插槽优先，`null` 表示隐藏 | `VueNode` | 箭头图标 |
 | itemHeight | 选项高度（px） | `number` | `40` |
 | visibleItemCount | 可见选项个数 | `number` | `5` |
+| virtual | 虚拟滚动：每列只渲染可视区域附近的选项，上万个选项也只挂载几十个节点；`false` 时渲染全部选项 | `boolean` | `true` |
 | getContainer | 弹层挂载节点，`false` 表示原地渲染 | `string \| HTMLElement \| (() => HTMLElement) \| false` | `document.body` |
 | zIndex | 弹层层级 | `number` | - |
 | maskClosable | 点击遮罩是否关闭（视为取消） | `boolean` | `true` |
@@ -104,5 +105,5 @@ TimePicker 没有独立的组件变量：触发器与弹层变量见 [Picker](/c
 - 没有 `TimePicker.RangePicker`、`showNow`、`hideDisabledOptions`、`renderExtraFooter`、`cellRender`、`placement`、`prefix`、`inputReadOnly`、`changeOnScroll` 等 API；触发器不可手动输入。需要隐藏禁用项时请使用 `filter`。
 - `allowClear` 默认为 `false`，仅支持布尔值。
 - 弹层容器使用 `getContainer`（与 Popup 一致），不支持 `getPopupContainer`。
-- 新增移动端属性：`title`、`okText`、`cancelText`、`trigger`、`filter`、`renderLabel`、`itemHeight`、`visibleItemCount`。
+- 新增移动端属性：`title`、`okText`、`cancelText`、`trigger`、`filter`、`renderLabel`、`itemHeight`、`visibleItemCount`、`virtual`。
 - `classes` / `styles` 的语义化结构为 `root`、`content`、`suffix`、`popup`。

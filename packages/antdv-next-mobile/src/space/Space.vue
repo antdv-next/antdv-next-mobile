@@ -4,7 +4,7 @@ import type { SpaceProps, SpaceSize, SpaceSlots } from './interface'
 import { computed } from 'vue'
 import { addUnit } from '../_util'
 import RenderNode from '../_util/RenderNode'
-import { flattenChildren, mergeAttrsStyle } from './util'
+import { flattenChildren, mergeAttrsStyle } from '../_util/vnode'
 import '../style'
 import './style/index.css'
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ActionSheetAction, ActionSheetEmits, ActionSheetProps, ActionSheetSlots } from './interface'
 import { computed } from 'vue'
-import { cls } from '../_util'
+import { cls, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
 import Popup from '../popup/Popup.vue'
@@ -31,10 +31,8 @@ const slots = defineSlots<ActionSheetSlots>()
 
 const locale = useLocale('ActionSheet')
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
-const hasTitle = computed(() => !!slots.title || isNode(props.title))
-const hasExtra = computed(() => !!slots.extra || isNode(props.extra))
+const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
+const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
 const hasCancel = computed(() => props.showCancel && props.cancelText !== null && props.cancelText !== false)
 
 function close() {
@@ -112,12 +110,12 @@ function onCancel(event: MouseEvent) {
       >
         <slot name="action" :action="action" :index="index">
           <span class="am-action-sheet-item-main">
-            <span v-if="isNode(action.icon)" class="am-action-sheet-item-icon">
+            <span v-if="isRenderable(action.icon)" class="am-action-sheet-item-icon">
               <RenderNode :node="action.icon" />
             </span>
             <span class="am-action-sheet-item-text"><RenderNode :node="action.text" /></span>
           </span>
-          <span v-if="isNode(action.description)" class="am-action-sheet-item-description">
+          <span v-if="isRenderable(action.description)" class="am-action-sheet-item-description">
             <RenderNode :node="action.description" />
           </span>
         </slot>
@@ -133,7 +131,7 @@ function onCancel(event: MouseEvent) {
         @click="onCancel"
       >
         <slot name="cancelText">
-          <RenderNode v-if="isNode(cancelText)" :node="cancelText" />
+          <RenderNode v-if="isRenderable(cancelText)" :node="cancelText" />
           <template v-else>
             {{ locale.cancelText }}
           </template>

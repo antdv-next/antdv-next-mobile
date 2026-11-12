@@ -21,6 +21,7 @@ group:
 <demo src="./demo/cascade.vue">级联选择</demo>
 <demo src="./demo/disabled.vue">禁用选项与加载状态</demo>
 <demo src="./demo/custom.vue">自定义高度与选项内容</demo>
+<demo src="./demo/virtual.vue">大数据量 / 虚拟滚动</demo>
 
 ## API
 
@@ -35,6 +36,7 @@ group:
 | loading | 加载状态，显示加载图标并隐藏滚轮 | `boolean` | `false` |
 | itemHeight | 选项高度（px） | `number` | `40` |
 | visibleItemCount | 可见选项个数，建议为奇数 | `number` | `5` |
+| virtual | 虚拟滚动：每列只渲染可视区域附近的选项，上万个选项也只挂载几十个节点；`false` 时渲染全部选项 | `boolean` | `true` |
 | optionRender | 自定义选项内容，同名插槽 `option` 优先 | `VueNode \| ((info: PickerOptionRenderInfo) => VueNode)` | - |
 | rootClass | 根节点类名 | `string` | - |
 | classes | 语义化结构类名 | `Record<'root' \| 'column' \| 'item' \| 'indicator', string>` | - |

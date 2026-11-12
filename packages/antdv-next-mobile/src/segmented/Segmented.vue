@@ -2,7 +2,7 @@
 import type { CSSProperties } from 'vue'
 import type { SegmentedEmits, SegmentedLabeledOption, SegmentedProps, SegmentedSlots, SegmentedValue } from './interface'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { doubleRaf } from '../_util'
+import { doubleRaf, isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
@@ -39,9 +39,8 @@ const [value, setValue] = useControlled<SegmentedProps, 'value', SegmentedValue 
 const selectedIndex = computed(() => options.value.findIndex(option => option.value === value.value))
 const vertical = computed(() => (props.orientation ? props.orientation === 'vertical' : !!props.vertical))
 
-const hasNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-const hasIcon = (option: SegmentedLabeledOption) => !!slots.iconRender || hasNode(option.icon)
-const hasLabel = (option: SegmentedLabeledOption) => !!slots.labelRender || hasNode(option.label)
+const hasIcon = (option: SegmentedLabeledOption) => !!slots.iconRender || isRenderable(option.icon)
+const hasLabel = (option: SegmentedLabeledOption) => !!slots.labelRender || isRenderable(option.label)
 
 function handleSelect(option: SegmentedLabeledOption) {
   if (disabled.value || option.disabled || option.value === value.value)

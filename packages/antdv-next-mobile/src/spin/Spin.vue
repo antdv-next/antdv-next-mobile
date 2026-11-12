@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SpinProps, SpinSlots } from './interface'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { isRenderable } from '../_util'
 import { useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useSize } from '../config-provider/context'
@@ -50,10 +51,6 @@ useLockScroll(rootRef, () => props.fullscreen && innerSpinning.value)
 
 const nested = computed(() => !!slots.default && !props.fullscreen)
 const hasDescription = computed(() => !!slots.description || !!slots.tip || isRenderable(props.description) || isRenderable(props.tip))
-
-function isRenderable(node: unknown) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
 
 const spinClass = computed(() => [
   'am-spin',

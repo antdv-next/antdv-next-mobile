@@ -1,4 +1,5 @@
 import type { StatisticFormatConfig, StatisticTimeData, StatisticValueType } from './interface'
+import { padZero } from '../_util'
 
 export interface FormattedNumber {
   /** `false` when the value is not a plain number and is rendered as is */
@@ -47,7 +48,7 @@ export function formatTimeStr(duration: number, format: string) {
     if (current.includes(name)) {
       const value = Math.floor(leftDuration / unit)
       leftDuration -= value * unit
-      return current.replace(new RegExp(`${name}+`, 'g'), match => value.toString().padStart(match.length, '0'))
+      return current.replace(new RegExp(`${name}+`, 'g'), match => padZero(value, match.length))
     }
     return current
   }, templateText)

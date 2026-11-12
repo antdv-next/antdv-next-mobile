@@ -8,6 +8,7 @@ import {
   InfoCircleFilled,
 } from '@antdv-next/icons'
 import { computed, ref } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
 import '../style'
@@ -33,10 +34,6 @@ const iconMap = {
 
 const commonLocale = useLocale('common')
 const closed = ref(false)
-
-function isRenderable(node: unknown) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
 
 const mergedType = computed(() => props.type ?? (props.banner ? 'warning' : 'info'))
 const mergedShowIcon = computed(() => props.showIcon ?? !!props.banner)

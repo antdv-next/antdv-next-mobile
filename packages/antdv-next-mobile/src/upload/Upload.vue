@@ -9,8 +9,9 @@ import type {
   UploadRequestOption,
   UploadSlots,
 } from './interface'
-import { CloseOutlined, ExclamationCircleOutlined, FileOutlined, LoadingOutlined, PaperClipOutlined, PlusOutlined, UploadOutlined } from '@antdv-next/icons'
+import { CloseOutlined, ExclamationCircleOutlined, FileOutlined, PaperClipOutlined, PlusOutlined, UploadOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { Spinner } from '../_base'
 import RenderNode from '../_util/RenderNode'
 import Button from '../button/Button.vue'
 import { useDisabled } from '../config-provider/context'
@@ -425,7 +426,7 @@ defineExpose({ chooseFile, upload, abort })
                   <span class="am-upload-item-name">{{ file.name }}</span>
                 </div>
                 <div v-if="file.status === 'uploading'" class="am-upload-item-mask" role="progressbar" :aria-valuenow="Math.round(file.percent ?? 0)">
-                  <LoadingOutlined class="am-upload-item-mask-icon am-spin-icon" />
+                  <Spinner class="am-upload-item-mask-icon" />
                   <span class="am-upload-item-mask-text">{{ file.percent ? `${Math.round(file.percent)}%` : locale.uploading }}</span>
                 </div>
                 <div v-else-if="file.status === 'error'" class="am-upload-item-mask am-upload-item-mask-error">
@@ -435,7 +436,7 @@ defineExpose({ chooseFile, upload, abort })
               </template>
               <template v-else>
                 <span class="am-upload-item-icon">
-                  <LoadingOutlined v-if="file.status === 'uploading'" class="am-spin-icon" />
+                  <Spinner v-if="file.status === 'uploading'" />
                   <slot v-else name="iconRender" :file="file" :list-type="listType">
                     <RenderNode v-if="iconRender" :node="iconRender(file, listType)" />
                     <PaperClipOutlined v-else />

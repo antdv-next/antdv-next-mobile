@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { MaskEmits, MaskProps, MaskSlots } from './interface'
 import { computed, ref, watch } from 'vue'
-import { resolveContainer } from '../_util'
+import { Portal } from '../_base'
 import { useLockScroll } from '../_util/hooks'
-import { usePopupTheme } from '../config-provider/context'
 import '../style'
 import './style/index.css'
 
@@ -21,7 +20,6 @@ const emit = defineEmits<MaskEmits>()
 defineSlots<MaskSlots>()
 
 const rootRef = ref<HTMLElement>()
-const popupTheme = usePopupTheme()
 const rendered = ref(props.open)
 
 watch(() => props.open, (open) => {
@@ -31,7 +29,6 @@ watch(() => props.open, (open) => {
 
 useLockScroll(rootRef, () => props.open && props.lockScroll)
 
-const container = computed(() => resolveContainer(props.getContainer))
 const background = computed(() => {
   if (props.color === 'default')
     return undefined
@@ -56,7 +53,7 @@ function onAfterLeave() {
 </script>
 
 <template>
-  <Teleport :to="container ?? 'body'" :disabled="!container">
+  <Portal v-slot="{ theme }" :get-container="getContainer">
     <Transition name="am-fade" appear @after-enter="emit('afterOpenChange', true)" @after-leave="onAfterLeave">
       <div
         v-if="rendered"
@@ -64,12 +61,13 @@ function onAfterLeave() {
         ref="rootRef"
         v-bind="$attrs"
         class="am-mask"
-        :class="[container ? popupTheme.class : undefined, rootClass]"
-        :style="[container ? popupTheme.style : undefined, { zIndex, background }]"
+        :class="[theme.class, rootClass]"
+        :style="[theme.style, { zIndex, background }]"
+        :dir="theme.dir"
         @click="onClick"
       >
         <slot />
       </div>
     </Transition>
-  </Teleport>
+  </Portal>
 </template>

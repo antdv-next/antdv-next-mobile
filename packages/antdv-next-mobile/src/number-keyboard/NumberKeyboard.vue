@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { NumberKeyboardEmits, NumberKeyboardKeyType, NumberKeyboardProps, NumberKeyboardSlots } from './interface'
 import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
-import { preventDefault, resolveContainer, toArray } from '../_util'
-import { nextZIndex, useControlled, useEventListener, useTouch } from '../_util/hooks'
+import { Portal } from '../_base'
+import { preventDefault, toArray } from '../_util'
+import { nextZIndex, useClickAway, useControlled, useTouch } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
-import { useConfig, usePopupTheme } from '../config-provider/context'
 import { useLocale } from '../locale'
 import '../style'
 import './style/index.css'
@@ -37,8 +37,6 @@ const LONG_PRESS_DELAY = 500
 const REPEAT_INTERVAL = 100
 
 const locale = useLocale('NumberKeyboard')
-const config = useConfig()
-const popupTheme = usePopupTheme()
 const touch = useTouch()
 const rootRef = ref<HTMLElement>()
 
@@ -219,25 +217,14 @@ function onOutside(event: Event) {
   // ignore the mouse event emulated after a touch
   else if (Date.now() - lastTouch < 500)
     return
-  if (!open.value || !props.poppable || !props.hideOnClickOutside)
-    return
-  const root = rootRef.value
-  if (root && !root.contains(event.target as Node)) {
-    emit('blur')
-    hide()
-  }
+  emit('blur')
+  hide()
 }
-useEventListener('touchstart', onOutside, { passive: true })
-useEventListener('mousedown', onOutside)
+const hideOnOutside = () => !!open.value && props.poppable && props.hideOnClickOutside
+useClickAway(rootRef, onOutside, { eventName: 'touchstart', enabled: hideOnOutside })
+useClickAway(rootRef, onOutside, { eventName: 'mousedown', enabled: hideOnOutside })
 
 // ---------- structure ----------
-const container = computed(() => {
-  if (!props.poppable || props.getContainer === false)
-    return null
-  if (props.getContainer !== undefined)
-    return resolveContainer(props.getContainer)
-  return config.getPopupContainer.value?.() ?? resolveContainer()
-})
 
 const classNames = computed(() => [
   'am-number-keyboard',
@@ -247,7 +234,6 @@ const classNames = computed(() => [
     'am-number-keyboard-safe-area': props.safeArea && props.poppable,
     'am-number-keyboard-with-header': showHeader.value,
   },
-  container.value ? popupTheme.value.class : undefined,
   props.rootClass,
   props.classes?.root,
 ])
@@ -262,16 +248,16 @@ function keyClass(key: KeyConfig) {
 </script>
 
 <template>
-  <Teleport :to="container ?? 'body'" :disabled="!container">
+  <Portal v-slot="{ theme: scope }" :get-container="poppable ? getContainer : false">
     <Transition :name="poppable ? 'am-slide-bottom' : undefined" :css="poppable" appear>
       <div
         v-if="rendered"
         v-show="open"
         ref="rootRef"
         v-bind="$attrs"
-        :class="classNames"
-        :style="[container ? popupTheme.style : undefined, { zIndex: poppable ? zIndex : undefined }, styles?.root]"
-        :dir="container ? popupTheme.dir : undefined"
+        :class="[classNames, scope.class]"
+        :style="[scope.style, { zIndex: poppable ? zIndex : undefined }, styles?.root]"
+        :dir="scope.dir"
         @mousedown.prevent
       >
         <div v-if="showHeader" class="am-number-keyboard-header" :class="classes?.header" :style="styles?.header">
@@ -358,5 +344,5 @@ function keyClass(key: KeyConfig) {
         </div>
       </div>
     </Transition>
-  </Teleport>
+  </Portal>
 </template>

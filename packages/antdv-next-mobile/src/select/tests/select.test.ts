@@ -285,3 +285,108 @@ describe('Select', () => {
     expect(onFieldBlur).toHaveBeenCalledTimes(1)
   })
 })
+
+describe('Select virtual', () => {
+  const big = Array.from({ length: 5000 }, (_, i) => ({ label: `Option ${i}`, value: i }))
+  const list = () => document.querySelector<HTMLElement>('.am-select-list')!
+  const rows = () => [...document.querySelectorAll<HTMLElement>('.am-virtual-list-item')]
+  function mockViewport(height = 360) {
+    Object.defineProperty(list(), 'clientHeight', { value: height, configurable: true })
+  }
+  async function scrollList(top: number) {
+    list().scrollTop = top
+    list().dispatchEvent(new Event('scroll'))
+    await nextTick()
+  }
+
+  it('mounts only a window of 5,000 options', async () => {
+    mount(Select, { props: { options: big, defaultOpen: true } })
+    await nextTick()
+    expect(list().classList.contains('am-virtual-list')).toBe(true)
+    expect(list().getAttribute('role')).toBe('listbox')
+    expect(optionEls().length).toBeGreaterThan(5)
+    expect(optionEls().length).toBeLessThan(30)
+    expect(optionTexts()[0]).toBe('Option 0')
+    // the holder keeps the scroll height of every option (48px estimate)
+    expect(document.querySelector<HTMLElement>('.am-virtual-list-holder')!.style.height).toBe(`${5000 * 48}px`)
+
+    await scrollList(48 * 3000)
+    expect(optionTexts()).toContain('Option 3000')
+    expect(optionTexts()).not.toContain('Option 0')
+    expect(optionEls().length).toBeLessThan(30)
+    await clickOption('Option 3001')
+  })
+
+  it('selects an option deep in the list and scrolls it into view when reopened', async () => {
+    const wrapper = mount(Select, { props: { options: big, defaultValue: 4000 } })
+    expect(wrapper.find('.am-picker-trigger').text()).toBe('Option 4000')
+    await wrapper.find('.am-picker-trigger').trigger('click')
+    await nextTick()
+    await nextTick()
+    await nextTick()
+    // scrollTo({ key, align: 'center' }): jsdom has no layout (viewport 0), so the centre of the row is at the top
+    expect(list().scrollTop).toBe(48 * 4000 + 24)
+    const selected = document.querySelector('.am-select-option-selected')!
+    expect(selected.textContent!.trim()).toBe('Option 4000')
+    expect(optionEls().length).toBeLessThan(30)
+
+    await clickOption('Option 4002')
+    expect(wrapper.emitted('change')![0][0]).toBe(4002)
+    expect(wrapper.find('.am-picker-trigger').text()).toBe('Option 4002')
+  })
+
+  it('filters 5,000 options and keeps the multiple check state across the window', async () => {
+    const wrapper = mount(Select, { props: { options: big, mode: 'multiple', showSearch: true, defaultOpen: true } })
+    await nextTick()
+    await scrollList(48 * 1000)
+    await clickOption('Option 1001')
+    expect(document.querySelectorAll('.am-select-option-selected')).toHaveLength(1)
+
+    const input = document.querySelector<HTMLInputElement>('.am-select-search-input')!
+    input.value = '499'
+    input.dispatchEvent(new Event('input'))
+    await nextTick()
+    // 499, 1499, 2499, 3499, 4499, 4990..4999
+    expect(list().scrollTop).toBe(0)
+    expect(optionTexts()).toHaveLength(15)
+    expect(optionTexts()[0]).toBe('Option 499')
+    await clickOption('Option 4499')
+
+    input.value = ''
+    input.dispatchEvent(new Event('input'))
+    await nextTick()
+    await scrollList(48 * 1000)
+    expect(document.querySelector('.am-select-option-selected')!.textContent!.trim()).toBe('Option 1001')
+    await clickButton('confirm')
+    expect(wrapper.emitted('change')![0][0]).toEqual([1001, 4499])
+  })
+
+  it('group titles are rows of the virtual list', async () => {
+    const groups = Array.from({ length: 50 }, (_, g) => ({
+      label: `Group ${g}`,
+      options: Array.from({ length: 100 }, (_, i) => ({ label: `G${g}-${i}`, value: `${g}-${i}` })),
+    }))
+    mount(Select, { props: { options: groups, defaultOpen: true } })
+    await nextTick()
+    expect(rows().length).toBeLessThan(30)
+    expect(rows()[0].querySelector('.am-select-group')!.textContent!.trim()).toBe('Group 0')
+    expect(rows()[1].querySelector('.am-select-option')).not.toBeNull()
+  })
+
+  it('virtual: false renders every option; listHeight / listItemHeight size the list', async () => {
+    mount(Select, { props: { options: big.slice(0, 300), defaultOpen: true, virtual: false, listHeight: 240, listItemHeight: 40 } })
+    await nextTick()
+    expect(optionEls()).toHaveLength(300)
+    const panel = document.querySelector<HTMLElement>('.am-select-panel')!
+    expect(panel.style.getPropertyValue('--am-select-list-max-height')).toBe('240px')
+    expect(panel.style.getPropertyValue('--am-select-option-height')).toBe('40px')
+  })
+
+  it('listItemHeight without descriptions uses fixed rows', async () => {
+    mount(Select, { props: { options: big, defaultOpen: true, listItemHeight: 40 } })
+    await nextTick()
+    mockViewport(200)
+    expect(rows()[0].style.height).toBe('40px')
+    expect(document.querySelector<HTMLElement>('.am-virtual-list-holder')!.style.height).toBe(`${5000 * 40}px`)
+  })
+})

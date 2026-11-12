@@ -23,6 +23,7 @@ group:
 <demo src="./demo/card.vue" full>卡片模式</demo>
 <demo src="./demo/control.vue" full>搭配其他组件</demo>
 <demo src="./demo/data.vue" full>数据模式</demo>
+<demo src="./demo/virtual.vue" full>大数据量 / 虚拟滚动</demo>
 <demo src="./demo/size.vue" full>尺寸与对齐</demo>
 <demo src="./demo/style-class.vue" full>自定义样式</demo>
 
@@ -41,10 +42,25 @@ group:
 | renderItem | 渲染数据源中的每一项 | `(item: any, index: number) => VueNode` | - |
 | rowKey | 数据项的 `key`：字段名或函数 | `string \| ((item: any, index: number) => string \| number)` | 下标 |
 | loading | 是否加载中，在列表底部显示加载指示 | `boolean` | `false` |
+| virtual | 数据模式下开启虚拟滚动：列表项通过 [VirtualList](/components/virtual-list) 渲染，只挂载可视区域附近的项。开启后列表自身滚动，需要设置 `height` | `boolean` | `false` |
+| height | 虚拟滚动时滚动区域的高度 | `number \| string` | - |
+| itemHeight | 虚拟滚动时列表项的预估高度（px），实际高度会在渲染后测量 | `number` | 列表项最小高度（`40` / `48` / `56`） |
 | locale | 文案，`emptyText` 为数据为空时的提示 | `{ emptyText?: VueNode }` | - |
 | rootClass | 根节点类名 | `string` | - |
 | classes | 语义化结构类名 | `Record<'root' \| 'header' \| 'body' \| 'footer', string>` | - |
 | styles | 语义化结构样式 | `Record<'root' \| 'header' \| 'body' \| 'footer', CSSProperties>` | - |
+
+### List 事件 {#events}
+
+| 事件 | 说明 | 类型 |
+| --- | --- | --- |
+| reachEnd | 虚拟滚动时滚动到列表底部附近触发，用于加载更多（无限加载）；数据长度变化后可再次触发 | `() => void` |
+
+### List 方法 {#methods}
+
+| 方法 | 说明 | 类型 |
+| --- | --- | --- |
+| scrollTo | 虚拟滚动时滚动到指定位置（px），或滚动到指定下标 / `rowKey` 的项 | `(target: number \| { index?: number, key?: string \| number, align?: 'start' \| 'center' \| 'end' \| 'auto', offset?: number, behavior?: ScrollBehavior }) => void` |
 
 ### List 插槽 {#slots}
 
@@ -122,3 +138,4 @@ PC 端的 `List` 已不再推荐使用，移动端的 `List` 是面向触屏重�
 - 新增 `mode="card"`；`bordered` 表现为列表上下的 0.5px 细线，列表项之间的分隔线始终显示并与标题左对齐（没有 `split`）。
 - 保留数据模式的 `dataSource`、`renderItem`、`rowKey`、`loading`、`locale.emptyText`、`header`、`footer`、`size`。
 - 不支持 `grid`、`pagination`、`loadMore`、`itemLayout`；分页与加载更多请搭配 `Pagination`、`InfiniteScroll` 使用。
+- 数据模式新增 `virtual`、`height`、`itemHeight`、`reachEnd` 事件与 `scrollTo` 方法：上万条数据时只渲染可视区域附近的列表项，默认关闭（列表通常随页面滚动）。

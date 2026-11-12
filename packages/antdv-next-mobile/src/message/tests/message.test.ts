@@ -51,7 +51,7 @@ describe('message', () => {
     expect(notices().map(n => n.className.match(/am-message-notice-(\w+)/)![1])).toEqual(['success', 'error', 'warning', 'loading'])
     expect(notices()[3].classList.contains('custom')).toBe(true)
     expect(notices()[3].style.color).toBe('red')
-    expect(notices()[3].querySelector('.am-spin-icon')).not.toBeNull()
+    expect(notices()[3].querySelector('.am-spinner.am-spin-icon')).not.toBeNull()
     await vi.advanceTimersByTimeAsync(3000)
     await flush()
     expect(notices()).toHaveLength(0)

@@ -2,9 +2,10 @@
 import type { InputEmits, InputInstance, InputProps, InputSlots } from './interface'
 import { CloseCircleFilled } from '@antdv-next/icons'
 import { computed, onMounted, ref } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
-import { countText, isRenderable, useInput } from './useInput'
+import { countText, useInput } from './useInput'
 import '../style'
 import './style/index.css'
 

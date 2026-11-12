@@ -53,6 +53,8 @@ export interface DatePickerBaseProps {
   renderLabel?: (type: DatePickerColumnType, value: number) => string | number
   itemHeight?: number
   visibleItemCount?: number
+  /** Only mount the wheel options around the visible window. `false` renders all of them. Default `true`. */
+  virtual?: boolean
 }
 
 export interface DatePickerViewProps extends DatePickerBaseProps {

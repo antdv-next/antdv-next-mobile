@@ -4,9 +4,10 @@ import type { FormItemInputContext } from './context'
 import type { FormItemEmits, FormItemInstance, FormItemProps, FormItemSlots, FormRuleObject, FormTriggerType, FormValidateOptions } from './interface'
 import type { FormFieldEntity, FormFieldMeta, FormItemChildState } from './internal'
 import type { FormRuleError } from './utils'
-import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, LoadingOutlined, RightOutlined } from '@antdv-next/icons'
+import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, RightOutlined } from '@antdv-next/icons'
 import { computed, inject, nextTick, onBeforeUnmount, provide, reactive, ref, shallowRef, watch } from 'vue'
-import { addUnit, toArray } from '../_util'
+import { Spinner } from '../_base'
+import { addUnit, isRenderable, toArray } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled } from '../config-provider/context'
 import { useLocale } from '../locale'
@@ -324,7 +325,6 @@ const mergedColon = computed(() => (props.colon ?? form?.props.colon ?? false) &
 const mergedLabelWidth = computed(() => addUnit(props.labelWidth ?? form?.props.labelWidth))
 const requiredMark = computed(() => form?.props.requiredMark ?? true)
 
-const isRenderable = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 const hasLabel = computed(() => !!slots.label || isRenderable(props.label))
 const hasHelp = computed(() => !!slots.help || isRenderable(props.help))
 const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
@@ -340,7 +340,7 @@ const feedbackIcon = computed(() => {
     case 'success': return CheckCircleFilled
     case 'error': return CloseCircleFilled
     case 'warning': return ExclamationCircleFilled
-    case 'validating': return LoadingOutlined
+    case 'validating': return Spinner
     default: return undefined
   }
 })
@@ -412,7 +412,7 @@ defineExpose(instance)
           <slot />
         </div>
         <span v-if="feedbackIcon" class="am-form-item-feedback-icon">
-          <component :is="feedbackIcon" :class="{ 'am-spin-icon': mergedStatus === 'validating' }" />
+          <component :is="feedbackIcon" />
         </span>
         <span v-if="showArrow" class="am-form-item-arrow">
           <slot name="arrow">

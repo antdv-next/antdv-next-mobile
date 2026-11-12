@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import type { VirtualListExpose } from '../virtual-list/interface'
 import type { CascaderOption, CascaderValue, CascaderViewEmits, CascaderViewProps, CascaderViewSlots } from './interface'
-import { CheckOutlined, LoadingOutlined } from '@antdv-next/icons'
-import { computed, ref, watch } from 'vue'
-import { isPromise } from '../_util'
+import { CheckOutlined } from '@antdv-next/icons'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { Spinner } from '../_base'
+import { addUnit, isPromise } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
+import VirtualList from '../virtual-list/VirtualList.vue'
 import { getSelectedOptions, resolveFieldNames } from './util'
 import '../style'
 import './style/index.css'
@@ -16,9 +19,10 @@ const props = withDefaults(defineProps<CascaderViewProps>(), {
   changeOnSelect: false,
   optionRender: undefined,
   notFoundContent: undefined,
+  virtual: true,
 })
 const emit = defineEmits<CascaderViewEmits>()
-defineSlots<CascaderViewSlots>()
+const slots = defineSlots<CascaderViewSlots>()
 
 const locale = useLocale('Cascader')
 const emptyLocale = useLocale('Empty')
@@ -69,6 +73,34 @@ function setActiveTab(index: number) {
   activeTab.value = index
   emit('tabChange', index)
 }
+
+// ---------- list (virtualized, one VirtualList per level) ----------
+/** fallback of `--am-cascader-view-option-height`, the estimate used before a row is measured */
+const DEFAULT_ITEM_HEIGHT = 48
+
+const listRef = ref<VirtualListExpose>()
+/** rows are measured unless every row is known to be exactly `listItemHeight` tall */
+const fixedHeight = computed(() => props.listItemHeight !== undefined && !slots.option && props.optionRender === undefined)
+const rootStyle = computed(() => [
+  {
+    '--am-cascader-view-option-height': addUnit(props.listItemHeight),
+    // `listHeight` sizes the list, the view grows around it
+    'height': props.listHeight !== undefined ? 'auto' : undefined,
+  },
+  props.styles?.root,
+])
+const listStyle = computed(() => [props.listHeight !== undefined ? { flex: 'none' } : undefined, props.styles?.list])
+
+/** brings the selected option of the active level to the middle of the list */
+function scrollToSelected() {
+  const key = path.value[activeTab.value]
+  if (key !== undefined && levels.value[activeTab.value]?.some(option => option[names.value.value] === key))
+    listRef.value?.scrollTo({ key, align: 'center' })
+}
+
+// the list is re-created per level: runs once the new one is mounted
+watch(activeTab, () => nextTick(scrollToSelected), { flush: 'post' })
+onMounted(() => nextTick(scrollToSelected))
 
 function commit(next: CascaderValue[], selected: CascaderOption[]) {
   setValue(next)
@@ -139,10 +171,12 @@ function onSelect(option: CascaderOption, level: number) {
     emit('finish', next, selected)
   }
 }
+
+defineExpose({ scrollToSelected })
 </script>
 
 <template>
-  <div v-bind="$attrs" class="am-cascader-view" :class="[rootClass, classes?.root]" :style="styles?.root">
+  <div v-bind="$attrs" class="am-cascader-view" :class="[rootClass, classes?.root]" :style="rootStyle">
     <div class="am-cascader-view-tabs" :class="classes?.tabs" :style="styles?.tabs" role="tablist">
       <div
         v-for="(tab, index) in tabs"
@@ -160,47 +194,62 @@ function onSelect(option: CascaderOption, level: number) {
         {{ tab.label }}
       </div>
     </div>
-    <div class="am-cascader-view-list" :class="classes?.list" :style="styles?.list" role="listbox">
-      <div
-        v-for="option in levels[activeTab]"
-        :key="option[names.value]"
-        class="am-cascader-view-option"
-        :class="[
-          {
-            'am-cascader-view-option-selected': path[activeTab] === option[names.value],
-            'am-cascader-view-option-disabled': option.disabled,
-          },
-          classes?.option,
-        ]"
-        :style="styles?.option"
-        role="option"
-        :aria-selected="path[activeTab] === option[names.value]"
-        :aria-disabled="option.disabled || undefined"
-        @click="onSelect(option, activeTab)"
-      >
-        <span class="am-cascader-view-option-label">
-          <slot name="option" :option="option" :level="activeTab" :selected="path[activeTab] === option[names.value]">
-            <RenderNode
-              v-if="optionRender !== undefined"
-              :node="optionRender"
-              :params="{ option, level: activeTab, selected: path[activeTab] === option[names.value] }"
-            />
+    <VirtualList
+      :key="activeTab"
+      ref="listRef"
+      class="am-cascader-view-list"
+      :class="classes?.list"
+      :style="listStyle"
+      role="listbox"
+      :data="levels[activeTab]"
+      :item-key="names.value"
+      :virtual="virtual"
+      :height="listHeight"
+      :item-height="listItemHeight ?? DEFAULT_ITEM_HEIGHT"
+      :fixed="fixedHeight"
+    >
+      <template #default="{ item: option }">
+        <div
+          class="am-cascader-view-option"
+          :class="[
+            {
+              'am-cascader-view-option-selected': path[activeTab] === option[names.value],
+              'am-cascader-view-option-disabled': option.disabled,
+            },
+            classes?.option,
+          ]"
+          :style="styles?.option"
+          role="option"
+          :aria-selected="path[activeTab] === option[names.value]"
+          :aria-disabled="option.disabled || undefined"
+          @click="onSelect(option, activeTab)"
+        >
+          <span class="am-cascader-view-option-label">
+            <slot name="option" :option="option" :level="activeTab" :selected="path[activeTab] === option[names.value]">
+              <RenderNode
+                v-if="optionRender !== undefined"
+                :node="optionRender"
+                :params="{ option, level: activeTab, selected: path[activeTab] === option[names.value] }"
+              />
+              <template v-else>
+                {{ option[names.label] ?? option[names.value] }}
+              </template>
+            </slot>
+          </span>
+          <Spinner v-if="isLoading(option, activeTab)" class="am-cascader-view-option-icon" />
+          <CheckOutlined v-else-if="path[activeTab] === option[names.value]" class="am-cascader-view-option-icon" />
+        </div>
+      </template>
+      <template v-if="!levels[activeTab]?.length" #footer>
+        <div class="am-cascader-view-empty">
+          <slot name="notFoundContent">
+            <RenderNode v-if="notFoundContent !== undefined" :node="notFoundContent" />
             <template v-else>
-              {{ option[names.label] ?? option[names.value] }}
+              {{ emptyLocale.description }}
             </template>
           </slot>
-        </span>
-        <LoadingOutlined v-if="isLoading(option, activeTab)" class="am-cascader-view-option-icon am-spin-icon" />
-        <CheckOutlined v-else-if="path[activeTab] === option[names.value]" class="am-cascader-view-option-icon" />
-      </div>
-      <div v-if="!levels[activeTab]?.length" class="am-cascader-view-empty">
-        <slot name="notFoundContent">
-          <RenderNode v-if="notFoundContent !== undefined" :node="notFoundContent" />
-          <template v-else>
-            {{ emptyLocale.description }}
-          </template>
-        </slot>
-      </div>
-    </div>
+        </div>
+      </template>
+    </VirtualList>
   </div>
 </template>

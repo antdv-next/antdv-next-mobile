@@ -15,12 +15,11 @@
   pointer-events: none;
 }
 
-.am-popup-mask {
+/* the backdrop is a Mask: keep it inside the root's stacking context */
+.am-popup-root > .am-popup-mask {
   position: absolute;
-  inset: 0;
-  background: var(--am-color-bg-mask);
+  z-index: auto;
   pointer-events: auto;
-  touch-action: none;
 }
 
 .am-popup {

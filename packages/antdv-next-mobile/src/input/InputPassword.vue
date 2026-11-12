@@ -2,11 +2,11 @@
 import type { InputFocusOptions, InputInstance, InputPasswordEmits, InputPasswordProps, InputPasswordSlots } from './interface'
 import { EyeInvisibleOutlined, EyeOutlined } from '@antdv-next/icons'
 import { computed, ref } from 'vue'
+import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled } from '../config-provider/context'
 import Input from './Input.vue'
-import { isRenderable } from './useInput'
 import '../style'
 import './style/index.css'
 

@@ -2,11 +2,11 @@
 import type { ImagePreviewEmits, ImagePreviewImage, ImagePreviewProps, ImagePreviewSlots } from './interface'
 import { CloseOutlined } from '@antdv-next/icons'
 import { computed, nextTick, ref, watch } from 'vue'
-import { clamp, inBrowser, resolveContainer } from '../_util'
+import { Portal } from '../_base'
+import { clamp, inBrowser } from '../_util'
 import { nextZIndex, useControlled, useEventListener, useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import Carousel from '../carousel/Carousel.vue'
-import { useConfig, usePopupTheme } from '../config-provider/context'
 import { useLocale } from '../locale'
 import ImagePreviewItem from './ImagePreviewItem.vue'
 import '../style'
@@ -33,8 +33,6 @@ const props = withDefaults(defineProps<ImagePreviewProps>(), {
 const emit = defineEmits<ImagePreviewEmits>()
 defineSlots<ImagePreviewSlots>()
 
-const config = useConfig()
-const popupTheme = usePopupTheme()
 const commonLocale = useLocale('common')
 
 const rootRef = ref<HTMLElement>()
@@ -105,14 +103,6 @@ useEventListener('resize', resize)
 useEventListener('orientationchange', resize)
 useLockScroll(rootRef, () => !!open.value)
 
-const container = computed(() => {
-  if (props.getContainer === false)
-    return null
-  if (props.getContainer !== undefined)
-    return resolveContainer(props.getContainer)
-  return config.getPopupContainer.value?.() ?? resolveContainer()
-})
-
 function close() {
   if (!open.value)
     return
@@ -144,16 +134,16 @@ defineExpose({
 </script>
 
 <template>
-  <Teleport :to="container ?? 'body'" :disabled="!container">
+  <Portal v-slot="{ theme }" :get-container="getContainer">
     <Transition name="am-fade" appear @after-enter="emit('afterOpenChange', true)" @after-leave="emit('afterOpenChange', false)">
       <div
         v-if="open"
         ref="rootRef"
         v-bind="$attrs"
         class="am-image-preview"
-        :class="[popupTheme.class, rootClass, classes?.root]"
-        :style="[popupTheme.style, { zIndex }, styles?.root]"
-        :dir="popupTheme.dir"
+        :class="[theme.class, rootClass, classes?.root]"
+        :style="[theme.style, { zIndex }, styles?.root]"
+        :dir="theme.dir"
         role="dialog"
         aria-modal="true"
       >
@@ -213,5 +203,5 @@ defineExpose({
         </div>
       </div>
     </Transition>
-  </Teleport>
+  </Portal>
 </template>

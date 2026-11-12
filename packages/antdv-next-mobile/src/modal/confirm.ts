@@ -3,7 +3,7 @@ import type { VueNode } from '../_util/type'
 import type { ModalAction, ModalFuncProps, ModalFuncReturn, ModalHookApi } from './interface'
 import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, InfoCircleFilled } from '@antdv-next/icons'
 import { defineComponent, Fragment, h, ref, shallowRef } from 'vue'
-import { isPromise } from '../_util'
+import { isPromise, isRenderable } from '../_util'
 import { mountComponent } from '../_util/mount'
 import ModalVue from './Modal.vue'
 
@@ -35,8 +35,6 @@ const typeIcons: Record<string, Component> = {
 function renderNode(node: VueNode) {
   return typeof node === 'function' ? (node as () => any)() : node
 }
-
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 
 function createDialog(initial: ModalFuncProps, host: DialogHost): DialogHandle {
   const config = shallowRef<ModalFuncProps>({ ...initial })
@@ -109,9 +107,9 @@ function createDialog(initial: ModalFuncProps, host: DialogHost): DialogHandle {
     const type = c.type === 'warn' ? 'warning' : c.type
     const okCancel = c.okCancel ?? type === 'confirm'
     const DefaultIcon = type ? typeIcons[type] : undefined
-    const iconNode = isNode(c.icon) ? renderNode(c.icon) : (c.icon === undefined && DefaultIcon ? h(DefaultIcon) : null)
+    const iconNode = isRenderable(c.icon) ? renderNode(c.icon) : (c.icon === undefined && DefaultIcon ? h(DefaultIcon) : null)
     const slots: Record<string, () => any> = {}
-    if (isNode(c.content))
+    if (isRenderable(c.content))
       slots.default = () => renderNode(c.content)
     if (iconNode)
       slots.header = () => h('span', { class: ['am-modal-icon', type && `am-modal-icon-${type}`] }, [iconNode])

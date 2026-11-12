@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { VirtualListExpose } from '../virtual-list/interface'
 import type {
   SelectEmits,
   SelectFilterOption,
@@ -9,9 +10,10 @@ import type {
   SelectValue,
   SelectValueType,
 } from './interface'
-import { CheckOutlined, LoadingOutlined, SearchOutlined } from '@antdv-next/icons'
+import { CheckOutlined, SearchOutlined } from '@antdv-next/icons'
 import { computed, nextTick, ref, watch } from 'vue'
-import { isObject, toArray } from '../_util'
+import { Spinner } from '../_base'
+import { addUnit, isObject, toArray } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useConfig } from '../config-provider/context'
@@ -19,6 +21,7 @@ import { useLocale } from '../locale'
 import PickerPopup from '../picker/PickerPopup.vue'
 import PickerTrigger from '../picker/PickerTrigger.vue'
 import { usePickerField } from '../picker/usePickerField'
+import VirtualList from '../virtual-list/VirtualList.vue'
 import '../style'
 import './style/index.css'
 
@@ -42,6 +45,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   getContainer: undefined,
   maskClosable: true,
   destroyOnHidden: false,
+  virtual: true,
 })
 const emit = defineEmits<SelectEmits>()
 const slots = defineSlots<SelectSlots>()
@@ -187,13 +191,57 @@ const visibleItems = computed(() => {
 })
 const isEmpty = computed(() => !visibleItems.value.some(item => !item.group))
 
+// ---------- list (virtualized) ----------
+/** fallback of `--am-select-option-height`, the estimate used before a row is measured */
+const DEFAULT_ITEM_HEIGHT = 48
+
+const listRef = ref<VirtualListExpose>()
+const listData = computed(() => (props.loading ? [] : visibleItems.value))
+/** rows are measured unless every row is known to be exactly `listItemHeight` tall */
+const fixedHeight = computed(() =>
+  props.listItemHeight !== undefined
+  && !slots.option
+  && props.optionRender === undefined
+  && !flatItems.value.some(item => item.group || item.option.description),
+)
+const panelStyle = computed(() => ({
+  '--am-select-list-max-height': addUnit(props.listHeight),
+  '--am-select-option-height': addUnit(props.listItemHeight),
+}))
+
+/** brings the (first) selected option to the middle of the list, or resets the scroll position */
+function scrollToSelected() {
+  const list = listRef.value
+  if (!list)
+    return false
+  const first = activeValues.value[0]
+  const key = first === undefined ? undefined : optionMap.value.get(first)?.key
+  if (key !== undefined && visibleItems.value.some(item => item.key === key))
+    list.scrollTo({ key, align: 'center' })
+  else
+    list.scrollTo(0)
+  return true
+}
+
+let pendingScroll = false
+function onAfterOpenChange(val: boolean) {
+  // the list was not mounted yet when the popup opened
+  if (val && pendingScroll)
+    scrollToSelected()
+  pendingScroll = false
+}
+
 function onSearch(event: Event) {
   searchValue.value = (event.target as HTMLInputElement).value
   emit('search', searchValue.value)
+  listRef.value?.scrollTo(0)
 }
 
 watch(open, (val) => {
   if (val) {
+    nextTick(() => {
+      pendingScroll = !scrollToSelected()
+    })
     if (searchConfig.value.autoFocus)
       nextTick(() => searchRef.value?.focus())
   }
@@ -304,11 +352,12 @@ defineExpose({ toggle })
     :popup-style="styles?.popup"
     @confirm="onConfirm"
     @cancel="onCancel"
+    @after-open-change="onAfterOpenChange"
   >
     <template v-if="$slots.title" #title>
       <slot name="title" />
     </template>
-    <div class="am-select-panel" :class="{ 'am-select-panel-multiple': multiple }">
+    <div class="am-select-panel" :class="{ 'am-select-panel-multiple': multiple }" :style="panelStyle">
       <div v-if="showSearch" class="am-select-search">
         <SearchOutlined class="am-select-search-icon" />
         <input
@@ -323,48 +372,58 @@ defineExpose({ toggle })
           @input="onSearch"
         >
       </div>
-      <div class="am-select-list" role="listbox" :aria-multiselectable="multiple || undefined">
-        <div v-if="loading" class="am-select-loading">
-          <LoadingOutlined class="am-spin-icon" />
-        </div>
-        <template v-else>
-          <template v-for="(item, index) in visibleItems" :key="item.key">
-            <div v-if="item.group" class="am-select-group">
-              {{ item.label }}
+      <VirtualList
+        ref="listRef"
+        class="am-select-list"
+        role="listbox"
+        :aria-multiselectable="multiple || undefined"
+        :data="listData"
+        item-key="key"
+        :virtual="virtual"
+        :item-height="listItemHeight ?? DEFAULT_ITEM_HEIGHT"
+        :fixed="fixedHeight"
+      >
+        <template #default="{ item, index }">
+          <div v-if="item.group" class="am-select-group">
+            {{ item.label }}
+          </div>
+          <div
+            v-else
+            class="am-select-option"
+            :class="{ 'am-select-option-selected': isSelected(item), 'am-select-option-disabled': isDisabled(item) }"
+            role="option"
+            :aria-selected="isSelected(item)"
+            :aria-disabled="isDisabled(item) || undefined"
+            @click="onOptionClick(item)"
+          >
+            <div class="am-select-option-content">
+              <slot name="option" :option="item.option" :index="index" :selected="isSelected(item)">
+                <RenderNode
+                  v-if="optionRender !== undefined"
+                  :node="optionRender"
+                  :params="{ option: item.option, index, selected: isSelected(item) }"
+                />
+                <template v-else>
+                  <div class="am-select-option-label">
+                    {{ item.label }}
+                  </div>
+                  <div v-if="item.option.description" class="am-select-option-description">
+                    {{ item.option.description }}
+                  </div>
+                </template>
+              </slot>
             </div>
-            <div
-              v-else
-              class="am-select-option"
-              :class="{ 'am-select-option-selected': isSelected(item), 'am-select-option-disabled': isDisabled(item) }"
-              role="option"
-              :aria-selected="isSelected(item)"
-              :aria-disabled="isDisabled(item) || undefined"
-              @click="onOptionClick(item)"
-            >
-              <div class="am-select-option-content">
-                <slot name="option" :option="item.option" :index="index" :selected="isSelected(item)">
-                  <RenderNode
-                    v-if="optionRender !== undefined"
-                    :node="optionRender"
-                    :params="{ option: item.option, index, selected: isSelected(item) }"
-                  />
-                  <template v-else>
-                    <div class="am-select-option-label">
-                      {{ item.label }}
-                    </div>
-                    <div v-if="item.option.description" class="am-select-option-description">
-                      {{ item.option.description }}
-                    </div>
-                  </template>
-                </slot>
-              </div>
-              <span v-if="multiple" class="am-select-option-check">
-                <CheckOutlined v-if="isSelected(item)" />
-              </span>
-              <CheckOutlined v-else-if="isSelected(item)" class="am-select-option-icon" />
-            </div>
-          </template>
-          <div v-if="isEmpty" class="am-select-empty">
+            <span v-if="multiple" class="am-select-option-check">
+              <CheckOutlined v-if="isSelected(item)" />
+            </span>
+            <CheckOutlined v-else-if="isSelected(item)" class="am-select-option-icon" />
+          </div>
+        </template>
+        <template v-if="loading || isEmpty" #footer>
+          <div v-if="loading" class="am-select-loading">
+            <Spinner />
+          </div>
+          <div v-else class="am-select-empty">
             <slot name="notFoundContent">
               <RenderNode v-if="notFoundContent !== undefined" :node="notFoundContent" />
               <template v-else>
@@ -373,7 +432,7 @@ defineExpose({ toggle })
             </slot>
           </div>
         </template>
-      </div>
+      </VirtualList>
     </div>
   </PickerPopup>
 </template>

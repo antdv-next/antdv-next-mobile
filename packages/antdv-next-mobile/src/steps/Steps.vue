@@ -2,6 +2,7 @@
 import type { StepsEmits, StepsItem, StepsProps, StepsSlots, StepsStatus } from './interface'
 import { CheckOutlined, CloseOutlined } from '@antdv-next/icons'
 import { computed, getCurrentInstance } from 'vue'
+import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useSize } from '../config-provider/context'
@@ -47,8 +48,6 @@ function isClickable() {
   return !!(vnodeProps?.onChange || vnodeProps?.['onUpdate:current'])
 }
 
-const hasNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
 function getStatus(item: StepsItem, index: number): StepsStatus {
   if (item.status)
     return item.status
@@ -90,7 +89,7 @@ const classNames = computed(() => [
           'am-steps-item-active': initial + index === current,
           'am-steps-item-disabled': item.disabled,
           'am-steps-item-clickable': isClickable() && !item.disabled && initial + index !== current,
-          'am-steps-item-custom': !isDot && (hasNode(item.icon) || !!$slots.iconRender),
+          'am-steps-item-custom': !isDot && (isRenderable(item.icon) || !!$slots.iconRender),
         },
         classes?.item,
         item.class,
@@ -108,7 +107,7 @@ const classNames = computed(() => [
           :active="initial + index === current"
         >
           <span v-if="isDot" class="am-steps-item-dot" />
-          <RenderNode v-else-if="hasNode(item.icon)" :node="item.icon" />
+          <RenderNode v-else-if="isRenderable(item.icon)" :node="item.icon" />
           <CheckOutlined v-else-if="getStatus(item, index) === 'finish'" />
           <CloseOutlined v-else-if="getStatus(item, index) === 'error'" />
           <template v-else>
@@ -118,15 +117,15 @@ const classNames = computed(() => [
       </div>
       <div class="am-steps-item-section" :class="classes?.itemSection" :style="styles?.itemSection">
         <div class="am-steps-item-header" :class="classes?.itemHeader" :style="styles?.itemHeader">
-          <div v-if="hasNode(item.title)" class="am-steps-item-title" :class="classes?.itemTitle" :style="styles?.itemTitle">
+          <div v-if="isRenderable(item.title)" class="am-steps-item-title" :class="classes?.itemTitle" :style="styles?.itemTitle">
             <RenderNode :node="item.title" />
           </div>
-          <div v-if="hasNode(item.subTitle)" class="am-steps-item-subtitle" :class="classes?.itemSubtitle" :style="styles?.itemSubtitle">
+          <div v-if="isRenderable(item.subTitle)" class="am-steps-item-subtitle" :class="classes?.itemSubtitle" :style="styles?.itemSubtitle">
             <RenderNode :node="item.subTitle" />
           </div>
         </div>
         <div
-          v-if="hasNode(item.content ?? item.description)"
+          v-if="isRenderable(item.content ?? item.description)"
           class="am-steps-item-content"
           :class="classes?.itemContent"
           :style="styles?.itemContent"

@@ -3,7 +3,7 @@ import type { ButtonColorType } from '../button/interface'
 import type { ModalAction, ModalEmits, ModalProps, ModalSlots } from './interface'
 import { CloseOutlined } from '@antdv-next/icons'
 import { computed, reactive } from 'vue'
-import { cls, isPromise } from '../_util'
+import { cls, isPromise, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import Button from '../button/Button.vue'
 import { useLocale } from '../locale'
@@ -41,10 +41,8 @@ const slots = defineSlots<ModalSlots>()
 const locale = useLocale('Modal')
 const commonLocale = useLocale('common')
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
-const hasTitle = computed(() => !!slots.title || isNode(props.title))
-const hasBody = computed(() => !!slots.default || isNode(props.content))
+const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
+const hasBody = computed(() => !!slots.default || isRenderable(props.content))
 const hasHeader = computed(() => !!slots.header || !!props.image)
 const showClose = computed(() => props.closable && props.closeIcon !== null && props.closeIcon !== false)
 const hasActions = computed(() => Array.isArray(props.actions) && props.actions.length > 0)
@@ -148,7 +146,7 @@ function onAfterOpenChange(open: boolean) {
       @click="handleCancel"
     >
       <slot name="closeIcon">
-        <RenderNode v-if="isNode(closeIcon)" :node="closeIcon" />
+        <RenderNode v-if="isRenderable(closeIcon)" :node="closeIcon" />
         <CloseOutlined v-else />
       </slot>
     </button>
@@ -215,7 +213,7 @@ function onAfterOpenChange(open: boolean) {
           @click="handleCancel"
         >
           <slot name="cancelText">
-            <RenderNode v-if="isNode(cancelText)" :node="cancelText" />
+            <RenderNode v-if="isRenderable(cancelText)" :node="cancelText" />
             <template v-else>
               {{ locale.cancelText }}
             </template>
@@ -230,7 +228,7 @@ function onAfterOpenChange(open: boolean) {
           @click="handleOk"
         >
           <slot name="okText">
-            <RenderNode v-if="isNode(okText)" :node="okText" />
+            <RenderNode v-if="isRenderable(okText)" :node="okText" />
             <template v-else>
               {{ okCancel ? locale.okText : locale.justOkText }}
             </template>

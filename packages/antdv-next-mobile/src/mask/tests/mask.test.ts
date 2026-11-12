@@ -1,6 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { h } from 'vue'
 import Mask from '..'
+import ConfigProvider from '../../config-provider'
 
 describe('Mask', () => {
   it('renders lazily and toggles visibility', async () => {
@@ -23,5 +25,18 @@ describe('Mask', () => {
     expect(document.body.classList.contains('am-overflow-hidden')).toBe(true)
     await wrapper.setProps({ open: false })
     expect(document.body.classList.contains('am-overflow-hidden')).toBe(false)
+  })
+
+  it('renders in place by default; a teleported mask carries the ConfigProvider theme', () => {
+    const inline = mount(Mask, { props: { open: true } })
+    expect(inline.find('.am-mask').exists()).toBe(true)
+
+    mount(ConfigProvider, {
+      props: { theme: { algorithm: 'dark' } },
+      slots: { default: () => h(Mask, { open: true, getContainer: 'body', rootClass: 'teleported' }) },
+    })
+    const el = document.body.querySelector<HTMLElement>('.am-mask.teleported')!
+    expect(el.parentElement).toBe(document.body)
+    expect(el.classList.contains('am-theme-dark')).toBe(true)
   })
 })

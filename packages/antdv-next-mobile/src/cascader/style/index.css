@@ -69,12 +69,10 @@
   content: '';
 }
 
+/* the scroll container is a VirtualList: it owns overflow / scrolling */
 .am-cascader-view-list {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
 }
 
 .am-cascader-view-option {

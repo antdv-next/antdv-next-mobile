@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { InfiniteScrollEmits, InfiniteScrollProps, InfiniteScrollSlots } from './interface'
-import { LoadingOutlined } from '@antdv-next/icons'
 import { computed, nextTick, onActivated, onMounted, onUpdated, ref, shallowRef, watch } from 'vue'
+import { Spinner } from '../_base'
 import { getScrollParent, inBrowser } from '../_util'
 import { useControlled, useEventListener } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
@@ -139,7 +139,7 @@ defineExpose({ check })
       </div>
       <div v-else-if="loading" class="am-infinite-scroll-loading">
         <slot name="loading">
-          <LoadingOutlined class="am-infinite-scroll-icon am-spin-icon" />
+          <Spinner class="am-infinite-scroll-icon" />
           <RenderNode v-if="loadingText !== undefined" :node="loadingText" />
           <template v-else>
             {{ locale.loading }}

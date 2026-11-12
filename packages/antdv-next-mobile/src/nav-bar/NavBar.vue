@@ -2,6 +2,7 @@
 import type { NavBarEmits, NavBarProps, NavBarSlots } from './interface'
 import { LeftOutlined } from '@antdv-next/icons'
 import { computed } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
 import '../style'
@@ -26,7 +27,8 @@ const slots = defineSlots<NavBarSlots>()
 
 const locale = useLocale('common')
 
-const isEmpty = (node: unknown) => node === undefined || node === null || node === false || node === true || node === ''
+// `true` (a bare boolean attribute) is a switch, not content
+const isEmpty = (node: unknown) => node === true || !isRenderable(node)
 
 const showBack = computed(() => !!slots.back || (props.back !== null && props.back !== false))
 const showBackIcon = computed(() => !!slots.backIcon || (props.backIcon !== null && props.backIcon !== false))

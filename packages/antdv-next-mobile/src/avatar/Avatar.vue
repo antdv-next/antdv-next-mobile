@@ -2,9 +2,10 @@
 import type { CSSProperties } from 'vue'
 import type { AvatarEmits, AvatarProps, AvatarSlots } from './interface'
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, watch } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
+import { mergeAttrsStyle } from '../_util/vnode'
 import { useConfig } from '../config-provider/context'
-import { mergeAttrsStyle } from '../space/util'
 import { avatarGroupContextKey } from './context'
 import '../style'
 import './style/index.css'
@@ -30,10 +31,9 @@ watch(() => props.src, () => {
   imageFailed.value = false
 })
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 const isImageUrl = computed(() => typeof props.src === 'string' && props.src !== '')
-const hasImage = computed(() => (isImageUrl.value && !imageFailed.value) || !!slots.src || (isNode(props.src) && !isImageUrl.value))
-const hasIcon = computed(() => !!slots.icon || isNode(props.icon))
+const hasImage = computed(() => (isImageUrl.value && !imageFailed.value) || !!slots.src || (isRenderable(props.src) && !isImageUrl.value))
+const hasIcon = computed(() => !!slots.icon || isRenderable(props.icon))
 
 function handleImageError(event: Event) {
   imageFailed.value = true

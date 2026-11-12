@@ -63,6 +63,7 @@ API 与 antdv-next 的 `DatePicker` 对齐：`value` 默认收发 [dayjs](https:
 | suffixIcon | 触发器后缀图标，同名插槽优先，`null` 表示隐藏 | `VueNode` | 箭头图标 |
 | itemHeight | 选项高度（px） | `number` | `40` |
 | visibleItemCount | 可见选项个数 | `number` | `5` |
+| virtual | 虚拟滚动：每列只渲染可视区域附近的选项，上万个选项也只挂载几十个节点；`false` 时渲染全部选项 | `boolean` | `true` |
 | getContainer | 弹层挂载节点，`false` 表示原地渲染 | `string \| HTMLElement \| (() => HTMLElement) \| false` | `document.body` |
 | zIndex | 弹层层级 | `number` | - |
 | maskClosable | 点击遮罩是否关闭（视为取消） | `boolean` | `true` |
@@ -122,7 +123,7 @@ API 与 antdv-next 的 `DatePicker` 对齐：`value` 默认收发 [dayjs](https:
 
 ### DatePickerView
 
-内嵌的滚轮视图，也可通过 `DatePicker.View` 访问。支持上表中所有日期相关属性（`value`、`defaultValue`、`valueFormat`、`picker`、`showTime`、`format`、`minDate`、`maxDate`、`disabledDate`、`disabledTime`、`defaultPickerValue`、`use12Hours`、`hourStep`、`minuteStep`、`secondStep`、`filter`、`renderLabel`、`itemHeight`、`visibleItemCount`），以及 [PickerView](/components/picker-view#props) 的 `rootClass`、`classes`、`styles`。
+内嵌的滚轮视图，也可通过 `DatePicker.View` 访问。支持上表中所有日期相关属性（`value`、`defaultValue`、`valueFormat`、`picker`、`showTime`、`format`、`minDate`、`maxDate`、`disabledDate`、`disabledTime`、`defaultPickerValue`、`use12Hours`、`hourStep`、`minuteStep`、`secondStep`、`filter`、`renderLabel`、`itemHeight`、`visibleItemCount`、`virtual`），以及 [PickerView](/components/picker-view#props) 的 `rootClass`、`classes`、`styles`。
 
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
@@ -149,5 +150,5 @@ API 与 antdv-next 的 `DatePicker` 对齐：`value` 默认收发 [dayjs](https:
 - `minDate` / `maxDate` 默认为前后十年（滚轮需要有限的范围）；`disabledDate` 仅作用于当前粒度的最后一列，命中的选项置灰并自动跳过。
 - `allowClear` 默认为 `false`，仅支持布尔值。
 - 弹层容器使用 `getContainer`（与 Popup 一致），不支持 `getPopupContainer`。
-- 新增移动端属性：`title`、`okText`、`cancelText`、`trigger`、`filter`、`renderLabel`、`itemHeight`、`visibleItemCount`，以及内嵌视图 `DatePickerView`。
+- 新增移动端属性：`title`、`okText`、`cancelText`、`trigger`、`filter`、`renderLabel`、`itemHeight`、`visibleItemCount`、`virtual`，以及内嵌视图 `DatePickerView`。
 - `classes` / `styles` 的语义化结构为 `root`、`content`、`suffix`、`popup`。

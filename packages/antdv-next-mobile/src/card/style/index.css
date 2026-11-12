@@ -157,47 +157,17 @@
   opacity: var(--am-opacity-active);
 }
 
-/* ---------- loading ---------- */
-.am-card-skeleton-row {
-  height: 14px;
-  margin-top: var(--am-margin-sm);
-  background: linear-gradient(
-    90deg,
-    var(--am-color-fill-secondary) 25%,
-    var(--am-color-fill) 37%,
-    var(--am-color-fill-secondary) 63%
-  );
-  background-size: 400% 100%;
-  border-radius: var(--am-border-radius-sm);
-  animation: am-card-skeleton 1.4s ease infinite;
+/* ---------- loading (Skeleton, tuned to the card rhythm) ---------- */
+.am-card-skeleton {
+  --am-skeleton-paragraph-height: 14px;
+  --am-skeleton-paragraph-gap: var(--am-margin-sm);
 }
 
-.am-card-skeleton-title {
-  width: 38%;
-  height: 16px;
-  margin-top: 0;
-  margin-bottom: var(--am-margin);
-}
-
-.am-card-skeleton-last {
-  width: 61%;
-}
-
-@keyframes am-card-skeleton {
-  0% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0 50%;
-  }
+.am-card-skeleton .am-skeleton-title + .am-skeleton-paragraph {
+  margin-block-start: var(--am-margin);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .am-card-skeleton-row {
-    animation: none;
-  }
-
   .am-card-clickable:active {
     transform: none;
   }

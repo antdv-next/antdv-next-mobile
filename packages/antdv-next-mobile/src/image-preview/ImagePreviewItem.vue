@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
-import { LoadingOutlined, PictureOutlined } from '@antdv-next/icons'
+import { PictureOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, reactive, watch } from 'vue'
+import { Spinner } from '../_base'
 import { clamp, preventDefault } from '../_util'
 import { useTouch } from '../_util/hooks'
 import { useLocale } from '../locale'
@@ -315,7 +316,7 @@ defineExpose({ resetScale })
     </div>
     <template v-if="!$slots.default">
       <div v-if="state.status === 'loading'" class="am-image-preview-status">
-        <LoadingOutlined class="am-spin-icon" />
+        <Spinner />
       </div>
       <div v-else-if="state.status === 'error'" class="am-image-preview-status">
         <PictureOutlined />

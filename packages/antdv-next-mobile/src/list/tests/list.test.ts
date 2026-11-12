@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { h } from 'vue'
+import { h, nextTick } from 'vue'
 import List, { ListItem } from '..'
 import ConfigProvider from '../../config-provider'
 import enUS from '../../locale/en_US'
@@ -177,5 +177,77 @@ describe('ListItem', () => {
     expect(wrapper.find('.am-list-item-title').classes()).toContain('title-cls')
     expect(wrapper.find('.am-list-item-title').attributes('style')).toContain('color: red')
     expect(wrapper.find('.am-list-item-extra').classes()).toContain('extra-cls')
+  })
+})
+
+describe('List virtual', () => {
+  const dataSource = Array.from({ length: 10000 }, (_, i) => ({ id: `r${i}`, name: `Row ${i}` }))
+  const slots = { renderItem: ({ item }: any) => h(ListItem, { title: item.name }) }
+  const titles = (wrapper: ReturnType<typeof mount>) => wrapper.findAll('.am-list-item').map(item => item.text())
+  function mockViewport(wrapper: ReturnType<typeof mount>, clientHeight: number, scrollHeight: number) {
+    const el = wrapper.find('.am-virtual-list').element
+    Object.defineProperty(el, 'clientHeight', { value: clientHeight, configurable: true })
+    Object.defineProperty(el, 'scrollHeight', { value: scrollHeight, configurable: true })
+    return el as HTMLElement
+  }
+
+  it('renders every row by default (the list scrolls with the page)', () => {
+    const wrapper = mount(List, { props: { dataSource: dataSource.slice(0, 200), rowKey: 'id' }, slots })
+    expect(wrapper.findAll('.am-list-item')).toHaveLength(200)
+    expect(wrapper.find('.am-virtual-list').exists()).toBe(false)
+    expect(wrapper.classes()).not.toContain('am-list-virtual')
+  })
+
+  it('virtual: mounts only a window of 10,000 rows inside the body', async () => {
+    const wrapper = mount(List, { props: { dataSource, rowKey: 'id', virtual: true, height: 400, header: 'H', mode: 'card' }, slots })
+    expect(wrapper.classes()).toEqual(expect.arrayContaining(['am-list-virtual', 'am-list-card']))
+    const list = wrapper.find('.am-list-body > .am-virtual-list')
+    expect(list.classes()).toContain('am-list-virtual-list')
+    expect(list.attributes('style')).toContain('height: 400px')
+    expect(wrapper.findAll('.am-list-item').length).toBeGreaterThan(5)
+    expect(wrapper.findAll('.am-list-item').length).toBeLessThan(30)
+    expect(titles(wrapper)[0]).toBe('Row 0')
+    // 48px estimate per row
+    expect(wrapper.find('.am-virtual-list-holder').attributes('style')).toContain(`height: ${10000 * 48}px`)
+    // rows keep their index so the hairline between items still works
+    expect(wrapper.find('.am-virtual-list-item').attributes('data-index')).toBe('0')
+
+    const el = mockViewport(wrapper, 400, 10000 * 48)
+    el.scrollTop = 48 * 5000
+    await list.trigger('scroll')
+    expect(titles(wrapper)).toContain('Row 5000')
+    expect(titles(wrapper)).not.toContain('Row 0')
+    expect(wrapper.findAll('.am-list-item').length).toBeLessThan(30)
+  })
+
+  it('exposes scrollTo and emits reachEnd', async () => {
+    const wrapper = mount(List, { props: { dataSource, rowKey: 'id', virtual: true, height: 400, itemHeight: 50, size: 'large' }, slots })
+    const el = mockViewport(wrapper, 400, 10000 * 50)
+    ;(wrapper.vm as any).scrollTo({ key: 'r9000', align: 'start' })
+    await nextTick()
+    expect(el.scrollTop).toBe(9000 * 50)
+    expect(titles(wrapper)).toContain('Row 9000')
+    // measured rows: VirtualList settles a scrollTo once more two ticks later
+    await nextTick()
+    await nextTick()
+    ;(wrapper.vm as any).scrollTo({ index: 20 })
+    await nextTick()
+    expect(titles(wrapper)).toContain('Row 20')
+    expect(wrapper.emitted('reachEnd')).toBeUndefined()
+
+    el.scrollTop = 10000 * 50 - 400
+    await wrapper.find('.am-virtual-list').trigger('scroll')
+    expect(wrapper.emitted('reachEnd')).toHaveLength(1)
+  })
+
+  it('virtual: keeps empty text and the loading row inside the scroll area', async () => {
+    const wrapper = mount(List, { props: { dataSource: [], virtual: true, height: 300 }, slots })
+    expect(wrapper.find('.am-virtual-list-footer .am-list-empty').text()).toBe('暂无数据')
+    await wrapper.setProps({ dataSource: dataSource.slice(0, 3), loading: true })
+    expect(wrapper.find('.am-list-empty').exists()).toBe(false)
+    expect(wrapper.find('.am-virtual-list-footer .am-list-spin .am-spinner').exists()).toBe(true)
+    expect(wrapper.findAll('.am-list-item')).toHaveLength(3)
+    // no data mode: `virtual` is ignored
+    expect(mount(List, { props: { virtual: true } }).find('.am-virtual-list').exists()).toBe(false)
   })
 })

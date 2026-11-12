@@ -2,8 +2,9 @@
 import type { Key } from '../_util/type'
 import type { IndexBarAnchorRecord } from './context'
 import type { IndexBarEmits, IndexBarExpose, IndexBarProps, IndexBarSlots } from './interface'
-import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, shallowRef, watch } from 'vue'
-import { clamp, getScrollParent, preventDefault } from '../_util'
+import { computed, nextTick, onMounted, provide, ref, shallowRef, watch } from 'vue'
+import { clamp, getScrollParent, getScrollTop, preventDefault, setScrollTop } from '../_util'
+import { useEventListener, useTouch } from '../_util/hooks'
 import { indexBarContextKey } from './context'
 import '../style'
 import './style/index.css'
@@ -23,7 +24,8 @@ const anchors = shallowRef<IndexBarAnchorRecord[]>([])
 const activeIndex = ref<Key>()
 const viewportHeight = ref<number>()
 
-let scroller: HTMLElement | Window | undefined
+/** nearest scroll container (an element or the window), resolved on mount */
+const scroller = shallowRef<HTMLElement | Window>()
 
 function sortAnchors(list: IndexBarAnchorRecord[]) {
   return list.slice().sort((a, b) => {
@@ -50,14 +52,14 @@ provide(indexBarContextKey, {
 const indexList = computed<Key[]>(() => props.indexList ?? anchors.value.map(anchor => anchor.index()))
 
 // ---------- scroll tracking ----------
-const isWindow = (el: HTMLElement | Window): el is Window => el === window
-
+/** top of the scroll viewport: `0` for the window */
 function getScrollerTop() {
-  return scroller && !isWindow(scroller) ? scroller.getBoundingClientRect().top : 0
+  const el = scroller.value
+  return el instanceof Element ? el.getBoundingClientRect().top : 0
 }
 
 function updateActive() {
-  if (!scroller)
+  if (!scroller.value)
     return
   const top = getScrollerTop() + props.stickyOffsetTop
   let active: Key | undefined
@@ -79,9 +81,10 @@ function updateActive() {
 }
 
 function updateViewport() {
-  if (!scroller)
+  const el = scroller.value
+  if (!el)
     return
-  const height = isWindow(scroller) ? scroller.innerHeight : scroller.clientHeight
+  const height = el instanceof Element ? el.clientHeight : el.innerHeight
   viewportHeight.value = height ? Math.max(height - props.stickyOffsetTop, 0) : undefined
 }
 
@@ -90,33 +93,27 @@ function handleResize() {
   updateActive()
 }
 
-onMounted(() => {
-  scroller = getScrollParent(rootRef.value)
-  scroller.addEventListener('scroll', updateActive, { passive: true })
-  window.addEventListener('resize', handleResize)
-  handleResize()
-})
+useEventListener('scroll', updateActive, { target: scroller, passive: true })
+useEventListener('resize', handleResize)
 
-onBeforeUnmount(() => {
-  scroller?.removeEventListener('scroll', updateActive)
-  window.removeEventListener('resize', handleResize)
+onMounted(() => {
+  scroller.value = getScrollParent(rootRef.value)
+  handleResize()
 })
 
 watch(() => props.stickyOffsetTop, handleResize)
 
 function scrollTo(index: Key) {
   const el = anchors.value.find(anchor => String(anchor.index()) === String(index))?.el()
-  if (!el || !scroller)
+  if (!el || !scroller.value)
     return
   const offset = el.getBoundingClientRect().top - getScrollerTop() - props.stickyOffsetTop
-  if (isWindow(scroller))
-    scroller.scrollTo(scroller.scrollX, Math.max(scroller.scrollY + offset, 0))
-  else
-    scroller.scrollTop += offset
+  setScrollTop(scroller.value, Math.max(getScrollTop(scroller.value) + offset, 0))
   updateActive()
 }
 
 // ---------- side bar: tap & drag ----------
+const touch = useTouch()
 const touching = ref(false)
 const touchingIndex = ref<Key>()
 let touchEndTime = 0
@@ -144,16 +141,18 @@ function getIndexByTarget(target: EventTarget | null) {
 }
 
 function handleTouchStart(event: TouchEvent) {
+  touch.start(event)
   touching.value = true
   touchingIndex.value = undefined
-  select(getIndexByPoint(event.touches[0].clientY) ?? getIndexByTarget(event.target))
+  select(getIndexByPoint(touch.startY.value) ?? getIndexByTarget(event.target))
 }
 
 function handleTouchMove(event: TouchEvent) {
   if (!touching.value)
     return
+  touch.move(event)
   preventDefault(event)
-  select(getIndexByPoint(event.touches[0].clientY))
+  select(getIndexByPoint(touch.startY.value + touch.deltaY.value))
 }
 
 function handleTouchEnd() {

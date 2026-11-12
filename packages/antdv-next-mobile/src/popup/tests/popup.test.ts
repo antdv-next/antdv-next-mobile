@@ -53,4 +53,15 @@ describe('Popup', () => {
     expect(root.style.getPropertyValue('--am-color-primary')).toBe('#00b96b')
     wrapper.unmount()
   })
+
+  it('builds its backdrop on Mask and keeps the page scrollable with lockScroll=false', async () => {
+    const wrapper = mount(Popup, { props: { open: true, getContainer: false, lockScroll: false, styles: { mask: { opacity: '0.5' } } } })
+    const mask = wrapper.find('.am-popup-mask')
+    expect(mask.classes()).toContain('am-mask')
+    expect(mask.element.parentElement).toBe(wrapper.find('.am-popup-root').element)
+    expect((mask.element as HTMLElement).style.opacity).toBe('0.5')
+    expect(document.body.classList.contains('am-overflow-hidden')).toBe(false)
+    await wrapper.setProps({ mask: false })
+    expect(wrapper.find('.am-popup-mask').exists()).toBe(false)
+  })
 })

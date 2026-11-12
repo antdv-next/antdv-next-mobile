@@ -2,6 +2,8 @@
 import type { Key } from '../_util/type'
 import type { TabBarEmits, TabBarItem, TabBarProps, TabBarSlots } from './interface'
 import { computed } from 'vue'
+import { BaseBadge } from '../_base'
+import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import '../style'
@@ -39,10 +41,8 @@ const classNames = computed(() => [
   props.classes?.root,
 ])
 
-const hasNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-const hasBadge = (badge: TabBarItem['badge']) => badge !== undefined && badge !== null && badge !== false && badge !== '' && badge !== 0
-const hasIcon = (item: TabBarItem) => !!slots.icon || hasNode(item.icon)
-const hasTitle = (item: TabBarItem) => !!slots.title || hasNode(item.title)
+const hasIcon = (item: TabBarItem) => !!slots.icon || isRenderable(item.icon)
+const hasTitle = (item: TabBarItem) => !!slots.title || isRenderable(item.title)
 
 function handleClick(item: TabBarItem) {
   if (item.disabled || item.key === activeKey.value)
@@ -80,27 +80,26 @@ function handleClick(item: TabBarItem) {
           <slot name="icon" :item="item" :index="index" :active="item.key === activeKey">
             <RenderNode :node="item.icon" :params="item.key === activeKey" />
           </slot>
-          <sup
-            v-if="hasBadge(item.badge)"
+          <BaseBadge
+            :count="item.badge"
+            :overflow-count="Infinity"
             class="am-tab-bar-badge"
             :class="[{ 'am-tab-bar-badge-dot': item.badge === true }, classes?.badge]"
             :style="styles?.badge"
-          >
-            <template v-if="item.badge !== true">{{ item.badge }}</template>
-          </sup>
+          />
         </div>
         <div v-if="hasTitle(item)" class="am-tab-bar-item-title" :class="classes?.title" :style="styles?.title">
           <slot name="title" :item="item" :index="index" :active="item.key === activeKey">
             <RenderNode :node="item.title" />
           </slot>
-          <sup
-            v-if="!hasIcon(item) && hasBadge(item.badge)"
+          <BaseBadge
+            v-if="!hasIcon(item)"
+            :count="item.badge"
+            :overflow-count="Infinity"
             class="am-tab-bar-badge"
             :class="[{ 'am-tab-bar-badge-dot': item.badge === true }, classes?.badge]"
             :style="styles?.badge"
-          >
-            <template v-if="item.badge !== true">{{ item.badge }}</template>
-          </sup>
+          />
         </div>
       </div>
     </div>

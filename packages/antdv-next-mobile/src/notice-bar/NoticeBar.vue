@@ -2,7 +2,7 @@
 import type { NoticeBarEmits, NoticeBarExpose, NoticeBarProps, NoticeBarSlots } from './interface'
 import { CloseOutlined, SoundOutlined } from '@antdv-next/icons'
 import { computed, nextTick, onActivated, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { cancelRaf, doubleRaf, raf } from '../_util'
+import { cancelRaf, doubleRaf, isRenderable, raf } from '../_util'
 import { useEventListener } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useConfig } from '../config-provider/context'
@@ -36,10 +36,6 @@ let wrapWidth = 0
 let contentWidth = 0
 let startTimer: ReturnType<typeof setTimeout> | undefined
 let rafId = -1
-
-function isRenderable(node: unknown) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
 
 // `icon` is tri-state: absent -> default icon, null / false -> hidden.
 const showIcon = computed(() => !!slots.icon || props.icon === undefined || isRenderable(props.icon))

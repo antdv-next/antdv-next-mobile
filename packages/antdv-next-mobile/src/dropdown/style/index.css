@@ -116,11 +116,10 @@
   line-height: var(--am-line-height);
 }
 
-.am-dropdown-mask {
+/* the backdrop is a Mask: keep it inside the layer (below the bar) */
+.am-dropdown-layer > .am-dropdown-mask {
   position: absolute;
-  inset: 0;
-  background: var(--am-color-bg-mask);
-  touch-action: none;
+  z-index: auto;
 }
 
 .am-dropdown-panel {

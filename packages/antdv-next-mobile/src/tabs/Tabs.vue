@@ -2,7 +2,7 @@
 import type { Key } from '../_util/type'
 import type { TabsEmits, TabsItem, TabsProps, TabsSlots } from './interface'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { addUnit, doubleRaf, preventDefault } from '../_util'
+import { addUnit, doubleRaf, isRenderable, preventDefault } from '../_util'
 import { useControlled, useTouch } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useConfig, useSize } from '../config-provider/context'
@@ -66,8 +66,6 @@ function shouldRender(item: TabsItem) {
     return true
   return visited.value.includes(item.key) && !(item.destroyOnHidden ?? props.destroyOnHidden)
 }
-
-const hasNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 
 // ---------- ink bar & auto centering ----------
 const navRef = ref<HTMLElement>()
@@ -246,7 +244,7 @@ const classNames = computed(() => [
             @click="handleTabClick(item, $event)"
             @keydown.enter="handleTabClick(item, $event as unknown as MouseEvent)"
           >
-            <span v-if="hasNode(item.icon)" class="am-tabs-tab-icon">
+            <span v-if="isRenderable(item.icon)" class="am-tabs-tab-icon">
               <RenderNode :node="item.icon" />
             </span>
             <span class="am-tabs-tab-label">
@@ -293,7 +291,7 @@ const classNames = computed(() => [
         >
           <template v-if="shouldRender(item)">
             <slot name="contentRender" :item="item" :index="index">
-              <RenderNode v-if="hasNode(item.content ?? item.children)" :node="item.content ?? item.children" />
+              <RenderNode v-if="isRenderable(item.content ?? item.children)" :node="item.content ?? item.children" />
               <slot v-else :item="item" :index="index" />
             </slot>
           </template>

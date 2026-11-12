@@ -9,6 +9,14 @@ export const isObject = (val: unknown): val is Record<any, any> => val !== null 
 export const isPromise = <T = any>(val: unknown): val is Promise<T> => isObject(val) && isFunction(val.then) && isFunction(val.catch)
 export const isNumeric = (val: unknown): val is Numeric => typeof val === 'number' || (typeof val === 'string' && /^-?\d+(?:\.\d+)?$/.test(val))
 
+/**
+ * Whether a render-type prop (`VueNode`) holds something to render.
+ * `false` is what Vue passes for an absent prop whose type includes `boolean`.
+ */
+export function isRenderable(node: unknown): boolean {
+  return node !== undefined && node !== null && node !== false && node !== ''
+}
+
 export function noop() {}
 
 export function clamp(num: number, min: number, max: number) {
@@ -94,7 +102,7 @@ export function getScrollParent(el?: Element | null, root: ScrollElement | undef
   return root as ScrollElement
 }
 
-function isWindow(el: ScrollElement): el is Window {
+export function isWindow(el: unknown): el is Window {
   return el === window
 }
 

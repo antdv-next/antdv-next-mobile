@@ -19,6 +19,7 @@ API 与 antdv-next 的 `Cascader` 对齐：`options`、`fieldNames`、`value`（
 <demo src="./demo/basic.vue">基础用法</demo>
 <demo src="./demo/change-on-select.vue">选择即改变</demo>
 <demo src="./demo/lazy.vue">动态加载选项</demo>
+<demo src="./demo/virtual.vue">大数据量 / 虚拟滚动</demo>
 <demo src="./demo/custom.vue">自定义显示与字段名</demo>
 <demo src="./demo/custom-trigger.vue" full>自定义触发器与表单</demo>
 <demo src="./demo/view.vue" full>内嵌视图 CascaderView</demo>
@@ -38,6 +39,9 @@ API 与 antdv-next 的 `Cascader` 对齐：`options`、`fieldNames`、`value`（
 | displayRender | 自定义触发器的显示内容，同名插槽优先 | `(labels: string[], selectedOptions: CascaderOption[]) => VueNode` | `labels => labels.join(' / ')` |
 | optionRender | 自定义选项内容，同名插槽 `option` 优先 | `(info: { option, level, selected }) => VueNode` | - |
 | notFoundContent | 某一级没有选项时显示的内容，同名插槽优先 | `VueNode` | `'暂无数据'` |
+| virtual | 虚拟滚动：每一级的选项列表通过 [VirtualList](/components/virtual-list) 渲染，只挂载可视区域附近的选项；`false` 时渲染全部选项 | `boolean` | `true` |
+| listHeight | 选项列表的高度 | `number \| string` | 视图高度（`--am-cascader-view-height`，`360px`）减去页签 |
+| listItemHeight | 选项高度（px）：作为选项的最小高度与未测量前的预估高度。没有自定义渲染时按固定高度渲染 | `number` | `48` |
 | open (v-model) | 弹层是否展开 | `boolean` | - |
 | defaultOpen | 默认是否展开 | `boolean` | `false` |
 | placeholder | 占位文字 | `string` | `'请选择'` |
@@ -105,7 +109,7 @@ API 与 antdv-next 的 `Cascader` 对齐：`options`、`fieldNames`、`value`（
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| options / fieldNames / changeOnSelect / loadData / optionRender / notFoundContent | 同 Cascader | - | - |
+| options / fieldNames / changeOnSelect / loadData / optionRender / notFoundContent / virtual / listHeight / listItemHeight | 同 Cascader | - | - |
 | value (v-model) | 当前值路径 | `(string \| number)[]` | - |
 | defaultValue | 默认值（非受控） | `(string \| number)[]` | - |
 | placeholder | 尚未选择的层级的页签文字 | `string` | `'请选择'` |
@@ -119,6 +123,10 @@ API 与 antdv-next 的 `Cascader` 对齐：`options`、`fieldNames`、`value`（
 | finish | 选中叶子节点（路径完整）时触发 | `(value, selectedOptions) => void` |
 | select | 点击任意一级的选项时触发 | `(option, level) => void` |
 | tabChange | 当前层级变化时触发 | `(index: number) => void` |
+
+| 方法 | 说明 | 类型 |
+| --- | --- | --- |
+| scrollToSelected | 把当前层级的已选项滚动到列表中间（切换页签、打开弹层时会自动调用） | `() => void` |
 
 ## 主题变量 {#design-token}
 
@@ -142,6 +150,7 @@ API 与 antdv-next 的 `Cascader` 对齐：`options`、`fieldNames`、`value`（
 - `changeOnSelect` 开启后不会在每次点击时立即提交，而是显示「确定」按钮，由用户确认当前路径。
 - 不支持 `multiple`、`showCheckedStrategy`、`showSearch`、`expandTrigger`、`popupRender`、`placement`、`tagRender`、`maxTagCount`、`Cascader.Panel` 等 API；内嵌场景请使用 `CascaderView`。
 - `loadData` 除了 PC 端「修改目标选项的 `children`」的写法外，也支持返回 Promise；若加载后没有子选项，则把该选项当作叶子节点。
+- 新增与 Select 一致的 `virtual`、`listHeight`、`listItemHeight`：每一级的列表都是虚拟滚动的，切换页签时会把该级的已选项滚动到列表中间。
 - `allowClear` 默认为 `false`，仅支持布尔值。
 - 弹层容器使用 `getContainer`（与 Popup 一致），不支持 `getPopupContainer`。
 - 新增 `confirm`、`cancel`、`select`、`tabChange` 事件，以及 `title`、`okText`、`cancelText`、`trigger` 属性和 `default`（自定义触发器）插槽。

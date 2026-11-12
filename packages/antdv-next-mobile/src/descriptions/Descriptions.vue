@@ -2,6 +2,7 @@
 import type { VueNode } from '../_util/type'
 import type { DescriptionsItemType, DescriptionsProps, DescriptionsSlots } from './interface'
 import { computed } from 'vue'
+import { clamp, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useSize } from '../config-provider/context'
 import '../style'
@@ -26,10 +27,6 @@ interface InternalItem {
 }
 
 const size = useSize(() => props.size)
-
-function isRenderable(node: unknown) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
 
 const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
 const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
@@ -58,7 +55,7 @@ const mergedItems = computed<InternalItem[]>(() => {
       span = rest
     }
     else {
-      span = Math.min(Math.max(Math.floor(Number(item.span)) || 1, 1), column)
+      span = clamp(Math.floor(Number(item.span)) || 1, 1, column)
       if (span > rest) {
         fillPrevious()
       }

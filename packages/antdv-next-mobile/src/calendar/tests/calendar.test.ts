@@ -315,3 +315,42 @@ describe('Calendar', () => {
     expect(wrapper.findAll('.am-calendar-weekday')[0].text()).toBe('Sun')
   })
 })
+
+describe('Calendar virtual', () => {
+  const decade = { minDate: dayjs('2020-01-01'), maxDate: dayjs('2029-12-31'), poppable: false } as const
+  const spacerHeights = (wrapper: ReturnType<typeof mount>) =>
+    wrapper.findAll('.am-calendar-spacer').map(item => Number.parseInt(item.attributes('style')!.match(/height: (\d+)px/)![1]))
+
+  it('mounts only the visible months of a 10-year range', async () => {
+    const wrapper = mount(Calendar, { props: { ...decade, defaultValue: dayjs('2026-06-15') } })
+    await nextTick()
+    // 120 months in range
+    const months = wrapper.findAll('.am-calendar-month')
+    expect(months.length).toBeGreaterThan(0)
+    expect(months.length).toBeLessThan(6)
+    expect(wrapper.findAll('.am-calendar-day').length).toBeLessThan(6 * 31)
+    expect(wrapper.find('[data-month="2026-06"]').exists()).toBe(true)
+    expect(wrapper.find('[data-month="2020-01"]').exists()).toBe(false)
+    expect(dayOf(wrapper.element, '2026-06', 15).classList.contains('am-calendar-day-selected')).toBe(true)
+    // spacers + rendered months add up to the height of all 120 months
+    const [before, after] = spacerHeights(wrapper)
+    const rendered = months.reduce((sum, month) => sum + Number.parseInt(month.attributes('style')!.match(/height: (\d+)px/)![1]), 0)
+    expect(before).toBeGreaterThan(20000)
+    expect(after).toBeGreaterThan(10000)
+    expect(before + rendered + after).toBeGreaterThan(120 * (44 + 4 * 64))
+    expect(before + rendered + after).toBeLessThan(120 * (44 + 6 * 64))
+
+    ;(wrapper.vm as any).scrollToDate(dayjs('2029-12-31'))
+    await nextTick()
+    expect(wrapper.find('[data-month="2029-12"]').exists()).toBe(true)
+    expect(wrapper.find('[data-month="2026-06"]').exists()).toBe(false)
+    expect(wrapper.findAll('.am-calendar-month').length).toBeLessThan(6)
+    expect(spacerHeights(wrapper)[1]).toBe(0)
+  })
+
+  it('virtual: false renders every month with the same structure', () => {
+    const wrapper = mount(Calendar, { props: { ...decade, virtual: false } })
+    expect(wrapper.findAll('.am-calendar-month')).toHaveLength(120)
+    expect(spacerHeights(wrapper)).toEqual([0, 0])
+  })
+})

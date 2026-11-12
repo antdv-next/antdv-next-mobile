@@ -104,22 +104,17 @@
   background: var(--am-side-bar-background);
 }
 
+/* the bubble is BaseBadge; only its size tokens and position are set here */
 .am-side-bar-badge {
+  --am-base-badge-size: 16px;
+  --am-base-badge-font-size: 10px;
+  --am-base-badge-bg: var(--am-side-bar-badge-color);
+
   position: absolute;
   top: 0;
   inset-inline-start: 100%;
-  box-sizing: border-box;
-  min-width: 16px;
-  height: 16px;
   padding: 0 4px;
-  color: var(--am-color-text-light-solid);
   font-weight: 500;
-  font-size: 10px;
-  line-height: 16px;
-  white-space: nowrap;
-  text-align: center;
-  background: var(--am-side-bar-badge-color);
-  border-radius: 8px;
   transform: translate(-2px, -50%);
 }
 
@@ -128,10 +123,7 @@
 }
 
 .am-side-bar-badge-dot {
-  min-width: 8px;
-  height: 8px;
   padding: 0;
-  border-radius: 50%;
   transform: translate(0, -25%);
 }
 

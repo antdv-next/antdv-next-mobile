@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SkeletonAvatarProps } from './interface'
 import { computed } from 'vue'
+import { getSizeStyle } from '../_util'
 import '../style'
 import './style/index.css'
 
@@ -27,7 +28,7 @@ const contentClass = computed(() => [
 ])
 
 const contentStyle = computed(() => [
-  typeof props.size === 'number' ? { width: `${props.size}px`, height: `${props.size}px` } : undefined,
+  typeof props.size === 'number' ? getSizeStyle(props.size) : undefined,
   props.styles?.content,
 ])
 </script>

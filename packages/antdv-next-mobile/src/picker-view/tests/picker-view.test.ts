@@ -175,3 +175,80 @@ describe('PickerView', () => {
     expect(resolvePicker(undefined, undefined).value).toEqual([])
   })
 })
+
+describe('PickerView virtual', () => {
+  const big = [Array.from({ length: 5000 }, (_, i) => ({ label: `Item ${i}`, value: i }))]
+  const indexes = (wrapper: ReturnType<typeof mount>) =>
+    wrapper.findAll('.am-picker-view-item').map(item => Number(item.attributes('aria-posinset')) - 1)
+
+  it('mounts only the window of a 5,000-option column', () => {
+    const wrapper = mount(PickerView, { props: { columns: big } })
+    const items = wrapper.findAll('.am-picker-view-item')
+    expect(items.length).toBeGreaterThan(5)
+    expect(items.length).toBeLessThan(30)
+    expect(items[0].text()).toBe('Item 0')
+    expect(items[0].attributes('aria-setsize')).toBe('5000')
+    expect(wrapper.find('.am-picker-view-column-wrapper').attributes('style')).not.toContain('padding-top')
+  })
+
+  it('renders and selects the initial value deep in the list', () => {
+    const wrapper = mount(PickerView, { props: { columns: big, value: [4000], itemHeight: 40 } })
+    expect(wrapper.findAll('.am-picker-view-item').length).toBeLessThan(30)
+    const selected = wrapper.find('.am-picker-view-item-selected')
+    expect(selected.text()).toBe('Item 4000')
+    expect(selected.attributes('aria-selected')).toBe('true')
+    expect(selected.attributes('aria-posinset')).toBe('4001')
+    const list = indexes(wrapper)
+    const style = wrapper.find('.am-picker-view-column-wrapper').attributes('style')
+    // same translate as the full list, the rows before the window are a spacer
+    expect(style).toContain(`translate3d(0, ${80 - 4000 * 40}px, 0)`)
+    expect(style).toContain(`padding-top: ${list[0] * 40}px`)
+    // one viewport of overscan on both sides of the 5 visible rows
+    expect(list[0]).toBeLessThanOrEqual(3998 - 5)
+    expect(list[list.length - 1]).toBeGreaterThanOrEqual(4002 + 5)
+  })
+
+  it('follows a programmatic value change', async () => {
+    const wrapper = mount(PickerView, { props: { columns: big, value: [10] } })
+    expect(indexes(wrapper)).toContain(10)
+    await wrapper.setProps({ value: [2500] })
+    await nextTick()
+    expect(wrapper.find('.am-picker-view-item-selected').text()).toBe('Item 2500')
+    expect(indexes(wrapper)).not.toContain(10)
+    expect(wrapper.findAll('.am-picker-view-item').length).toBeLessThan(30)
+  })
+
+  it('follows a touch drag and selects a windowed option by click', async () => {
+    const wrapper = mount(PickerView, { props: { columns: big, defaultValue: [100], itemHeight: 40 } })
+    const column = wrapper.find('.am-picker-view-column')
+    vi.useFakeTimers()
+    await column.trigger('touchstart', touches(1000))
+    vi.advanceTimersByTime(400)
+    // 30 rows up: far outside the initial window
+    await column.trigger('touchmove', touches(400))
+    await column.trigger('touchmove', touches(-200))
+    expect(indexes(wrapper)).toContain(130)
+    expect(indexes(wrapper)).not.toContain(100)
+    vi.advanceTimersByTime(400)
+    await column.trigger('touchend')
+    vi.runAllTimers()
+    expect(wrapper.emitted('change')![0][0]).toEqual([130])
+    expect(wrapper.find('.am-picker-view-item-selected').text()).toBe('Item 130')
+    expect(wrapper.findAll('.am-picker-view-item').length).toBeLessThan(30)
+
+    const target = wrapper.findAll('.am-picker-view-item').find(item => item.text() === 'Item 133')!
+    // (still on fake time: Vue ignores events older than the listener it attached under the mocked clock)
+    await target.trigger('click')
+    vi.useRealTimers()
+    expect(wrapper.emitted('change')![1][0]).toEqual([133])
+  })
+
+  it('virtual: false renders every option', () => {
+    const wrapper = mount(PickerView, { props: { columns: big, value: [4000], virtual: false } })
+    const items = wrapper.findAll('.am-picker-view-item')
+    expect(items).toHaveLength(5000)
+    expect(items[0].attributes('aria-setsize')).toBeUndefined()
+    expect(wrapper.find('.am-picker-view-item-selected').text()).toBe('Item 4000')
+    expect(wrapper.find('.am-picker-view-column-wrapper').attributes('style')).not.toContain('padding-top')
+  })
+})

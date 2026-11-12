@@ -304,4 +304,14 @@ describe('ImagePreview', () => {
     await nextTick()
     expect(qa('.am-image-preview-index').filter(el => !el.closest('.am-fade-leave-active'))).toHaveLength(0)
   })
+
+  it('carries the theme of ConfigProvider when teleported', () => {
+    mount(ConfigProvider, {
+      props: { theme: { algorithm: 'dark' } },
+      slots: { default: () => h(ImagePreview, { images, open: true }) },
+    })
+    const el = document.body.querySelector<HTMLElement>('.am-image-preview')!
+    expect(el.parentElement).toBe(document.body)
+    expect(el.classList.contains('am-theme-dark')).toBe(true)
+  })
 })

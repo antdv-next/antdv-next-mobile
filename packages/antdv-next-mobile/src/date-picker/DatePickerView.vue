@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<DatePickerViewProps>(), {
   picker: 'date',
   showTime: false,
   use12Hours: undefined,
+  virtual: true,
 })
 const emit = defineEmits<DatePickerViewEmits>()
 
@@ -53,6 +54,7 @@ function onChange(values: PickerValue[]) {
     :value="pickerValue"
     :item-height="itemHeight"
     :visible-item-count="visibleItemCount"
+    :virtual="virtual"
     :root-class="rootClass"
     :classes="classes"
     :styles="styles"

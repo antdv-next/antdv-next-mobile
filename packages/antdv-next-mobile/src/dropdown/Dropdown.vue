@@ -4,7 +4,8 @@ import type { DropdownContext, DropdownItemRegistration } from './context'
 import type { DropdownEmits, DropdownExpose, DropdownProps, DropdownSlots } from './interface'
 import { CaretDownOutlined } from '@antdv-next/icons'
 import { computed, onMounted, provide, ref, shallowRef, watch } from 'vue'
-import { nextZIndex, useControlled, useEventListener } from '../_util/hooks'
+import { isRenderable } from '../_util'
+import { nextZIndex, useClickAway, useControlled, useEventListener } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { dropdownContextKey } from './context'
 import '../style'
@@ -38,8 +39,6 @@ const [activeKey, setActiveKey] = useControlled<typeof props, 'activeKey', Key |
     emit('change', key)
   },
 })
-
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 
 function updateRect() {
   const nav = navRef.value
@@ -103,18 +102,16 @@ onMounted(() => {
 })
 
 function onClickAway(event: Event) {
-  if (activeKey.value === null || !props.closeOnClickAway)
-    return
   const target = event.target as Node | null
-  if (!target || rootRef.value?.contains(target))
-    return
-  if (items.value.some(item => item.layerEl?.()?.contains(target)))
+  // the panels are teleported: they are not inside the bar
+  if (!target || items.value.some(item => item.layerEl?.()?.contains(target)))
     return
   close()
 }
 
-useEventListener('touchstart', onClickAway, { passive: true, capture: true })
-useEventListener('mousedown', onClickAway, { capture: true })
+const clickAwayEnabled = () => activeKey.value !== null && props.closeOnClickAway
+useClickAway(rootRef, onClickAway, { eventName: 'touchstart', enabled: clickAwayEnabled })
+useClickAway(rootRef, onClickAway, { eventName: 'mousedown', enabled: clickAwayEnabled })
 useEventListener('resize', () => activeKey.value !== null && updateRect(), { passive: true })
 useEventListener('scroll', () => activeKey.value !== null && updateRect(), { passive: true, capture: true })
 
@@ -167,7 +164,7 @@ defineExpose<DropdownExpose>({ close })
         <span class="am-dropdown-nav-arrow" :class="classes?.arrow" :style="styles?.arrow">
           <RenderNode v-if="item.renderArrow" :node="item.renderArrow" />
           <slot v-else name="arrowIcon">
-            <RenderNode v-if="isNode(arrowIcon)" :node="arrowIcon" />
+            <RenderNode v-if="isRenderable(arrowIcon)" :node="arrowIcon" />
             <CaretDownOutlined v-else />
           </slot>
         </span>

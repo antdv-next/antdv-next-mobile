@@ -2,6 +2,7 @@
 import type { FloatButtonGroupEmits, FloatButtonGroupProps, FloatButtonGroupSlots } from './interface'
 import { CloseOutlined, FileTextOutlined } from '@antdv-next/icons'
 import { computed, provide } from 'vue'
+import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { floatButtonGroupContextKey } from './context'
@@ -23,8 +24,6 @@ const props = withDefaults(defineProps<FloatButtonGroupProps>(), {
 })
 const emit = defineEmits<FloatButtonGroupEmits>()
 defineSlots<FloatButtonGroupSlots>()
-
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 
 const [open, setOpen] = useControlled(props, 'open', {
   defaultValue: () => props.defaultOpen,
@@ -82,11 +81,11 @@ function onTriggerClick(event: MouseEvent) {
       >
         <template #icon>
           <slot v-if="open" name="closeIcon">
-            <RenderNode v-if="isNode(closeIcon)" :node="closeIcon" />
+            <RenderNode v-if="isRenderable(closeIcon)" :node="closeIcon" />
             <CloseOutlined v-else />
           </slot>
           <slot v-else name="icon">
-            <RenderNode v-if="isNode(icon)" :node="icon" />
+            <RenderNode v-if="isRenderable(icon)" :node="icon" />
             <FileTextOutlined v-else />
           </slot>
         </template>

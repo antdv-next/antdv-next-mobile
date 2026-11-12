@@ -2,7 +2,7 @@
 import type { AvatarGroupProps, AvatarGroupSlots } from './interface'
 import { computed, provide } from 'vue'
 import RenderNode from '../_util/RenderNode'
-import { flattenChildren } from '../space/util'
+import { flattenChildren } from '../_util/vnode'
 import Avatar from './Avatar.vue'
 import { avatarGroupContextKey } from './context'
 import '../style'

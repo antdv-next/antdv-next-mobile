@@ -4,6 +4,7 @@ import type { Variant } from '../form/context'
 import type { PickerFieldSemanticClassNames, PickerFieldSemanticStyles } from './interface'
 import { CloseCircleFilled, DownOutlined, RightOutlined } from '@antdv-next/icons'
 import { computed } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
 import { useFormItemInputContext, useMergedStatus, useVariant } from '../form/context'
@@ -43,7 +44,7 @@ const disabled = useDisabled(() => props.disabled)
 const status = useMergedStatus(() => props.status)
 const variant = useVariant(() => props.variant)
 
-const hasValue = computed(() => props.label !== undefined && props.label !== null && props.label !== '' && props.label !== false)
+const hasValue = computed(() => isRenderable(props.label))
 const showClear = computed(() => props.allowClear && hasValue.value && !disabled.value)
 
 const classNames = computed(() => [

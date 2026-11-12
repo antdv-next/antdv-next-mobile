@@ -1,0 +1,23 @@
+.am-virtual-list {
+  position: relative;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.am-virtual-list-holder {
+  position: relative;
+  overflow: hidden;
+}
+
+.am-virtual-list-inner {
+  will-change: transform;
+}
+
+.am-virtual-list-item {
+  box-sizing: border-box;
+  /* a child margin must not collapse out of the measured box */
+  display: flow-root;
+}

@@ -4,8 +4,8 @@ import type { RenderNodeFn } from '../_util/type'
 import type { PickerOptionRenderInfo, PickerValue } from './interface'
 import type { NormalizedPickerOption } from './util'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { clamp, preventDefault } from '../_util'
-import { useTouch } from '../_util/hooks'
+import { cancelRaf, clamp, preventDefault, raf } from '../_util'
+import { useTouch, useVirtualRange } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { findEnabledIndex } from './util'
 
@@ -20,7 +20,10 @@ const props = withDefaults(defineProps<{
   optionRender?: RenderNodeFn<PickerOptionRenderInfo>
   itemClass?: string
   itemStyle?: CSSProperties
+  /** `false` renders every option */
+  virtual?: boolean
 }>(), {
+  virtual: true,
   // render-type props include `boolean`: without this Vue casts an absent prop to `false`
   optionRender: undefined,
 })
@@ -52,6 +55,32 @@ let momentumOffset = 0
 let moving = false
 let lastWheelTime = 0
 let movingTimer: ReturnType<typeof setTimeout> | undefined
+
+// ---------- windowing ----------
+/**
+ * Position of the wheel while a transition (snap / inertia) is running. `offset` already holds the
+ * target then, so the window follows the *rendered* position frame by frame instead, otherwise the
+ * rows the wheel is still rolling over would be unmounted. `null`: the wheel rests at `offset`.
+ */
+const trackedOffset = ref<number | null>(null)
+let trackId = -1
+let trackTimer: ReturnType<typeof setTimeout> | undefined
+
+const range = useVirtualRange({
+  count,
+  size: () => props.itemHeight,
+  // the wheel is centred: `baseOffset` px of the viewport sit above the selected row
+  scrollOffset: () => -(trackedOffset.value ?? offset.value) - baseOffset.value,
+  viewportSize: () => props.itemHeight * props.visibleItemCount,
+  // one viewport on each side, so drags and inertia never run into blank rows
+  overscan: () => Math.max(props.visibleItemCount, 3),
+  enabled: () => props.virtual,
+})
+
+const visibleOptions = computed(() => {
+  const start = range.start.value
+  return props.options.slice(start, range.end.value).map((option, i) => ({ option, index: start + i }))
+})
 
 watch(
   () => [currentIndex.value, props.itemHeight, count()],
@@ -168,9 +197,40 @@ function onKeydown(event: KeyboardEvent) {
   }
 }
 
-onBeforeUnmount(() => clearTimeout(movingTimer))
+function stopTracking() {
+  cancelRaf(trackId)
+  clearTimeout(trackTimer)
+  trackedOffset.value = null
+}
+
+function trackTransition() {
+  const rendered = getRenderedOffset()
+  if (!duration.value || Math.abs(rendered - offset.value) < 0.5) {
+    stopTracking()
+    return
+  }
+  trackedOffset.value = rendered
+  trackId = raf(trackTransition)
+}
+
+// runs before the DOM is patched: the wheel is still rendered at its previous position
+watch(offset, () => {
+  stopTracking()
+  if (!props.virtual || !duration.value)
+    return
+  // frames may never come (background tab) and `transitionend` may not fire: always settle on the target
+  trackTimer = setTimeout(stopTracking, duration.value + 100)
+  trackTransition()
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(movingTimer)
+  stopTracking()
+})
 
 const wrapperStyle = computed<CSSProperties>(() => ({
+  // leading spacer: the rendered window keeps its place in the full list
+  paddingTop: range.offsetBefore.value ? `${range.offsetBefore.value}px` : undefined,
   transform: `translate3d(0, ${offset.value + baseOffset.value}px, 0)`,
   transitionDuration: `${duration.value}ms`,
   transitionProperty: duration.value ? 'transform' : 'none',
@@ -191,7 +251,7 @@ const wrapperStyle = computed<CSSProperties>(() => ({
   >
     <ul ref="wrapperRef" class="am-picker-view-column-wrapper" :style="wrapperStyle" @transitionend="stopMomentum">
       <li
-        v-for="(option, index) in options"
+        v-for="{ option, index } in visibleOptions"
         :key="`${index}-${option.value}`"
         class="am-picker-view-item"
         :class="[
@@ -202,6 +262,8 @@ const wrapperStyle = computed<CSSProperties>(() => ({
         role="option"
         :aria-selected="option.value === value"
         :aria-disabled="option.disabled || undefined"
+        :aria-setsize="virtual ? options.length : undefined"
+        :aria-posinset="virtual ? index + 1 : undefined"
         @click="onClickOption(index)"
       >
         <slot name="option" :option="option.raw" :index="index" :column-index="columnIndex" :selected="option.value === value">

@@ -169,8 +169,9 @@
   padding-inline-end: var(--am-list-item-padding-inline, 16px);
 }
 
-/* hairline between items, inset from the title */
-.am-list-item + .am-list-item > .am-list-item-main::before {
+/* hairline between items, inset from the title (virtual rows are wrapped, so they go by their index) */
+.am-list-item + .am-list-item > .am-list-item-main::before,
+.am-list-virtual-list .am-virtual-list-item:not([data-index='0']) > .am-list-item > .am-list-item-main::before {
   position: absolute;
   top: 0;
   right: 0;

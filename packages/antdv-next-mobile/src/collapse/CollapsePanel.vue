@@ -3,7 +3,7 @@ import type { Key } from '../_util/type'
 import type { CollapsePanelInfo, CollapsePanelProps, CollapsePanelSlots } from './interface'
 import { RightOutlined } from '@antdv-next/icons'
 import { computed, getCurrentInstance, inject, ref, watch } from 'vue'
-import { genId } from '../_util'
+import { genId, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { collapseContextKey } from './context'
 import '../style'
@@ -40,8 +40,7 @@ watch(active, (val) => {
 })
 const shouldRender = computed(() => active.value || props.forceRender || (visited.value && !context?.destroyOnHidden.value))
 
-const hasNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-const hasExtra = computed(() => !!slots.extra || hasNode(props.extra))
+const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
 
 const panelInfo = computed<CollapsePanelInfo>(() => ({
   panelKey,

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StatisticProps, StatisticSlots } from './interface'
 import { computed } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import Skeleton from '../skeleton'
 import { formatNumber } from './utils'
@@ -16,10 +17,6 @@ const props = withDefaults(defineProps<StatisticProps>(), {
   loading: false,
 })
 const slots = defineSlots<StatisticSlots>()
-
-function isRenderable(node: unknown) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
 
 const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
 const hasPrefix = computed(() => !!slots.prefix || isRenderable(props.prefix))

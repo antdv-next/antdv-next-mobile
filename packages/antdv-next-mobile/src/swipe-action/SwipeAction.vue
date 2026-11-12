@@ -2,8 +2,8 @@
 import type { CSSProperties } from 'vue'
 import type { SwipeActionEmits, SwipeActionItem, SwipeActionProps, SwipeActionSide, SwipeActionSlots } from './interface'
 import { computed, ref } from 'vue'
-import { inBrowser, preventDefault } from '../_util'
-import { useEventListener, useTouch } from '../_util/hooks'
+import { preventDefault } from '../_util'
+import { useClickAway, useTouch } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled } from '../config-provider/context'
 import '../style'
@@ -163,15 +163,9 @@ function onAction(action: SwipeActionItem, event: MouseEvent) {
     close()
 }
 
-function onOutside(event: Event) {
-  if (!opened.value || !props.closeOnTouchOutside)
-    return
-  if (!rootRef.value?.contains(event.target as Node))
-    close()
-}
-
-useEventListener('touchstart', onOutside, { target: inBrowser ? document : undefined, passive: true })
-useEventListener('mousedown', onOutside, { target: inBrowser ? document : undefined, passive: true })
+const closeOnOutside = () => !!opened.value && props.closeOnTouchOutside
+useClickAway(rootRef, close, { eventName: 'touchstart', enabled: closeOnOutside })
+useClickAway(rootRef, close, { eventName: 'mousedown', enabled: closeOnOutside })
 
 // ---------- render ----------
 const trackStyle = computed<CSSProperties>(() => ({

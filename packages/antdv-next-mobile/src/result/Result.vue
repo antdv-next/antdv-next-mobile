@@ -2,6 +2,7 @@
 import type { ResultProps, ResultSlots } from './interface'
 import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, WarningFilled } from '@antdv-next/icons'
 import { computed } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import ExceptionImage from './ExceptionImage.vue'
 import '../style'
@@ -20,16 +21,15 @@ const iconMap = {
 }
 const exceptionStatus = ['403', '404', '500']
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 const status = computed(() => String(props.status))
 const isException = computed(() => exceptionStatus.includes(status.value))
-const hasCustomIcon = computed(() => !!slots.icon || isNode(props.icon))
+const hasCustomIcon = computed(() => !!slots.icon || isRenderable(props.icon))
 const showIcon = computed(() => !!slots.icon || (props.icon !== null && props.icon !== false))
 const statusIcon = computed(() => iconMap[status.value as keyof typeof iconMap] ?? iconMap.info)
 
-const hasTitle = computed(() => !!slots.title || isNode(props.title))
-const hasSubTitle = computed(() => !!slots.subTitle || isNode(props.subTitle))
-const hasExtra = computed(() => !!slots.extra || isNode(props.extra))
+const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
+const hasSubTitle = computed(() => !!slots.subTitle || isRenderable(props.subTitle))
+const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
 
 const classNames = computed(() => [
   'am-result',

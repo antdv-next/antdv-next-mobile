@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ButtonColorType, ButtonEmits, ButtonProps, ButtonSlots, ButtonType, ButtonVariantType } from './interface'
-import { LoadingOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { Spinner } from '../_base'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
 import '../style'
@@ -117,7 +117,7 @@ function handleClick(event: MouseEvent) {
     <span v-if="hasIcon" class="am-button-icon" :class="classes?.icon" :style="styles?.icon">
       <template v-if="innerLoading">
         <RenderNode v-if="loadingIcon" :node="loadingIcon" />
-        <LoadingOutlined v-else class="am-spin-icon" />
+        <Spinner v-else />
       </template>
       <slot v-else name="icon">
         <RenderNode :node="icon" />

@@ -28,6 +28,7 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
   getContainer: undefined,
   maskClosable: true,
   destroyOnHidden: false,
+  virtual: true,
 })
 const emit = defineEmits<DatePickerEmits>()
 defineSlots<DatePickerSlots>()
@@ -160,6 +161,7 @@ defineExpose({ toggle })
       :render-label="renderLabel"
       :item-height="itemHeight"
       :visible-item-count="visibleItemCount"
+      :virtual="virtual"
       @change="onSelect"
     />
     <slot name="footer" />

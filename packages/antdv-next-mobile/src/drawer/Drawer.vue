@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { DrawerClosableConfig, DrawerEmits, DrawerProps, DrawerSlots } from './interface'
-import { CloseOutlined, LoadingOutlined } from '@antdv-next/icons'
+import { CloseOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { addUnit, cls, preventDefault } from '../_util'
+import { Spinner } from '../_base'
+import { addUnit, cls, isRenderable, preventDefault } from '../_util'
 import { useTouch } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
@@ -39,8 +40,6 @@ const slots = defineSlots<DrawerSlots>()
 const commonLocale = useLocale('common')
 const popupRef = ref<InstanceType<typeof Popup>>()
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
 const isVertical = computed(() => props.placement === 'top' || props.placement === 'bottom')
 
 const closableConfig = computed<DrawerClosableConfig | null>(() => {
@@ -51,9 +50,9 @@ const closableConfig = computed<DrawerClosableConfig | null>(() => {
 const mergedCloseIcon = computed(() => closableConfig.value?.closeIcon ?? props.closeIcon)
 const closeAtStart = computed(() => closableConfig.value?.placement === 'start')
 
-const hasTitle = computed(() => !!slots.title || isNode(props.title))
-const hasExtra = computed(() => !!slots.extra || isNode(props.extra))
-const hasFooter = computed(() => !!slots.footer || isNode(props.footer))
+const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
+const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
+const hasFooter = computed(() => !!slots.footer || isRenderable(props.footer))
 const hasHeader = computed(() => hasTitle.value || hasExtra.value || !!closableConfig.value)
 const showHandle = computed(() => props.swipeToClose && props.placement === 'bottom')
 
@@ -275,14 +274,14 @@ defineExpose({
         @click="onCloseClick"
       >
         <slot name="closeIcon">
-          <RenderNode v-if="isNode(mergedCloseIcon)" :node="mergedCloseIcon" />
+          <RenderNode v-if="isRenderable(mergedCloseIcon)" :node="mergedCloseIcon" />
           <CloseOutlined v-else />
         </slot>
       </button>
     </div>
     <div class="am-drawer-body" :class="classes?.body" :style="styles?.body">
       <div v-if="loading" class="am-drawer-loading" role="status" :aria-label="commonLocale.loading">
-        <LoadingOutlined class="am-spin-icon" />
+        <Spinner />
       </div>
       <slot v-else />
     </div>

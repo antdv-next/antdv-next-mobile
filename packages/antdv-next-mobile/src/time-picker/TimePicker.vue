@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<TimePickerProps>(), {
   getContainer: undefined,
   maskClosable: true,
   destroyOnHidden: false,
+  virtual: true,
 })
 const emit = defineEmits<TimePickerEmits>()
 defineSlots<TimePickerSlots>()
@@ -80,6 +81,7 @@ defineExpose({ toggle: (open?: boolean) => pickerRef.value?.toggle(open) })
     :render-label="renderLabel"
     :item-height="itemHeight"
     :visible-item-count="visibleItemCount"
+    :virtual="virtual"
     :open="open"
     :default-open="defaultOpen"
     :placeholder="placeholder"

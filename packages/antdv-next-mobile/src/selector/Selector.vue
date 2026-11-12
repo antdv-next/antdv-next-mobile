@@ -3,7 +3,7 @@ import type { VueNode } from '../_util/type'
 import type { SelectorEmits, SelectorItemContext, SelectorOption, SelectorProps, SelectorSlots, SelectorValue } from './interface'
 import { CheckOutlined } from '@antdv-next/icons'
 import { computed } from 'vue'
-import { isDef } from '../_util'
+import { isDef, isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled } from '../config-provider/context'
@@ -89,10 +89,6 @@ function getContext(item: NormalizedItem, index: number): SelectorItemContext {
   return { option: item.option, index, checked: isChecked(item), disabled: isItemDisabled(item) }
 }
 
-function hasNode(node: VueNode) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
-
 const classNames = computed(() => [
   'am-selector',
   {
@@ -142,7 +138,7 @@ const rootStyle = computed(() => [
         </slot>
       </div>
       <div
-        v-if="$slots.description || hasNode(item.description)"
+        v-if="$slots.description || isRenderable(item.description)"
         class="am-selector-item-description"
         :class="classes?.description"
         :style="styles?.description"

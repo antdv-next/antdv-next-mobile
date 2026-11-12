@@ -2,9 +2,11 @@
 import type { VueNode } from '../_util/type'
 import type { CardProps, CardSlots } from './interface'
 import { computed } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
+import { flattenChildren } from '../_util/vnode'
 import { useSize } from '../config-provider/context'
-import { flattenChildren } from '../space/util'
+import Skeleton from '../skeleton/Skeleton.vue'
 import '../style'
 import './style/index.css'
 
@@ -19,12 +21,11 @@ const slots = defineSlots<CardSlots>()
 
 const contextSize = useSize(() => (props.size === 'default' ? 'middle' : props.size))
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 const variant = computed(() => props.variant ?? (props.bordered === false ? 'borderless' : 'outlined'))
-const hasTitle = computed(() => !!slots.title || isNode(props.title))
-const hasExtra = computed(() => !!slots.extra || isNode(props.extra))
-const hasCover = computed(() => !!slots.cover || isNode(props.cover))
-const hasFooter = computed(() => !!slots.footer || isNode(props.footer))
+const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
+const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
+const hasCover = computed(() => !!slots.cover || isRenderable(props.cover))
+const hasFooter = computed(() => !!slots.footer || isRenderable(props.footer))
 
 const classNames = computed(() => [
   'am-card',
@@ -43,7 +44,7 @@ const classNames = computed(() => [
 // Actions are collected while rendering (by the `v-if` of the list) so that slot content stays reactive.
 let actionNodes: unknown[] = []
 function collectActions() {
-  actionNodes = slots.actions ? flattenChildren(slots.actions()) : (props.actions ?? []).filter(isNode)
+  actionNodes = slots.actions ? flattenChildren(slots.actions()) : (props.actions ?? []).filter(isRenderable)
   return actionNodes.length > 0
 }
 const getActions = () => actionNodes as VueNode[]
@@ -69,12 +70,7 @@ const getActions = () => actionNodes as VueNode[]
       </slot>
     </div>
     <div v-if="loading || $slots.default" class="am-card-body" :class="classes?.body" :style="styles?.body">
-      <div v-if="loading" class="am-card-skeleton" aria-busy="true">
-        <div class="am-card-skeleton-row am-card-skeleton-title" />
-        <div class="am-card-skeleton-row" />
-        <div class="am-card-skeleton-row" />
-        <div class="am-card-skeleton-row am-card-skeleton-last" />
-      </div>
+      <Skeleton v-if="loading" active class="am-card-skeleton" />
       <slot v-else />
     </div>
     <div v-if="hasFooter" class="am-card-footer" :class="classes?.footer" :style="styles?.footer">

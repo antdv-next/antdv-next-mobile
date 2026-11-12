@@ -54,6 +54,12 @@ export interface CascaderBaseProps {
   optionRender?: RenderNodeFn<CascaderOptionRenderInfo>
   /** Content shown when a level has no options, the `notFoundContent` slot wins */
   notFoundContent?: VueNode
+  /** Only mount the options around the visible window of a level (through `VirtualList`). `false` renders every option. Default `true`. */
+  virtual?: boolean
+  /** Height of the option list. Default: the rest of `--am-cascader-view-height` (360px) below the tabs. */
+  listHeight?: number | string
+  /** Height of one option in px: the min-height of an option and the estimate used before a row is measured. Default `48`. */
+  listItemHeight?: number
 }
 
 export interface CascaderViewProps extends CascaderBaseProps {
@@ -80,6 +86,11 @@ export interface CascaderViewEmits {
 export interface CascaderViewSlots {
   option?: (info: CascaderOptionRenderInfo) => any
   notFoundContent?: () => any
+}
+
+export interface CascaderViewExpose {
+  /** Scroll the selected option of the active level into view */
+  scrollToSelected: () => void
 }
 
 export interface CascaderProps extends CascaderBaseProps, PickerFieldProps {

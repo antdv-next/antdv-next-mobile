@@ -172,8 +172,6 @@ export function useInput(props: UseInputProps, emit: (event: any, ...args: any[]
   }
 }
 
-export const isRenderable = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
 /** Counts user-perceived characters (an emoji is one). */
 export function countText(text: string) {
   return Array.from(text).length

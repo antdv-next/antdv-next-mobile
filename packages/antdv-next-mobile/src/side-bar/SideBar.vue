@@ -2,6 +2,7 @@
 import type { Key } from '../_util/type'
 import type { SideBarEmits, SideBarItem, SideBarProps, SideBarSlots } from './interface'
 import { computed } from 'vue'
+import { BaseBadge } from '../_base'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import '../style'
@@ -24,8 +25,6 @@ const [activeKey, setActiveKey] = useControlled<SideBarProps, 'activeKey', Key |
 })
 
 const activeIndex = computed(() => props.items.findIndex(item => item.key === activeKey.value))
-
-const hasBadge = (badge: SideBarItem['badge']) => badge !== undefined && badge !== null && badge !== false && badge !== '' && badge !== 0
 
 function handleClick(item: SideBarItem) {
   if (item.disabled || item.key === activeKey.value)
@@ -62,14 +61,13 @@ function handleClick(item: SideBarItem) {
         <slot name="title" :item="item" :index="index" :active="index === activeIndex">
           <RenderNode :node="item.title" />
         </slot>
-        <sup
-          v-if="hasBadge(item.badge)"
+        <BaseBadge
+          :count="item.badge"
+          :overflow-count="Infinity"
           class="am-side-bar-badge"
           :class="[{ 'am-side-bar-badge-dot': item.badge === true }, classes?.badge]"
           :style="styles?.badge"
-        >
-          <template v-if="item.badge !== true">{{ item.badge }}</template>
-        </sup>
+        />
       </span>
     </div>
     <div class="am-side-bar-rest" :class="{ 'am-side-bar-item-next': activeIndex > -1 && activeIndex === items.length - 1 }" />

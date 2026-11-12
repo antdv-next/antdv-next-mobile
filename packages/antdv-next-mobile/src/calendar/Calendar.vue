@@ -12,7 +12,7 @@ import type {
 import dayjs from 'dayjs'
 import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, useAttrs, watch } from 'vue'
 import { cls, toArray } from '../_util'
-import { useControlled } from '../_util/hooks'
+import { useControlled, useVirtualRange } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import Button from '../button/Button.vue'
 import { useConfig } from '../config-provider/context'
@@ -49,6 +49,7 @@ const props = withDefaults(defineProps<CalendarProps>(), {
   maskClosable: true,
   closable: true,
   destroyOnHidden: false,
+  virtual: true,
 })
 const emit = defineEmits<CalendarEmits>()
 const slots = defineSlots<CalendarSlots>()
@@ -100,7 +101,7 @@ const label = computed(() => {
   return texts.join(props.selectionMode === 'range' ? ' ~ ' : separator.value)
 })
 
-// ---------- months (offsets are computed so only the visible months are rendered) ----------
+// ---------- months (heights are computed, not measured, so only the visible months are rendered) ----------
 const minDate = computed(() => parse(props.minDate) ?? today)
 const maxDate = computed(() => {
   const max = parse(props.maxDate) ?? today.add(6, 'month')
@@ -113,7 +114,6 @@ interface MonthMeta {
   title: string
   /** empty cells before the 1st */
   offset: number
-  top: number
   height: number
 }
 
@@ -121,36 +121,31 @@ const months = computed<MonthMeta[]>(() => {
   const list: MonthMeta[] = []
   const last = maxDate.value.startOf('month')
   let cursor = minDate.value.startOf('month')
-  let top = 0
   while (!cursor.isAfter(last)) {
     const offset = (cursor.day() - props.weekStartsOn + 7) % 7
     const height = MONTH_TITLE_HEIGHT + Math.ceil((offset + cursor.daysInMonth()) / 7) * props.rowHeight
-    list.push({ key: cursor.format('YYYY-MM'), date: cursor, title: cursor.format(locale.value.monthFormat), offset, top, height })
-    top += height
+    list.push({ key: cursor.format('YYYY-MM'), date: cursor, title: cursor.format(locale.value.monthFormat), offset, height })
     cursor = cursor.add(1, 'month')
   }
   return list
 })
-const totalHeight = computed(() => {
-  const last = months.value[months.value.length - 1]
-  return last ? last.top + last.height : 0
-})
-
 const bodyRef = ref<HTMLElement>()
 const scrollTop = ref(0)
 const viewHeight = ref(FALLBACK_VIEW_HEIGHT)
 
-const visibleRange = computed(() => {
-  const buffer = viewHeight.value / 2
-  const from = scrollTop.value - buffer
-  const to = scrollTop.value + viewHeight.value + buffer
-  let start = months.value.findIndex(month => month.top + month.height > from)
-  if (start < 0)
-    start = Math.max(months.value.length - 1, 0)
-  let end = start
-  while (end + 1 < months.value.length && months.value[end + 1].top < to)
-    end++
-  return [start, end]
+/** half a viewport is kept rendered before and after the visible months */
+const windowStart = computed(() => Math.max(scrollTop.value - viewHeight.value / 2, 0))
+
+const range = useVirtualRange({
+  count: () => months.value.length,
+  size: () => {
+    const list = months.value
+    return (index: number) => list[index].height
+  },
+  scrollOffset: () => windowStart.value,
+  viewportSize: () => scrollTop.value + viewHeight.value * 1.5 - windowStart.value,
+  overscan: () => 0,
+  enabled: () => props.virtual,
 })
 
 // ---------- days ----------
@@ -189,18 +184,11 @@ function createDay(date: Dayjs): CalendarDay {
 }
 
 const visibleMonths = computed(() => {
-  const [start, end] = visibleRange.value
-  return months.value.slice(start, end + 1).map(month => ({
+  return months.value.slice(range.start.value, range.end.value).map(month => ({
     ...month,
     days: Array.from({ length: month.date.daysInMonth() }, (_, index) => createDay(month.date.date(index + 1))),
   }))
 })
-const spacerTop = computed(() => months.value[visibleRange.value[0]]?.top ?? 0)
-const spacerBottom = computed(() => {
-  const last = months.value[visibleRange.value[1]]
-  return last ? totalHeight.value - last.top - last.height : 0
-})
-
 const weekdays = computed(() => {
   const names = locale.value.weekdays
   return names.map((_, index) => names[(index + props.weekStartsOn) % 7])
@@ -238,12 +226,16 @@ function scrollToDate(target: CalendarDate) {
   if (!date)
     return
   const key = date.format('YYYY-MM')
-  const month = months.value.find(item => item.key === key) ?? (date.isBefore(minDate.value) ? months.value[0] : months.value[months.value.length - 1])
+  let index = months.value.findIndex(item => item.key === key)
+  if (index < 0)
+    index = date.isBefore(minDate.value) ? 0 : months.value.length - 1
+  const month = months.value[index]
   if (!month)
     return
+  const monthTop = range.offsetOf(index)
   // keep the row of the day in view for long months
   const row = month.key === key ? Math.floor((month.offset + date.date() - 1) / 7) : 0
-  const top = row > 2 ? month.top + MONTH_TITLE_HEIGHT + (row - 1) * props.rowHeight : month.top
+  const top = row > 2 ? monthTop + MONTH_TITLE_HEIGHT + (row - 1) * props.rowHeight : monthTop
   scrollTop.value = top
   if (bodyRef.value)
     bodyRef.value.scrollTop = top
@@ -457,7 +449,7 @@ defineExpose({ scrollToDate, reset, toggle })
         </div>
       </div>
       <div ref="bodyRef" class="am-calendar-body" :class="classes?.body" :style="styles?.body" role="grid" @scroll.passive="onScroll">
-        <div class="am-calendar-spacer" :style="{ height: `${spacerTop}px` }" />
+        <div class="am-calendar-spacer" :style="{ height: `${range.offsetBefore.value}px` }" />
         <div
           v-for="month in visibleMonths"
           :key="month.key"
@@ -502,7 +494,7 @@ defineExpose({ scrollToDate, reset, toggle })
             </div>
           </div>
         </div>
-        <div class="am-calendar-spacer" :style="{ height: `${spacerBottom}px` }" />
+        <div class="am-calendar-spacer" :style="{ height: `${range.offsetAfter.value}px` }" />
       </div>
       <Transition name="am-fade">
         <div v-if="tip" class="am-calendar-tip" role="alert">

@@ -2,8 +2,9 @@
 import type { CSSProperties, VNode } from 'vue'
 import type { Key, VueNode } from '../_util/type'
 import type { TimelineItemType, TimelineProps, TimelineRenderParams, TimelineSlots } from './interface'
-import { LoadingOutlined } from '@antdv-next/icons'
 import { Comment, computed, Fragment, Text } from 'vue'
+import { Spinner } from '../_base'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import '../style'
 import './style/index.css'
@@ -31,10 +32,6 @@ interface InternalItem {
 }
 
 const PRESET_COLORS = ['blue', 'red', 'green', 'gray']
-
-function isRenderable(node: unknown) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
 
 /** `true` when a slot rendered nothing (only comments / empty fragments), so the fallback is used. */
 function isEmptyVNodes(nodes: VNode[] | undefined): boolean {
@@ -173,12 +170,12 @@ const rootStyle = computed(() => {
           <template v-if="node.pending">
             <slot name="pendingDot">
               <RenderNode v-if="isRenderable(node.icon)" :node="node.icon" />
-              <LoadingOutlined v-else class="am-spin-icon" />
+              <Spinner v-else />
             </slot>
           </template>
           <slot v-else name="dotRender" :item="node.item" :index="node.index">
             <RenderNode v-if="isRenderable(node.icon)" :node="node.icon" />
-            <LoadingOutlined v-else-if="node.loading" class="am-spin-icon" />
+            <Spinner v-else-if="node.loading" />
           </slot>
         </span>
       </div>

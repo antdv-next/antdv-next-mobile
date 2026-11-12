@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { CardMetaProps, CardMetaSlots } from './interface'
 import { computed } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import '../style'
 import './style/index.css'
@@ -10,10 +11,9 @@ defineOptions({ name: 'AmCardMeta', inheritAttrs: false })
 const props = defineProps<CardMetaProps>()
 const slots = defineSlots<CardMetaSlots>()
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-const hasAvatar = computed(() => !!slots.avatar || isNode(props.avatar))
-const hasTitle = computed(() => !!slots.title || isNode(props.title))
-const hasDescription = computed(() => !!slots.description || isNode(props.description))
+const hasAvatar = computed(() => !!slots.avatar || isRenderable(props.avatar))
+const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
+const hasDescription = computed(() => !!slots.description || isRenderable(props.description))
 </script>
 
 <template>

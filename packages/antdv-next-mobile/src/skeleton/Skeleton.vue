@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SkeletonAvatarConfig, SkeletonParagraphConfig, SkeletonProps, SkeletonSlots, SkeletonTitleConfig } from './interface'
 import { computed } from 'vue'
-import { addUnit } from '../_util'
+import { addUnit, getSizeStyle } from '../_util'
 import '../style'
 import './style/index.css'
 
@@ -39,7 +39,7 @@ const avatarConfig = computed(() => {
       props.classes?.avatar,
     ],
     style: [
-      typeof size === 'number' ? { width: `${size}px`, height: `${size}px` } : undefined,
+      typeof size === 'number' ? getSizeStyle(size) : undefined,
       props.styles?.avatar,
     ],
   }

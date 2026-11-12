@@ -19,6 +19,7 @@ Picker 是一个**表单域**：默认渲染一个类输入框的触发器，点
 <demo src="./demo/basic.vue">基础用法</demo>
 <demo src="./demo/format.vue">多列与格式化</demo>
 <demo src="./demo/cascade.vue">级联选择</demo>
+<demo src="./demo/virtual.vue">大数据量 / 虚拟滚动</demo>
 <demo src="./demo/custom-trigger.vue" full>自定义触发器</demo>
 <demo src="./demo/variant.vue">形态、尺寸与状态</demo>
 <demo src="./demo/form.vue" full>在表单中使用</demo>
@@ -50,6 +51,7 @@ Picker 是一个**表单域**：默认渲染一个类输入框的触发器，点
 | loading | 加载状态，加载中无法确认 | `boolean` | `false` |
 | itemHeight | 选项高度（px） | `number` | `40` |
 | visibleItemCount | 可见选项个数 | `number` | `5` |
+| virtual | 虚拟滚动：每列只渲染可视区域附近的选项，上万个选项也只挂载几十个节点；`false` 时渲染全部选项 | `boolean` | `true` |
 | optionRender | 自定义选项内容，同名插槽 `option` 优先 | `VueNode \| ((info: PickerOptionRenderInfo) => VueNode)` | - |
 | getContainer | 弹层挂载节点，`false` 表示原地渲染 | `string \| HTMLElement \| (() => HTMLElement) \| false` | `document.body` |
 | zIndex | 弹层层级 | `number` | - |

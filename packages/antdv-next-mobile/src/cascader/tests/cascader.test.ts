@@ -322,3 +322,76 @@ describe('Cascader', () => {
     expect(onFieldBlur).toHaveBeenCalledTimes(1)
   })
 })
+
+describe('Cascader virtual', () => {
+  const cities = Array.from({ length: 3000 }, (_, i) => ({ label: `City ${i}`, value: `c${i}`, children: [{ label: `Area ${i}-a`, value: `a${i}` }] }))
+  const big = [{ label: 'Province', value: 'p', children: cities }, { label: 'Other', value: 'o' }]
+  const listOf = (root: ParentNode = document) => root.querySelector<HTMLElement>('.am-cascader-view-list')!
+
+  it('mounts only a window of a 3,000-option level', async () => {
+    const wrapper = mount(CascaderView, { props: { options: big } })
+    expect(listOf(wrapper.element).classList.contains('am-virtual-list')).toBe(true)
+    expect(listOf(wrapper.element).getAttribute('role')).toBe('listbox')
+    await clickOption('Province', wrapper.element)
+    await nextTick()
+    const rendered = optionsOf(wrapper.element)
+    expect(rendered.length).toBeGreaterThan(5)
+    expect(rendered.length).toBeLessThan(30)
+    expect(rendered[0]).toBe('City 0')
+    expect(wrapper.find('.am-virtual-list-holder').attributes('style')).toContain(`height: ${3000 * 48}px`)
+
+    const list = listOf(wrapper.element)
+    list.scrollTop = 48 * 2000
+    await wrapper.find('.am-cascader-view-list').trigger('scroll')
+    expect(optionsOf(wrapper.element)).toContain('City 2000')
+    expect(optionsOf(wrapper.element)).not.toContain('City 0')
+    await clickOption('City 2001', wrapper.element)
+    await clickOption('Area 2001-a', wrapper.element)
+    expect(wrapper.emitted('change')![0][0]).toEqual(['p', 'c2001', 'a2001'])
+  })
+
+  it('scrolls the selected option of a level into view when its tab is activated', async () => {
+    const wrapper = mount(CascaderView, { props: { options: big, defaultValue: ['p', 'c2500', 'a2500'] } })
+    await nextTick()
+    await nextTick()
+    expect(optionsOf(wrapper.element)).toEqual(['Area 2500-a'])
+    await wrapper.findAll('.am-cascader-view-tab')[1].trigger('click')
+    await nextTick()
+    await nextTick()
+    await nextTick()
+    // jsdom has no layout (viewport 0): the centre of the row is at the top
+    expect(listOf(wrapper.element).scrollTop).toBe(48 * 2500 + 24)
+    expect(wrapper.find('.am-cascader-view-option-selected').text()).toBe('City 2500')
+    expect(optionsOf(wrapper.element).length).toBeLessThan(30)
+    // a level without a selection starts at the top
+    await clickOption('City 2501', wrapper.element)
+    await nextTick()
+    expect(listOf(wrapper.element).scrollTop).toBe(0)
+  })
+
+  it('virtual: false renders every option; listHeight / listItemHeight size the list', async () => {
+    const wrapper = mount(CascaderView, { props: { options: big, defaultValue: ['p'], virtual: false, listHeight: 240, listItemHeight: 40 } })
+    await nextTick()
+    expect(optionsOf(wrapper.element)).toHaveLength(3000)
+    expect(wrapper.attributes('style')).toContain('--am-cascader-view-option-height: 40px')
+    expect(wrapper.attributes('style')).toContain('height: auto')
+    expect(listOf(wrapper.element).style.height).toBe('240px')
+    expect(wrapper.find('.am-virtual-list-item').attributes('style')).toContain('height: 40px')
+  })
+
+  it('popup: passes the virtual props and re-centres the selection on open', async () => {
+    const wrapper = mount(Cascader, { props: { options: big, defaultValue: ['p', 'c1200'], changeOnSelect: true, listItemHeight: 50 } })
+    await wrapper.find('.am-picker-trigger').trigger('click')
+    await nextTick()
+    await nextTick()
+    await nextTick()
+    // last reachable level: the areas of City 1200
+    expect(optionsOf()).toEqual(['Area 1200-a'])
+    ;(document.querySelectorAll('.am-cascader-view-tab')[1] as HTMLElement).click()
+    await nextTick()
+    await nextTick()
+    await nextTick()
+    expect(listOf().scrollTop).toBe(50 * 1200 + 25)
+    expect(document.querySelectorAll('.am-cascader-view-option').length).toBeLessThan(30)
+  })
+})

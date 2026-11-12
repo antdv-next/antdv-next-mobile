@@ -3,12 +3,13 @@ import type { Key } from '../_util/type'
 import type { DropdownItemEmits, DropdownItemProps, DropdownItemSlots, DropdownItemValue, DropdownOption } from './interface'
 import { CheckOutlined } from '@antdv-next/icons'
 import { computed, getCurrentInstance, h, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { genId, resolveContainer } from '../_util'
+import { Portal } from '../_base'
+import { genId, isRenderable } from '../_util'
 import { useControlled, useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import Button from '../button/Button.vue'
-import { useConfig, usePopupTheme } from '../config-provider/context'
 import { useLocale } from '../locale'
+import Mask from '../mask/Mask.vue'
 import { dropdownContextKey } from './context'
 import '../style'
 import './style/index.css'
@@ -32,8 +33,6 @@ const emit = defineEmits<DropdownItemEmits>()
 const slots = defineSlots<DropdownItemSlots>()
 
 const dropdown = inject(dropdownContextKey, null)
-const config = useConfig()
-const popupTheme = usePopupTheme()
 const locale = useLocale('Dropdown')
 
 // `key` is a reserved attribute in Vue: read it from the vnode (`<am-dropdown-item key="sort" />`)
@@ -46,8 +45,6 @@ const layerRef = ref<HTMLElement>()
 const [value, setValue] = useControlled<typeof props, 'value', DropdownItemValue | undefined>(props, 'value', {
   defaultValue: () => props.defaultValue,
 })
-
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 
 const active = computed(() => !!dropdown && dropdown.activeKey.value === itemKey)
 const selectedOption = computed(() => props.options.find(option => option.value === value.value))
@@ -66,19 +63,9 @@ watch(active, (val) => {
 
 useLockScroll(layerRef, () => active.value)
 
-const container = computed(() => {
-  const getContainer = dropdown?.getContainer.value
-  if (getContainer === false)
-    return null
-  if (getContainer !== undefined)
-    return resolveContainer(getContainer)
-  return config.getPopupContainer.value?.() ?? resolveContainer()
-})
-
 const layerStyle = computed(() => {
   const rect = dropdown?.rect.value
   return [
-    container.value ? popupTheme.value.style : undefined,
     {
       top: `${rect?.top ?? 0}px`,
       left: `${rect?.left ?? 0}px`,
@@ -94,7 +81,7 @@ const layerStyle = computed(() => {
 function renderTitle() {
   if (slots.title)
     return slots.title()
-  if (isNode(props.title))
+  if (isRenderable(props.title))
     return h(RenderNode, { node: props.title })
   const option = selectedOption.value
   return option ? h(RenderNode, { node: option.label }) : null
@@ -108,7 +95,7 @@ const registration = {
   get renderArrow() {
     if (slots.arrowIcon)
       return () => slots.arrowIcon!()
-    return isNode(props.arrowIcon) ? () => h(RenderNode, { node: props.arrowIcon }) : undefined
+    return isRenderable(props.arrowIcon) ? () => h(RenderNode, { node: props.arrowIcon }) : undefined
   },
   highlight: () => props.highlight,
   disabled: () => props.disabled,
@@ -157,20 +144,25 @@ function onAfterLeave() {
 
 <template>
   <div ref="anchorRef" class="am-dropdown-item">
-    <Teleport :to="container ?? 'body'" :disabled="!container">
+    <Portal v-slot="{ theme }" :get-container="dropdown?.getContainer.value">
       <div
         v-if="rendered"
         v-show="visible"
         ref="layerRef"
         v-bind="$attrs"
         class="am-dropdown-layer"
-        :class="[container ? popupTheme.class : undefined, rootClass, classes?.root]"
-        :style="layerStyle"
-        :dir="container ? popupTheme.dir : undefined"
+        :class="[theme.class, rootClass, classes?.root]"
+        :style="[theme.style, layerStyle]"
+        :dir="theme.dir"
       >
-        <Transition name="am-fade" appear>
-          <div v-show="active" class="am-dropdown-mask" :class="classes?.mask" :style="styles?.mask" @click="onMaskClick" />
-        </Transition>
+        <Mask
+          :open="active"
+          :lock-scroll="false"
+          root-class="am-dropdown-mask"
+          :class="classes?.mask"
+          :style="styles?.mask"
+          @click="onMaskClick"
+        />
         <Transition name="am-slide-top" appear @after-enter="emit('afterOpenChange', true)" @after-leave="onAfterLeave">
           <div v-show="active" class="am-dropdown-panel" :class="classes?.panel" :style="styles?.panel">
             <div class="am-dropdown-panel-body" :class="classes?.body" :style="styles?.body">
@@ -201,13 +193,13 @@ function onAfterLeave() {
             </div>
             <div v-if="showFooter" class="am-dropdown-footer" :class="classes?.footer" :style="styles?.footer">
               <Button class="am-dropdown-footer-button" @click="emit('reset')">
-                <RenderNode v-if="isNode(resetText)" :node="resetText" />
+                <RenderNode v-if="isRenderable(resetText)" :node="resetText" />
                 <template v-else>
                   {{ locale.reset }}
                 </template>
               </Button>
               <Button class="am-dropdown-footer-button" type="primary" @click="onConfirm">
-                <RenderNode v-if="isNode(confirmText)" :node="confirmText" />
+                <RenderNode v-if="isRenderable(confirmText)" :node="confirmText" />
                 <template v-else>
                   {{ locale.confirm }}
                 </template>
@@ -216,6 +208,6 @@ function onAfterLeave() {
           </div>
         </Transition>
       </div>
-    </Teleport>
+    </Portal>
   </div>
 </template>

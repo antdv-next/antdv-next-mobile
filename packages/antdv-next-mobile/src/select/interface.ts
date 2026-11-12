@@ -71,6 +71,12 @@ export interface SelectProps extends PickerFieldProps {
   /** Text for the labels hidden by `maxTagCount`, default `+N...` */
   maxTagPlaceholder?: RenderNodeFn<SelectLabeledValue[]>
   loading?: boolean
+  /** Only mount the options around the visible window (through `VirtualList`). `false` renders every option. Default `true`. */
+  virtual?: boolean
+  /** Max height of the option list in the popup. Default `360` (`--am-select-list-max-height`). */
+  listHeight?: number | string
+  /** Height of one option in px: the min-height of an option and the estimate used before a row is measured. Default `48`. */
+  listItemHeight?: number
 }
 
 export interface SelectEmits {

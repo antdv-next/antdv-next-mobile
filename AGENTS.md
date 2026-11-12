@@ -26,7 +26,8 @@ packages/antdv-next-mobile/src/
   components.ts          # public export list (do not reorder / rename without updating docs)
   index.ts               # install + re-exports
   style/                 # tokens.css (design tokens), base.css (motions, helpers)
-  _util/                 # shared helpers: type.ts, index.ts, RenderNode.ts, withInstall.ts, mount.ts, hooks/
+  _util/                 # shared helpers: type.ts, index.ts, vnode.ts, RenderNode.ts, withInstall.ts, mount.ts, hooks/
+  _base/                 # internal primitives: Portal, Spinner, BaseBadge
   config-provider/       # ConfigProvider + useConfig / useSize / useDisabled / usePopupTheme
   locale/                # interface.ts, zh_CN.ts, en_US.ts, useLocale()
   theme/                 # ThemeConfig, algorithms, applyTheme, useToken
@@ -47,6 +48,39 @@ docs/
 ```
 
 `button/`, `popup/`, `mask/` and `config-provider/` are the reference implementations. Copy their structure.
+
+## Base Layer (build on it, never around it)
+
+Upper-level components are **composed from the base layer**. Re-implementing something the base layer
+already owns is a review blocker.
+
+| Need | Use | Never |
+| --- | --- | --- |
+| Leave the normal flow (teleport) and keep the ConfigProvider theme | `_base/Portal.vue` (`v-slot="{ theme }"`) | a hand-written `<Teleport>` + `usePopupTheme()` |
+| Popup with mask / animation / scroll lock / z-index / ESC | `popup/Popup.vue` | a custom fixed layer |
+| Backdrop only | `mask/Mask.vue` | a custom overlay div |
+| Field that opens a bottom sheet (trigger + header + commit / cancel) | `picker/PickerTrigger.vue`, `picker/PickerPopup.vue`, `picker/usePickerField.ts` | per-component trigger / header markup |
+| Buttons inside components (footer actions ...) | `button/Button.vue` | styled `<button>` look-alikes |
+| Loading indicator | `_base/Spinner.vue` | `LoadingOutlined` + `am-spin-icon` by hand |
+| Count / dot bubble | `_base/BaseBadge.vue` | local `*-badge` markup + css |
+| Long lists (options, data lists, months) | `virtual-list/VirtualList.vue`, or `useVirtualRange()` when the component owns scrolling (wheel, calendar) | rendering every item |
+| Gestures | `useTouch()` (+ `useEventListener`) | ad-hoc `touchstart` bookkeeping |
+| Outside tap | `useClickAway()` | a document listener per component |
+| Scroll helpers / page scroll lock / stacking | `getScrollParent`, `getScrollTop`, `setScrollTop`, `useLockScroll`, `nextZIndex` | local copies |
+| Render props, slot children, attrs style | `RenderNode`, `isRenderable`, `flattenChildren`, `mergeAttrsStyle` (`_util`) | local copies |
+| Static APIs | `_util/mount.ts` | `createApp` by hand |
+| Controlled state, size, disabled, locale, status, variant | `useControlled`, `useSize`, `useDisabled`, `useLocale`, `useMergedStatus`, `useVariant` | re-deriving them |
+
+If a second component needs the same helper, move it into `_util` / `_base` instead of copying it.
+
+### Virtual scrolling
+
+Any list whose length is data-driven must stay cheap with thousands of rows:
+
+- `Select`, `Cascader`, `List` (data mode) and similar render through `VirtualList` and expose the PC-aligned
+  props `virtual` (default `true`), `listHeight`, `listItemHeight`.
+- `PickerView` columns and `Calendar` months own their scrolling and use `useVirtualRange()`.
+- `virtual: false` must keep the same DOM structure and behaviour (it only renders everything).
 
 ## Component Contract
 
@@ -164,6 +198,8 @@ pnpm dev                 # docs + simulator
 pnpm test                # vitest
 pnpm typecheck           # vue-tsc for the library and the docs
 pnpm lint                # eslint --fix (@antfu/eslint-config)
+pnpm check:base          # architecture guard: components must be built on the base layer
+pnpm check               # lint + check:base + typecheck + test (what CI runs)
 pnpm build               # library -> packages/antdv-next-mobile/dist
 ```
 

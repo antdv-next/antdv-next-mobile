@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CascaderEmits, CascaderOption, CascaderProps, CascaderSlots, CascaderValue } from './interface'
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<CascaderProps>(), {
   getContainer: undefined,
   maskClosable: true,
   destroyOnHidden: false,
+  virtual: true,
 })
 const emit = defineEmits<CascaderEmits>()
 defineSlots<CascaderSlots>()
@@ -44,9 +45,13 @@ const [value, setValue] = useControlled<CascaderProps, 'value', CascaderValue[]>
 
 /** path of the popup, committed on confirm (`changeOnSelect`) or when a leaf is selected */
 const pending = ref<CascaderValue[]>(value.value.slice())
+const viewRef = ref<{ scrollToSelected: () => void }>()
 watch(open, (val) => {
-  if (val)
+  if (val) {
     pending.value = value.value.slice()
+    // the view stays mounted while the popup is hidden: bring the selection back into view
+    nextTick(() => nextTick(() => viewRef.value?.scrollToSelected()))
+  }
 })
 watch(value, (val) => {
   pending.value = val.slice()
@@ -156,6 +161,7 @@ defineExpose({ toggle })
       <slot name="title" />
     </template>
     <CascaderView
+      ref="viewRef"
       :value="pending"
       :options="options"
       :field-names="fieldNames"
@@ -163,6 +169,9 @@ defineExpose({ toggle })
       :load-data="loadData"
       :option-render="optionRender"
       :not-found-content="notFoundContent"
+      :virtual="virtual"
+      :list-height="listHeight"
+      :list-item-height="listItemHeight"
       @change="onViewChange"
       @finish="onFinish"
       @select="(option, level) => emit('select', option, level)"

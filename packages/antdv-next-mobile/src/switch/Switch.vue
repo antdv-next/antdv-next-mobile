@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SwitchCheckedValue, SwitchEmits, SwitchProps, SwitchSlots } from './interface'
-import { LoadingOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { Spinner } from '../_base'
 import { isPromise } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
@@ -158,7 +158,7 @@ defineExpose({
     @blur="handleBlur"
   >
     <span class="am-switch-handle" :class="classes?.indicator" :style="styles?.indicator">
-      <LoadingOutlined v-if="mergedLoading" class="am-switch-loading-icon am-spin-icon" />
+      <Spinner v-if="mergedLoading" class="am-switch-loading-icon" />
     </span>
     <span v-if="hasChildren" class="am-switch-inner" :class="classes?.content" :style="styles?.content">
       <span class="am-switch-inner-checked">

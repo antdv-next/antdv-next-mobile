@@ -2,7 +2,7 @@
 import type { CSSProperties } from 'vue'
 import type { ColFlexType, ColProps, ColSlots, ColSpanType } from './interface'
 import { computed } from 'vue'
-import { mergeAttrsStyle } from '../space/util'
+import { mergeAttrsStyle } from '../_util/vnode'
 import '../style'
 import './style/index.css'
 

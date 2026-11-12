@@ -90,6 +90,7 @@ declare module 'vue' {
     AmTypographyText: typeof import('antdv-next-mobile')['TypographyText']
     AmTypographyTitle: typeof import('antdv-next-mobile')['TypographyTitle']
     AmUpload: typeof import('antdv-next-mobile')['Upload']
+    AmVirtualList: typeof import('antdv-next-mobile')['VirtualList']
     AmWatermark: typeof import('antdv-next-mobile')['Watermark']
   }
 }

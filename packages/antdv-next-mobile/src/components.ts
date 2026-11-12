@@ -134,5 +134,7 @@ export { default as Typography, TypographyParagraph, TypographyText, TypographyT
 export type * from './typography'
 export { default as Upload } from './upload'
 export type * from './upload'
+export { default as VirtualList } from './virtual-list'
+export type * from './virtual-list'
 export { default as Watermark } from './watermark'
 export type * from './watermark'

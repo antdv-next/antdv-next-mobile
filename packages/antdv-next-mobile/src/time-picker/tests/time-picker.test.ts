@@ -21,7 +21,7 @@ function clickButton(type: 'confirm' | 'cancel') {
 
 describe('TimePicker', () => {
   it('renders the trigger with the TimePicker placeholder and three wheels', async () => {
-    const wrapper = mount(TimePicker, { props: { defaultOpenValue: dayjs('2024-05-06 08:09:10') } })
+    const wrapper = mount(TimePicker, { props: { defaultOpenValue: dayjs('2024-05-06 08:09:10'), virtual: false } })
     const trigger = wrapper.find('.am-picker-trigger')
     expect(trigger.classes()).toEqual(expect.arrayContaining(['am-time-picker', 'am-date-picker']))
     expect(trigger.text()).toBe('请选择时间')

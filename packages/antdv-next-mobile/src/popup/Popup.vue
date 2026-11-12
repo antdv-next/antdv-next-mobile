@@ -2,11 +2,12 @@
 import type { PopupEmits, PopupProps, PopupSlots } from './interface'
 import { CloseOutlined } from '@antdv-next/icons'
 import { computed, ref, watch } from 'vue'
-import { addUnit, resolveContainer } from '../_util'
+import { Portal } from '../_base'
+import { addUnit } from '../_util'
 import { nextZIndex, useEventListener, useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
-import { useConfig, usePopupTheme } from '../config-provider/context'
 import { useLocale } from '../locale'
+import Mask from '../mask/Mask.vue'
 import '../style'
 import './style/index.css'
 
@@ -29,8 +30,6 @@ const props = withDefaults(defineProps<PopupProps>(), {
 const emit = defineEmits<PopupEmits>()
 defineSlots<PopupSlots>()
 
-const config = useConfig()
-const popupTheme = usePopupTheme()
 const commonLocale = useLocale('common')
 
 const rootRef = ref<HTMLElement>()
@@ -57,14 +56,6 @@ watch(() => props.zIndex, (val) => {
 })
 
 useLockScroll(rootRef, () => props.open && props.lockScroll)
-
-const container = computed(() => {
-  if (props.getContainer === false)
-    return null
-  if (props.getContainer !== undefined)
-    return resolveContainer(props.getContainer)
-  return config.getPopupContainer.value?.() ?? resolveContainer()
-})
 
 const transitionName = computed(() => (props.placement === 'center' ? 'am-zoom' : `am-slide-${props.placement}`))
 
@@ -103,27 +94,26 @@ defineExpose({
 </script>
 
 <template>
-  <Teleport :to="container ?? 'body'" :disabled="!container">
+  <Portal v-slot="{ theme }" :get-container="getContainer">
     <div
       v-if="rendered"
       v-show="visible"
       ref="rootRef"
       v-bind="$attrs"
       class="am-popup-root"
-      :class="[popupTheme.class, rootClass, classes?.root]"
-      :style="[popupTheme.style, { zIndex }, styles?.root]"
-      :dir="popupTheme.dir"
+      :class="[theme.class, rootClass, classes?.root]"
+      :style="[theme.style, { zIndex }, styles?.root]"
+      :dir="theme.dir"
     >
-      <Transition name="am-fade" appear>
-        <div
-          v-if="mask"
-          v-show="open"
-          class="am-popup-mask"
-          :class="classes?.mask"
-          :style="styles?.mask"
-          @click="onMaskClick"
-        />
-      </Transition>
+      <Mask
+        v-if="mask"
+        :open="open"
+        :lock-scroll="false"
+        root-class="am-popup-mask"
+        :class="classes?.mask"
+        :style="styles?.mask"
+        @click="onMaskClick"
+      />
       <Transition :name="transitionName" appear @after-enter="emit('afterOpenChange', true)" @after-leave="onAfterLeave">
         <div
           v-show="open"
@@ -154,5 +144,5 @@ defineExpose({
         </div>
       </Transition>
     </div>
-  </Teleport>
+  </Portal>
 </template>

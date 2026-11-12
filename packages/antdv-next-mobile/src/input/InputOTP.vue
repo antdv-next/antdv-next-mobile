@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { InputOTPEmits, InputOTPInstance, InputOTPProps, InputOTPSlots } from './interface'
 import { computed, nextTick, onMounted, ref } from 'vue'
+import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
 import { useFormItemInputContext, useMergedStatus, useVariant } from '../form/context'
-import { isRenderable } from './useInput'
 import '../style'
 import './style/index.css'
 

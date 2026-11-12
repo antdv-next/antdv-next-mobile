@@ -27,7 +27,7 @@ function clickButton(type: 'confirm' | 'cancel') {
 
 describe('DatePickerView', () => {
   it('renders year / month / day wheels with locale units', () => {
-    const wrapper = mount(DatePickerView, { props: { value: dayjs('2024-02-15'), minDate: min, maxDate: max } })
+    const wrapper = mount(DatePickerView, { props: { virtual: false, value: dayjs('2024-02-15'), minDate: min, maxDate: max } })
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['am-picker-view', 'am-date-picker-view']))
     const columns = columnsOf(wrapper.element)
     expect(columns).toHaveLength(3)
@@ -39,7 +39,7 @@ describe('DatePickerView', () => {
   })
 
   it('keeps the day valid when the month changes and emits dayjs + string', async () => {
-    const wrapper = mount(DatePickerView, { props: { defaultValue: dayjs('2023-01-31'), minDate: min, maxDate: max } })
+    const wrapper = mount(DatePickerView, { props: { virtual: false, defaultValue: dayjs('2023-01-31'), minDate: min, maxDate: max } })
     await clickOption(1, '2月', wrapper.element)
     const [value, text] = wrapper.emitted('change')![0] as [dayjs.Dayjs, string]
     expect(dayjs.isDayjs(value)).toBe(true)
@@ -50,7 +50,7 @@ describe('DatePickerView', () => {
 
   it('clamps the columns to minDate / maxDate', async () => {
     const wrapper = mount(DatePickerView, {
-      props: { defaultValue: dayjs('2024-06-20'), minDate: dayjs('2024-03-10'), maxDate: dayjs('2025-08-05') },
+      props: { virtual: false, defaultValue: dayjs('2024-06-20'), minDate: dayjs('2024-03-10'), maxDate: dayjs('2025-08-05') },
     })
     let columns = columnsOf(wrapper.element)
     expect(labelsOf(columns[0])).toEqual(['2024年', '2025年'])
@@ -81,16 +81,16 @@ describe('DatePickerView', () => {
   })
 
   it('supports month / year / quarter / week pickers', () => {
-    const month = mount(DatePickerView, { props: { picker: 'month', value: dayjs('2024-05-06'), minDate: min, maxDate: max } })
+    const month = mount(DatePickerView, { props: { virtual: false, picker: 'month', value: dayjs('2024-05-06'), minDate: min, maxDate: max } })
     expect(selectedOf(month.element)).toEqual(['2024年', '5月'])
-    const year = mount(DatePickerView, { props: { picker: 'year', value: dayjs('2024-05-06'), minDate: min, maxDate: max } })
+    const year = mount(DatePickerView, { props: { virtual: false, picker: 'year', value: dayjs('2024-05-06'), minDate: min, maxDate: max } })
     expect(selectedOf(year.element)).toEqual(['2024年'])
-    const quarter = mount(DatePickerView, { props: { picker: 'quarter', value: dayjs('2024-05-06'), minDate: min, maxDate: max } })
+    const quarter = mount(DatePickerView, { props: { virtual: false, picker: 'quarter', value: dayjs('2024-05-06'), minDate: min, maxDate: max } })
     expect(selectedOf(quarter.element)).toEqual(['2024年', '2季度'])
-    const week = mount(DatePickerView, { props: { picker: 'week', value: dayjs('2024-01-01'), minDate: min, maxDate: max } })
+    const week = mount(DatePickerView, { props: { virtual: false, picker: 'week', value: dayjs('2024-01-01'), minDate: min, maxDate: max } })
     expect(selectedOf(week.element)).toEqual(['2024年', '1周'])
     // 2020 has 53 ISO weeks
-    const long = mount(DatePickerView, { props: { picker: 'week', value: dayjs('2020-06-01'), minDate: min, maxDate: max } })
+    const long = mount(DatePickerView, { props: { virtual: false, picker: 'week', value: dayjs('2020-06-01'), minDate: min, maxDate: max } })
     expect(labelsOf(columnsOf(long.element)[1])).toHaveLength(53)
   })
 
@@ -117,7 +117,7 @@ describe('DatePickerView', () => {
 
   it('bounds the time wheels on the min day', () => {
     const wrapper = mount(DatePickerView, {
-      props: { value: dayjs('2024-05-06 09:30:00'), showTime: true, minDate: dayjs('2024-05-06 08:20:10'), maxDate: max },
+      props: { virtual: false, value: dayjs('2024-05-06 09:30:00'), showTime: true, minDate: dayjs('2024-05-06 08:20:10'), maxDate: max },
     })
     const columns = columnsOf(wrapper.element)
     expect(columns).toHaveLength(6)
@@ -128,6 +128,7 @@ describe('DatePickerView', () => {
   it('greys out and skips disabledDate', () => {
     const wrapper = mount(DatePickerView, {
       props: {
+        virtual: false,
         value: dayjs('2024-05-06'),
         minDate: min,
         maxDate: max,

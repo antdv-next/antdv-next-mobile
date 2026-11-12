@@ -2,7 +2,7 @@
 import type { InputNumberEmits, InputNumberInstance, InputNumberProps, InputNumberSlots, InputNumberValueType } from './interface'
 import { MinusOutlined, PlusOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { preventDefault } from '../_util'
+import { clamp, isRenderable, preventDefault } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
@@ -68,11 +68,11 @@ const stepNumber = computed(() => {
 })
 
 function round(num: number, decimals: number) {
-  return Number(num.toFixed(Math.min(Math.max(decimals, 0), 20)))
+  return Number(num.toFixed(clamp(decimals, 0, 20)))
 }
 
 function clampNumber(num: number) {
-  return Math.min(Math.max(num, min.value), max.value)
+  return clamp(num, min.value, max.value)
 }
 
 /** number -> emitted value (`precision` applied, string in `stringMode`). */
@@ -274,7 +274,6 @@ onBeforeUnmount(stopPress)
 const showControls = computed(() => props.mode === 'spinner' && !!props.controls)
 const upIcon = computed(() => (typeof props.controls === 'object' ? props.controls?.upIcon : undefined))
 const downIcon = computed(() => (typeof props.controls === 'object' ? props.controls?.downIcon : undefined))
-const isRenderable = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
 const hasPrefix = computed(() => !!slots.prefix || isRenderable(props.prefix))
 const hasSuffix = computed(() => !!slots.suffix || isRenderable(props.suffix))
 

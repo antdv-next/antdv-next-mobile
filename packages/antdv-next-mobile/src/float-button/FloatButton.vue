@@ -2,7 +2,8 @@
 import type { FloatButtonEmits, FloatButtonOffset, FloatButtonProps, FloatButtonSlots } from './interface'
 import { FileTextOutlined } from '@antdv-next/icons'
 import { computed, inject, onBeforeUnmount, ref, watch } from 'vue'
-import { clamp, preventDefault } from '../_util'
+import { BaseBadge } from '../_base'
+import { clamp, isRenderable, preventDefault } from '../_util'
 import { useTouch } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { floatButtonGroupContextKey } from './context'
@@ -27,30 +28,11 @@ const slots = defineSlots<FloatButtonSlots>()
 const group = inject(floatButtonGroupContextKey, null)
 const rootRef = ref<HTMLElement>()
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
 const mergedShape = computed(() => group?.shape.value ?? props.shape ?? 'circle')
-const mergedContent = computed(() => (isNode(props.content) ? props.content : props.description))
-const hasContent = computed(() => !!slots.default || isNode(mergedContent.value))
-const hasIcon = computed(() => !!slots.icon || isNode(props.icon))
+const mergedContent = computed(() => (isRenderable(props.content) ? props.content : props.description))
+const hasContent = computed(() => !!slots.default || isRenderable(mergedContent.value))
+const hasIcon = computed(() => !!slots.icon || isRenderable(props.icon))
 const canDrag = computed(() => props.draggable && !group)
-
-// ---------- badge ----------
-const badgeText = computed(() => {
-  const badge = props.badge
-  if (!badge || badge.dot)
-    return ''
-  const { count, overflowCount = 99, showZero } = badge
-  if (count === undefined || count === null || count === '')
-    return ''
-  const num = Number(count)
-  if (Number.isNaN(num))
-    return String(count)
-  if (num === 0 && !showZero)
-    return ''
-  return num > overflowCount ? `${overflowCount}+` : String(count)
-})
-const showBadge = computed(() => !!props.badge && (!!props.badge.dot || badgeText.value !== ''))
 
 // ---------- drag ----------
 const touch = useTouch()
@@ -236,16 +218,21 @@ defineExpose({
     @touchend="onTouchEnd"
     @touchcancel="onTouchEnd"
   >
-    <span
-      v-if="showBadge"
+    <BaseBadge
+      v-if="badge"
+      :count="badge.count"
+      :dot="badge.dot"
+      :overflow-count="badge.overflowCount"
+      :show-zero="badge.showZero"
+      :color="badge.color"
       class="am-float-button-badge"
-      :class="[classes?.badge, { 'am-float-button-badge-dot': badge?.dot }]"
-      :style="[badge?.color ? { background: badge.color } : undefined, styles?.badge]"
-    >{{ badgeText }}</span>
+      :class="[classes?.badge, { 'am-float-button-badge-dot': badge.dot }]"
+      :style="styles?.badge"
+    />
     <span class="am-float-button-body">
       <span v-if="hasIcon || !hasContent" class="am-float-button-icon" :class="classes?.icon" :style="styles?.icon">
         <slot name="icon">
-          <RenderNode v-if="isNode(icon)" :node="icon" />
+          <RenderNode v-if="isRenderable(icon)" :node="icon" />
           <FileTextOutlined v-else />
         </slot>
       </span>

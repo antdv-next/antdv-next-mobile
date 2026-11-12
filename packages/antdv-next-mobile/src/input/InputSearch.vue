@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { InputFocusOptions, InputInstance, InputSearchEmits, InputSearchProps, InputSearchSlots } from './interface'
-import { LoadingOutlined, SearchOutlined } from '@antdv-next/icons'
+import { SearchOutlined } from '@antdv-next/icons'
 import { computed, ref } from 'vue'
+import { Spinner } from '../_base'
+import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
 import { useLocale } from '../locale'
 import Input from './Input.vue'
-import { isRenderable } from './useInput'
 import '../style'
 import './style/index.css'
 
@@ -151,7 +152,7 @@ defineExpose({
         <slot name="prefix">
           <RenderNode v-if="isRenderable(prefix)" :node="prefix" />
           <span v-else class="am-input-search-icon">
-            <LoadingOutlined v-if="loading" class="am-spin-icon" />
+            <Spinner v-if="loading" />
             <slot v-else name="searchIcon">
               <RenderNode v-if="isRenderable(searchIcon)" :node="searchIcon" />
               <SearchOutlined v-else />

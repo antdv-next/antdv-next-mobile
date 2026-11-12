@@ -2,6 +2,7 @@
 import type { TypographyBaseEmits, TypographyBaseProps, TypographyBaseSlots, TypographyCopyConfig, TypographyEllipsisConfig, TypographyTitleLevel } from './interface'
 import { CheckOutlined, CopyOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
+import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
@@ -31,10 +32,6 @@ interface TypographyInternalProps extends TypographyBaseProps {
 const locale = useLocale('Typography')
 const rootRef = ref<HTMLElement>()
 const contentRef = ref<HTMLElement>()
-
-function isRenderable(node: unknown) {
-  return node !== undefined && node !== null && node !== false && node !== ''
-}
 
 // ---------- decorations ----------
 const tags = computed(() => {

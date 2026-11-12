@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { PullToRefreshEmits, PullToRefreshProps, PullToRefreshSlots, PullToRefreshStatus } from './interface'
-import { LoadingOutlined } from '@antdv-next/icons'
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
-import { addUnit, getScrollParent, preventDefault } from '../_util'
+import { Spinner } from '../_base'
+import { addUnit, getScrollParent, getScrollTop, preventDefault } from '../_util'
 import { useControlled, useEventListener, useTouch } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled } from '../config-provider/context'
@@ -85,9 +85,7 @@ let reachTop = false
 let completeTimer: ReturnType<typeof setTimeout> | undefined
 
 function checkPosition(event: TouchEvent) {
-  const scrollParent = getScrollParent(rootRef.value)
-  const scrollTop = scrollParent === window ? window.scrollY : (scrollParent as HTMLElement).scrollTop
-  reachTop = !(scrollTop > 0)
+  reachTop = !(getScrollTop(getScrollParent(rootRef.value)) > 0)
   if (reachTop) {
     dragging.value = true
     touch.start(event)
@@ -199,7 +197,7 @@ const classNames = computed(() => [
           </template>
         </slot>
         <slot v-else-if="status === 'refreshing'" name="refreshing" v-bind="info">
-          <LoadingOutlined class="am-pull-to-refresh-icon am-spin-icon" />
+          <Spinner class="am-pull-to-refresh-icon" />
           <RenderNode v-if="refreshingText !== undefined" :node="refreshingText" :params="info" />
           <template v-else>
             {{ locale.refreshing }}

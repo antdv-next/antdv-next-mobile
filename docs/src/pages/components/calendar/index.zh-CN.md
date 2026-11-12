@@ -22,6 +22,7 @@ group:
 <demo src="./demo/multiple.vue" full>选择多个日期</demo>
 <demo src="./demo/formatter.vue" full>自定义日期内容</demo>
 <demo src="./demo/config.vue" full>范围、禁用与快捷选择</demo>
+<demo src="./demo/virtual.vue" full>大数据量 / 虚拟滚动</demo>
 <demo src="./demo/inline.vue" full>内嵌展示</demo>
 <demo src="./demo/field.vue" full>作为表单域</demo>
 
@@ -38,6 +39,7 @@ group:
 | minDate | 最小可选日期 | `Dayjs \| string` | 今天 |
 | maxDate | 最大可选日期 | `Dayjs \| string` | 六个月后 |
 | disabledDate | 不可选择的日期 | `(date: Dayjs) => boolean` | - |
+| virtual | 虚拟滚动：只渲染可视区域附近的月份，可选范围跨越多年时也保持流畅；`false` 时渲染全部月份 | `boolean` | `true` |
 | maxRange | 区间模式下最多可选天数；多选模式下最多可选个数 | `number` | - |
 | showRangePrompt | 超过 `maxRange` 时是否显示提示 | `boolean` | `true` |
 | rangePrompt | 超过 `maxRange` 时的提示文案 | `string` | `'最多选择 N 天'` |
@@ -151,5 +153,5 @@ PC 端的 `Calendar` 是一个**数据展示**组件（按月 / 年展示日程�
 - 不支持 PC 端的 `mode`、`fullscreen`、`headerRender`、`fullCellRender`、`validRange`、`showWeek`，以及 `panelChange` 事件。
 - `value` 支持单个日期、区间与多个日期（`selectionMode`），并与 DatePicker 一样支持 `valueFormat`、`minDate`、`maxDate`、`disabledDate`。
 - `cellRender` 保留了 PC 端的命名，参数为 `{ date, day }`；附加信息更推荐使用 `formatter`。
-- 新增弹层相关 API（`poppable`、`open`、`showConfirm`、`confirm` / `cancel` 事件）、触发器相关 API（`trigger`、`format`、`placeholder` 等，用法与其他选择类表单域一致）以及 `scrollToDate`、`reset` 方法。
+- 新增弹层相关 API（`poppable`、`open`、`showConfirm`、`confirm` / `cancel` 事件）、触发器相关 API（`trigger`、`format`、`placeholder` 等，用法与其他选择类表单域一致）以及 `scrollToDate`、`reset` 方法；月份列表默认虚拟滚动（`virtual`）。
 - 需要在移动端展示日程月历时，可使用内嵌模式并通过 `formatter` / `cellRender` 渲染日程信息。

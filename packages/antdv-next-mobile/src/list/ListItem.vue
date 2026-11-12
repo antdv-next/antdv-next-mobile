@@ -2,6 +2,7 @@
 import type { ListItemEmits, ListItemProps, ListItemSlots } from './interface'
 import { RightOutlined } from '@antdv-next/icons'
 import { computed, getCurrentInstance } from 'vue'
+import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import '../style'
 import './style/index.css'
@@ -23,8 +24,6 @@ const slots = defineSlots<ListItemSlots>()
 
 const instance = getCurrentInstance()
 
-const hasNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
 /** Not reactive on purpose: listeners live on the vnode, so this is read on every render. */
 function isClickable() {
   return props.clickable ?? (props.href !== undefined || !!instance?.vnode.props?.onClick)
@@ -33,7 +32,7 @@ function isClickable() {
 function showArrow() {
   if (slots.arrow)
     return true
-  return props.arrow === undefined ? isClickable() : hasNode(props.arrow)
+  return props.arrow === undefined ? isClickable() : isRenderable(props.arrow)
 }
 
 const isLink = computed(() => props.href !== undefined)
@@ -76,7 +75,7 @@ function handleKeydown(event: KeyboardEvent) {
     @click="handleClick"
     @keydown.enter="handleKeydown"
   >
-    <div v-if="slots.prefix || hasNode(prefix)" class="am-list-item-prefix" :class="classes?.prefix" :style="styles?.prefix">
+    <div v-if="slots.prefix || isRenderable(prefix)" class="am-list-item-prefix" :class="classes?.prefix" :style="styles?.prefix">
       <slot name="prefix">
         <RenderNode :node="prefix" />
       </slot>
@@ -84,7 +83,7 @@ function handleKeydown(event: KeyboardEvent) {
     <div class="am-list-item-main">
       <div class="am-list-item-content" :class="classes?.content" :style="styles?.content">
         <div
-          v-if="slots.default || slots.title || hasNode(title)"
+          v-if="slots.default || slots.title || isRenderable(title)"
           class="am-list-item-title"
           :class="classes?.title"
           :style="styles?.title"
@@ -96,7 +95,7 @@ function handleKeydown(event: KeyboardEvent) {
           </slot>
         </div>
         <div
-          v-if="slots.description || hasNode(description)"
+          v-if="slots.description || isRenderable(description)"
           class="am-list-item-description"
           :class="classes?.description"
           :style="styles?.description"
@@ -106,7 +105,7 @@ function handleKeydown(event: KeyboardEvent) {
           </slot>
         </div>
       </div>
-      <div v-if="slots.extra || hasNode(extra)" class="am-list-item-extra" :class="classes?.extra" :style="styles?.extra">
+      <div v-if="slots.extra || isRenderable(extra)" class="am-list-item-extra" :class="classes?.extra" :style="styles?.extra">
         <slot name="extra">
           <RenderNode :node="extra" />
         </slot>

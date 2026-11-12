@@ -80,6 +80,8 @@ export interface PickerProps extends PickerFieldProps {
   loading?: boolean
   itemHeight?: number
   visibleItemCount?: number
+  /** Only mount the wheel options around the visible window. `false` renders all of them. Default `true`. */
+  virtual?: boolean
   optionRender?: RenderNodeFn<PickerOptionRenderInfo>
   /** Text of the trigger, default joins the labels with ` / ` */
   format?: (items: (PickerOption | undefined)[]) => string

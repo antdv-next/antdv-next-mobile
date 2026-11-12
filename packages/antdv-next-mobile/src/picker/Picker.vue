@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<PickerProps>(), {
   maskClosable: true,
   destroyOnHidden: false,
   loading: false,
+  virtual: true,
   optionRender: undefined,
 })
 const emit = defineEmits<PickerEmits>()
@@ -163,6 +164,7 @@ defineExpose({ toggle })
       :loading="loading"
       :item-height="itemHeight"
       :visible-item-count="visibleItemCount"
+      :virtual="virtual"
       :option-render="optionRender"
       @change="onSelect"
     >

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { MessageHolderProps } from './interface'
-import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, InfoCircleFilled, LoadingOutlined } from '@antdv-next/icons'
+import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, InfoCircleFilled } from '@antdv-next/icons'
 import { computed, onMounted, ref } from 'vue'
-import { addUnit, resolveContainer } from '../_util'
+import { Portal, Spinner } from '../_base'
+import { addUnit, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
-import { useConfig, usePopupTheme } from '../config-provider/context'
 import '../style'
 import './style/index.css'
 
@@ -14,8 +14,6 @@ const props = withDefaults(defineProps<MessageHolderProps>(), {
   notices: () => [],
 })
 
-const config = useConfig()
-const popupTheme = usePopupTheme()
 const rootRef = ref<HTMLElement>()
 /** the holder is client-only: nothing is rendered on the server */
 const mounted = ref(false)
@@ -28,16 +26,12 @@ const icons = {
   success: CheckCircleFilled,
   error: CloseCircleFilled,
   warning: ExclamationCircleFilled,
-  loading: LoadingOutlined,
+  loading: Spinner,
 }
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
-const container = computed(() => props.getContainer?.() ?? config.getPopupContainer.value?.() ?? resolveContainer())
 const rootStyle = computed(() => {
   const top = addUnit(props.top)
   return [
-    popupTheme.value.style,
     { zIndex: props.zIndex },
     top ? { '--am-message-top': top } : undefined,
   ]
@@ -49,14 +43,14 @@ defineExpose({
 </script>
 
 <template>
-  <Teleport v-if="mounted" :to="container ?? 'body'" :disabled="!container">
+  <Portal v-if="mounted" v-slot="{ theme }" :get-container="getContainer">
     <div
       ref="rootRef"
       v-bind="$attrs"
       class="am-message"
-      :class="popupTheme.class"
-      :style="rootStyle"
-      :dir="popupTheme.dir"
+      :class="theme.class"
+      :style="[theme.style, rootStyle]"
+      :dir="theme.dir"
     >
       <TransitionGroup name="am-message-motion">
         <div
@@ -71,18 +65,14 @@ defineExpose({
             :role="notice.type === 'error' ? 'alert' : 'status'"
             @click="notice.onClick?.($event)"
           >
-            <span v-if="isNode(notice.icon) || notice.type" class="am-message-icon">
-              <RenderNode v-if="isNode(notice.icon)" :node="notice.icon" />
-              <component
-                :is="icons[notice.type]"
-                v-else-if="notice.type"
-                :class="{ 'am-spin-icon': notice.type === 'loading' }"
-              />
+            <span v-if="isRenderable(notice.icon) || notice.type" class="am-message-icon">
+              <RenderNode v-if="isRenderable(notice.icon)" :node="notice.icon" />
+              <component :is="icons[notice.type]" v-else-if="notice.type" />
             </span>
             <span class="am-message-text"><RenderNode :node="notice.content" /></span>
           </div>
         </div>
       </TransitionGroup>
     </div>
-  </Teleport>
+  </Portal>
 </template>

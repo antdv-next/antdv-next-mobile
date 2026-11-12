@@ -62,6 +62,8 @@ export interface PickerViewProps {
   visibleItemCount?: number
   /** Custom option content, the `option` slot wins */
   optionRender?: RenderNodeFn<PickerOptionRenderInfo>
+  /** Only mount the options around the visible window of every column. `false` renders all of them. Default `true`. */
+  virtual?: boolean
   rootClass?: string
   classes?: PickerViewSemanticClassNames
   styles?: PickerViewSemanticStyles

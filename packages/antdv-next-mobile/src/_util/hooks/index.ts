@@ -1,5 +1,7 @@
+export * from './useClickAway'
 export * from './useControlled'
 export * from './useEventListener'
 export * from './useLockScroll'
 export * from './useTouch'
+export * from './useVirtualRange'
 export * from './useZIndex'

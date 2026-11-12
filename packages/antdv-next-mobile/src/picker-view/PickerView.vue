@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PickerValue, PickerViewEmits, PickerViewProps, PickerViewSlots } from './interface'
-import { LoadingOutlined } from '@antdv-next/icons'
 import { computed } from 'vue'
+import { Spinner } from '../_base'
 import { useControlled } from '../_util/hooks'
 import PickerViewColumn from './PickerViewColumn.vue'
 import { resolvePicker } from './util'
@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<PickerViewProps>(), {
   itemHeight: 40,
   visibleItemCount: 5,
   loading: false,
+  virtual: true,
   optionRender: undefined,
 })
 const emit = defineEmits<PickerViewEmits>()
@@ -52,7 +53,7 @@ const rootStyle = computed(() => [
   >
     <div v-if="loading" class="am-picker-view-spin">
       <slot name="loading">
-        <LoadingOutlined class="am-spin-icon" />
+        <Spinner />
       </slot>
     </div>
     <template v-else>
@@ -69,6 +70,7 @@ const rootStyle = computed(() => [
           :item-height="itemHeight"
           :visible-item-count="visibleItemCount"
           :option-render="optionRender"
+          :virtual="virtual"
           :item-class="classes?.item"
           :item-style="styles?.item"
           @change="onColumnChange(index, $event)"

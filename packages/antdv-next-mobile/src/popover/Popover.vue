@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { PopoverAction, PopoverEmits, PopoverExpose, PopoverPlacement, PopoverProps, PopoverSlots } from './interface'
 import { computed, nextTick, onMounted, ref, shallowRef, watch } from 'vue'
-import { inBrowser } from '../_util'
-import { nextZIndex, useControlled, useEventListener } from '../_util/hooks'
+import { Portal } from '../_base'
+import { isRenderable } from '../_util'
+import { nextZIndex, useClickAway, useControlled, useEventListener } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
-import { useConfig, usePopupTheme } from '../config-provider/context'
 import { computePosition, parsePlacement } from './position'
 import '../style'
 import './style/index.css'
@@ -28,9 +28,6 @@ const props = withDefaults(defineProps<PopoverProps>(), {
 const emit = defineEmits<PopoverEmits>()
 const slots = defineSlots<PopoverSlots>()
 
-const config = useConfig()
-const popupTheme = usePopupTheme()
-
 const triggerRef = ref<HTMLElement>()
 const popupRef = ref<HTMLElement>()
 const innerRef = ref<HTMLElement>()
@@ -45,16 +42,15 @@ const [open, setOpen] = useControlled(props, 'open', {
   },
 })
 
-const isNode = (node: unknown) => node !== undefined && node !== null && node !== false && node !== ''
-
-const hasTitle = computed(() => !!slots.title || isNode(props.title))
-const hasContent = computed(() => !!slots.content || isNode(props.content))
+const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
+const hasContent = computed(() => !!slots.content || isRenderable(props.content))
 const hasActions = computed(() => Array.isArray(props.actions) && props.actions.length > 0)
 
 /** the popup is only teleported on the client, once it has been opened */
 const mounted = ref(false)
 const rendered = ref(false)
-const container = shallowRef<HTMLElement | null>(null)
+/** node returned by `getPopupContainer(trigger)`; `undefined` lets Portal use the ConfigProvider default */
+const container = shallowRef<HTMLElement>()
 const zIndex = ref<number | undefined>(props.zIndex)
 const position = ref<{ left: number, top: number, placement: PopoverPlacement, arrowOffset: number }>({
   left: 0,
@@ -64,13 +60,6 @@ const position = ref<{ left: number, top: number, placement: PopoverPlacement, a
 })
 
 const side = computed(() => parsePlacement(position.value.placement).side)
-
-function resolveContainer() {
-  if (!inBrowser)
-    return null
-  const trigger = triggerRef.value
-  return (trigger && props.getPopupContainer?.(trigger)) ?? config.getPopupContainer.value?.() ?? document.body
-}
 
 /** viewport position of the origin that `left / top` of the popup are measured from */
 function getOrigin(el: HTMLElement) {
@@ -110,7 +99,8 @@ function updatePosition() {
 }
 
 async function prepare() {
-  container.value = resolveContainer()
+  const trigger = triggerRef.value
+  container.value = (trigger && props.getPopupContainer?.(trigger)) || undefined
   zIndex.value = props.zIndex ?? nextZIndex()
   rendered.value = true
   await nextTick()
@@ -149,17 +139,9 @@ function onTriggerClick() {
     setOpen(!open.value)
 }
 
-function onClickAway(event: Event) {
-  if (!open.value || !props.closeOnClickAway)
-    return
-  const target = event.target as Node | null
-  if (target && (triggerRef.value?.contains(target) || popupRef.value?.contains(target)))
-    return
-  hide()
-}
-
-useEventListener('touchstart', onClickAway, { passive: true, capture: true })
-useEventListener('mousedown', onClickAway, { capture: true })
+const clickAwayEnabled = () => !!open.value && props.closeOnClickAway
+useClickAway([triggerRef, popupRef], hide, { eventName: 'touchstart', enabled: clickAwayEnabled })
+useClickAway([triggerRef, popupRef], hide, { eventName: 'mousedown', enabled: clickAwayEnabled })
 useEventListener('resize', updatePosition, { passive: true })
 useEventListener('scroll', updatePosition, { passive: true, capture: true })
 
@@ -178,7 +160,6 @@ function onAfterLeave() {
 }
 
 const popupStyle = computed(() => [
-  popupTheme.value.style,
   {
     left: `${position.value.left}px`,
     top: `${position.value.top}px`,
@@ -202,12 +183,12 @@ defineExpose<PopoverExpose>({ show, hide, updatePosition })
   >
     <slot />
   </span>
-  <Teleport v-if="mounted && rendered && container" :to="container">
+  <Portal v-if="mounted && rendered" v-slot="{ theme }" :get-container="container">
     <div
       ref="popupRef"
       class="am-popover"
       :class="[
-        popupTheme.class,
+        theme.class,
         `am-popover-${mode}`,
         `am-popover-placement-${position.placement}`,
         `am-popover-side-${side}`,
@@ -215,8 +196,8 @@ defineExpose<PopoverExpose>({ show, hide, updatePosition })
         rootClass,
         classes?.root,
       ]"
-      :style="popupStyle"
-      :dir="popupTheme.dir"
+      :style="[theme.style, popupStyle]"
+      :dir="theme.dir"
     >
       <Transition name="am-popover-zoom" appear @after-leave="onAfterLeave">
         <div
@@ -242,7 +223,7 @@ defineExpose<PopoverExpose>({ show, hide, updatePosition })
               :disabled="action.disabled || undefined"
               @click="onAction(action, index)"
             >
-              <span v-if="isNode(action.icon)" class="am-popover-menu-item-icon">
+              <span v-if="isRenderable(action.icon)" class="am-popover-menu-item-icon">
                 <RenderNode :node="action.icon" />
               </span>
               <span class="am-popover-menu-item-text"><RenderNode :node="action.text" /></span>
@@ -263,5 +244,5 @@ defineExpose<PopoverExpose>({ show, hide, updatePosition })
         </div>
       </Transition>
     </div>
-  </Teleport>
+  </Portal>
 </template>

@@ -21,6 +21,7 @@ API 与 antdv-next 的 `Select` 对齐：`options`、`fieldNames`、`value`、`m
 <demo src="./demo/search.vue">搜索</demo>
 <demo src="./demo/option.vue">选项描述与自定义渲染</demo>
 <demo src="./demo/group.vue">分组与字段名</demo>
+<demo src="./demo/virtual.vue">大数据量 / 虚拟滚动</demo>
 <demo src="./demo/variant.vue">形态与状态</demo>
 <demo src="./demo/custom-trigger.vue" full>自定义触发器与表单</demo>
 
@@ -45,6 +46,9 @@ API 与 antdv-next 的 `Select` 对齐：`options`、`fieldNames`、`value`、`m
 | maxTagCount | 多选时触发器中最多显示的已选项个数 | `number` | - |
 | maxTagPlaceholder | 被 `maxTagCount` 隐藏的已选项的占位内容 | `VueNode \| ((omitted: LabeledValue[]) => VueNode)` | `+N...` |
 | loading | 加载状态，列表显示加载图标 | `boolean` | `false` |
+| virtual | 虚拟滚动：选项列表通过 [VirtualList](/components/virtual-list) 渲染，只挂载可视区域附近的选项；`false` 时渲染全部选项 | `boolean` | `true` |
+| listHeight | 弹层中选项列表的最大高度 | `number \| string` | `360`（`--am-select-list-max-height`） |
+| listItemHeight | 选项高度（px）：作为选项的最小高度与未测量前的预估高度。选项没有描述、分组与自定义渲染时按固定高度渲染 | `number` | `48` |
 | open (v-model) | 弹层是否展开 | `boolean` | - |
 | defaultOpen | 默认是否展开 | `boolean` | `false` |
 | placeholder | 占位文字 | `string` | `'请选择'` |
@@ -129,7 +133,8 @@ API 与 antdv-next 的 `Select` 对齐：`options`、`fieldNames`、`value`、`m
 
 - 使用底部弹层的列表代替下拉菜单；搜索框位于弹层顶部，而不是触发器内。
 - 多选时在弹层内勾选，点击「确定」后才提交；`select` / `deselect` 在勾选时触发，`change` 在提交时触发。触发器以文字拼接已选项（`A、B +2...`），没有标签（Tag）形态，因此不支持 `tagRender`、`maxTagTextLength`。
-- 不支持 `mode="tags"`、`tokenSeparators`、`popupRender`、`placement`、`virtual`、`listHeight`、`popupMatchSelectWidth`、`optionFilterProp`、`optionLabelProp`、`defaultActiveFirstOption`、`Select.Option` / `Select.OptGroup` 子组件写法（请使用 `options`）等 API。
+- 不支持 `mode="tags"`、`tokenSeparators`、`popupRender`、`placement`、`popupMatchSelectWidth`、`optionFilterProp`、`optionLabelProp`、`defaultActiveFirstOption`、`Select.Option` / `Select.OptGroup` 子组件写法（请使用 `options`）等 API。
+- `virtual`、`listHeight`、`listItemHeight` 与 PC 端同名：`listHeight` 默认为 `360`（PC 端 `256`），`listItemHeight` 默认为 `48`（PC 端 `24`）并同时作为选项的最小高度；选项高度默认按实际内容测量，因此带描述的选项也可以虚拟滚动。打开弹层时会把已选项滚动到列表中间。
 - 单选清除后的值为 `null`（PC 端为 `undefined`），多选为 `[]`；`allowClear` 默认为 `false`，仅支持布尔值。
 - 选项新增 `description` 字段；新增 `title`、`okText`、`cancelText`、`trigger` 属性，`confirm`、`cancel` 事件与 `default`（自定义触发器）插槽。
 - 弹层容器使用 `getContainer`（与 Popup 一致），不支持 `getPopupContainer`。
