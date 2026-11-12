@@ -2,6 +2,10 @@
 设置 `action` 后会使用内置的 XHR 请求上传并展示进度。这里用 `customRequest` 模拟上传过程：每第三个文件会上传失败，点击失败的文件即可重试。
 </docs>
 
+<docs lang="en-US">
+With `action` set, the built-in XHR request is used to upload and the progress is shown. Here `customRequest` simulates the upload process: every third file fails to upload, and tapping a failed file retries it.
+</docs>
+
 <script setup lang="ts">
 import type { UploadFile, UploadRequestOption } from 'antdv-next-mobile'
 import { ref } from 'vue'

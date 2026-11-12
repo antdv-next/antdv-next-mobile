@@ -2,6 +2,10 @@
 通过覆盖组件 CSS 变量（或 `ConfigProvider` 的 `theme.components.Switch`）定制颜色与尺寸。
 </docs>
 
+<docs lang="en-US">
+Customize the colors and size by overriding the component CSS variables (or `theme.components.Switch` of `ConfigProvider`).
+</docs>
+
 <template>
   <am-flex align="center" gap="middle">
     <am-switch default-checked style="--am-switch-color: var(--am-color-success)" />

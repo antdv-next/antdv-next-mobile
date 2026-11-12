@@ -2,13 +2,17 @@
 使用 `labelRender` 插槽自定义选项内容，覆盖 `--am-segmented-*` 组件变量定制外观。
 </docs>
 
+<docs lang="en-US">
+Use the `labelRender` slot to customize the option content, and override the `--am-segmented-*` component tokens to customize the appearance.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const options = [
-  { label: '月付', value: 'month', price: '¥ 25' },
-  { label: '季付', value: 'quarter', price: '¥ 68' },
-  { label: '年付', value: 'year', price: '¥ 228' },
+  { label: 'Monthly', value: 'month', price: '¥ 25' },
+  { label: 'Quarterly', value: 'quarter', price: '¥ 68' },
+  { label: 'Yearly', value: 'year', price: '¥ 228' },
 ]
 const value = ref<string | number>('quarter')
 </script>

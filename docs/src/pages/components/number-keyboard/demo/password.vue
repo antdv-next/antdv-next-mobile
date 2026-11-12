@@ -2,6 +2,10 @@
 配合 `maxlength` 与自定义的密码格实现支付密码输入：输入满 6 位后自动收起键盘。
 </docs>
 
+<docs lang="en-US">
+Combine `maxlength` with custom password cells to implement payment password input: the keyboard hides automatically once 6 digits are entered.
+</docs>
+
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 
@@ -13,7 +17,7 @@ watch(value, (val) => {
   result.value = ''
   if (val.length === 6) {
     open.value = false
-    result.value = '密码已输入完成'
+    result.value = 'Password entered'
   }
 })
 </script>
@@ -25,9 +29,9 @@ watch(value, (val) => {
     </span>
   </div>
   <div class="demo-tip">
-    {{ result || '请输入 6 位支付密码' }}
+    {{ result || 'Enter the 6-digit payment password' }}
   </div>
-  <am-number-keyboard v-model:open="open" v-model:value="value" :maxlength="6" random-key-order :hide-on-click-outside="false" close-button-text="收起" />
+  <am-number-keyboard v-model:open="open" v-model:value="value" :maxlength="6" random-key-order :hide-on-click-outside="false" close-button-text="Hide" />
 </template>
 
 <style scoped>

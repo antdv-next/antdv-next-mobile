@@ -2,6 +2,10 @@
 没有具体数字时，用 `dot` 显示一个小红点。
 </docs>
 
+<docs lang="en-US">
+When there is no specific number, show a small red dot with `dot`.
+</docs>
+
 <script setup lang="ts">
 import { BellOutlined, MessageOutlined } from '@antdv-next/icons'
 </script>
@@ -15,7 +19,7 @@ import { BellOutlined, MessageOutlined } from '@antdv-next/icons'
       <MessageOutlined class="icon" />
     </am-badge>
     <am-badge dot>
-      <span class="link">消息</span>
+      <span class="link">Messages</span>
     </am-badge>
   </am-space>
 </template>

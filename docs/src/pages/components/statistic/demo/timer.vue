@@ -2,6 +2,10 @@
 `Statistic.Timer` 支持倒计时与正计时，`format` 可以包含天、毫秒等单位，倒计时结束触发 `finish`。
 </docs>
 
+<docs lang="en-US">
+`Statistic.Timer` supports countdown and count-up. `format` can include units such as days and milliseconds, and `finish` is triggered when the countdown ends.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -19,22 +23,22 @@ function restart() {
 <template>
   <am-flex vertical gap="middle">
     <am-flex gap="large" wrap>
-      <am-statistic-timer title="倒计时" :value="deadline" />
-      <am-statistic-timer title="精确到毫秒" :value="deadline" format="HH:mm:ss:SSS" />
+      <am-statistic-timer title="Countdown" :value="deadline" />
+      <am-statistic-timer title="Milliseconds" :value="deadline" format="HH:mm:ss:SSS" />
     </am-flex>
-    <am-statistic-timer title="距离活动结束" :value="deadline" format="D 天 H 时 m 分 s 秒" />
+    <am-statistic-timer title="Until the sale ends" :value="deadline" format="D [d] H [h] m [m] s [s]" />
     <am-flex gap="large" wrap>
-      <am-statistic-timer type="countup" title="正计时" :value="start" format="mm:ss" />
+      <am-statistic-timer type="countup" title="Count-up" :value="start" format="mm:ss" />
       <am-statistic-timer
-        title="10 秒倒计时"
+        title="10s countdown"
         :value="short"
-        format="s.SS 秒"
+        format="s.SS [s]"
         :value-style="finished ? { color: 'var(--am-color-error)' } : undefined"
         @finish="finished = true"
       />
     </am-flex>
     <am-button block :disabled="!finished" @click="restart">
-      {{ finished ? '重新开始' : '倒计时进行中...' }}
+      {{ finished ? 'Restart' : 'Counting down...' }}
     </am-button>
   </am-flex>
 </template>

@@ -2,6 +2,10 @@
 通过 `classes` / `styles` 定制语义化结构，或覆盖 `--am-skeleton-*` 组件变量调整颜色与尺寸。
 </docs>
 
+<docs lang="en-US">
+Customize the semantic structure with `classes` / `styles`, or override the `--am-skeleton-*` component tokens to adjust the color and size.
+</docs>
+
 <template>
   <am-flex vertical gap="large">
     <am-skeleton

@@ -2,34 +2,38 @@
 显示关闭按钮，点击后带有收起动画，`close` 与 `afterClose` 事件分别在点击时和动画结束后触发。
 </docs>
 
+<docs lang="en-US">
+Show a close button. Clicking it plays a collapse animation; the `close` and `afterClose` events are triggered on click and when the animation ends respectively.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const visible = ref(true)
-const log = ref('点击右侧的关闭按钮')
+const log = ref('Tap the close button on the right')
 </script>
 
 <template>
   <am-flex vertical gap="small">
     <am-alert
       v-if="visible"
-      title="警告提示的文案"
+      title="Warning Text"
       type="warning"
       show-icon
       closable
-      @close="log = '触发 close'"
-      @after-close="log = '触发 afterClose'; visible = false"
+      @close="log = 'close triggered'"
+      @after-close="log = 'afterClose triggered'; visible = false"
     />
     <am-alert
-      title="自定义关闭文字"
-      description="closeIcon 可以是任意节点，设置后自动显示关闭按钮。"
+      title="Custom close text"
+      description="closeIcon can be any node. The close button is shown once it is set."
       type="info"
-      close-icon="知道了"
+      close-icon="Got it"
     />
     <am-flex align="center" justify="space-between">
       <span class="log">{{ log }}</span>
       <am-button size="small" :disabled="visible" @click="visible = true">
-        重新显示
+        Show again
       </am-button>
     </am-flex>
   </am-flex>

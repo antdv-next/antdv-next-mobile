@@ -2,6 +2,10 @@
 预设五种状态颜色：`success`、`processing`、`warning`、`error`、`default`，用于表示订单、任务等的状态。
 </docs>
 
+<docs lang="en-US">
+Five preset status colors: `success`, `processing`, `warning`, `error`, `default`, for representing the status of orders, tasks, etc.
+</docs>
+
 <script setup lang="ts">
 import {
   CheckCircleOutlined,
@@ -16,19 +20,19 @@ import {
   <am-space vertical size="middle">
     <am-space wrap>
       <am-tag color="success">
-        已完成
+        Done
       </am-tag>
       <am-tag color="processing">
-        进行中
+        In progress
       </am-tag>
       <am-tag color="warning">
-        待确认
+        Pending
       </am-tag>
       <am-tag color="error">
-        已失败
+        Failed
       </am-tag>
       <am-tag color="default">
-        未开始
+        Not started
       </am-tag>
     </am-space>
     <am-space wrap>
@@ -36,31 +40,31 @@ import {
         <template #icon>
           <CheckCircleOutlined />
         </template>
-        已完成
+        Done
       </am-tag>
       <am-tag color="processing">
         <template #icon>
           <SyncOutlined spin />
         </template>
-        进行中
+        In progress
       </am-tag>
       <am-tag color="warning">
         <template #icon>
           <ExclamationCircleOutlined />
         </template>
-        待确认
+        Pending
       </am-tag>
       <am-tag color="error">
         <template #icon>
           <CloseCircleOutlined />
         </template>
-        已失败
+        Failed
       </am-tag>
       <am-tag color="default">
         <template #icon>
           <ClockCircleOutlined />
         </template>
-        未开始
+        Not started
       </am-tag>
     </am-space>
   </am-space>

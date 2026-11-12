@@ -2,6 +2,10 @@
 默认插槽自定义上传按钮的内容，`columns` 设置宫格列数，`capture` 可直接调起相机，也可以覆盖 `--am-upload-*` 变量调整外观。
 </docs>
 
+<docs lang="en-US">
+The default slot customizes the content of the upload button, `columns` sets the number of grid columns, and `capture` opens the camera directly; you can also override the `--am-upload-*` variables to adjust the appearance.
+</docs>
+
 <script setup lang="ts">
 import type { UploadFile } from 'antdv-next-mobile'
 import { CameraOutlined } from '@antdv-next/icons'
@@ -14,7 +18,7 @@ const fileList = ref<UploadFile[]>([])
   <am-upload v-model:file-list="fileList" accept="image/*" capture="environment" :columns="3" class="custom-upload">
     <div class="trigger">
       <CameraOutlined class="trigger-icon" />
-      <span>拍照上传</span>
+      <span>Take photo</span>
     </div>
   </am-upload>
 </template>

@@ -2,6 +2,10 @@
 通过 `prefix` / `suffix` 属性或同名插槽添加前后缀；`showCount` 配合 `maxlength` 显示字数统计；`align` 控制文字对齐。
 </docs>
 
+<docs lang="en-US">
+Add a prefix / suffix with the `prefix` / `suffix` props or the same-named slots; `showCount` together with `maxlength` shows the character count; `align` controls the text alignment.
+</docs>
+
 <script setup lang="ts">
 import { MobileOutlined, UserOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -19,19 +23,19 @@ function send() {
 
 <template>
   <am-flex vertical gap="small">
-    <am-input placeholder="用户名" :maxlength="12" show-count>
+    <am-input placeholder="Username" :maxlength="12" show-count>
       <template #prefix>
         <UserOutlined />
       </template>
     </am-input>
-    <am-input v-model:value="amount" prefix="¥" suffix="元" inputmode="decimal" align="end" />
-    <am-input placeholder="短信验证码" inputmode="numeric" :maxlength="6">
+    <am-input v-model:value="amount" prefix="¥" suffix="CNY" inputmode="decimal" align="end" />
+    <am-input placeholder="SMS code" inputmode="numeric" :maxlength="6">
       <template #prefix>
         <MobileOutlined />
       </template>
       <template #suffix>
         <am-button type="link" size="small" :loading="sending" @click="send">
-          获取验证码
+          Get code
         </am-button>
       </template>
     </am-input>

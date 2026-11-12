@@ -2,6 +2,10 @@
 各阶段的插槽都会收到当前的下拉距离 `distance`，可以实现跟手的动画。`headHeight` 调整顶部区域高度，`threshold` 调整触发距离。
 </docs>
 
+<docs lang="en-US">
+The slot of every stage receives the current pull distance `distance`, which makes it possible to build animations that follow the finger. `headHeight` adjusts the height of the top area, and `threshold` adjusts the trigger distance.
+</docs>
+
 <script setup lang="ts">
 import { SyncOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -27,11 +31,11 @@ function onRefresh() {
       <SyncOutlined class="icon icon-active" spin />
     </template>
     <template #complete>
-      <span class="done">已更新 8 条内容</span>
+      <span class="done">8 new items</span>
     </template>
     <ul class="list">
       <li v-for="i in 6" :key="i">
-        列表项 {{ i }}
+        Item {{ i }}
       </li>
     </ul>
   </am-pull-to-refresh>

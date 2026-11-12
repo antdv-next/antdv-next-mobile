@@ -2,6 +2,10 @@
 可以将星星替换为其他字符：图标、文字，或通过函数 / `character` 插槽按位置渲染不同内容。
 </docs>
 
+<docs lang="en-US">
+The stars can be replaced with other characters: an icon, text, or different content per position through a function / the `character` slot.
+</docs>
+
 <script setup lang="ts">
 import { FrownOutlined, HeartFilled, MehOutlined, SmileOutlined } from '@antdv-next/icons'
 import { h, ref } from 'vue'

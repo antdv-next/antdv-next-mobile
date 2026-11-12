@@ -2,6 +2,10 @@
 设置 `preview` 后点击图片全屏预览，支持双指缩放、双击放大、下拉或单击关闭。`preview.src` 可以指定预览时使用的原图。
 </docs>
 
+<docs lang="en-US">
+With `preview` set, tapping the image opens a full-screen preview that supports pinch to zoom, double-tap to zoom in, and swipe down or single tap to close. `preview.src` specifies the original image used for the preview.
+</docs>
+
 <script setup lang="ts">
 function createImage(text: string, color: string, width = 600, height = 450) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`
@@ -12,8 +16,8 @@ function createImage(text: string, color: string, width = 600, height = 450) {
   return `data:image/svg+xml,${encodeURIComponent(svg)}`
 }
 
-const thumb = createImage('缩略图', '#1677ff', 200, 150)
-const origin = createImage('原图 1200 × 900', '#1677ff', 1200, 900)
+const thumb = createImage('Thumbnail', '#1677ff', 200, 150)
+const origin = createImage('HD 1200 × 900', '#1677ff', 1200, 900)
 </script>
 
 <template>

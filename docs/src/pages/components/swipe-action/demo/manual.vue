@@ -2,17 +2,21 @@
 通过 ref 调用 `show(side)` 与 `close()` 手动控制。`closeOnAction` 设为 `false` 后点击按钮不会自动收起，`closeOnTouchOutside` 设为 `false` 后触摸外部不会收起，`disabled` 禁用滑动。
 </docs>
 
+<docs lang="en-US">
+Control it manually by calling `show(side)` and `close()` through a ref. With `closeOnAction` set to `false`, clicking a button does not close automatically; with `closeOnTouchOutside` set to `false`, touching outside does not close; `disabled` disables swiping.
+</docs>
+
 <script setup lang="ts">
 import type { SwipeActionItem } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const swipeRef = ref()
 const rightActions: SwipeActionItem[] = [
-  { key: 'edit', text: '编辑', color: 'primary' },
-  { key: 'delete', text: '删除', color: 'danger' },
+  { key: 'edit', text: 'Edit', color: 'primary' },
+  { key: 'delete', text: 'Delete', color: 'danger' },
 ]
-const leftActions: SwipeActionItem[] = [{ key: 'pin', text: '置顶', color: 'warning' }]
-const state = ref('已收起')
+const leftActions: SwipeActionItem[] = [{ key: 'pin', text: 'Pin', color: 'warning' }]
+const state = ref('Closed')
 </script>
 
 <template>
@@ -22,28 +26,28 @@ const state = ref('已收起')
     :right-actions="rightActions"
     :close-on-action="false"
     :close-on-touch-outside="false"
-    @actions-reveal="state = `已展开：${$event}`"
-    @close="state = '已收起'"
+    @actions-reveal="state = `Opened: ${$event}`"
+    @close="state = 'Closed'"
   >
     <div class="cell">
-      <span>手动控制</span>
+      <span>Manual control</span>
       <span class="cell-extra">{{ state }}</span>
     </div>
   </am-swipe-action>
   <am-flex gap="small" style="padding: 12px 16px">
     <am-button size="small" @click="swipeRef?.show('left')">
-      展开左侧
+      Show left
     </am-button>
     <am-button size="small" @click="swipeRef?.show('right')">
-      展开右侧
+      Show right
     </am-button>
     <am-button size="small" @click="swipeRef?.close()">
-      收起
+      Close
     </am-button>
   </am-flex>
   <am-swipe-action :right-actions="rightActions" disabled>
     <div class="cell">
-      <span>禁用滑动</span>
+      <span>Swipe disabled</span>
     </div>
   </am-swipe-action>
 </template>

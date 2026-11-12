@@ -2,6 +2,10 @@
 通过 `handle` 插槽自定义滑块内容，通过 CSS 变量与 `classes` / `styles` 定制轨道和滑块。
 </docs>
 
+<docs lang="en-US">
+Customize the handle content with the `handle` slot, and the rail and handle with CSS variables and `classes` / `styles`.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 

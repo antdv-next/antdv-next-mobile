@@ -2,6 +2,10 @@
 移动端最常见的用法：用栅格搭建首页的宫格入口。
 </docs>
 
+<docs lang="en-US">
+The most common usage on mobile: build the grid entries of a home page with the grid.
+</docs>
+
 <script setup lang="ts">
 import {
   AppstoreOutlined,
@@ -15,14 +19,14 @@ import {
 } from '@antdv-next/icons'
 
 const entries = [
-  { icon: WalletOutlined, text: '钱包' },
-  { icon: CreditCardOutlined, text: '卡包' },
-  { icon: GiftOutlined, text: '优惠券' },
-  { icon: ShoppingOutlined, text: '订单' },
-  { icon: StarOutlined, text: '收藏' },
-  { icon: EnvironmentOutlined, text: '地址' },
-  { icon: CustomerServiceOutlined, text: '客服' },
-  { icon: AppstoreOutlined, text: '更多' },
+  { icon: WalletOutlined, text: 'Wallet' },
+  { icon: CreditCardOutlined, text: 'Cards' },
+  { icon: GiftOutlined, text: 'Coupons' },
+  { icon: ShoppingOutlined, text: 'Orders' },
+  { icon: StarOutlined, text: 'Favorites' },
+  { icon: EnvironmentOutlined, text: 'Address' },
+  { icon: CustomerServiceOutlined, text: 'Support' },
+  { icon: AppstoreOutlined, text: 'More' },
 ]
 </script>
 

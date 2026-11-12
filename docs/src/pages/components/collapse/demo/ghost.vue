@@ -2,13 +2,17 @@
 `ghost` 让折叠面板背景透明、没有细线，适合放在卡片里；`size` 提供三种尺寸，`bordered` 控制细线。
 </docs>
 
+<docs lang="en-US">
+`ghost` makes the collapse background transparent with no hairlines, which suits being placed inside a card; `size` provides three sizes and `bordered` controls the hairlines.
+</docs>
+
 <script setup lang="ts">
 import type { CollapseItemType } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const items: CollapseItemType[] = [
-  { key: '1', label: '什么是幽灵模式？', content: '背景透明、没有细线的折叠面板。' },
-  { key: '2', label: '可以调整尺寸吗？', content: '可以，通过 size 设置 small / middle / large。' },
+  { key: '1', label: 'What is ghost mode?', content: 'A collapse with a transparent background and no hairlines.' },
+  { key: '2', label: 'Can the size be changed?', content: 'Yes, set size to small / middle / large.' },
 ]
 
 const size = ref<'small' | 'middle' | 'large'>('small')

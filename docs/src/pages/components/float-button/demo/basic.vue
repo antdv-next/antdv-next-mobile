@@ -2,13 +2,17 @@
 最简单的用法。悬浮按钮默认固定在屏幕右下角，这里为了演示把它放在了一个相对定位的容器内。
 </docs>
 
+<docs lang="en-US">
+The simplest usage. The float button is fixed at the bottom right corner of the screen by default; here it is placed in a relatively positioned container for demonstration.
+</docs>
+
 <script setup lang="ts">
 import { message } from 'antdv-next-mobile'
 </script>
 
 <template>
   <div class="demo-box">
-    <am-float-button :style="{ position: 'absolute' }" @click="message.info('点击了悬浮按钮')" />
+    <am-float-button :style="{ position: 'absolute' }" @click="message.info('Float button clicked')" />
   </div>
 </template>
 
@@ -21,7 +25,7 @@ import { message } from 'antdv-next-mobile'
   border-radius: var(--am-border-radius);
 }
 
-/* 组件变量声明在悬浮按钮（组）的根节点上，需要在其自身上覆盖 */
+/* The component variables are declared on the root of the float button (group), so override them on that element */
 .demo-box > .am-float-button,
 .demo-box > .am-float-button-group {
   --am-float-button-inset-block-end: 24px;

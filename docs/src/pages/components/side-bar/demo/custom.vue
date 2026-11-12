@@ -2,15 +2,19 @@
 覆盖 `--am-side-bar-*` 组件变量调整宽度与颜色，使用 `title` 插槽自定义标题内容。
 </docs>
 
+<docs lang="en-US">
+Override the `--am-side-bar-*` component tokens to adjust the width and colors, and use the `title` slot to customize the title content.
+</docs>
+
 <script setup lang="ts">
 import type { SideBarItem } from 'antdv-next-mobile'
 import { FireOutlined } from '@antdv-next/icons'
 
 const items: SideBarItem[] = [
-  { key: 'hot', title: '热销' },
-  { key: 'new', title: '新品' },
-  { key: 'combo', title: '超值套餐' },
-  { key: 'drink', title: '饮品' },
+  { key: 'hot', title: 'Hot' },
+  { key: 'new', title: 'New' },
+  { key: 'combo', title: 'Combos' },
+  { key: 'drink', title: 'Drinks' },
 ]
 </script>
 

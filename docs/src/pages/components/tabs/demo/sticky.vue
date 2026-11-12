@@ -2,20 +2,24 @@
 开启 `sticky` 后标签栏在滚动容器内吸顶，`offsetTop` 设置与顶部的距离（例如固定导航栏的高度）。
 </docs>
 
+<docs lang="en-US">
+With `sticky` enabled, the tab bar sticks to the top inside the scroll container, and `offsetTop` sets the distance from the top (e.g. the height of a fixed nav bar).
+</docs>
+
 <script setup lang="ts">
 import type { TabsItem } from 'antdv-next-mobile'
 
 const items: TabsItem[] = [
-  { key: '1', label: '商品' },
-  { key: '2', label: '评价' },
-  { key: '3', label: '详情' },
+  { key: '1', label: 'Product' },
+  { key: '2', label: 'Reviews' },
+  { key: '3', label: 'Details' },
 ]
 </script>
 
 <template>
   <div class="scroller">
     <div class="banner">
-      向下滚动，标签栏会吸顶
+      Scroll down and the tab bar sticks to the top
     </div>
     <am-tabs :items="items" sticky>
       <template #default="{ item }">

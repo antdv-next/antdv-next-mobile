@@ -2,6 +2,10 @@
 使用 `marks` 标注分段式滑块。`included` 为 `false` 时表示并列关系；`step` 为 `null` 时只能选择刻度上的值。
 </docs>
 
+<docs lang="en-US">
+Use `marks` to annotate a graduated slider. `included` being `false` means the values are independent; when `step` is `null`, only the values on the marks can be selected.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 

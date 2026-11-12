@@ -2,6 +2,10 @@
 `disabled` 时只读，无法进行交互，常用于展示评分结果。
 </docs>
 
+<docs lang="en-US">
+Read only when `disabled`, unable to interact. Commonly used to display a rating result.
+</docs>
+
 <template>
   <div class="demo-rate-list">
     <am-rate disabled :default-value="2" />

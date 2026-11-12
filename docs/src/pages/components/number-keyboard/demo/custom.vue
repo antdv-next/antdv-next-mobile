@@ -2,6 +2,10 @@
 `theme="custom"` 会在右侧增加删除键与大号的完成按钮，适合输入金额后直接进入下一步。点击完成按钮触发 `confirm` 并收起键盘，`confirmText` 可修改按钮文字。
 </docs>
 
+<docs lang="en-US">
+`theme="custom"` adds a delete key and a large done button on the right, suitable for going straight to the next step after entering an amount. Tapping the done button triggers `confirm` and hides the keyboard; `confirmText` changes the button text.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -10,7 +14,7 @@ const amount = ref('')
 const paid = ref('')
 
 function onInput(key: string) {
-  // 金额最多两位小数、一个小数点
+  // at most two decimal places and one decimal point
   const next = amount.value + key
   if (!/^(?:0|[1-9]\d{0,5})?(?:\.\d{0,2})?$/.test(next) || next === '.')
     return
@@ -26,14 +30,14 @@ function onInput(key: string) {
       <span v-else class="demo-placeholder">0.00</span>
     </div>
     <div v-if="paid" class="demo-tip">
-      已支付 ¥{{ paid }}
+      Paid ¥{{ paid }}
     </div>
   </am-flex>
   <am-number-keyboard
     v-model:open="open"
     theme="custom"
     extra-key="."
-    confirm-text="付款"
+    confirm-text="Pay"
     @input="onInput"
     @delete="amount = amount.slice(0, -1)"
     @confirm="paid = amount || '0'"

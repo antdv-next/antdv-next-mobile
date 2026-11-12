@@ -2,12 +2,16 @@
 通过 `description` 属性或同名插槽自定义描述，设为 `false` 时不显示描述。
 </docs>
 
+<docs lang="en-US">
+Customize the description with the `description` prop or the same-named slot. The description is hidden when it is set to `false`.
+</docs>
+
 <template>
-  <am-empty description="购物车空空如也" />
+  <am-empty description="Your cart is empty" />
   <am-divider />
   <am-empty>
     <template #description>
-      没有找到 <b class="keyword">“antdv”</b> 相关的结果
+      No results for <b class="keyword">"antdv"</b>
     </template>
   </am-empty>
   <am-divider />

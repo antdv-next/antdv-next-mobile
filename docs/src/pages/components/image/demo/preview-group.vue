@@ -2,6 +2,10 @@
 用 `am-image-preview-group` 包裹多张图片，点击任意一张即可在它们之间滑动预览。也可以通过 `items` 指定预览的图片列表，实现「点击封面预览相册」。
 </docs>
 
+<docs lang="en-US">
+Wrap multiple images with `am-image-preview-group`, then tap any of them to swipe through them in the preview. You can also specify the list of images to preview with `items`, to implement "tap the cover to preview the album".
+</docs>
+
 <script setup lang="ts">
 function createImage(text: string, color: string, width = 600, height = 600) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`
@@ -16,7 +20,7 @@ const images = colors.map((color, index) => createImage(String(index + 1), color
 
 <template>
   <p class="title">
-    收集分组内的图片
+    Images collected from the group
   </p>
   <am-image-preview-group>
     <div class="grid">
@@ -25,7 +29,7 @@ const images = colors.map((color, index) => createImage(String(index + 1), color
   </am-image-preview-group>
 
   <p class="title">
-    点击封面预览相册
+    Tap the cover to preview the album
   </p>
   <am-image-preview-group :items="images">
     <am-image :src="images[0]" :width="120" :height="120" fit="cover" :radius="8" />

@@ -2,6 +2,10 @@
 通过 `loadingText` / `finishedText` / `errorText` 属性或同名插槽自定义各状态的提示。
 </docs>
 
+<docs lang="en-US">
+Customize the tip of each state through the `loadingText` / `finishedText` / `errorText` props or the corresponding slots.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -25,15 +29,15 @@ function onLoad() {
     <am-infinite-scroll v-model:loading="loading" :has-more="hasMore" :threshold="50" @load="onLoad">
       <ul class="list">
         <li v-for="item in list" :key="item">
-          列表项 {{ item }}
+          Item {{ item }}
         </li>
       </ul>
       <template #loading>
         <span class="dots"><i /><i /><i /></span>
-        <span>正在赶来的路上</span>
+        <span>On the way</span>
       </template>
       <template #finished>
-        <span>—— 我是有底线的 ——</span>
+        <span>—— The end ——</span>
       </template>
     </am-infinite-scroll>
   </div>

@@ -2,6 +2,10 @@
 `disabled` 状态下开关不可操作。
 </docs>
 
+<docs lang="en-US">
+The switch cannot be operated in the `disabled` state.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -15,7 +19,7 @@ const disabled = ref(true)
       <am-switch :disabled="disabled" />
     </am-flex>
     <am-button type="primary" size="small" @click="disabled = !disabled">
-      切换禁用状态
+      Toggle disabled
     </am-button>
   </am-flex>
 </template>

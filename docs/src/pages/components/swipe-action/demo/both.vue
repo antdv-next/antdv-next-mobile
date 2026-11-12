@@ -2,23 +2,27 @@
 同时设置 `leftActions` 与 `rightActions`。`color` 支持预设值，也可以传入任意 CSS 颜色。
 </docs>
 
+<docs lang="en-US">
+Set both `leftActions` and `rightActions`. `color` supports presets as well as any CSS color.
+</docs>
+
 <script setup lang="ts">
 import type { SwipeActionItem } from 'antdv-next-mobile'
 
 const leftActions: SwipeActionItem[] = [
-  { key: 'pin', text: '置顶', color: 'primary' },
-  { key: 'star', text: '收藏', color: 'success' },
+  { key: 'pin', text: 'Pin', color: 'primary' },
+  { key: 'star', text: 'Star', color: 'success' },
 ]
 const rightActions: SwipeActionItem[] = [
-  { key: 'archive', text: '归档', color: '#722ed1' },
-  { key: 'delete', text: '删除', color: 'danger' },
+  { key: 'archive', text: 'Archive', color: '#722ed1' },
+  { key: 'delete', text: 'Delete', color: 'danger' },
 ]
 </script>
 
 <template>
   <am-swipe-action :left-actions="leftActions" :right-actions="rightActions">
     <div class="cell">
-      <span>左右都可以滑动</span>
+      <span>Swipe left or right</span>
       <span class="cell-extra">← →</span>
     </div>
   </am-swipe-action>

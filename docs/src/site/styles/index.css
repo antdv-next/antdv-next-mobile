@@ -166,6 +166,14 @@ button {
   align-items: center;
 }
 
+.locale-switch {
+  width: auto;
+  min-width: 34px;
+  padding: 0 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
 /* ---------- theme panel ---------- */
 .theme-picker {
   position: relative;

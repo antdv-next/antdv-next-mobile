@@ -2,6 +2,10 @@
 头像有圆形和方形两种形状，通过 `shape` 设置。
 </docs>
 
+<docs lang="en-US">
+An avatar has two shapes, circle and square, set with `shape`.
+</docs>
+
 <script setup lang="ts">
 import { UserOutlined } from '@antdv-next/icons'
 </script>

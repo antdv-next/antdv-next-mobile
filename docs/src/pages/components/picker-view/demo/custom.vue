@@ -2,15 +2,19 @@
 `itemHeight` 与 `visibleItemCount` 决定滚轮的尺寸；`option` 插槽可以自定义选项内容；`fieldNames` 用于适配已有的数据结构。
 </docs>
 
+<docs lang="en-US">
+`itemHeight` and `visibleItemCount` determine the size of the wheels; the `option` slot customizes the option content; `fieldNames` adapts to an existing data structure.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const columns = [
   [
-    { name: '经济舱', code: 'Y', price: 680 },
-    { name: '超级经济舱', code: 'W', price: 980 },
-    { name: '公务舱', code: 'C', price: 2180 },
-    { name: '头等舱', code: 'F', price: 3960 },
+    { name: 'Economy', code: 'Y', price: 680 },
+    { name: 'Premium Economy', code: 'W', price: 980 },
+    { name: 'Business', code: 'C', price: 2180 },
+    { name: 'First', code: 'F', price: 3960 },
   ],
 ]
 const value = ref(['W'])

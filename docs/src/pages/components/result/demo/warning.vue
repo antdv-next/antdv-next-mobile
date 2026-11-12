@@ -2,11 +2,15 @@
 警告类型的结果。
 </docs>
 
+<docs lang="en-US">
+A warning result.
+</docs>
+
 <template>
-  <am-result status="warning" title="账号存在风险" sub-title="检测到异地登录，建议尽快修改密码">
+  <am-result status="warning" title="Account at risk" sub-title="A login from an unusual location was detected. Please change your password soon">
     <template #extra>
       <am-button type="primary" shape="round">
-        修改密码
+        Change password
       </am-button>
     </template>
   </am-result>

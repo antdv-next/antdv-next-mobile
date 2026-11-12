@@ -2,19 +2,23 @@
 `size` 控制列表项的间距，`bordered` 时控制单元格内边距。
 </docs>
 
+<docs lang="en-US">
+`size` controls the spacing of the list items, and the cell padding when `bordered`.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const size = ref<'small' | 'middle' | 'large'>('small')
 const options = [
-  { label: '小', value: 'small' },
-  { label: '中', value: 'middle' },
-  { label: '大', value: 'large' },
+  { label: 'Small', value: 'small' },
+  { label: 'Middle', value: 'middle' },
+  { label: 'Large', value: 'large' },
 ]
 const items = [
-  { key: 'product', label: '产品', content: '云数据库' },
-  { key: 'billing', label: '计费模式', content: '预付费' },
-  { key: 'renew', label: '自动续费', content: '是' },
+  { key: 'product', label: 'Product', content: 'Cloud Database' },
+  { key: 'billing', label: 'Billing', content: 'Prepaid' },
+  { key: 'renew', label: 'Auto renewal', content: 'Yes' },
 ]
 </script>
 

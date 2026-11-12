@@ -2,6 +2,10 @@
 通过 `justify` 设置主轴对齐方式，`align` 设置交叉轴对齐方式。
 </docs>
 
+<docs lang="en-US">
+Set the alignment on the main axis with `justify` and on the cross axis with `align`.
+</docs>
+
 <script setup lang="ts">
 const justifyOptions = ['flex-start', 'center', 'flex-end', 'space-between', 'space-around', 'space-evenly'] as const
 </script>

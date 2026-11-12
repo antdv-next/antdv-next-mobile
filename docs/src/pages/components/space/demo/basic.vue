@@ -2,17 +2,21 @@
 相邻组件之间保持统一的水平间距。
 </docs>
 
+<docs lang="en-US">
+Keep a unified horizontal spacing between adjacent components.
+</docs>
+
 <template>
   <am-space>
     <am-button type="primary">
-      主要
+      Primary
     </am-button>
-    <am-button>默认</am-button>
+    <am-button>Default</am-button>
     <am-button type="dashed">
-      虚线
+      Dashed
     </am-button>
     <am-button type="link">
-      链接
+      Link
     </am-button>
   </am-space>
 </template>

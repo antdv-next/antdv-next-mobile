@@ -2,6 +2,10 @@
 通过 `src` 设置图片地址，`width` / `height` 设置尺寸。
 </docs>
 
+<docs lang="en-US">
+Set the image URL with `src` and the size with `width` / `height`.
+</docs>
+
 <script setup lang="ts">
 function createImage(text: string, color: string, width = 400, height = 300) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`
@@ -16,5 +20,5 @@ const src = createImage('Image', '#1677ff')
 </script>
 
 <template>
-  <am-image :src="src" alt="示例图片" :width="200" :height="150" />
+  <am-image :src="src" alt="Sample image" :width="200" :height="150" />
 </template>

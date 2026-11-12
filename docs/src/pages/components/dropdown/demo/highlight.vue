@@ -2,27 +2,31 @@
 `highlight` 让标题保持高亮，用来提示该项已应用了筛选条件；`disabled` 禁用某一项。
 </docs>
 
+<docs lang="en-US">
+`highlight` keeps the title highlighted to indicate that a filter has been applied to that item; `disabled` disables an item.
+</docs>
+
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
 const price = ref('all')
 const options = [
-  { label: '不限价格', value: 'all' },
-  { label: '0 - 100 元', value: '0-100' },
-  { label: '100 - 500 元', value: '100-500' },
-  { label: '500 元以上', value: '500+' },
+  { label: 'Any price', value: 'all' },
+  { label: '¥0 - 100', value: '0-100' },
+  { label: '¥100 - 500', value: '100-500' },
+  { label: 'Over ¥500', value: '500+' },
 ]
 const highlight = computed(() => price.value !== 'all')
 </script>
 
 <template>
   <am-dropdown>
-    <am-dropdown-item key="price" v-model:value="price" title="价格" :options="options" :highlight="highlight" />
-    <am-dropdown-item key="brand" title="品牌" highlight :options="[{ label: '已选：品牌 A', value: 'a' }]" default-value="a" />
-    <am-dropdown-item key="region" title="地区" disabled />
+    <am-dropdown-item key="price" v-model:value="price" title="Price" :options="options" :highlight="highlight" />
+    <am-dropdown-item key="brand" title="Brand" highlight :options="[{ label: 'Selected: Brand A', value: 'a' }]" default-value="a" />
+    <am-dropdown-item key="region" title="Region" disabled />
   </am-dropdown>
   <div class="page">
-    选择价格区间后「价格」会高亮
+    Pick a price range to highlight "Price"
   </div>
 </template>
 

@@ -2,6 +2,10 @@
 默认挂载到 `document.body`。通过 `getContainer` 指定挂载节点，设为 `false` 则渲染在当前位置。配合带有 `transform` 的容器，可以把弹出层限制在局部区域内。
 </docs>
 
+<docs lang="en-US">
+Mounted to `document.body` by default. Specify the mount node with `getContainer`, or set it to `false` to render in place. Together with a container that has a `transform`, the popup can be confined to a local area.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -11,11 +15,11 @@ const open = ref(false)
 <template>
   <div class="box">
     <am-button type="primary" @click="open = true">
-      在容器内弹出
+      Open in container
     </am-button>
     <am-popup v-model:open="open" :get-container="false" :lock-scroll="false" round>
       <div class="content">
-        渲染在当前容器内
+        Rendered inside this container
       </div>
     </am-popup>
   </div>
@@ -32,7 +36,7 @@ const open = ref(false)
   background: var(--am-color-fill-quaternary);
   border-radius: var(--am-border-radius);
 
-  /* 让内部 position: fixed 的弹出层以该容器为参照 */
+  /* Make the position: fixed popup inside use this container as its reference */
   transform: translateZ(0);
 }
 

@@ -2,6 +2,10 @@
 通过 `v-model:open` 控制键盘显示，`v-model:value` 绑定输入的字符串。点击键盘以外的区域会自动收起（示例中的输入区域阻止了事件冒泡，因此重复点击不会收起）；键盘不会抢占焦点，也不会锁定页面滚动。
 </docs>
 
+<docs lang="en-US">
+Control the visibility of the keyboard with `v-model:open` and bind the entered string with `v-model:value`. Tapping outside the keyboard hides it automatically (the input area in this demo stops event propagation, so tapping it again does not hide the keyboard); the keyboard does not steal focus or lock page scrolling.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -13,13 +17,13 @@ const value = ref('')
   <am-flex vertical gap="small">
     <div class="demo-field" :class="{ 'demo-field-focus': open }" @touchstart.stop @mousedown.stop @click="open = true">
       <span v-if="value">{{ value }}</span>
-      <span v-else class="demo-placeholder">点击输入手机号</span>
+      <span v-else class="demo-placeholder">Tap to enter phone number</span>
     </div>
     <am-button block @click="value = ''">
-      清空
+      Clear
     </am-button>
   </am-flex>
-  <am-number-keyboard v-model:open="open" v-model:value="value" :maxlength="11" close-button-text="完成" />
+  <am-number-keyboard v-model:open="open" v-model:value="value" :maxlength="11" close-button-text="Done" />
 </template>
 
 <style scoped>

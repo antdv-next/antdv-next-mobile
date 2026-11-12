@@ -24,7 +24,22 @@ export interface DemoMeta {
 const LANGS = ['vue', 'ts', 'tsx', 'js', 'json', 'css', 'html', 'bash', 'diff']
 const VIRTUAL_ID = 'virtual:am-docs'
 const RESOLVED_VIRTUAL_ID = `\0${VIRTUAL_ID}`
-const LOCALE = 'zh-CN'
+/** `zh-CN` is the source of truth: a page without an `en-US` file falls back to it. */
+const LOCALES = ['zh-CN', 'en-US'] as const
+type DocsLocale = typeof LOCALES[number]
+const DEFAULT_LOCALE: DocsLocale = 'zh-CN'
+const localeFileReg = /\.(zh-CN|en-US)\.md$/
+
+function localeOf(file: string): DocsLocale {
+  return (localeFileReg.exec(file)?.[1] as DocsLocale | undefined) ?? DEFAULT_LOCALE
+}
+
+/** Site paths follow antdv-next: English has no suffix, Chinese ends with `-cn`. */
+function localizeHref(href: string, locale: DocsLocale) {
+  if (locale !== 'zh-CN')
+    return href
+  return href.replace(/^(\/(?:components|docs)\/[\w-]+?)(?:-cn)?(?=$|[#?])/, '$1-cn')
+}
 
 let highlighterPromise: ReturnType<typeof createHighlighter> | undefined
 function getHighlighter() {
@@ -115,6 +130,9 @@ async function createRenderer() {
       tokens[idx].attrSet('target', '_blank')
       tokens[idx].attrSet('rel', 'noopener')
     }
+    else if (env?.locale) {
+      tokens[idx].attrSet('href', localizeHref(href, env.locale))
+    }
     return defaultLinkOpen(tokens, idx, options, env, self)
   }
 
@@ -154,42 +172,43 @@ function getRenderer() {
   return rendererPromise
 }
 
-function readDemoSource(file: string) {
+/** `<docs lang="zh-CN">` / `<docs lang="en-US">` blocks hold the demo description of each locale. */
+function readDemoSource(file: string, locale: DocsLocale) {
   const raw = fs.readFileSync(file, 'utf-8')
-  let desc = ''
+  const descs: Record<string, string> = {}
   const code = raw
     .replace(/<docs(?:\s+lang="([^"]*)")?\s*>([\s\S]*?)<\/docs>\s*/g, (_, lang: string | undefined, body: string) => {
-      if (!lang || lang === LOCALE)
-        desc = body.trim()
+      descs[lang || DEFAULT_LOCALE] = body.trim()
       return ''
     })
     .trim()
-  return { code, desc }
+  return { code, desc: descs[locale] ?? descs[DEFAULT_LOCALE] ?? '' }
 }
 
 async function transformMarkdown(source: string, id: string) {
   const { md, highlight } = await getRenderer()
   const { data, content } = parseFrontmatter(source)
   const dir = path.dirname(id)
+  const locale = localeOf(id)
   const demos: any[] = []
 
   const body = content
     .replace(/<\/?demo-group[^>]*>/g, '')
     .replace(demoReg, (_, src: string, _attrs: string, title: string) => {
       const file = path.resolve(dir, src)
-      const { code, desc } = readDemoSource(file)
+      const { code, desc } = readDemoSource(file, locale)
       const index = demos.length
       demos.push({
         id: path.basename(src, '.vue'),
         title: title.trim(),
-        descHtml: desc ? md.render(desc) : '',
+        descHtml: desc ? md.render(desc, { locale }) : '',
         codeHtml: highlight(code, 'vue'),
         code,
       })
       return `\n\n<DemoBlock v-bind="demos[${index}]"></DemoBlock>\n\n`
     })
 
-  const env: Record<string, any> = {}
+  const env: Record<string, any> = { locale }
   const html = md.render(body, env)
 
   return `<script setup>
@@ -209,25 +228,37 @@ ${html}
 `
 }
 
-function scan(root: string) {
+const FALLBACK_GROUP: Record<DocsLocale, string> = { 'zh-CN': '其他', 'en-US': 'Others' }
+const GUIDE_GROUP: Record<DocsLocale, string> = { 'zh-CN': '指南', 'en-US': 'Guide' }
+
+/** The file of `locale`, or the default locale one when it has not been translated yet. */
+function resolveLocaleFile(dir: string, base: string, locale: DocsLocale) {
+  const file = path.join(dir, `${base}.${locale}.md`)
+  if (fs.existsSync(file))
+    return { file, fileName: `${base}.${locale}.md` }
+  const fallback = path.join(dir, `${base}.${DEFAULT_LOCALE}.md`)
+  return fs.existsSync(fallback) ? { file: fallback, fileName: `${base}.${DEFAULT_LOCALE}.md` } : undefined
+}
+
+function scan(root: string, locale: DocsLocale) {
   const pagesDir = path.join(root, 'src/pages')
   const components: any[] = []
   const componentsDir = path.join(pagesDir, 'components')
   if (fs.existsSync(componentsDir)) {
     fs.readdirSync(componentsDir).sort().forEach((name) => {
-      const file = path.join(componentsDir, name, `index.${LOCALE}.md`)
-      if (!fs.existsSync(file))
+      const resolved = resolveLocaleFile(path.join(componentsDir, name), 'index', locale)
+      if (!resolved)
         return
-      const { data, content } = parseFrontmatter(fs.readFileSync(file, 'utf-8'))
+      const { data, content } = parseFrontmatter(fs.readFileSync(resolved.file, 'utf-8'))
       components.push({
         name,
         title: data.title ?? name,
         subtitle: data.subtitle ?? '',
         description: data.description ?? '',
-        group: data.group?.title ?? '其他',
+        group: data.group?.title ?? FALLBACK_GROUP[locale],
         groupOrder: data.group?.order ?? 99,
         order: data.order ?? 0,
-        page: `/src/pages/components/${name}/index.${LOCALE}.md`,
+        page: `/src/pages/components/${name}/${resolved.fileName}`,
         demos: extractDemos(content).map(demo => ({
           ...demo,
           file: `/src/pages/components/${name}/${demo.src.replace(/^\.\//, '')}`,
@@ -238,16 +269,19 @@ function scan(root: string) {
   const guides: any[] = []
   const docsDir = path.join(pagesDir, 'docs')
   if (fs.existsSync(docsDir)) {
-    fs.readdirSync(docsDir).filter(f => f.endsWith(`.${LOCALE}.md`)).forEach((fileName) => {
-      const { data } = parseFrontmatter(fs.readFileSync(path.join(docsDir, fileName), 'utf-8'))
-      const name = fileName.replace(`.${LOCALE}.md`, '')
+    const names = fs.readdirSync(docsDir)
+      .filter(f => f.endsWith(`.${DEFAULT_LOCALE}.md`))
+      .map(f => f.replace(`.${DEFAULT_LOCALE}.md`, ''))
+    names.forEach((name) => {
+      const resolved = resolveLocaleFile(docsDir, name, locale)!
+      const { data } = parseFrontmatter(fs.readFileSync(resolved.file, 'utf-8'))
       guides.push({
         name,
         title: data.title ?? name,
-        group: data.group?.title ?? '指南',
+        group: data.group?.title ?? GUIDE_GROUP[locale],
         groupOrder: data.group?.order ?? 0,
         order: data.order ?? 0,
-        page: `/src/pages/docs/${fileName}`,
+        page: `/src/pages/docs/${resolved.fileName}`,
       })
     })
   }
@@ -256,22 +290,25 @@ function scan(root: string) {
 }
 
 function generateVirtualModule(root: string) {
-  const { components, guides } = scan(root)
-  const componentCode = components.map((c) => {
-    const demos = c.demos.map((d: any) => `{ id: ${JSON.stringify(d.id)}, title: ${JSON.stringify(d.title)}, full: ${d.full}, load: () => import(${JSON.stringify(d.file)}) }`).join(', ')
-    const { page, demos: _demos, ...meta } = c
-    return `{ ...${JSON.stringify(meta)}, page: () => import(${JSON.stringify(page)}), demos: [${demos}] }`
-  }).join(',\n  ')
-  const guideCode = guides.map((g) => {
-    const { page, ...meta } = g
-    return `{ ...${JSON.stringify(meta)}, page: () => import(${JSON.stringify(page)}) }`
-  }).join(',\n  ')
-  return `export const components = [\n  ${componentCode}\n]\nexport const guides = [\n  ${guideCode}\n]\n`
+  const registries = LOCALES.map((locale) => {
+    const { components, guides } = scan(root, locale)
+    const componentCode = components.map((c) => {
+      const demos = c.demos.map((d: any) => `{ id: ${JSON.stringify(d.id)}, title: ${JSON.stringify(d.title)}, full: ${d.full}, load: () => import(${JSON.stringify(d.file)}) }`).join(', ')
+      const { page, demos: _demos, ...meta } = c
+      return `{ ...${JSON.stringify(meta)}, page: () => import(${JSON.stringify(page)}), demos: [${demos}] }`
+    }).join(',\n      ')
+    const guideCode = guides.map((g) => {
+      const { page, ...meta } = g
+      return `{ ...${JSON.stringify(meta)}, page: () => import(${JSON.stringify(page)}) }`
+    }).join(',\n      ')
+    return `  ${JSON.stringify(locale)}: {\n    components: [\n      ${componentCode}\n    ],\n    guides: [\n      ${guideCode}\n    ],\n  }`
+  })
+  return `export const docs = {\n${registries.join(',\n')},\n}\n`
 }
 
 /**
  * - `*.md` -> Vue SFC (frontmatter, toc, shiki, `<demo src>` blocks)
- * - `virtual:am-docs` -> component / guide registry built from the markdown files
+ * - `virtual:am-docs` -> component / guide registry of every locale, built from the markdown files
  * - `<docs>` custom blocks in demo SFCs are dropped from the runtime bundle
  */
 export function markdownPlugin(): Plugin {

@@ -2,6 +2,10 @@
 `gap` 支持预设的 `small`、`middle`、`large`，也可以传入数字（px）或任意 CSS 长度。
 </docs>
 
+<docs lang="en-US">
+`gap` supports the `small`, `middle` and `large` presets, as well as a number (px) or any CSS length.
+</docs>
+
 <template>
   <am-flex vertical gap="middle">
     <am-flex gap="small">
@@ -17,11 +21,11 @@
       <am-button>24px</am-button>
     </am-flex>
     <am-flex :gap="4">
-      <am-button>数字</am-button>
+      <am-button>Number</am-button>
       <am-button>4</am-button>
     </am-flex>
     <am-flex gap="2em">
-      <am-button>字符串</am-button>
+      <am-button>String</am-button>
       <am-button>2em</am-button>
     </am-flex>
   </am-flex>

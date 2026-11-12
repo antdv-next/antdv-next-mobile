@@ -2,10 +2,14 @@
 设置 `wrap` 后文字换行完整展示，不再滚动。
 </docs>
 
+<docs lang="en-US">
+With `wrap` set, the text wraps and is shown in full, and no longer scrolls.
+</docs>
+
 <template>
   <am-notice-bar
     wrap
     closable
-    content="在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准，优秀的代码读起来应该像一篇散文。"
+    content="The only valid measurement of code quality is how often people swear while reading it, and good code should read like well-written prose."
   />
 </template>

@@ -2,20 +2,24 @@
 `size` 提供三种尺寸；`centered` 让标签居中排列而不是等分宽度；`tabPlacement="bottom"` 把标签栏放到内容下方。
 </docs>
 
+<docs lang="en-US">
+`size` provides three sizes; `centered` centers the tabs instead of sharing the width equally; `tabPlacement="bottom"` puts the tab bar below the content.
+</docs>
+
 <script setup lang="ts">
 import type { TabsItem } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const items: TabsItem[] = [
-  { key: '1', label: '标签一', content: '内容一' },
-  { key: '2', label: '标签二', content: '内容二' },
-  { key: '3', label: '标签三', content: '内容三' },
+  { key: '1', label: 'Tab 1', content: 'Content 1' },
+  { key: '2', label: 'Tab 2', content: 'Content 2' },
+  { key: '3', label: 'Tab 3', content: 'Content 3' },
 ]
 
 const sizeOptions = [
-  { label: '小', value: 'small' },
-  { label: '中', value: 'middle' },
-  { label: '大', value: 'large' },
+  { label: 'Small', value: 'small' },
+  { label: 'Middle', value: 'middle' },
+  { label: 'Large', value: 'large' },
 ]
 const size = ref<'small' | 'middle' | 'large'>('middle')
 const centered = ref(true)
@@ -25,8 +29,8 @@ const bottom = ref(false)
 <template>
   <div class="toolbar">
     <am-segmented v-model:value="size" :options="sizeOptions" />
-    <label><am-switch v-model:checked="centered" size="small" /> 居中</label>
-    <label><am-switch v-model:checked="bottom" size="small" /> 底部</label>
+    <label><am-switch v-model:checked="centered" size="small" /> Centered</label>
+    <label><am-switch v-model:checked="bottom" size="small" /> Bottom</label>
   </div>
   <am-tabs
     :items="items"
@@ -40,6 +44,7 @@ const bottom = ref(false)
 <style scoped>
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   align-items: center;
   padding: 12px 16px;

@@ -2,17 +2,21 @@
 `column` 设置一行的列数，`span` 设置单项占据的列数，`'filled'` 占满当前行剩余的列。
 </docs>
 
+<docs lang="en-US">
+`column` sets the number of columns in a row, `span` sets the number of columns an item occupies, and `'filled'` takes up the remaining columns of the current row.
+</docs>
+
 <script setup lang="ts">
 const items = [
-  { key: 'product', label: '产品', content: '云数据库' },
-  { key: 'billing', label: '计费', content: '预付费' },
-  { key: 'time', label: '到期时间', content: '2027-09-01 00:00:00', span: 2 },
-  { key: 'region', label: '地域', content: '华东 1' },
-  { key: 'status', label: '状态', content: '运行中', span: 'filled' as const },
-  { key: 'remark', label: '备注', content: '最后一项会自动占满整行' },
+  { key: 'product', label: 'Product', content: 'Cloud Database' },
+  { key: 'billing', label: 'Billing', content: 'Prepaid' },
+  { key: 'time', label: 'Expires', content: '2027-09-01 00:00:00', span: 2 },
+  { key: 'region', label: 'Region', content: 'East China 1' },
+  { key: 'status', label: 'Status', content: 'Running', span: 'filled' as const },
+  { key: 'remark', label: 'Remark', content: 'The last item fills the whole row' },
 ]
 </script>
 
 <template>
-  <am-descriptions title="实例信息" :column="2" :items="items" />
+  <am-descriptions title="Instance Info" :column="2" :items="items" />
 </template>

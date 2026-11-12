@@ -2,26 +2,30 @@
 向左滑动露出 `rightActions` 中的按钮，点击按钮触发 `action` 事件并自动收起。
 </docs>
 
+<docs lang="en-US">
+Swipe left to reveal the buttons in `rightActions`. Clicking a button triggers the `action` event and closes automatically.
+</docs>
+
 <script setup lang="ts">
 import type { SwipeActionItem } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const rightActions: SwipeActionItem[] = [
-  { key: 'unread', text: '标为未读', color: 'default' },
-  { key: 'mute', text: '不再提醒', color: 'warning' },
-  { key: 'delete', text: '删除', color: 'danger' },
+  { key: 'unread', text: 'Unread', color: 'default' },
+  { key: 'mute', text: 'Mute', color: 'warning' },
+  { key: 'delete', text: 'Delete', color: 'danger' },
 ]
-const last = ref('向左滑动试试')
+const last = ref('Try swiping left')
 
 function onAction(action: SwipeActionItem) {
-  last.value = `点击了：${action.key}`
+  last.value = `Clicked: ${action.key}`
 }
 </script>
 
 <template>
   <am-swipe-action :right-actions="rightActions" @action="onAction">
     <div class="cell">
-      <span>向左滑动</span>
+      <span>Swipe left</span>
       <span class="cell-extra">{{ last }}</span>
     </div>
   </am-swipe-action>

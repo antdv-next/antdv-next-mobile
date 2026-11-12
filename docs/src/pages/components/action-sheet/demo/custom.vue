@@ -2,6 +2,10 @@
 默认插槽可以在动作列表上方放置任意内容，`action` 插槽用于自定义每个动作的渲染。设置 `closeOnAction` 为 `false` 后点击动作不会自动关闭。
 </docs>
 
+<docs lang="en-US">
+The default slot places any content above the action list, and the `action` slot customizes how each action is rendered. With `closeOnAction` set to `false`, clicking an action does not close the panel automatically.
+</docs>
+
 <script setup lang="ts">
 import type { ActionSheetAction } from 'antdv-next-mobile'
 import { CheckOutlined } from '@antdv-next/icons'
@@ -10,25 +14,25 @@ import { ref } from 'vue'
 const open = ref(false)
 const selected = ref('wechat')
 const actions: ActionSheetAction[] = [
-  { key: 'wechat', text: '微信支付' },
-  { key: 'alipay', text: '支付宝' },
-  { key: 'card', text: '银行卡' },
+  { key: 'wechat', text: 'WeChat Pay' },
+  { key: 'alipay', text: 'Alipay' },
+  { key: 'card', text: 'Bank card' },
 ]
 </script>
 
 <template>
   <am-button block @click="open = true">
-    自定义内容
+    Custom content
   </am-button>
   <am-action-sheet
     v-model:open="open"
     :actions="actions"
     :close-on-action="false"
-    cancel-text="完成"
+    cancel-text="Done"
     @action="selected = String($event.key)"
   >
     <div class="amount">
-      <small>支付金额</small>
+      <small>Amount</small>
       <strong>¥ 128.00</strong>
     </div>
     <template #action="{ action }">

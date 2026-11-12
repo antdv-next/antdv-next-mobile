@@ -2,6 +2,10 @@
 通过 `image` 指定图片地址。为保证图片高清且不被拉伸，请设置 `width` 和 `height`，并上传至少两倍尺寸的图片。
 </docs>
 
+<docs lang="en-US">
+Specify the image URL through `image`. To keep the image sharp and unstretched, set `width` and `height` and upload an image at least twice that size.
+</docs>
+
 <template>
   <am-watermark
     :height="30"

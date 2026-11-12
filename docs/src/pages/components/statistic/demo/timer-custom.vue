@@ -2,6 +2,10 @@
 `formatter` 插槽提供拆分好的时间数据，可以实现秒杀场景常见的数字块倒计时。
 </docs>
 
+<docs lang="en-US">
+The `formatter` slot provides the split time data, which can be used to build the digit block countdown common in flash sales.
+</docs>
+
 <script setup lang="ts">
 const deadline = Date.now() + 1000 * 60 * 60 * 5 + 1000 * 60 * 30
 
@@ -12,7 +16,7 @@ function pad(value: number) {
 
 <template>
   <div class="seckill">
-    <span class="seckill-title">限时秒杀</span>
+    <span class="seckill-title">Flash Sale</span>
     <am-statistic-timer :value="deadline">
       <template #formatter="{ time }">
         <span class="seckill-timer">

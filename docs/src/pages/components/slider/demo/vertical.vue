@@ -2,6 +2,10 @@
 设置 `vertical`（或 `orientation="vertical"`）得到垂直方向的滑动条，高度由 `--am-slider-vertical-height` 或 `style.height` 控制。
 </docs>
 
+<docs lang="en-US">
+Set `vertical` (or `orientation="vertical"`) for a vertical slider. The height is controlled by `--am-slider-vertical-height` or `style.height`.
+</docs>
+
 <script setup lang="ts">
 const marks = { 0: '0', 50: '50', 100: '100' }
 </script>

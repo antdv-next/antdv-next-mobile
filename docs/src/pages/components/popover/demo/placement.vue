@@ -2,6 +2,10 @@
 位置有十二个方向，与 PC 端一致。空间不足时会自动翻转到对侧并保持在屏幕内。
 </docs>
 
+<docs lang="en-US">
+There are twelve placements, the same as on PC. When there is not enough space it flips to the opposite side automatically and stays within the screen.
+</docs>
+
 <script setup lang="ts">
 import type { PopoverPlacement } from 'antdv-next-mobile'
 

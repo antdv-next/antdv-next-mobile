@@ -2,10 +2,14 @@
 设置 `height` 与 `itemHeight`，并通过 `fixed` 声明每一项的高度都固定，这是开销最小的模式。10,000 条数据只挂载可视区域附近的十几个节点，`visibleChange` 返回当前渲染的范围。
 </docs>
 
+<docs lang="en-US">
+Set `height` and `itemHeight`, and declare through `fixed` that every item has a fixed height, which is the cheapest mode. With 10,000 rows only a dozen or so nodes near the visible area are mounted, and `visibleChange` returns the currently rendered range.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const data = Array.from({ length: 10000 }, (_, index) => ({ id: index, name: `列表项 ${index + 1}` }))
+const data = Array.from({ length: 10000 }, (_, index) => ({ id: index, name: `Item ${index + 1}` }))
 const range = ref<[number, number]>([0, 0])
 
 function onVisibleChange(start: number, end: number) {
@@ -15,7 +19,7 @@ function onVisibleChange(start: number, end: number) {
 
 <template>
   <div class="demo-tip">
-    共 {{ data.length }} 条，已渲染第 {{ range[0] + 1 }} ~ {{ range[1] }} 条
+    {{ data.length }} rows, rendering {{ range[0] + 1 }} ~ {{ range[1] }}
   </div>
   <am-virtual-list
     :data="data"

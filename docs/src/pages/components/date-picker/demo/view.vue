@@ -2,6 +2,10 @@
 `DatePickerView`（即 `DatePicker.View`）是不带触发器与弹层的滚轮视图，可以直接嵌入页面，值随滚动实时更新。
 </docs>
 
+<docs lang="en-US">
+`DatePickerView` (i.e. `DatePicker.View`) is the wheel view without the trigger and the popup. It can be embedded directly in the page, and its value updates in real time while scrolling.
+</docs>
+
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { ref } from 'vue'

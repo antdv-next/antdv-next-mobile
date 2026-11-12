@@ -2,6 +2,10 @@
 通过 `color` 设置预设色或自定义颜色，`offset` 调整徽标位置，`count` 插槽可以放置自定义节点。
 </docs>
 
+<docs lang="en-US">
+Set a preset or custom color with `color`, adjust the badge position with `offset`, and place a custom node in the `count` slot.
+</docs>
+
 <script setup lang="ts">
 import { ClockCircleFilled } from '@antdv-next/icons'
 </script>

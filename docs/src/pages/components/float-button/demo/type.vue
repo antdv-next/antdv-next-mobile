@@ -2,6 +2,10 @@
 通过 `type` 改变按钮类型，`shape` 改变形状，`icon` 自定义图标，`content` 在图标下方显示文字；只设置 `content` 时仅显示文字。设置 `href` 后按钮渲染为链接。
 </docs>
 
+<docs lang="en-US">
+Change the button type with `type`, the shape with `shape`, customize the icon with `icon`, and show text below the icon with `content`; when only `content` is set, only the text is shown. With `href` set, the button is rendered as a link.
+</docs>
+
 <script setup lang="ts">
 import { CustomerServiceOutlined, QuestionCircleOutlined } from '@antdv-next/icons'
 
@@ -21,12 +25,12 @@ const abs = { position: 'absolute' } as const
       </template>
     </am-float-button>
     <am-float-button shape="square" :style="{ ...abs, insetInlineEnd: '144px' }" />
-    <am-float-button shape="square" type="primary" content="客服" :style="{ ...abs, insetInlineEnd: '84px' }">
+    <am-float-button shape="square" type="primary" content="Chat" :style="{ ...abs, insetInlineEnd: '84px' }">
       <template #icon>
         <CustomerServiceOutlined />
       </template>
     </am-float-button>
-    <am-float-button shape="square" content="帮助" href="https://github.com/antdv-next" target="_blank" :style="abs" />
+    <am-float-button shape="square" content="Help" href="https://github.com/antdv-next" target="_blank" :style="abs" />
   </div>
 </template>
 
@@ -39,7 +43,7 @@ const abs = { position: 'absolute' } as const
   border-radius: var(--am-border-radius);
 }
 
-/* 组件变量声明在悬浮按钮（组）的根节点上，需要在其自身上覆盖 */
+/* The component variables are declared on the root of the float button (group), so override them on that element */
 .demo-box > .am-float-button,
 .demo-box > .am-float-button-group {
   --am-float-button-inset-block-end: 24px;

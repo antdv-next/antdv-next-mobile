@@ -2,6 +2,10 @@
 通过 `icon` 属性或同名插槽在标签内放置图标。
 </docs>
 
+<docs lang="en-US">
+Place an icon inside the tag with the `icon` prop or the same-named slot.
+</docs>
+
 <script setup lang="ts">
 import { EnvironmentOutlined, FireFilled, GithubOutlined, StarFilled } from '@antdv-next/icons'
 import { h } from 'vue'
@@ -13,7 +17,7 @@ import { h } from 'vue'
       GitHub
     </am-tag>
     <am-tag color="volcano" :icon="h(FireFilled)">
-      热门
+      Hot
     </am-tag>
     <am-tag color="gold">
       <template #icon>
@@ -25,7 +29,7 @@ import { h } from 'vue'
       <template #icon>
         <EnvironmentOutlined />
       </template>
-      杭州
+      Hangzhou
     </am-tag>
   </am-space>
 </template>

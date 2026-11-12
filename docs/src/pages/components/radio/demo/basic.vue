@@ -2,6 +2,10 @@
 最简单的用法，在 `Radio.Group` 中通过 `v-model:value` 绑定选中的值，`change` 事件的参数与 PC 端一致。
 </docs>
 
+<docs lang="en-US">
+The simplest usage: bind the selected value with `v-model:value` on `Radio.Group`. The parameter of the `change` event is the same as on PC.
+</docs>
+
 <script setup lang="ts">
 import type { RadioChangeEvent } from 'antdv-next-mobile'
 import { ref } from 'vue'

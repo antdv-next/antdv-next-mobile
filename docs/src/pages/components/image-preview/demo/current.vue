@@ -2,6 +2,10 @@
 `v-model:current` 控制当前展示的图片，`change` 事件在切换时触发。设置 `loop` 为 `false` 后滑到首尾停止。
 </docs>
 
+<docs lang="en-US">
+`v-model:current` controls the image currently shown, and the `change` event is triggered on switching. With `loop` set to `false`, swiping stops at the first and last image.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -35,7 +39,7 @@ function preview(index: number) {
     <img v-for="(src, index) in images" :key="src" :src="src" class="thumb" alt="" @click="preview(index)">
   </div>
   <p class="tip">
-    当前位置：{{ current + 1 }}
+    Current: {{ current + 1 }}
   </p>
   <am-image-preview v-model:open="open" v-model:current="current" :images="images" :loop="false" />
 </template>

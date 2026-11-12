@@ -2,6 +2,10 @@
 `left` / `right` 插槽可以完全自定义操作区域，例如图标按钮。自定义内容需要自行调用 `close()` 收起。
 </docs>
 
+<docs lang="en-US">
+The `left` / `right` slots fully customize the action area, e.g. with icon buttons. Custom content has to call `close()` itself to close.
+</docs>
+
 <script setup lang="ts">
 import { DeleteOutlined, StarOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -18,8 +22,8 @@ function toggleStar() {
 <template>
   <am-swipe-action ref="swipeRef">
     <div class="cell">
-      <span>自定义操作区域</span>
-      <span class="cell-extra">{{ starred ? '已收藏' : '未收藏' }}</span>
+      <span>Custom actions</span>
+      <span class="cell-extra">{{ starred ? 'Starred' : 'Not starred' }}</span>
     </div>
     <template #right>
       <div class="actions">

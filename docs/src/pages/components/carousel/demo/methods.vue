@@ -2,6 +2,10 @@
 通过 ref 调用 `prev`、`next`、`goTo`。`infinite` 为 `false` 时滑到首尾会停止，`draggable` 为 `false` 时禁用手势。
 </docs>
 
+<docs lang="en-US">
+Call `prev`, `next` and `goTo` through a ref. When `infinite` is `false` it stops at the first and last slides; when `draggable` is `false` gestures are disabled.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -17,16 +21,16 @@ const carouselRef = ref()
   </am-carousel>
   <am-flex gap="small" wrap style="margin-top: 12px">
     <am-button size="small" @click="carouselRef?.prev()">
-      上一页
+      Prev
     </am-button>
     <am-button size="small" @click="carouselRef?.next()">
-      下一页
+      Next
     </am-button>
     <am-button size="small" @click="carouselRef?.goTo(0)">
-      回到第一页
+      First
     </am-button>
     <am-button size="small" @click="carouselRef?.goTo(3, true)">
-      无动画跳到末页
+      Jump to last
     </am-button>
   </am-flex>
 </template>

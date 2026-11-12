@@ -2,6 +2,10 @@
 内置 `small`、`middle`、`large` 三种尺寸，也可以传入数字自定义大小，图标和字符会按比例缩放。
 </docs>
 
+<docs lang="en-US">
+Three sizes are built in: `small`, `middle` and `large`. A number can also be passed for a custom size, and the icon and characters scale proportionally.
+</docs>
+
 <script setup lang="ts">
 import { UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'

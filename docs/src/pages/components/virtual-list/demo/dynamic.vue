@@ -2,14 +2,18 @@
 不设置 `fixed` 时，列表项的高度由内容决定：`itemHeight` 只是渲染前的预估值，实际高度会在渲染后测量并缓存，内容变化（如展开 / 收起）时自动更新。
 </docs>
 
+<docs lang="en-US">
+Without `fixed`, the item height is determined by the content: `itemHeight` is only an estimate before rendering, the actual height is measured and cached after rendering, and it is updated automatically when the content changes (e.g. expand / collapse).
+</docs>
+
 <script setup lang="ts">
 import { reactive } from 'vue'
 
-const sentence = '虚拟列表只渲染可视区域附近的列表项。'
+const sentence = 'The virtual list only renders the items near the visible area. '
 const data = reactive(
   Array.from({ length: 3000 }, (_, index) => ({
     id: index,
-    title: `第 ${index + 1} 条`,
+    title: `Item ${index + 1}`,
     content: sentence.repeat((index % 5) + 1),
     expanded: false,
   })),
@@ -23,14 +27,14 @@ const data = reactive(
         <div class="demo-card-title">
           {{ item.title }}
           <am-tag v-if="item.expanded" color="processing">
-            已展开
+            Expanded
           </am-tag>
         </div>
         <div class="demo-card-content">
           {{ item.content }}
         </div>
         <div v-if="item.expanded" class="demo-card-extra">
-          点击可以收起。高度变化后，后面的列表项会自动重新定位。
+          Tap to collapse. After the height changes, the following items are repositioned automatically.
         </div>
       </div>
     </template>

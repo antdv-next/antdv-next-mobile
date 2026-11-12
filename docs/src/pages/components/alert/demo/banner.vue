@@ -2,10 +2,14 @@
 页面顶部通告形式，通栏展示，默认有图标且 `type` 为 `warning`。
 </docs>
 
+<docs lang="en-US">
+Displayed as a full-width banner at the top of the page, with an icon and `type` set to `warning` by default.
+</docs>
+
 <template>
   <am-flex vertical gap="small">
-    <am-alert banner title="系统将于今晚 23:00 进行升级维护" />
-    <am-alert banner closable title="当前处于弱网环境，部分内容可能加载缓慢" type="info" />
-    <am-alert banner type="error" :show-icon="false" title="不带图标的错误公告" />
+    <am-alert banner title="Maintenance starts at 23:00 tonight" />
+    <am-alert banner closable title="Weak network, some content may load slowly" type="info" />
+    <am-alert banner type="error" :show-icon="false" title="Error banner without icon" />
   </am-flex>
 </template>

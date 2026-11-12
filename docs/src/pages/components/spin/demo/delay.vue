@@ -2,6 +2,10 @@
 设置 `delay` 后，加载时间短于延迟的请求不会出现加载效果，避免界面闪烁。
 </docs>
 
+<docs lang="en-US">
+With `delay` set, requests that finish sooner than the delay show no loading effect, which avoids flashing.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -19,15 +23,15 @@ function request(duration: number) {
   <am-flex vertical gap="middle">
     <am-spin :spinning="loading" :delay="500">
       <div class="delay-box">
-        延迟 500ms 显示加载效果
+        Loading shows after 500ms
       </div>
     </am-spin>
     <am-flex gap="small">
       <am-button block @click="request(300)">
-        请求 300ms
+        Request 300ms
       </am-button>
       <am-button type="primary" block @click="request(2000)">
-        请求 2s
+        Request 2s
       </am-button>
     </am-flex>
   </am-flex>

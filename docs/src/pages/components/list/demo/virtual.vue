@@ -2,6 +2,10 @@
 数据模式下设置 `virtual` 与 `height` 开启虚拟滚动：10,000 条数据只渲染可视区域附近的列表项，列表项高度可以不一致（渲染后自动测量）。`scrollTo` 方法可滚动到指定下标或 `rowKey`；滚动到底部附近会触发 `reachEnd`，可用于无限加载。
 </docs>
 
+<docs lang="en-US">
+Set `virtual` and `height` in data mode to enable virtual scrolling: with 10,000 rows only the items near the visible area are rendered, and item heights may differ (they are measured automatically after rendering). The `scrollTo` method scrolls to a given index or `rowKey`; scrolling near the bottom triggers `reachEnd`, which can be used for infinite loading.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -14,7 +18,7 @@ interface Message {
 function create(start: number, length: number): Message[] {
   return Array.from({ length }, (_, i) => {
     const id = start + i
-    return { id, title: `消息 ${id + 1}`, description: id % 4 === 0 ? '这条消息带有一行描述，高度与其他项不同' : undefined }
+    return { id, title: `Message ${id + 1}`, description: id % 4 === 0 ? 'This message has a description line, so its height differs' : undefined }
   })
 }
 
@@ -36,7 +40,7 @@ function loadMore() {
 <template>
   <am-list
     ref="listRef"
-    :header="`共 ${messages.length} 条消息`"
+    :header="`${messages.length} messages`"
     :data-source="messages"
     row-key="id"
     virtual
@@ -51,13 +55,13 @@ function loadMore() {
   <div style="padding: 12px 16px">
     <am-flex gap="small">
       <am-button block @click="listRef?.scrollTo(0)">
-        顶部
+        Top
       </am-button>
       <am-button block @click="listRef?.scrollTo({ index: 4999, align: 'center' })">
-        第 5000 条
+        No. 5000
       </am-button>
       <am-button block @click="listRef?.scrollTo({ index: messages.length - 1 })">
-        底部
+        Bottom
       </am-button>
     </am-flex>
   </div>

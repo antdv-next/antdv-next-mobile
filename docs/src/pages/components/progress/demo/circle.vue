@@ -2,6 +2,10 @@
 圈形的进度，`size` 设置直径。
 </docs>
 
+<docs lang="en-US">
+A circular progress bar, `size` sets the diameter.
+</docs>
+
 <template>
   <am-flex gap="middle" align="center" wrap>
     <am-progress type="circle" :percent="75" :size="96" />

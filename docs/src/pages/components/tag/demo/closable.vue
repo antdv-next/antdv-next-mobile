@@ -2,6 +2,10 @@
 设置 `closable` 显示关闭按钮。点击后触发 `close` 事件并自动隐藏；在数据驱动的列表中，调用 `event.preventDefault()` 后由数据决定是否移除。
 </docs>
 
+<docs lang="en-US">
+Set `closable` to show the close button. Tapping it triggers the `close` event and hides the tag automatically; in a data-driven list, call `event.preventDefault()` and let the data decide whether to remove it.
+</docs>
+
 <script setup lang="ts">
 import { CloseCircleFilled } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -28,18 +32,18 @@ function remove(event: MouseEvent, tag: string) {
         {{ tag }}
       </am-tag>
       <am-button v-if="tags.length < 4" size="small" type="link" @click="tags = ['Vue', 'TypeScript', 'Vite', 'Vitest']">
-        重置
+        Reset
       </am-button>
     </am-space>
     <am-space wrap>
       <am-tag closable>
-        自动隐藏
+        Auto hide
       </am-tag>
       <am-tag color="error" closable>
         <template #closeIcon>
           <CloseCircleFilled />
         </template>
-        自定义图标
+        Custom icon
       </am-tag>
     </am-space>
   </am-space>

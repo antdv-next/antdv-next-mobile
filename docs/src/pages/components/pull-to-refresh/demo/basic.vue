@@ -2,17 +2,21 @@
 下拉超过阈值后松手触发 `refresh`，`v-model:refreshing` 在数据返回后置为 `false`。
 </docs>
 
+<docs lang="en-US">
+Releasing after pulling beyond the threshold fires `refresh`; set `v-model:refreshing` to `false` once the data has returned.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const refreshing = ref(false)
 const count = ref(0)
-const list = ref(Array.from({ length: 6 }, (_, i) => `列表项 ${i + 1}`))
+const list = ref(Array.from({ length: 6 }, (_, i) => `Item ${i + 1}`))
 
 function onRefresh() {
   setTimeout(() => {
     count.value += 1
-    list.value = Array.from({ length: 6 }, (_, i) => `第 ${count.value} 次刷新 - 列表项 ${i + 1}`)
+    list.value = Array.from({ length: 6 }, (_, i) => `Refresh ${count.value} - Item ${i + 1}`)
     refreshing.value = false
   }, 1000)
 }

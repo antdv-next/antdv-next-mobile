@@ -2,6 +2,10 @@
 `componentSize` 与 `componentDisabled` 统一控制内部组件的尺寸和禁用状态。
 </docs>
 
+<docs lang="en-US">
+`componentSize` and `componentDisabled` control the size and disabled state of the inner components in one place.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -17,16 +21,16 @@ const disabled = ref(false)
       :options="[{ label: 'Small', value: 'small' }, { label: 'Middle', value: 'middle' }, { label: 'Large', value: 'large' }]"
     />
     <am-flex gap="small" align="center">
-      禁用 <am-switch v-model:checked="disabled" />
+      Disabled <am-switch v-model:checked="disabled" />
     </am-flex>
     <am-config-provider :component-size="size" :component-disabled="disabled">
       <am-flex vertical gap="small">
-        <am-input placeholder="请输入" />
+        <am-input placeholder="Please enter" />
         <am-flex gap="small" align="center" wrap>
           <am-button type="primary">
-            按钮
+            Button
           </am-button>
-          <am-button>按钮</am-button>
+          <am-button>Button</am-button>
           <am-switch />
         </am-flex>
       </am-flex>

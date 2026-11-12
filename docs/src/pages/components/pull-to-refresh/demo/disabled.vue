@@ -2,6 +2,10 @@
 设置 `disabled` 后不响应下拉手势。
 </docs>
 
+<docs lang="en-US">
+With `disabled` set, the pull gesture is ignored.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -17,12 +21,12 @@ function onRefresh() {
 
 <template>
   <am-button size="small" style="margin-bottom: 12px" @click="disabled = !disabled">
-    {{ disabled ? '启用下拉刷新' : '禁用下拉刷新' }}
+    {{ disabled ? 'Enable pull to refresh' : 'Disable pull to refresh' }}
   </am-button>
   <am-pull-to-refresh v-model:refreshing="refreshing" :disabled="disabled" @refresh="onRefresh">
     <ul class="list">
       <li v-for="i in 5" :key="i">
-        列表项 {{ i }}
+        Item {{ i }}
       </li>
     </ul>
   </am-pull-to-refresh>

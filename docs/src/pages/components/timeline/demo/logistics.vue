@@ -2,12 +2,16 @@
 使用 `contentRender` 插槽自定义内容结构，实现移动端常见的物流轨迹。
 </docs>
 
+<docs lang="en-US">
+Use the `contentRender` slot to customize the content structure and build the logistics tracking that is common on mobile.
+</docs>
+
 <script setup lang="ts">
 const items = [
-  { key: 1, status: '已签收', desc: '你的快递已由本人签收，感谢使用。', time: '09-03 14:21', color: 'green' },
-  { key: 2, status: '派送中', desc: '快递员正在为你派送，请保持电话畅通。', time: '09-03 08:40' },
-  { key: 3, status: '运输中', desc: '快件已到达【杭州转运中心】。', time: '09-02 21:15', color: 'gray' },
-  { key: 4, status: '已揽收', desc: '【上海市】快递员已揽收。', time: '09-01 18:02', color: 'gray' },
+  { key: 1, status: 'Delivered', desc: 'Your parcel has been signed for. Thank you.', time: '09-03 14:21', color: 'green' },
+  { key: 2, status: 'Out for delivery', desc: 'The courier is on the way. Please keep your phone on.', time: '09-03 08:40' },
+  { key: 3, status: 'In transit', desc: 'Parcel arrived at Hangzhou transit center.', time: '09-02 21:15', color: 'gray' },
+  { key: 4, status: 'Picked up', desc: 'Picked up by the courier in Shanghai.', time: '09-01 18:02', color: 'gray' },
 ]
 </script>
 

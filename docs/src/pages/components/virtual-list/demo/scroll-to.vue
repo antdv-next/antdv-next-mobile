@@ -2,11 +2,15 @@
 通过 ref 调用 `scrollTo`：传入数字滚动到指定位置，传入 `{ index }` 或 `{ key }` 滚动到指定的项，`align` 控制目标项停在可视区域的顶部、中间或底部。
 </docs>
 
+<docs lang="en-US">
+Call `scrollTo` through a ref: pass a number to scroll to a position, pass `{ index }` or `{ key }` to scroll to a specific item, and `align` controls whether the target item rests at the top, middle or bottom of the visible area.
+</docs>
+
 <script setup lang="ts">
 import type { VirtualListExpose } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
-const data = Array.from({ length: 10000 }, (_, index) => ({ id: `user-${index}`, name: `用户 ${index + 1}` }))
+const data = Array.from({ length: 10000 }, (_, index) => ({ id: `user-${index}`, name: `User ${index + 1}` }))
 const listRef = ref<VirtualListExpose>()
 const active = ref('')
 
@@ -25,16 +29,16 @@ function toKey(key: string) {
   <div style="padding: 12px 16px">
     <am-flex gap="small" wrap>
       <am-button size="small" @click="listRef?.scrollTo(0)">
-        顶部
+        Top
       </am-button>
       <am-button size="small" @click="toIndex(4999)">
-        index: 4999（居中）
+        index: 4999 (center)
       </am-button>
       <am-button size="small" @click="toKey('user-8000')">
-        key: user-8000（置顶）
+        key: user-8000 (start)
       </am-button>
       <am-button size="small" @click="toIndex(data.length - 1)">
-        底部
+        Bottom
       </am-button>
     </am-flex>
   </div>

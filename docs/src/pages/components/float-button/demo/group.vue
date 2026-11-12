@@ -2,6 +2,10 @@
 使用 `FloatButton.Group`（`<am-float-button-group>`）把多个按钮组合在一起。`shape` 作用于组内所有按钮，方形的按钮组会合并为一张卡片。
 </docs>
 
+<docs lang="en-US">
+Use `FloatButton.Group` (`<am-float-button-group>`) to group multiple buttons together. `shape` applies to all buttons in the group, and a square button group is merged into a single card.
+</docs>
+
 <script setup lang="ts">
 import { CommentOutlined, CustomerServiceOutlined, QuestionCircleOutlined } from '@antdv-next/icons'
 
@@ -33,7 +37,7 @@ const abs = { position: 'absolute' } as const
           <QuestionCircleOutlined />
         </template>
       </am-float-button>
-      <am-float-button content="评论" />
+      <am-float-button content="Reply" />
       <am-float-button>
         <template #icon>
           <CustomerServiceOutlined />
@@ -52,7 +56,7 @@ const abs = { position: 'absolute' } as const
   border-radius: var(--am-border-radius);
 }
 
-/* 组件变量声明在悬浮按钮（组）的根节点上，需要在其自身上覆盖 */
+/* The component variables are declared on the root of the float button (group), so override them on that element */
 .demo-box > .am-float-button,
 .demo-box > .am-float-button-group {
   --am-float-button-inset-block-end: 24px;

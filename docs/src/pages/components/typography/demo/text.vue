@@ -2,6 +2,10 @@
 内置不同样式的文本：语义类型、禁用、标记、代码、键盘、下划线、删除线、加粗与斜体。
 </docs>
 
+<docs lang="en-US">
+Built-in text styles: semantic types, disabled, mark, code, keyboard, underline, delete, strong and italic.
+</docs>
+
 <template>
   <am-flex vertical gap="small">
     <am-typography-text>Antdv Next (default)</am-typography-text>
@@ -42,7 +46,7 @@
       Antdv Next (italic)
     </am-typography-text>
     <am-typography-text strong underline type="danger">
-      组合使用 (strong + underline + danger)
+      Combined (strong + underline + danger)
     </am-typography-text>
   </am-flex>
 </template>

@@ -2,6 +2,10 @@
 `radius` 设置圆角，`round` 显示为圆形（宽高相等时）。
 </docs>
 
+<docs lang="en-US">
+`radius` sets the border radius, and `round` displays the image as a circle (when the width and height are equal).
+</docs>
+
 <script setup lang="ts">
 function createImage(text: string, color: string, width = 300, height = 300) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`

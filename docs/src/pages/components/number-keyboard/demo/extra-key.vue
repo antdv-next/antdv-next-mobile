@@ -2,6 +2,10 @@
 `extraKey` 设置额外按键：默认样式支持左下角 1 个（如身份证号的 `X`、金额的小数点），`custom` 样式支持最多 2 个。
 </docs>
 
+<docs lang="en-US">
+`extraKey` sets the extra keys: the default style supports 1 at the bottom left (such as `X` for an ID number or a decimal point for an amount), and the `custom` style supports up to 2.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -13,23 +17,23 @@ const double = ref('')
 
 <template>
   <am-list>
-    <am-list-item title="身份证号（X 键）" :extra="id || '点击输入'" clickable @click="current = 'id'" />
-    <am-list-item title="带小数点" :extra="decimal || '点击输入'" clickable @click="current = 'decimal'" />
-    <am-list-item title="两个额外按键" :extra="double || '点击输入'" clickable @click="current = 'double'" />
+    <am-list-item title="ID number (X key)" :extra="id || 'Tap to enter'" clickable @click="current = 'id'" />
+    <am-list-item title="Decimal point" :extra="decimal || 'Tap to enter'" clickable @click="current = 'decimal'" />
+    <am-list-item title="Two extra keys" :extra="double || 'Tap to enter'" clickable @click="current = 'double'" />
   </am-list>
   <am-number-keyboard
     v-model:value="id"
     :open="current === 'id'"
     extra-key="X"
     :maxlength="18"
-    close-button-text="完成"
+    close-button-text="Done"
     @update:open="current = ''"
   />
   <am-number-keyboard
     v-model:value="decimal"
     :open="current === 'decimal'"
     extra-key="."
-    close-button-text="完成"
+    close-button-text="Done"
     @update:open="current = ''"
   />
   <am-number-keyboard

@@ -2,6 +2,10 @@
 `direction="up"` 时滚动到顶部附近触发加载，适用于聊天记录。插入历史数据后需要自行保持滚动位置。
 </docs>
 
+<docs lang="en-US">
+With `direction="up"`, loading is triggered when scrolled near the top, which suits chat records. You need to keep the scroll position yourself after inserting the history data.
+</docs>
+
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from 'vue'
 
@@ -11,7 +15,7 @@ const loading = ref(false)
 const hasMore = ref(true)
 
 onMounted(() => {
-  // 初始定位到底部
+  // start at the bottom
   scroller.value!.scrollTop = scroller.value!.scrollHeight
 })
 
@@ -25,7 +29,7 @@ function onLoad() {
     if (list.value[0] <= 1)
       hasMore.value = false
     await nextTick()
-    // 保持可视内容不跳动
+    // keep the visible content from jumping
     el.scrollTop += el.scrollHeight - prevHeight
     loading.value = false
   }, 800)
@@ -40,12 +44,12 @@ function onLoad() {
       :has-more="hasMore"
       :threshold="20"
       :immediate-check="false"
-      finished-text="没有更早的消息了"
+      finished-text="No earlier messages"
       @load="onLoad"
     >
       <ul class="list">
         <li v-for="item in list" :key="item">
-          消息 {{ item }}
+          Message {{ item }}
         </li>
       </ul>
     </am-infinite-scroll>

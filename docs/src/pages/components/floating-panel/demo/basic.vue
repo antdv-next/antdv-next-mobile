@@ -2,15 +2,19 @@
 默认有两个锚点：`100px` 与可用高度的 60%。上下拖动面板，松手后吸附到最近的锚点；完全展开后内容区域可以滚动。
 </docs>
 
+<docs lang="en-US">
+There are two anchors by default: `100px` and 60% of the available height. Drag the panel up and down, and it snaps to the nearest anchor after release; the content area becomes scrollable once fully expanded.
+</docs>
+
 <template>
   <div class="stage">
     <p class="stage-tip">
-      背后的内容依然可以操作
+      The content behind is still interactive
     </p>
     <am-floating-panel :fixed="false">
       <ul class="list">
         <li v-for="i in 20" :key="i">
-          列表项 {{ i }}
+          Item {{ i }}
         </li>
       </ul>
     </am-floating-panel>

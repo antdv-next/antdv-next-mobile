@@ -2,16 +2,20 @@
 `mode="alternate"` 让内容在时间轴两侧轮流出现。
 </docs>
 
+<docs lang="en-US">
+`mode="alternate"` makes the content appear alternately on both sides of the timeline.
+</docs>
+
 <script setup lang="ts">
 import { ClockCircleOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 
 const items = [
-  { content: '创建服务现场' },
-  { content: '初步排除网络异常', color: 'green' },
-  { content: '技术测试异常，需要进一步排查', icon: () => h(ClockCircleOutlined) },
-  { content: '网络异常正在修复', color: 'red' },
-  { content: '修复完成', title: '09-02' },
+  { content: 'Create a services site' },
+  { content: 'Solve initial network problems', color: 'green' },
+  { content: 'Testing failed, needs more checks', icon: () => h(ClockCircleOutlined) },
+  { content: 'Network problems being solved', color: 'red' },
+  { content: 'Fixed', title: '09-02' },
 ]
 </script>
 

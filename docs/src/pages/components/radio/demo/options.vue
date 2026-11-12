@@ -2,6 +2,10 @@
 通过 `options` 快速生成一组单选框，支持字符串、数字或 `{ label, value, disabled }` 对象。
 </docs>
 
+<docs lang="en-US">
+Quickly generate a group of radios with `options`, which supports strings, numbers or `{ label, value, disabled }` objects.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -10,9 +14,9 @@ const plain = ['Apple', 'Pear', 'Orange']
 
 const city = ref('hz')
 const options = [
-  { label: '杭州', value: 'hz' },
-  { label: '上海', value: 'sh' },
-  { label: '北京', value: 'bj', disabled: true },
+  { label: 'Hangzhou', value: 'hz' },
+  { label: 'Shanghai', value: 'sh' },
+  { label: 'Beijing', value: 'bj', disabled: true },
 ]
 </script>
 

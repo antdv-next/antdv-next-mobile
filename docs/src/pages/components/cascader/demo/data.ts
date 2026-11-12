@@ -2,60 +2,60 @@ import type { CascaderOption } from 'antdv-next-mobile'
 
 export const regions: CascaderOption[] = [
   {
-    label: '浙江省',
+    label: 'Zhejiang',
     value: 'zhejiang',
     children: [
       {
-        label: '杭州市',
+        label: 'Hangzhou',
         value: 'hangzhou',
         children: [
-          { label: '西湖区', value: 'xihu' },
-          { label: '余杭区', value: 'yuhang' },
-          { label: '滨江区', value: 'binjiang' },
-          { label: '萧山区', value: 'xiaoshan' },
+          { label: 'Xihu', value: 'xihu' },
+          { label: 'Yuhang', value: 'yuhang' },
+          { label: 'Binjiang', value: 'binjiang' },
+          { label: 'Xiaoshan', value: 'xiaoshan' },
         ],
       },
       {
-        label: '宁波市',
+        label: 'Ningbo',
         value: 'ningbo',
         children: [
-          { label: '海曙区', value: 'haishu' },
-          { label: '鄞州区', value: 'yinzhou' },
+          { label: 'Haishu', value: 'haishu' },
+          { label: 'Yinzhou', value: 'yinzhou' },
         ],
       },
-      { label: '舟山市（暂未开通）', value: 'zhoushan', disabled: true },
+      { label: 'Zhoushan (unavailable)', value: 'zhoushan', disabled: true },
     ],
   },
   {
-    label: '江苏省',
+    label: 'Jiangsu',
     value: 'jiangsu',
     children: [
       {
-        label: '南京市',
+        label: 'Nanjing',
         value: 'nanjing',
         children: [
-          { label: '玄武区', value: 'xuanwu' },
-          { label: '鼓楼区', value: 'gulou' },
-          { label: '建邺区', value: 'jianye' },
+          { label: 'Xuanwu', value: 'xuanwu' },
+          { label: 'Gulou', value: 'gulou' },
+          { label: 'Jianye', value: 'jianye' },
         ],
       },
       {
-        label: '苏州市',
+        label: 'Suzhou',
         value: 'suzhou',
         children: [
-          { label: '姑苏区', value: 'gusu' },
-          { label: '吴中区', value: 'wuzhong' },
+          { label: 'Gusu', value: 'gusu' },
+          { label: 'Wuzhong', value: 'wuzhong' },
         ],
       },
     ],
   },
   {
-    label: '上海市',
+    label: 'Shanghai',
     value: 'shanghai',
     children: [
-      { label: '黄浦区', value: 'huangpu' },
-      { label: '徐汇区', value: 'xuhui' },
-      { label: '浦东新区', value: 'pudong' },
+      { label: 'Huangpu', value: 'huangpu' },
+      { label: 'Xuhui', value: 'xuhui' },
+      { label: 'Pudong', value: 'pudong' },
     ],
   },
 ]

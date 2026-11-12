@@ -2,11 +2,15 @@
 通过 `--am-index-bar-highlight-color` 变量修改高亮颜色；`select` 在点击或拖动索引时触发，`change` 在滚动导致激活锚点变化时触发。
 </docs>
 
+<docs lang="en-US">
+Change the highlight color with the `--am-index-bar-highlight-color` variable; `select` is triggered when an index is tapped or dragged onto, and `change` is triggered when scrolling changes the active anchor.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F']
-const log = ref('滚动列表或点击右侧索引')
+const log = ref('Scroll the list or tap an index')
 
 function handleSelect(index: string | number) {
   log.value = `select: ${index}`
@@ -26,7 +30,7 @@ function handleChange(index: string | number) {
       <template v-for="letter in letters" :key="letter">
         <am-index-bar-anchor :index="letter" />
         <am-list :bordered="false">
-          <am-list-item v-for="i in 4" :key="i" :title="`${letter} 列表项 ${i}`" />
+          <am-list-item v-for="i in 4" :key="i" :title="`${letter} Item ${i}`" />
         </am-list>
       </template>
     </am-index-bar>

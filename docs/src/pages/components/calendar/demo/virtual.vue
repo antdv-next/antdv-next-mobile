@@ -2,6 +2,10 @@
 月份列表默认开启虚拟滚动（`virtual`）：可选范围为 10 年（120 个月、3,600 多天）时，也只渲染可视区域附近的几个月份。`scrollToDate` 可以直接跳到任意日期。
 </docs>
 
+<docs lang="en-US">
+The month list uses virtual scrolling by default (`virtual`): even with a selectable range of 10 years (120 months, more than 3,600 days), only the few months near the visible area are rendered. `scrollToDate` jumps straight to any date.
+</docs>
+
 <script setup lang="ts">
 import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
@@ -17,22 +21,22 @@ const calendarRef = ref<{ scrollToDate: (date: Dayjs) => void }>()
 
 <template>
   <am-list>
-    <am-list-item title="选择日期（10 年范围）" :extra="value ? value.format('YYYY-MM-DD') : '请选择'" clickable @click="open = true" />
+    <am-list-item title="Select a date (10 years)" :extra="value ? value.format('YYYY-MM-DD') : 'Please select'" clickable @click="open = true" />
   </am-list>
   <am-calendar ref="calendarRef" v-model:open="open" v-model:value="value" :min-date="minDate" :max-date="maxDate">
     <template #footer="{ confirm, disabled }">
       <am-flex gap="small">
         <am-button @click="calendarRef?.scrollToDate(minDate)">
-          最早
+          Earliest
         </am-button>
         <am-button @click="calendarRef?.scrollToDate(dayjs())">
-          今天
+          Today
         </am-button>
         <am-button @click="calendarRef?.scrollToDate(maxDate)">
-          最晚
+          Latest
         </am-button>
         <am-button type="primary" block :disabled="disabled" @click="confirm">
-          确定
+          OK
         </am-button>
       </am-flex>
     </template>

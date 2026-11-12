@@ -2,6 +2,10 @@
 `closable` 显示关闭按钮，`extra` 用于放置「查看详情」等额外操作。
 </docs>
 
+<docs lang="en-US">
+`closable` shows the close button, and `extra` holds an extra action such as "View details".
+</docs>
+
 <script setup lang="ts">
 import { RightOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -12,20 +16,20 @@ const count = ref(0)
 
 <template>
   <am-flex vertical gap="small">
-    <am-notice-bar v-if="visible" closable content="点击右侧按钮关闭通告" @close="visible = false" />
-    <am-notice-bar color="info" :content="`点击整条通告查看详情（已点击 ${count} 次）`" @click="count++">
+    <am-notice-bar v-if="visible" closable content="Tap the button on the right to close" @close="visible = false" />
+    <am-notice-bar color="info" :content="`Tap the notice for details (tapped ${count} times)`" @click="count++">
       <template #extra>
         <RightOutlined />
       </template>
     </am-notice-bar>
-    <am-notice-bar color="error" closable content="同时展示额外操作与关闭按钮">
+    <am-notice-bar color="error" closable content="Extra action with a close button">
       <template #extra>
-        <span @click.stop>查看详情</span>
+        <span @click.stop>Details</span>
       </template>
     </am-notice-bar>
     <div v-if="!visible" style="padding: 0 16px">
       <am-button size="small" @click="visible = true">
-        重新显示
+        Show again
       </am-button>
     </div>
   </am-flex>

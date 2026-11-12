@@ -2,14 +2,18 @@
 通过 `expandIcon` 插槽（或同名属性）自定义展开图标，插槽参数包含面板的展开状态；`labelRender` 插槽自定义标题。
 </docs>
 
+<docs lang="en-US">
+Customize the expand icon through the `expandIcon` slot (or the same-named prop), the slot params contain the expanded state of the panel; the `labelRender` slot customizes the title.
+</docs>
+
 <script setup lang="ts">
 import type { CollapseItemType } from 'antdv-next-mobile'
 import { MinusCircleOutlined, PlusCircleOutlined } from '@antdv-next/icons'
 
 const items: CollapseItemType[] = [
-  { key: '1', label: '基础信息', content: '姓名、手机号、所在城市。' },
-  { key: '2', label: '教育经历', content: '学校、专业、学历。' },
-  { key: '3', label: '工作经历', content: '公司、职位、在职时间。' },
+  { key: '1', label: 'Basic info', content: 'Name, phone number and city.' },
+  { key: '2', label: 'Education', content: 'School, major and degree.' },
+  { key: '3', label: 'Experience', content: 'Company, position and period.' },
 ]
 </script>
 

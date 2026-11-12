@@ -2,6 +2,10 @@
 字符较长时会自动缩小以适应头像宽度，`gap` 设置字符距离左右两侧的最小距离。
 </docs>
 
+<docs lang="en-US">
+Long text shrinks automatically to fit the avatar width; `gap` sets the minimum distance between the characters and the left / right edges.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -16,7 +20,7 @@ const gap = ref(4)
       {{ names[index] }}
     </am-avatar>
     <am-button size="small" @click="index = (index + 1) % names.length">
-      切换名字
+      Change name
     </am-button>
     <am-button size="small" @click="gap = gap === 4 ? 12 : 4">
       gap: {{ gap }}

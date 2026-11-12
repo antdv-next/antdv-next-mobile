@@ -2,6 +2,10 @@
 滚动到底部附近时触发 `load`。使用 `v-model:loading` 维护加载状态，全部加载后将 `hasMore` 设为 `false`。
 </docs>
 
+<docs lang="en-US">
+`load` is fired when scrolled near the bottom. Use `v-model:loading` to maintain the loading state, and set `hasMore` to `false` once everything has been loaded.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -25,7 +29,7 @@ function onLoad() {
     <am-infinite-scroll v-model:loading="loading" :has-more="hasMore" :threshold="50" @load="onLoad">
       <ul class="list">
         <li v-for="item in list" :key="item">
-          列表项 {{ item }}
+          Item {{ item }}
         </li>
       </ul>
     </am-infinite-scroll>

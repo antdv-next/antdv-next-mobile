@@ -2,6 +2,10 @@
 `prefix` 放置图标或头像，`description` 展示描述信息，`extra` 展示右侧内容。分隔线自动与标题左对齐。
 </docs>
 
+<docs lang="en-US">
+`prefix` holds an icon or an avatar, `description` shows the description, and `extra` shows the content on the right. The separator is automatically left-aligned with the title.
+</docs>
+
 <script setup lang="ts">
 import { BellOutlined, CreditCardOutlined, SafetyOutlined, SettingOutlined } from '@antdv-next/icons'
 
@@ -9,39 +13,39 @@ function noop() {}
 </script>
 
 <template>
-  <am-list header="带图标">
+  <am-list header="With icon">
     <am-list-item @click="noop">
       <template #prefix>
         <CreditCardOutlined class="icon" />
       </template>
-      账单
+      Bills
     </am-list-item>
-    <am-list-item extra="已开启" @click="noop">
+    <am-list-item extra="On" @click="noop">
       <template #prefix>
         <BellOutlined class="icon" />
       </template>
-      消息通知
+      Notifications
     </am-list-item>
     <am-list-item @click="noop">
       <template #prefix>
         <SettingOutlined class="icon" />
       </template>
-      设置
+      Settings
     </am-list-item>
   </am-list>
 
-  <am-list header="带描述">
-    <am-list-item description="管理登录密码、支付密码与设备" @click="noop">
+  <am-list header="With description">
+    <am-list-item description="Manage passwords, payment and devices" @click="noop">
       <template #prefix>
         <span class="avatar"><SafetyOutlined /></span>
       </template>
-      账号与安全
+      Account and security
     </am-list-item>
-    <am-list-item description="这是一段比较长的描述信息，超出一行时会自动换行显示，不会被截断" extra="详情" @click="noop">
+    <am-list-item description="This is a fairly long description that wraps onto the next line automatically instead of being truncated" extra="Details" @click="noop">
       <template #prefix>
         <span class="avatar">A</span>
       </template>
-      标题文字
+      Title
     </am-list-item>
   </am-list>
 </template>

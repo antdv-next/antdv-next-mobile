@@ -2,6 +2,10 @@
 通过 `icon` 属性或插槽自定义左侧图标，传入 `null` 可以隐藏图标。
 </docs>
 
+<docs lang="en-US">
+Customize the icon on the left with the `icon` prop or slot; pass `null` to hide the icon.
+</docs>
+
 <script setup lang="ts">
 import { CloseCircleOutlined, CompassOutlined, GiftOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
@@ -9,14 +13,14 @@ import { h } from 'vue'
 
 <template>
   <am-flex vertical gap="small">
-    <am-notice-bar content="通过插槽自定义图标">
+    <am-notice-bar content="Custom icon through the slot">
       <template #icon>
         <GiftOutlined />
       </template>
     </am-notice-bar>
-    <am-notice-bar color="info" content="通过属性自定义图标" :icon="() => h(CompassOutlined)" />
-    <am-notice-bar color="success" content="不显示图标" :icon="null" />
-    <am-notice-bar color="error" closable content="自定义关闭图标">
+    <am-notice-bar color="info" content="Custom icon through the prop" :icon="() => h(CompassOutlined)" />
+    <am-notice-bar color="success" content="No icon" :icon="null" />
+    <am-notice-bar color="error" closable content="Custom close icon">
       <template #closeIcon>
         <CloseCircleOutlined />
       </template>

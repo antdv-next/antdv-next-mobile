@@ -2,6 +2,10 @@
 设置 `valueFormat` 后，`v-model:value` 收发该格式的字符串，方便直接提交给后端；`format` 只影响展示。
 </docs>
 
+<docs lang="en-US">
+With `valueFormat` set, `v-model:value` takes and emits strings in that format, which is convenient for submitting directly to the backend; `format` only affects the display.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -11,13 +15,13 @@ const month = ref<string | null>(null)
 
 <template>
   <am-flex vertical gap="small">
-    <am-date-picker v-model:value="date" value-format="YYYY-MM-DD" format="YYYY年M月D日" />
+    <am-date-picker v-model:value="date" value-format="YYYY-MM-DD" format="YYYY/MM/DD" />
     <div class="demo-result">
-      绑定值：{{ JSON.stringify(date) }}
+      Value: {{ JSON.stringify(date) }}
     </div>
-    <am-date-picker v-model:value="month" picker="month" value-format="YYYYMM" format="YYYY年M月" placeholder="请选择账期" />
+    <am-date-picker v-model:value="month" picker="month" value-format="YYYYMM" format="YYYY/MM" placeholder="Please select a period" />
     <div class="demo-result">
-      绑定值：{{ JSON.stringify(month) }}
+      Value: {{ JSON.stringify(month) }}
     </div>
   </am-flex>
 </template>

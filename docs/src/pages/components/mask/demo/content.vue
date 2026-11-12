@@ -2,6 +2,10 @@
 默认插槽的内容显示在蒙层之上。点击内容不会触发 `click` 事件，也不会关闭蒙层。
 </docs>
 
+<docs lang="en-US">
+The content of the default slot is shown above the mask. Clicking the content neither triggers the `click` event nor closes the mask.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -10,14 +14,14 @@ const open = ref(false)
 
 <template>
   <am-button block @click="open = true">
-    显示带内容的蒙层
+    Show mask with content
   </am-button>
   <am-mask v-model:open="open" closable>
     <div class="wrapper">
       <div class="card">
-        <p>点击卡片不会关闭</p>
+        <p>Tapping the card does not close it</p>
         <am-button type="primary" size="small" @click="open = false">
-          我知道了
+          Got it
         </am-button>
       </div>
     </div>

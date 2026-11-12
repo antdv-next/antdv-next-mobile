@@ -2,6 +2,10 @@
 列表项的 `extra` 与默认插槽可以放置任意组件，例如开关、输入框和按钮。
 </docs>
 
+<docs lang="en-US">
+The `extra` and default slots of an item can hold any component, such as a switch, an input or a button.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -11,32 +15,32 @@ const name = ref('')
 </script>
 
 <template>
-  <am-list header="搭配开关">
+  <am-list header="With switch">
     <am-list-item>
-      无线局域网
+      Wi-Fi
       <template #extra>
         <am-switch v-model:checked="wifi" />
       </template>
     </am-list-item>
-    <am-list-item description="开启后可被附近的设备发现">
-      蓝牙
+    <am-list-item description="Discoverable by nearby devices when on">
+      Bluetooth
       <template #extra>
         <am-switch v-model:checked="bluetooth" />
       </template>
     </am-list-item>
   </am-list>
-  <am-list header="搭配输入框与按钮">
+  <am-list header="With input and button">
     <am-list-item>
       <template #prefix>
-        设备名称
+        Device name
       </template>
-      <am-input v-model:value="name" variant="borderless" placeholder="请输入" />
+      <am-input v-model:value="name" variant="borderless" placeholder="Please enter" />
     </am-list-item>
     <am-list-item>
-      固件版本 1.2.0
+      Firmware 1.2.0
       <template #extra>
         <am-button size="small" type="primary">
-          更新
+          Update
         </am-button>
       </template>
     </am-list-item>

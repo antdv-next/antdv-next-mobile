@@ -2,6 +2,10 @@
 `success` 用于展示分段进度，例如「已完成 / 进行中 / 未开始」。
 </docs>
 
+<docs lang="en-US">
+`success` is used to show segmented progress, e.g. "done / in progress / not started".
+</docs>
+
 <template>
   <am-flex vertical gap="middle">
     <am-progress :percent="60" :success="{ percent: 30 }" />

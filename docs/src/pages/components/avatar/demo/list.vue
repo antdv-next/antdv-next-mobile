@@ -2,13 +2,17 @@
 在会话 / 联系人列表中作为前缀使用。
 </docs>
 
+<docs lang="en-US">
+Used as the prefix in a conversation / contact list.
+</docs>
+
 <script setup lang="ts">
 const src = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
 
 const users = [
-  { name: '陈小明', desc: '好的，明天见', src },
-  { name: '设计讨论组', desc: '[图片]', text: '设' },
-  { name: 'Lily', desc: '文件已经发到你邮箱了', text: 'L' },
+  { name: 'Tom Chen', desc: 'OK, see you tomorrow', src },
+  { name: 'Design Team', desc: '[Photo]', text: 'D' },
+  { name: 'Lily', desc: 'I have emailed you the file', text: 'L' },
 ]
 </script>
 

@@ -2,22 +2,26 @@
 当任务状态正在发生，还在记录过程中，可用 `pending` 展示幽灵节点；`reverse` 控制节点排序。
 </docs>
 
+<docs lang="en-US">
+When a task is still in progress and being recorded, use `pending` to show a ghost node; `reverse` controls the order of the nodes.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const reverse = ref(false)
 const items = [
-  { content: '创建服务现场 2026-09-01' },
-  { content: '初步排除网络异常 2026-09-01' },
-  { content: '技术测试异常 2026-09-01' },
+  { content: 'Create a services site 2026-09-01' },
+  { content: 'Solve initial network problems 2026-09-01' },
+  { content: 'Testing failed 2026-09-01' },
 ]
 </script>
 
 <template>
   <am-flex vertical gap="middle">
-    <am-timeline :items="items" pending="记录中..." :reverse="reverse" />
+    <am-timeline :items="items" pending="Recording..." :reverse="reverse" />
     <am-button block @click="reverse = !reverse">
-      切换排序
+      Toggle reverse
     </am-button>
   </am-flex>
 </template>

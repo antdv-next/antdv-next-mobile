@@ -2,6 +2,10 @@
 可以直接把内容内嵌到 `Spin` 中，将现有容器变为加载状态。
 </docs>
 
+<docs lang="en-US">
+Embed content into `Spin` directly to put an existing container into the loading state.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -10,15 +14,15 @@ const spinning = ref(true)
 
 <template>
   <am-flex vertical gap="middle">
-    <am-spin :spinning="spinning" description="加载中...">
+    <am-spin :spinning="spinning" description="Loading...">
       <am-alert
         type="info"
-        title="提示的标题"
-        description="这里是关于提示内容的进一步描述，加载完成后可以正常点击和阅读。"
+        title="Alert title"
+        description="Further details about the alert. You can tap and read it once loading is done."
       />
     </am-spin>
     <am-flex align="center" justify="space-between">
-      <span>加载状态</span>
+      <span>Loading</span>
       <am-switch v-model:checked="spinning" />
     </am-flex>
   </am-flex>

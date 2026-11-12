@@ -40,12 +40,13 @@ packages/antdv-next-mobile/src/
     style/index.css
     tests/<component>.test.ts
 docs/
-  plugins/markdown.ts    # md -> SFC, demo blocks, `virtual:am-docs` registry
+  plugins/markdown.ts    # md -> SFC, demo blocks, `virtual:am-docs` registry (one per locale)
   src/site/              # desktop documentation site
   src/mobile/            # demo app rendered inside the phone simulator (mobile.html)
-  src/pages/components/<component>/index.zh-CN.md
+  src/shared/            # theme + locale state / UI texts shared by the site and the simulator
+  src/pages/components/<component>/index.zh-CN.md + index.en-US.md
   src/pages/components/<component>/demo/*.vue
-  src/pages/docs/*.zh-CN.md
+  src/pages/docs/*.zh-CN.md + *.en-US.md
 ```
 
 `button/`, `popup/`, `mask/` and `config-provider/` are the reference implementations. Copy their structure.
@@ -158,6 +159,11 @@ Wrappers are auto-unmounted and `document.body` is cleared after each test (`tes
 
 ## Docs
 
+Docs are bilingual. Every page exists as `*.zh-CN.md` (source of truth) **and** `*.en-US.md`; change both in the
+same commit. A page without an `en-US` file falls back to the Chinese one. URLs follow antdv-next: English at
+`/components/button`, Chinese at `/components/button-cn`. Write internal links without the suffix
+(`/components/popup#props`), the markdown plugin adds `-cn` for Chinese pages.
+
 `docs/src/pages/components/<component>/index.zh-CN.md`:
 
 ```md
@@ -185,12 +191,21 @@ group:
 ## 与 PC 端的差异 {#diff}
 ```
 
-- A demo is a small SFC with a `<docs lang="zh-CN">` description block. Components are globally registered
+- `index.en-US.md` mirrors the Chinese file: no `subtitle`, group titles `General` / `Layout` / `Navigation` /
+  `Data Entry` / `Data Display` / `Feedback` / `Gestures & Others`, headings `When To Use`, `Examples`, `API`,
+  `Props`, `Events`, `Slots`, `Methods`, `Design Token`, `Differences from PC` with the **same `{#id}` anchors**,
+  and the same `<demo>` list with translated titles.
+- A demo is a small SFC with a `<docs lang="zh-CN">` and a `<docs lang="en-US">` description block. The demo itself is shared by both languages, so its
+  sample text (labels, placeholders, data, comments) is written in English and kept short enough for a 375px phone.
+  Components are globally registered
   (`<am-button>`), so demos only import icons / helpers. Demos render inside a 375px phone: by default in a padded
   card; add the `full` attribute for edge-to-edge content (lists, nav bars, tabs).
 - Escape `|` inside table cells as `\|`.
-- `pnpm dev` serves the site at http://localhost:5180 (`/components/<name>`), the simulator page is
-  `/mobile.html#/<name>`.
+- `pnpm dev` serves the site at http://localhost:5180 (`/components/<name>`, `/components/<name>-cn`), the simulator
+  page is `/mobile.html#/<name>` (it follows the language of the site).
+- Site / simulator UI texts live in `docs/src/shared/locale.ts`; never hard-code Chinese or English in
+  `docs/src/site` or `docs/src/mobile`.
+- `README.md` is English, `README.zh-CN.md` Chinese (root and `packages/antdv-next-mobile`); keep them in sync.
 
 ## Commands
 

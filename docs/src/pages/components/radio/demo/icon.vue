@@ -2,6 +2,10 @@
 通过 `icon` 插槽自定义图标，`Radio.Group` 的 `icon` 插槽会应用到组内所有选项。
 </docs>
 
+<docs lang="en-US">
+Customize the icon with the `icon` slot; the `icon` slot of `Radio.Group` applies to all options in the group.
+</docs>
+
 <script setup lang="ts">
 import { CheckCircleFilled, SmileFilled, SmileOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -12,7 +16,7 @@ const plan = ref('pro')
 
 <template>
   <am-flex vertical gap="middle">
-    <am-radio-group v-model:value="mood" :options="[{ label: '开心', value: 'good' }, { label: '一般', value: 'normal' }]">
+    <am-radio-group v-model:value="mood" :options="[{ label: 'Happy', value: 'good' }, { label: 'So-so', value: 'normal' }]">
       <template #icon="{ checked }">
         <SmileFilled v-if="checked" style="color: var(--am-color-warning)" />
         <SmileOutlined v-else style="color: var(--am-color-text-tertiary)" />
@@ -23,13 +27,13 @@ const plan = ref('pro')
         <template #icon="{ checked }">
           <CheckCircleFilled :style="{ color: checked ? 'var(--am-color-success)' : 'var(--am-color-fill)' }" />
         </template>
-        免费版
+        Free
       </am-radio>
       <am-radio value="pro">
         <template #icon="{ checked }">
           <CheckCircleFilled :style="{ color: checked ? 'var(--am-color-success)' : 'var(--am-color-fill)' }" />
         </template>
-        专业版
+        Pro
       </am-radio>
     </am-radio-group>
   </am-flex>

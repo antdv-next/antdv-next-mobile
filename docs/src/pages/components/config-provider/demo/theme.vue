@@ -2,6 +2,10 @@
 通过 `theme.token` 修改主色与圆角，所有派生颜色（按压态、浅色背景、描边）会自动计算。
 </docs>
 
+<docs lang="en-US">
+Change the primary color and border radius through `theme.token`; all derived colors (pressed state, light background, border) are computed automatically.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -22,27 +26,27 @@ const radius = ref(8)
         @click="primary = color"
       />
     </am-flex>
-    <am-segmented v-model:value="radius" block :options="[{ label: '直角', value: 2 }, { label: '默认', value: 8 }, { label: '圆润', value: 20 }]" />
+    <am-segmented v-model:value="radius" block :options="[{ label: 'Sharp', value: 2 }, { label: 'Default', value: 8 }, { label: 'Round', value: 20 }]" />
     <am-config-provider :theme="{ token: { colorPrimary: primary, borderRadius: radius, borderRadiusSM: radius / 2 } }">
       <am-flex vertical gap="small">
         <am-flex gap="small" wrap align="center">
           <am-button type="primary">
-            主按钮
+            Primary
           </am-button>
           <am-button color="primary" variant="filled">
-            浅色按钮
+            Filled
           </am-button>
           <am-button color="primary" variant="outlined">
-            描边按钮
+            Outlined
           </am-button>
         </am-flex>
         <am-flex gap="small" align="center" wrap>
           <am-switch default-checked />
           <am-tag color="processing">
-            标签
+            Tag
           </am-tag>
           <am-checkbox default-checked>
-            复选框
+            Checkbox
           </am-checkbox>
         </am-flex>
         <am-progress :percent="60" />

@@ -2,6 +2,10 @@
 幽灵按钮将按钮的内容反色，背景变为透明，常用在有色背景上。
 </docs>
 
+<docs lang="en-US">
+A ghost button inverts the color of its content and makes the background transparent. It is commonly used on colored backgrounds.
+</docs>
+
 <template>
   <div class="ghost-demo">
     <am-flex gap="small" wrap>

@@ -2,6 +2,10 @@
 通过 `variant` 设置填充（默认）、实心和描边三种变体，`bordered` 为 `false` 时移除描边。
 </docs>
 
+<docs lang="en-US">
+Set the three variants filled (default), solid and outlined with `variant`; the outline is removed when `bordered` is `false`.
+</docs>
+
 <script setup lang="ts">
 const colors = [undefined, 'blue', 'success', 'error', '#722ed1']
 const variants = ['filled', 'solid', 'outlined'] as const

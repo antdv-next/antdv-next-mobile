@@ -2,6 +2,10 @@
 与 `Badge` 组合，展示未读数或在线状态。
 </docs>
 
+<docs lang="en-US">
+Combine with `Badge` to show an unread count or online status.
+</docs>
+
 <script setup lang="ts">
 import { UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'

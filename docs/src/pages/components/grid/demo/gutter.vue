@@ -2,9 +2,13 @@
 通过 `gutter` 设置列之间的间隔，使用数组 `[水平间距, 垂直间距]` 可以同时设置换行后的行间距。
 </docs>
 
+<docs lang="en-US">
+Set the spacing between columns with `gutter`; the array form `[horizontal, vertical]` also sets the spacing between rows after wrapping.
+</docs>
+
 <template>
   <div class="label">
-    水平间距 :gutter="12"
+    Horizontal gutter :gutter="12"
   </div>
   <am-row :gutter="12">
     <am-col v-for="i in 3" :key="i" :span="8">
@@ -14,7 +18,7 @@
     </am-col>
   </am-row>
   <div class="label">
-    水平与垂直间距 :gutter="[12, 12]"
+    Horizontal and vertical gutter :gutter="[12, 12]"
   </div>
   <am-row :gutter="[12, 12]">
     <am-col v-for="i in 6" :key="i" :span="8">

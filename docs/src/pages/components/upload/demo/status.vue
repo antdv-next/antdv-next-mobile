@@ -2,6 +2,10 @@
 通过 `fileList` 中每一项的 `status` 展示上传中、失败、完成等状态；非图片文件展示图标与文件名。
 </docs>
 
+<docs lang="en-US">
+The `status` of each item in `fileList` shows states such as uploading, failed and done; non-image files show an icon and the file name.
+</docs>
+
 <script setup lang="ts">
 import type { UploadFile } from 'antdv-next-mobile'
 import { ref } from 'vue'
@@ -17,7 +21,7 @@ const fileList = ref<UploadFile[]>([
   { uid: '-1', name: 'done.png', status: 'done', url: createImage('Done', '#1677ff') },
   { uid: '-2', name: 'uploading.png', status: 'uploading', percent: 36, thumbUrl: createImage('36%', '#13c2c2') },
   { uid: '-3', name: 'error.png', status: 'error', thumbUrl: createImage('Error', '#722ed1') },
-  { uid: '-4', name: '合同.pdf', status: 'done', type: 'application/pdf' },
+  { uid: '-4', name: 'contract.pdf', status: 'done', type: 'application/pdf' },
 ])
 </script>
 

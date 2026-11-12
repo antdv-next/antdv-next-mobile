@@ -2,6 +2,10 @@
 设置 `vertical`（或 `orientation="vertical"`）纵向拼接，常用于一组上下排列的操作或输入。
 </docs>
 
+<docs lang="en-US">
+Set `vertical` (or `orientation="vertical"`) to join members vertically, commonly used for a group of actions or inputs stacked on top of each other.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -12,19 +16,19 @@ const password = ref('')
 <template>
   <am-flex vertical gap="middle">
     <am-space-compact vertical block>
-      <am-input v-model:value="account" placeholder="账号" />
-      <am-input-password v-model:value="password" placeholder="密码" />
+      <am-input v-model:value="account" placeholder="Account" />
+      <am-input-password v-model:value="password" placeholder="Password" />
     </am-space-compact>
 
     <am-space-compact vertical block>
       <am-button block>
-        拍照
+        Take photo
       </am-button>
       <am-button block>
-        从相册选择
+        Choose from album
       </am-button>
       <am-button block danger>
-        删除头像
+        Remove avatar
       </am-button>
     </am-space-compact>
   </am-flex>

@@ -2,6 +2,10 @@
 `precision` 固定小数位数；`formatter` / `parser` 自定义展示与解析；`stringMode` 以字符串形式输出，保留末尾的 0；`prefix` / `suffix` 添加前后缀。
 </docs>
 
+<docs lang="en-US">
+`precision` fixes the number of decimal places; `formatter` / `parser` customize display and parsing; `stringMode` outputs a string and keeps trailing zeros; `prefix` / `suffix` add a prefix and a suffix.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -20,7 +24,7 @@ const parsePercent = (text: string) => text.replace('%', '')
       <am-input-number v-model:value="price" :precision="2" :step="0.1" :min="0" prefix="¥" :styles="{ input: { width: '64px' } }" />
     </am-flex>
     <am-flex align="center" justify="space-between">
-      <span>百分比</span>
+      <span>Percent</span>
       <am-input-number
         v-model:value="percent"
         :min="0"
@@ -31,7 +35,7 @@ const parsePercent = (text: string) => text.replace('%', '')
       />
     </am-flex>
     <am-flex align="center" justify="space-between">
-      <span>stringMode：{{ JSON.stringify(precise) }}</span>
+      <span>stringMode: {{ JSON.stringify(precise) }}</span>
       <am-input-number v-model:value="precise" string-mode :precision="2" step="0.01" :styles="{ input: { width: '64px' } }" />
     </am-flex>
   </am-flex>

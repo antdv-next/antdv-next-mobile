@@ -2,6 +2,10 @@
 通过 `placement` 设置抽屉滑出的方向。
 </docs>
 
+<docs lang="en-US">
+Set the direction the drawer slides in from with `placement`.
+</docs>
+
 <script setup lang="ts">
 import type { DrawerPlacement } from 'antdv-next-mobile'
 import { ref } from 'vue'
@@ -22,8 +26,8 @@ function show(value: DrawerPlacement) {
       {{ item }}
     </am-button>
   </am-flex>
-  <am-drawer v-model:open="open" :placement="placement" :title="`从 ${placement} 滑出`">
-    <p>一些内容...</p>
-    <p>一些内容...</p>
+  <am-drawer v-model:open="open" :placement="placement" :title="`Slide from ${placement}`">
+    <p>Some contents...</p>
+    <p>Some contents...</p>
   </am-drawer>
 </template>

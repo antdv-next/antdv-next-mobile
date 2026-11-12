@@ -2,22 +2,26 @@
 嵌套使用 `Flex` 可以快速搭建常见的移动端卡片布局：左侧图片、右侧上下两端对齐的内容。
 </docs>
 
+<docs lang="en-US">
+Nest `Flex` to quickly build a common mobile card layout: an image on the left, and content justified to the top and bottom on the right.
+</docs>
+
 <template>
   <am-flex gap="middle" class="product">
     <div class="cover" />
     <am-flex vertical justify="space-between" flex="1" :style="{ minWidth: 0 }">
       <div>
         <div class="title">
-          antdv-next-mobile 定制周边 T 恤
+          antdv-next-mobile custom T-shirt
         </div>
         <div class="desc">
-          纯棉 · 黑色 · L
+          Cotton · Black · L
         </div>
       </div>
       <am-flex justify="space-between" align="center">
         <span class="price">¥ 99.00</span>
         <am-button type="primary" size="small" shape="round">
-          购买
+          Buy
         </am-button>
       </am-flex>
     </am-flex>

@@ -2,14 +2,18 @@
 `Checkbox.Group` 通过 `options` 快速生成一组多选框，也可以在默认插槽里自由组合 `Checkbox`。
 </docs>
 
+<docs lang="en-US">
+`Checkbox.Group` generates a group of checkboxes quickly through `options`, and `Checkbox` can also be composed freely in the default slot.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const fruits = ref(['Apple'])
 const options = [
-  { label: '苹果', value: 'Apple' },
-  { label: '梨', value: 'Pear' },
-  { label: '橙子', value: 'Orange', disabled: true },
+  { label: 'Apple', value: 'Apple' },
+  { label: 'Pear', value: 'Pear' },
+  { label: 'Orange', value: 'Orange', disabled: true },
 ]
 
 const cities = ref<string[]>(['hangzhou'])
@@ -20,15 +24,15 @@ const cities = ref<string[]>(['hangzhou'])
     <am-checkbox-group v-model:value="fruits" :options="options" />
     <am-checkbox-group v-model:value="cities">
       <am-checkbox value="hangzhou">
-        杭州
+        Hangzhou
       </am-checkbox>
       <am-checkbox value="shanghai">
-        上海
+        Shanghai
       </am-checkbox>
       <am-checkbox value="beijing">
-        北京
+        Beijing
       </am-checkbox>
     </am-checkbox-group>
-    <div>已选：{{ [...fruits, ...cities].join('、') || '无' }}</div>
+    <div>Selected: {{ [...fruits, ...cities].join(', ') || 'None' }}</div>
   </am-flex>
 </template>

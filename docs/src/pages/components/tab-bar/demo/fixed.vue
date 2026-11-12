@@ -2,15 +2,19 @@
 `fixed` 将标签栏固定在视口底部，`placeholder` 在文档流中保留等高占位，`safeArea` 默认开启以适配底部安全区。示例中用带 `transform` 的容器模拟视口。
 </docs>
 
+<docs lang="en-US">
+`fixed` fixes the tab bar at the bottom of the viewport, `placeholder` keeps a placeholder of the same height in the document flow, and `safeArea` is on by default to adapt to the bottom safe area. The demo simulates the viewport with a container that has a `transform`.
+</docs>
+
 <script setup lang="ts">
 import type { TabBarItem } from 'antdv-next-mobile'
 import { AppstoreOutlined, HomeOutlined, UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 
 const items: TabBarItem[] = [
-  { key: 'home', title: '首页', icon: () => h(HomeOutlined) },
-  { key: 'apps', title: '应用', icon: () => h(AppstoreOutlined) },
-  { key: 'me', title: '我的', icon: () => h(UserOutlined) },
+  { key: 'home', title: 'Home', icon: () => h(HomeOutlined) },
+  { key: 'apps', title: 'Apps', icon: () => h(AppstoreOutlined) },
+  { key: 'me', title: 'Me', icon: () => h(UserOutlined) },
 ]
 </script>
 
@@ -18,7 +22,7 @@ const items: TabBarItem[] = [
   <div class="viewport">
     <div class="scroller">
       <p v-for="i in 12" :key="i" class="row">
-        内容 {{ i }}
+        Content {{ i }}
       </p>
       <am-tab-bar :items="items" fixed placeholder />
     </div>
@@ -26,7 +30,7 @@ const items: TabBarItem[] = [
 </template>
 
 <style scoped>
-/* transform 让内部的 fixed 元素相对该容器定位 */
+/* transform makes inner fixed elements position relative to this container */
 .viewport {
   height: 240px;
   overflow: hidden;

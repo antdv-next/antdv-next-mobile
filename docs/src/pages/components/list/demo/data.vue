@@ -2,6 +2,10 @@
 数据模式：传入 `dataSource`，通过 `renderItem` 插槽渲染每一项；数据为空时显示 `locale.emptyText`，`loading` 在底部显示加载指示。
 </docs>
 
+<docs lang="en-US">
+Data mode: pass `dataSource` and render each item through the `renderItem` slot; `locale.emptyText` is shown when the data is empty, and `loading` shows a loading indicator at the bottom.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -19,7 +23,7 @@ function load() {
   setTimeout(() => {
     const start = contacts.value.length
     contacts.value.push(
-      ...Array.from({ length: 3 }, (_, i) => ({ id: start + i, name: `联系人 ${start + i + 1}`, phone: `138 0000 00${10 + start + i}` })),
+      ...Array.from({ length: 3 }, (_, i) => ({ id: start + i, name: `Contact ${start + i + 1}`, phone: `138 0000 00${10 + start + i}` })),
     )
     loading.value = false
   }, 800)
@@ -27,7 +31,7 @@ function load() {
 </script>
 
 <template>
-  <am-list header="联系人" :data-source="contacts" row-key="id" :loading="loading" :locale="{ emptyText: '还没有联系人，点击下方按钮加载' }">
+  <am-list header="Contacts" :data-source="contacts" row-key="id" :loading="loading" :locale="{ emptyText: 'No contacts yet, tap the button below to load' }">
     <template #renderItem="{ item }">
       <am-list-item :title="item.name" :extra="item.phone" />
     </template>
@@ -35,10 +39,10 @@ function load() {
   <div style="padding: 12px 16px">
     <am-flex gap="small">
       <am-button block type="primary" :loading="loading" @click="load">
-        加载数据
+        Load data
       </am-button>
       <am-button block @click="contacts = []">
-        清空
+        Clear
       </am-button>
     </am-flex>
   </div>

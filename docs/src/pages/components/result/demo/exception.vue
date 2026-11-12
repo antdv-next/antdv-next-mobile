@@ -2,13 +2,17 @@
 `status` 为 `403`、`404`、`500` 时显示内置的异常插图，用于整页的异常提示。
 </docs>
 
+<docs lang="en-US">
+When `status` is `403`, `404` or `500`, the built-in exception illustration is shown, for full-page exception prompts.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const texts = {
-  403: '抱歉，你无权访问该页面',
-  404: '抱歉，你访问的页面不存在',
-  500: '抱歉，服务器出错了',
+  403: 'Sorry, you are not authorized to access this page',
+  404: 'Sorry, the page you visited does not exist',
+  500: 'Sorry, something went wrong',
 }
 const statuses = [403, 404, 500] as const
 const status = ref<(typeof statuses)[number]>(404)
@@ -28,7 +32,7 @@ const status = ref<(typeof statuses)[number]>(404)
   <am-result :status="status" :title="String(status)" :sub-title="texts[status]">
     <template #extra>
       <am-button type="primary" shape="round">
-        返回首页
+        Back home
       </am-button>
     </template>
   </am-result>

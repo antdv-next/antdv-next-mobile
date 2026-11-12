@@ -2,19 +2,23 @@
 `columns` 是一个二维数组，每一项代表一列。通过 `v-model:value` 绑定每列的选中值。
 </docs>
 
+<docs lang="en-US">
+`columns` is a two-dimensional array in which each item represents a column. Bind the selected value of each column with `v-model:value`.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const columns = [
-  ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华'].map(city => ({ label: city, value: city })),
+  ['Hangzhou', 'Ningbo', 'Wenzhou', 'Shaoxing', 'Huzhou', 'Jiaxing', 'Jinhua'].map(city => ({ label: city, value: city })),
 ]
-const value = ref(['温州'])
+const value = ref(['Wenzhou'])
 </script>
 
 <template>
   <am-picker-view v-model:value="value" :columns="columns" />
   <div class="demo-result">
-    当前值：{{ value }}
+    Value: {{ value }}
   </div>
 </template>
 

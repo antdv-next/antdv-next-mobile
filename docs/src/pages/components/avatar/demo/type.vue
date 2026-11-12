@@ -2,6 +2,10 @@
 支持图片、图标和字符三种类型，其中图标和字符头像可以通过 `style` 或 `--am-avatar-*` 变量自定义颜色。
 </docs>
 
+<docs lang="en-US">
+Three types are supported: image, icon and characters. The color of icon and character avatars can be customized with `style` or the `--am-avatar-*` variables.
+</docs>
+
 <script setup lang="ts">
 import { UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
@@ -16,7 +20,7 @@ const src = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
     <am-avatar>U</am-avatar>
     <am-avatar>USER</am-avatar>
     <am-avatar class="orange">
-      张
+      U
     </am-avatar>
     <am-avatar class="green" :icon="h(UserOutlined)" />
   </am-space>

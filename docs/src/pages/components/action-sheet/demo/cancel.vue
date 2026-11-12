@@ -2,6 +2,10 @@
 `title` 与 `extra` 设置头部的标题和描述。取消按钮的文字默认取自语言包，可以通过 `cancelText` 修改，设为 `null` 则不显示。
 </docs>
 
+<docs lang="en-US">
+`title` and `extra` set the title and description of the header. The text of the cancel button comes from the locale by default and can be changed with `cancelText`; set it to `null` to hide the button.
+</docs>
+
 <script setup lang="ts">
 import type { ActionSheetAction } from 'antdv-next-mobile'
 import { ref } from 'vue'
@@ -9,26 +13,26 @@ import { ref } from 'vue'
 const withTitle = ref(false)
 const noCancel = ref(false)
 const actions: ActionSheetAction[] = [
-  { key: 'camera', text: '拍照' },
-  { key: 'album', text: '从相册选择' },
+  { key: 'camera', text: 'Take photo' },
+  { key: 'album', text: 'Choose from album' },
 ]
 </script>
 
 <template>
   <am-flex vertical gap="small">
     <am-button block @click="withTitle = true">
-      标题与描述
+      Title and description
     </am-button>
     <am-button block @click="noCancel = true">
-      无取消按钮
+      No cancel button
     </am-button>
   </am-flex>
   <am-action-sheet
     v-model:open="withTitle"
     :actions="actions"
-    title="更换头像"
-    extra="支持 JPG、PNG 格式，大小不超过 5MB"
-    cancel-text="再想想"
+    title="Change avatar"
+    extra="JPG or PNG, up to 5MB"
+    cancel-text="Not now"
   />
   <am-action-sheet v-model:open="noCancel" :actions="actions" :cancel-text="null" />
 </template>

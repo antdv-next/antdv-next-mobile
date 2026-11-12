@@ -2,6 +2,10 @@
 `min` / `max` 限制范围，到达边界后对应按钮会被禁用；`step` 设置每次改变的步长，可以是小数。
 </docs>
 
+<docs lang="en-US">
+`min` / `max` limit the range, and the corresponding button is disabled when a boundary is reached; `step` sets the amount of each change and can be a decimal.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -17,11 +21,11 @@ const tens = ref(50)
       <am-input-number v-model:value="count" :min="1" :max="5" />
     </am-flex>
     <am-flex align="center" justify="space-between">
-      <span>步长 0.1</span>
+      <span>Step 0.1</span>
       <am-input-number v-model:value="weight" :min="0" :max="2" :step="0.1" />
     </am-flex>
     <am-flex align="center" justify="space-between">
-      <span>步长 10</span>
+      <span>Step 10</span>
       <am-input-number v-model:value="tens" :min="0" :max="100" :step="10" />
     </am-flex>
   </am-flex>

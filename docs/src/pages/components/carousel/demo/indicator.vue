@@ -2,6 +2,10 @@
 `indicator` 插槽接收 `{ current, total }`，可以替换默认的指示点，例如常见的数字页码。
 </docs>
 
+<docs lang="en-US">
+The `indicator` slot receives `{ current, total }` and replaces the default dots, e.g. with the common page number.
+</docs>
+
 <script setup lang="ts">
 const colors = ['#1677ff', '#13c2c2', '#722ed1', '#eb2f96']
 </script>

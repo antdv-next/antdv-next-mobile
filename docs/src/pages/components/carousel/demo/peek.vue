@@ -2,13 +2,17 @@
 通过 `slideSize` 与 `trackOffset`（均为百分比）露出相邻的卡片。非循环模式下 `stuckAtBoundary` 让首尾卡片贴边。
 </docs>
 
+<docs lang="en-US">
+Use `slideSize` and `trackOffset` (both percentages) to let the adjacent cards peek out. In non-infinite mode `stuckAtBoundary` makes the first and last cards stick to the edge.
+</docs>
+
 <script setup lang="ts">
 const colors = ['#1677ff', '#13c2c2', '#722ed1', '#eb2f96', '#fa8c16']
 </script>
 
 <template>
   <p class="title">
-    循环
+    Infinite
   </p>
   <am-carousel :slide-size="80" :track-offset="10" :dots="false">
     <div v-for="(color, index) in colors" :key="color" class="card">
@@ -18,7 +22,7 @@ const colors = ['#1677ff', '#13c2c2', '#722ed1', '#eb2f96', '#fa8c16']
     </div>
   </am-carousel>
   <p class="title">
-    不循环，首尾贴边
+    Not infinite, stuck at boundary
   </p>
   <am-carousel :slide-size="80" :track-offset="10" :infinite="false" :dots="false">
     <div v-for="(color, index) in colors" :key="color" class="card">

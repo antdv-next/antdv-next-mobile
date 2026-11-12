@@ -2,20 +2,24 @@
 `type="dot"` 使用圆点代替图标，横向与竖向均可使用。
 </docs>
 
+<docs lang="en-US">
+`type="dot"` uses dots instead of icons, and works both horizontally and vertically.
+</docs>
+
 <script setup lang="ts">
 import type { StepsItem } from 'antdv-next-mobile'
 
 const items: StepsItem[] = [
-  { title: '填写信息' },
-  { title: '身份验证' },
-  { title: '设置密码' },
-  { title: '完成' },
+  { title: 'Details' },
+  { title: 'Verify' },
+  { title: 'Password' },
+  { title: 'Done' },
 ]
 
 const timeline: StepsItem[] = [
-  { title: '发起审批', content: '张三 · 09:00' },
-  { title: '部门主管审批', content: '李四 · 审批中' },
-  { title: '财务审批' },
+  { title: 'Request submitted', content: 'Tom · 09:00' },
+  { title: 'Manager approval', content: 'Lily · In review' },
+  { title: 'Finance approval' },
 ]
 </script>
 

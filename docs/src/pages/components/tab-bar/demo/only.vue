@@ -2,6 +2,10 @@
 `title` 与 `icon` 都是可选的，可以只展示图标或只展示文字；`disabled` 禁用某一项。
 </docs>
 
+<docs lang="en-US">
+`title` and `icon` are both optional, so you can show only icons or only titles; `disabled` disables an item.
+</docs>
+
 <script setup lang="ts">
 import type { TabBarItem } from 'antdv-next-mobile'
 import { AppstoreOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@antdv-next/icons'
@@ -15,10 +19,10 @@ const iconOnly: TabBarItem[] = [
 ]
 
 const titleOnly: TabBarItem[] = [
-  { key: 'home', title: '首页' },
-  { key: 'apps', title: '应用', badge: 3 },
-  { key: 'message', title: '消息', disabled: true },
-  { key: 'me', title: '我的' },
+  { key: 'home', title: 'Home' },
+  { key: 'apps', title: 'Apps', badge: 3 },
+  { key: 'message', title: 'Messages', disabled: true },
+  { key: 'me', title: 'Me' },
 ]
 </script>
 

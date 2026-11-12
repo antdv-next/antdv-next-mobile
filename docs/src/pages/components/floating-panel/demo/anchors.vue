@@ -2,6 +2,10 @@
 `anchors` 自定义吸附的高度，`v-model:height` 获取或控制当前高度。
 </docs>
 
+<docs lang="en-US">
+`anchors` customizes the heights to snap to, and `v-model:height` gets or controls the current height.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -12,12 +16,12 @@ const height = ref(anchors[1])
 <template>
   <div class="stage">
     <p class="stage-tip">
-      当前高度：{{ Math.round(height) }}px
+      Height: {{ Math.round(height) }}px
     </p>
     <am-floating-panel v-model:height="height" :anchors="anchors" :fixed="false">
       <ul class="list">
         <li v-for="i in 20" :key="i">
-          列表项 {{ i }}
+          Item {{ i }}
         </li>
       </ul>
     </am-floating-panel>

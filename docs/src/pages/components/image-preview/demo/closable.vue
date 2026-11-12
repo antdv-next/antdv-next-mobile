@@ -2,6 +2,10 @@
 `closable` 显示关闭图标；`closeOnClick` 与 `swipeToClose` 设为 `false` 后只能通过关闭图标关闭。`doubleTapZoom` 可以指定双击放大的倍数，`maxZoom` 限制最大缩放。
 </docs>
 
+<docs lang="en-US">
+`closable` shows the close icon; with `closeOnClick` and `swipeToClose` set to `false`, the preview can only be closed through the close icon. `doubleTapZoom` specifies the double-tap zoom-in scale, and `maxZoom` limits the maximum zoom.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -26,7 +30,7 @@ const open = ref(false)
 
 <template>
   <am-button block @click="open = true">
-    仅通过关闭图标关闭
+    Close with the icon only
   </am-button>
   <am-image-preview
     v-model:open="open"

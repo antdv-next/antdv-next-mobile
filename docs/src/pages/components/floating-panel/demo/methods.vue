@@ -2,15 +2,19 @@
 通过 ref 调用 `setHeight` 设置高度，`immediate` 跳过动画。`heightChange` 事件的 `animating` 可以区分拖动过程与吸附动画。
 </docs>
 
+<docs lang="en-US">
+Call `setHeight` through a ref to set the height; `immediate` skips the animation. `animating` of the `heightChange` event distinguishes dragging from the snap animation.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const panelRef = ref()
 const anchors = [80, 320]
-const info = ref('拖动或点击按钮')
+const info = ref('Drag or tap a button')
 
 function onHeightChange(height: number, { animating }: { animating: boolean }) {
-  info.value = `${Math.round(height)}px，${animating ? '吸附动画' : '拖动中'}`
+  info.value = `${Math.round(height)}px, ${animating ? 'snapping' : 'dragging'}`
 }
 </script>
 
@@ -21,19 +25,19 @@ function onHeightChange(height: number, { animating }: { animating: boolean }) {
     </p>
     <am-flex gap="small" style="padding: 0 16px">
       <am-button size="small" @click="panelRef?.setHeight(anchors[1])">
-        展开
+        Expand
       </am-button>
       <am-button size="small" @click="panelRef?.setHeight(anchors[0])">
-        收起
+        Collapse
       </am-button>
       <am-button size="small" @click="panelRef?.setHeight(anchors[1], { immediate: true })">
-        无动画展开
+        Expand instantly
       </am-button>
     </am-flex>
     <am-floating-panel ref="panelRef" :anchors="anchors" :fixed="false" @height-change="onHeightChange">
       <ul class="list">
         <li v-for="i in 20" :key="i">
-          列表项 {{ i }}
+          Item {{ i }}
         </li>
       </ul>
     </am-floating-panel>

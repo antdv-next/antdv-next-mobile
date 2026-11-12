@@ -35,6 +35,11 @@ declare module 'virtual:am-docs' {
     order: number
     page: () => Promise<{ default: Component }>
   }
-  export const components: ComponentEntry[]
-  export const guides: GuideEntry[]
+  export type DocsLocale = 'zh-CN' | 'en-US'
+  export interface DocsRegistry {
+    components: ComponentEntry[]
+    guides: GuideEntry[]
+  }
+  /** One registry per locale; a page without a translation falls back to `zh-CN`. */
+  export const docs: Record<DocsLocale, DocsRegistry>
 }

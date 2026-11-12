@@ -2,6 +2,10 @@
 内置 13 种预设颜色，也可以传入任意 CSS 颜色值，背景与边框会由主色自动派生。
 </docs>
 
+<docs lang="en-US">
+There are 13 built-in preset colors, and any CSS color value can also be passed; the background and border are derived from the main color automatically.
+</docs>
+
 <script setup lang="ts">
 const presets = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple']
 const customs = ['#f50', '#2db7f5', '#87d068', '#108ee9']

@@ -2,6 +2,10 @@
 通过 `pullingText`、`canReleaseText`、`refreshingText`、`completeText` 自定义各阶段文案，`completeDelay` 控制完成提示的停留时间。
 </docs>
 
+<docs lang="en-US">
+Customize the text of each stage with `pullingText`, `canReleaseText`, `refreshingText` and `completeText`; `completeDelay` controls how long the complete tip stays.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -17,16 +21,16 @@ function onRefresh() {
 <template>
   <am-pull-to-refresh
     v-model:refreshing="refreshing"
-    pulling-text="用力拉"
-    can-release-text="松开吧"
-    refreshing-text="玩命加载中..."
-    complete-text="好啦"
+    pulling-text="Pull harder"
+    can-release-text="Let go"
+    refreshing-text="Loading hard..."
+    complete-text="All done"
     :complete-delay="1000"
     @refresh="onRefresh"
   >
     <ul class="list">
       <li v-for="i in 6" :key="i">
-        列表项 {{ i }}
+        Item {{ i }}
       </li>
     </ul>
   </am-pull-to-refresh>

@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { SearchOutlined } from '@antdv-next/icons'
-import { components, guides } from 'virtual:am-docs'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { localizePath, useDocs, useDocsLocale, useMessages } from '../../shared/locale'
 
 const route = useRoute()
+const docsLocale = useDocsLocale()
+const docs = useDocs()
+const t = useMessages()
+const components = computed(() => docs.value.components)
+const link = (path: string) => localizePath(path, docsLocale.locale)
 const keyword = ref('')
 
 interface Group { title: string, order: number, items: Array<{ to: string, title: string, subtitle?: string }> }
@@ -23,12 +28,12 @@ const isGuide = computed(() => route.meta.type === 'guide')
 
 const groups = computed(() => {
   if (isGuide.value)
-    return groupBy(guides, g => ({ to: `/docs/${g.name}`, title: g.title }))
+    return groupBy(docs.value.guides, g => ({ to: link(`/docs/${g.name}`), title: g.title }))
   const kw = keyword.value.trim().toLowerCase()
   const list = kw
-    ? components.filter(c => c.title.toLowerCase().includes(kw) || c.subtitle.includes(kw) || c.name.includes(kw))
-    : components
-  return groupBy(list, c => ({ to: `/components/${c.name}`, title: c.title, subtitle: c.subtitle }))
+    ? components.value.filter(c => c.title.toLowerCase().includes(kw) || c.subtitle.includes(kw) || c.name.includes(kw))
+    : components.value
+  return groupBy(list, c => ({ to: link(`/components/${c.name}`), title: c.title, subtitle: c.subtitle }))
 })
 </script>
 
@@ -36,7 +41,7 @@ const groups = computed(() => {
   <aside class="site-sidebar">
     <label v-if="!isGuide" class="sidebar-search">
       <SearchOutlined />
-      <input v-model="keyword" type="search" placeholder="搜索组件" aria-label="搜索组件">
+      <input v-model="keyword" type="search" :placeholder="t.sidebar.search" :aria-label="t.sidebar.search">
       <span class="sidebar-count">{{ components.length }}</span>
     </label>
     <div v-for="group in groups" :key="group.title" class="sidebar-group">
@@ -50,7 +55,7 @@ const groups = computed(() => {
       </RouterLink>
     </div>
     <div v-if="!groups.length" class="sidebar-empty">
-      没有匹配的组件
+      {{ t.sidebar.empty }}
     </div>
   </aside>
 </template>

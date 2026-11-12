@@ -2,16 +2,20 @@
 最常见的场景：吸底操作栏内的最后放置一个 `SafeArea`，操作栏的背景会延伸到屏幕底部，按钮不会被指示条遮挡。
 </docs>
 
+<docs lang="en-US">
+The most common scenario: put a `SafeArea` at the end of a bottom action bar, so that the background of the bar extends to the bottom of the screen and the buttons are not covered by the home indicator.
+</docs>
+
 <template>
   <div class="page">
     <div class="content">
-      商品详情
+      Product details
     </div>
     <div class="bar">
       <div class="bar-inner">
-        <span class="price">合计：<b>¥ 199.00</b></span>
+        <span class="price">Total: <b>¥ 199.00</b></span>
         <am-button type="primary" shape="round">
-          提交订单
+          Place order
         </am-button>
       </div>
       <am-safe-area position="bottom" />

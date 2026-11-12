@@ -2,6 +2,10 @@
 `justify` 控制列在水平方向上的排列方式，`align` 控制垂直方向上的对齐方式。
 </docs>
 
+<docs lang="en-US">
+`justify` controls how the columns are arranged horizontally, and `align` controls how they are aligned vertically.
+</docs>
+
 <script setup lang="ts">
 const justifyOptions = ['start', 'center', 'end', 'space-between', 'space-around', 'space-evenly'] as const
 </script>

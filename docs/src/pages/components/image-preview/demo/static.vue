@@ -2,6 +2,10 @@
 `ImagePreview.show()` 无需声明组件即可打开预览，返回的对象可用于手动关闭；`ImagePreview.clear()` 关闭所有函数式预览。
 </docs>
 
+<docs lang="en-US">
+`ImagePreview.show()` opens a preview without declaring the component, and the returned object can be used to close it manually; `ImagePreview.clear()` closes all functional previews.
+</docs>
+
 <script setup lang="ts">
 import { ImagePreview } from 'antdv-next-mobile'
 import { ref } from 'vue'
@@ -30,10 +34,10 @@ function show() {
     current: 1,
     closable: true,
     onChange: (index) => {
-      last.value = `切换到第 ${index + 1} 张`
+      last.value = `Switched to image ${index + 1}`
     },
     onClose: () => {
-      last.value = '已关闭'
+      last.value = 'Closed'
     },
   })
 }
@@ -47,14 +51,14 @@ function showAndClose() {
 <template>
   <am-flex vertical gap="small">
     <am-button type="primary" block @click="show">
-      函数式调用
+      Static call
     </am-button>
     <am-button block @click="showAndClose">
-      2 秒后自动关闭
+      Auto close after 2s
     </am-button>
   </am-flex>
   <p class="tip">
-    最近的回调：{{ last }}
+    Last callback: {{ last }}
   </p>
 </template>
 

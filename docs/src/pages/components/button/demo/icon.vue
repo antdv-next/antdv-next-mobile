@@ -2,6 +2,10 @@
 通过 `icon` 插槽或 `icon` 属性设置图标，`iconPlacement` 控制图标位置。
 </docs>
 
+<docs lang="en-US">
+Set the icon with the `icon` slot or the `icon` prop; `iconPlacement` controls the icon position.
+</docs>
+
 <script setup lang="ts">
 import { DownloadOutlined, RightOutlined, SearchOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
@@ -13,16 +17,16 @@ import { h } from 'vue'
       <template #icon>
         <SearchOutlined />
       </template>
-      搜索
+      Search
     </am-button>
     <am-button :icon="() => h(DownloadOutlined)">
-      下载
+      Download
     </am-button>
     <am-button icon-placement="end" color="primary" variant="filled">
       <template #icon>
         <RightOutlined />
       </template>
-      下一步
+      Next
     </am-button>
     <am-button>
       <template #icon>

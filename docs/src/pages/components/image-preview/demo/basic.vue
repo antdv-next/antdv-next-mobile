@@ -2,6 +2,10 @@
 通过 `v-model:open` 控制显示，`images` 传入图片列表。左右滑动切换，双指或双击缩放，单击或下拉关闭。
 </docs>
 
+<docs lang="en-US">
+Control the visibility with `v-model:open` and pass the image list with `images`. Swipe left / right to switch, pinch or double-tap to zoom, single tap or swipe down to close.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -26,7 +30,7 @@ const open = ref(false)
 
 <template>
   <am-button type="primary" block @click="open = true">
-    预览图片
+    Preview images
   </am-button>
   <am-image-preview v-model:open="open" :images="images" />
 </template>

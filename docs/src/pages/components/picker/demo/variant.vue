@@ -2,11 +2,15 @@
 与 PC 端的选择类组件一致，支持 `variant`、`size`、`status`、`disabled` 与 `allowClear`。
 </docs>
 
+<docs lang="en-US">
+Like the selection components on PC, it supports `variant`, `size`, `status`, `disabled` and `allowClear`.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const columns = [['红色', '橙色', '黄色', '绿色', '蓝色'].map(label => ({ label, value: label }))]
-const value = ref(['绿色'])
+const columns = [['Red', 'Orange', 'Yellow', 'Green', 'Blue'].map(label => ({ label, value: label }))]
+const value = ref(['Green'])
 </script>
 
 <template>

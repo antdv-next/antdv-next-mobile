@@ -2,10 +2,14 @@
 通过 `columns` 指定列数，选项等宽排列，适合筛选面板。
 </docs>
 
+<docs lang="en-US">
+Specify the number of columns through `columns`; options are laid out with equal width, which suits filter panels.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const options = ['不限', '1 室', '2 室', '3 室', '4 室', '5 室及以上'].map((label, value) => ({ label, value }))
+const options = ['Any', '1 room', '2 rooms', '3 rooms', '4 rooms', '5+ rooms'].map((label, value) => ({ label, value }))
 const two = ref([0])
 const three = ref([1, 2])
 </script>

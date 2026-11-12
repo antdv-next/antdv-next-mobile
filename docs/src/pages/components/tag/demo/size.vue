@@ -2,6 +2,10 @@
 移动端特有：`size` 提供三种尺寸，`round` 得到胶囊形标签。
 </docs>
 
+<docs lang="en-US">
+Mobile only: `size` offers three sizes, and `round` gives a pill-shaped tag.
+</docs>
+
 <template>
   <am-space vertical size="middle">
     <am-space align="center" wrap>
@@ -17,13 +21,13 @@
     </am-space>
     <am-space align="center" wrap>
       <am-tag color="red" variant="solid" size="small" round>
-        热卖
+        Hot
       </am-tag>
       <am-tag color="orange" variant="outlined" round>
-        满 200 减 30
+        30 off 200
       </am-tag>
       <am-tag color="green" size="large" round>
-        包邮
+        Free shipping
       </am-tag>
     </am-space>
   </am-space>

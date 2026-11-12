@@ -2,19 +2,23 @@
 左侧导航、右侧内容的经典分类布局。通过 `v-model:activeKey` 获取当前激活项并渲染对应内容。
 </docs>
 
+<docs lang="en-US">
+The classic category layout with navigation on the left and content on the right. Get the active item with `v-model:activeKey` and render the corresponding content.
+</docs>
+
 <script setup lang="ts">
 import type { SideBarItem } from 'antdv-next-mobile'
 import { computed, ref } from 'vue'
 
 const items: SideBarItem[] = [
-  { key: 'recommend', title: '为你推荐' },
-  { key: 'phone', title: '手机数码' },
-  { key: 'home', title: '家用电器' },
-  { key: 'food', title: '食品生鲜' },
-  { key: 'clothes', title: '服饰鞋包' },
-  { key: 'book', title: '图书文娱' },
-  { key: 'sport', title: '运动户外' },
-  { key: 'baby', title: '母婴玩具' },
+  { key: 'recommend', title: 'For you' },
+  { key: 'phone', title: 'Phones' },
+  { key: 'home', title: 'Appliances' },
+  { key: 'food', title: 'Food' },
+  { key: 'clothes', title: 'Fashion' },
+  { key: 'book', title: 'Books' },
+  { key: 'sport', title: 'Sports' },
+  { key: 'baby', title: 'Baby' },
 ]
 
 const activeKey = ref<string | number>('recommend')

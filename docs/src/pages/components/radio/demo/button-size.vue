@@ -2,14 +2,18 @@
 按钮样式支持 `small`、`middle`、`large` 三种尺寸；设置 `block` 后撑满父元素并等分宽度。
 </docs>
 
+<docs lang="en-US">
+The button style supports three sizes: `small`, `middle` and `large`; with `block` set it fills the parent and splits the width equally.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const value = ref('a')
 const options = [
-  { label: '全部', value: 'a' },
-  { label: '待付款', value: 'b' },
-  { label: '待收货', value: 'c' },
+  { label: 'All', value: 'a' },
+  { label: 'Unpaid', value: 'b' },
+  { label: 'Shipped', value: 'c' },
 ]
 </script>
 

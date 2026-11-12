@@ -2,10 +2,14 @@
 覆盖 `--am-safe-area-multiple` 可以按倍数放大预留的空间，例如需要在指示条上方再留出同样高度的呼吸空间时。
 </docs>
 
+<docs lang="en-US">
+Override `--am-safe-area-multiple` to enlarge the reserved space by a multiple, for example when you need the same amount of breathing room again above the home indicator.
+</docs>
+
 <template>
   <div class="page">
     <div class="content">
-      双倍底部安全区
+      Double bottom safe area
     </div>
     <am-safe-area position="bottom" class="double" />
   </div>

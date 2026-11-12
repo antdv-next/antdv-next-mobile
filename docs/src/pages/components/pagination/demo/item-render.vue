@@ -2,15 +2,19 @@
 `itemRender` 自定义页码、上一页、下一页的内容；`prevIcon` / `nextIcon` 插槽只替换两侧的图标；组件变量可以调整外观。
 </docs>
 
+<docs lang="en-US">
+`itemRender` customizes the content of the page items, previous and next; the `prevIcon` / `nextIcon` slots only replace the icons on both sides; component tokens adjust the appearance.
+</docs>
+
 <script setup lang="ts">
 import type { PaginationProps } from 'antdv-next-mobile'
 import { CaretRightOutlined } from '@antdv-next/icons'
 
 const itemRender: PaginationProps['itemRender'] = (_page, type, element) => {
   if (type === 'prev')
-    return '上一页'
+    return 'Prev'
   if (type === 'next')
-    return '下一页'
+    return 'Next'
   return element
 }
 </script>

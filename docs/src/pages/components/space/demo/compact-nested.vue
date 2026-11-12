@@ -2,42 +2,46 @@
 `Space.Compact` 可以嵌套，内层会延续外层的分组，只有整体最外侧保留圆角。在表单中，组内字段会自动使用带边框的样式。
 </docs>
 
+<docs lang="en-US">
+`Space.Compact` can be nested: the inner one continues the outer group, and only the outermost edges of the whole keep rounded corners. Inside a form, the fields in a group use the bordered style automatically.
+</docs>
+
 <script setup lang="ts">
 import { reactive } from 'vue'
 
 const form = reactive({ area: '+86', phone: '', code: '' })
 const areas = [
-  { label: '+86', value: '+86', description: '中国大陆' },
-  { label: '+852', value: '+852', description: '中国香港' },
-  { label: '+1', value: '+1', description: '美国' },
+  { label: '+86', value: '+86', description: 'Chinese mainland' },
+  { label: '+852', value: '+852', description: 'Hong Kong, China' },
+  { label: '+1', value: '+1', description: 'United States' },
 ]
 </script>
 
 <template>
   <am-flex vertical gap="middle">
     <am-space-compact block>
-      <am-space-addon>筛选</am-space-addon>
+      <am-space-addon>Filter</am-space-addon>
       <am-space-compact>
-        <am-button>全部</am-button>
+        <am-button>All</am-button>
         <am-button color="primary" variant="filled">
-          进行中
+          Active
         </am-button>
-        <am-button>已完成</am-button>
+        <am-button>Done</am-button>
       </am-space-compact>
     </am-space-compact>
 
     <am-form :model="form" mode="card" layout="vertical">
-      <am-form-item label="手机号" name="phone">
+      <am-form-item label="Phone" name="phone">
         <am-space-compact block>
-          <am-select v-model:value="form.area" :options="areas" title="国家 / 地区" style="flex: 0 0 96px" />
-          <am-input v-model:value="form.phone" placeholder="请输入手机号" inputmode="tel" />
+          <am-select v-model:value="form.area" :options="areas" title="Country / Region" style="flex: 0 0 96px" />
+          <am-input v-model:value="form.phone" placeholder="Phone number" inputmode="tel" />
         </am-space-compact>
       </am-form-item>
-      <am-form-item label="验证码" name="code">
+      <am-form-item label="Code" name="code">
         <am-space-compact block>
-          <am-input v-model:value="form.code" placeholder="6 位验证码" inputmode="numeric" />
+          <am-input v-model:value="form.code" placeholder="6-digit code" inputmode="numeric" />
           <am-button type="primary">
-            获取验证码
+            Get code
           </am-button>
         </am-space-compact>
       </am-form-item>

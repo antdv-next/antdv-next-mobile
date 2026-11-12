@@ -2,6 +2,10 @@
 通过 `step` 设置步长，`dots` 显示每一步的刻度点。支持小数步长。
 </docs>
 
+<docs lang="en-US">
+Set the step with `step`, and `dots` shows a dot for each step. Decimal steps are supported.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 

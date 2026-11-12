@@ -2,6 +2,10 @@
 设置 `:poppable="false"` 后键盘内嵌在页面中，始终显示，可用于收银台、拨号盘等常驻键盘的页面。
 </docs>
 
+<docs lang="en-US">
+With `:poppable="false"` the keyboard is embedded in the page and always visible, for pages with a permanent keyboard such as a checkout counter or a dial pad.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -10,7 +14,7 @@ const value = ref('')
 
 <template>
   <div class="demo-display">
-    {{ value || '请输入取件码' }}
+    {{ value || 'Enter pickup code' }}
   </div>
   <am-number-keyboard v-model:value="value" :poppable="false" :maxlength="8" class="demo-inline-keyboard" />
 </template>

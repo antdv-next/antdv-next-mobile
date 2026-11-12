@@ -2,20 +2,24 @@
 包裹列表中的每一项。展开一项后触摸其他位置会自动收起，纵向滚动不受影响。
 </docs>
 
+<docs lang="en-US">
+Wrap each item of a list. After one item is opened, touching anywhere else closes it automatically; vertical scrolling is not affected.
+</docs>
+
 <script setup lang="ts">
 import type { SwipeActionItem } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const list = ref([
-  { id: 1, title: '周报已提交', time: '09:30' },
-  { id: 2, title: '设计评审会议', time: '10:00' },
-  { id: 3, title: '发布 1.0 版本', time: '14:00' },
-  { id: 4, title: '团队聚餐', time: '18:30' },
+  { id: 1, title: 'Weekly report submitted', time: '09:30' },
+  { id: 2, title: 'Design review', time: '10:00' },
+  { id: 3, title: 'Release 1.0', time: '14:00' },
+  { id: 4, title: 'Team dinner', time: '18:30' },
 ])
 
 const rightActions: SwipeActionItem[] = [
-  { key: 'top', text: '置顶', color: 'primary' },
-  { key: 'delete', text: '删除', color: 'danger' },
+  { key: 'top', text: 'Pin', color: 'primary' },
+  { key: 'delete', text: 'Delete', color: 'danger' },
 ]
 
 function onAction(action: SwipeActionItem, id: number) {

@@ -2,6 +2,10 @@
 `fit` 对应原生的 `object-fit`，`position` 对应 `object-position`。
 </docs>
 
+<docs lang="en-US">
+`fit` maps to the native `object-fit`, and `position` to `object-position`.
+</docs>
+
 <script setup lang="ts">
 function createImage(text: string, color: string, width = 400, height = 240) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`

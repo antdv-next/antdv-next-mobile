@@ -2,24 +2,28 @@
 `selection-mode="range"` 选择日期区间：先点开始日期，再点结束日期。`allow-same-day` 允许起止为同一天。
 </docs>
 
+<docs lang="en-US">
+`selection-mode="range"` selects a date range: tap the start date first, then the end date. `allow-same-day` allows the start and the end to be the same day.
+</docs>
+
 <script setup lang="ts">
 import type { Dayjs } from 'dayjs'
 import { computed, ref } from 'vue'
 
 const open = ref(false)
 const range = ref<Dayjs[] | null>(null)
-const text = computed(() => (range.value?.length ? range.value.map(date => date.format('M月D日')).join(' - ') : '请选择'))
+const text = computed(() => (range.value?.length ? range.value.map(date => date.format('M/D')).join(' - ') : 'Please select'))
 
 const sameDayOpen = ref(false)
 const sameDay = ref<Dayjs[] | null>(null)
-const sameDayText = computed(() => (sameDay.value?.length ? sameDay.value.map(date => date.format('M月D日')).join(' - ') : '请选择'))
+const sameDayText = computed(() => (sameDay.value?.length ? sameDay.value.map(date => date.format('M/D')).join(' - ') : 'Please select'))
 </script>
 
 <template>
   <am-list>
-    <am-list-item title="选择日期区间" :extra="text" clickable @click="open = true" />
-    <am-list-item title="允许同一天" :extra="sameDayText" clickable @click="sameDayOpen = true" />
+    <am-list-item title="Select a date range" :extra="text" clickable @click="open = true" />
+    <am-list-item title="Allow same day" :extra="sameDayText" clickable @click="sameDayOpen = true" />
   </am-list>
-  <am-calendar v-model:open="open" v-model:value="range" selection-mode="range" title="选择入住和离店日期" />
+  <am-calendar v-model:open="open" v-model:value="range" selection-mode="range" title="Select your stay" />
   <am-calendar v-model:open="sameDayOpen" v-model:value="sameDay" selection-mode="range" allow-same-day />
 </template>

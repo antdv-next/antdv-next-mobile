@@ -2,11 +2,15 @@
 `CheckableTag` 的行为类似复选框，点击切换选中状态，支持 `v-model:checked`，常用于筛选条件。
 </docs>
 
+<docs lang="en-US">
+`CheckableTag` behaves like a checkbox: tap to toggle the checked state. It supports `v-model:checked` and is commonly used for filter conditions.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const options = ['全部', '手机', '电脑', '平板', '耳机', '配件']
-const selected = ref<string[]>(['手机'])
+const options = ['All', 'Phones', 'Laptops', 'Tablets', 'Audio', 'Accessories']
+const selected = ref<string[]>(['Phones'])
 const single = ref(true)
 
 function toggle(option: string, checked: boolean) {
@@ -31,13 +35,13 @@ function toggle(option: string, checked: boolean) {
         v-model:checked
       </am-checkable-tag>
       <am-checkable-tag default-checked round size="small">
-        非受控
+        Uncontrolled
       </am-checkable-tag>
       <am-checkable-tag disabled round>
-        禁用
+        Disabled
       </am-checkable-tag>
     </am-space>
-    <span class="tip">已选：{{ selected.join('、') || '无' }}</span>
+    <span class="tip">Selected: {{ selected.join(', ') || 'None' }}</span>
   </am-space>
 </template>
 

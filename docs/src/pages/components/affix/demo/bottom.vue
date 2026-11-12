@@ -2,6 +2,10 @@
 设置 `offsetBottom` 后固定在容器底部，滚动到元素原本的位置后恢复。
 </docs>
 
+<docs lang="en-US">
+With `offsetBottom` set, the element is affixed to the bottom of the container and is restored once its original position is scrolled into view.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -12,17 +16,17 @@ const getTarget = () => scroller.value ?? null
 <template>
   <div ref="scroller" class="scroller">
     <div v-for="i in 4" :key="i" class="block">
-      内容 {{ i }}
+      Content {{ i }}
     </div>
     <am-affix :offset-bottom="0" :target="getTarget">
       <div class="footer">
         <am-button type="primary" block>
-          提交订单
+          Place order
         </am-button>
       </div>
     </am-affix>
     <div class="block">
-      页面底部
+      Bottom of page
     </div>
   </div>
 </template>

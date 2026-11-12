@@ -2,6 +2,10 @@
 超过 `overflowCount` 时显示为 `${overflowCount}+`，默认 `99`。
 </docs>
 
+<docs lang="en-US">
+Displayed as `${overflowCount}+` when the count exceeds `overflowCount`, which defaults to `99`.
+</docs>
+
 <template>
   <am-space size="large">
     <am-badge :count="99">

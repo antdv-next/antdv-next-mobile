@@ -2,6 +2,10 @@
 `offset` 让列向右偏移若干格，`order` 改变列的显示顺序。
 </docs>
 
+<docs lang="en-US">
+`offset` shifts a column to the right by a number of cells, and `order` changes the display order of the columns.
+</docs>
+
 <template>
   <am-row>
     <am-col :span="8">

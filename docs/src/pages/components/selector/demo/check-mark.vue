@@ -2,11 +2,15 @@
 `showCheckMark` 设为 `false` 可以隐藏选中项右下角的对勾角标。
 </docs>
 
+<docs lang="en-US">
+Set `showCheckMark` to `false` to hide the check mark at the bottom right corner of selected items.
+</docs>
+
 <script setup lang="ts">
 const options = [
-  { label: '选项一', value: '1' },
-  { label: '选项二', value: '2' },
-  { label: '选项三', value: '3' },
+  { label: 'Option 1', value: '1' },
+  { label: 'Option 2', value: '2' },
+  { label: 'Option 3', value: '3' },
 ]
 </script>
 

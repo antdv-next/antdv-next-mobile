@@ -2,6 +2,10 @@
 请求失败时将 `error` 置为 `true`，组件展示失败提示；点击提示会把 `error` 置回 `false` 并重新触发 `load`。
 </docs>
 
+<docs lang="en-US">
+Set `error` to `true` when the request fails and the component shows a failure tip; clicking the tip sets `error` back to `false` and fires `load` again.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -15,7 +19,7 @@ function onLoad() {
   setTimeout(() => {
     times += 1
     loading.value = false
-    // 第二次请求模拟失败
+    // simulate a failure on the second request
     if (times === 2) {
       error.value = true
       return
@@ -33,7 +37,7 @@ function onLoad() {
     <am-infinite-scroll v-model:loading="loading" v-model:error="error" :finished="finished" :threshold="50" @load="onLoad">
       <ul class="list">
         <li v-for="item in list" :key="item">
-          列表项 {{ item }}
+          Item {{ item }}
         </li>
       </ul>
     </am-infinite-scroll>

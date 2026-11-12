@@ -2,6 +2,10 @@
 骨架按钮、头像、输入框和图像，可以自由组合出任意页面的占位效果。
 </docs>
 
+<docs lang="en-US">
+Skeleton button, avatar, input and image, which can be freely combined into a placeholder for any page.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -24,7 +28,7 @@ const active = ref(true)
       <am-skeleton-image :active="active" :size="[160, 96]" />
     </am-flex>
     <am-flex align="center" justify="space-between">
-      <span>动画效果</span>
+      <span>Active</span>
       <am-switch v-model:checked="active" />
     </am-flex>
   </am-flex>

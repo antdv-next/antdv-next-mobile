@@ -2,6 +2,10 @@
 带步骤的进度条，`strokeColor` 传入数组可以为每一步设置颜色。
 </docs>
 
+<docs lang="en-US">
+A progress bar with steps. Pass an array to `strokeColor` to set a color for each step.
+</docs>
+
 <template>
   <am-flex vertical gap="middle" align="flex-start">
     <am-progress :percent="50" :steps="3" />

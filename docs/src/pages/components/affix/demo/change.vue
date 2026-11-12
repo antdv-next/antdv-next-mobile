@@ -2,6 +2,10 @@
 `change` 事件在固定状态改变时触发，可以用来切换吸顶后的样式。
 </docs>
 
+<docs lang="en-US">
+The `change` event is triggered when the affix state changes and can be used to switch the style once the element is sticky.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -13,16 +17,16 @@ const affixed = ref(false)
 <template>
   <div ref="scroller" class="scroller">
     <div class="block">
-      向下滚动
+      Scroll down
     </div>
     <am-affix :offset-top="8" :target="getTarget" @change="affixed = $event">
       <div class="bar pill" :class="{ 'pill-affixed': affixed }">
-        <span>{{ affixed ? '已固定' : '未固定' }}</span>
+        <span>{{ affixed ? 'Affixed' : 'Not affixed' }}</span>
         <span>offsetTop = 8</span>
       </div>
     </am-affix>
     <div v-for="i in 5" :key="i" class="block">
-      内容 {{ i }}
+      Content {{ i }}
     </div>
   </div>
 </template>

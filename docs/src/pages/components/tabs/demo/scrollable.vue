@@ -2,14 +2,18 @@
 标签超出宽度时标签栏可以横向滚动，切换后激活的标签会自动滚动到中间，指示条跟随滑动。
 </docs>
 
+<docs lang="en-US">
+When the tabs exceed the width, the tab bar can scroll horizontally. After switching, the active tab scrolls to the center automatically and the ink bar slides along.
+</docs>
+
 <script setup lang="ts">
 import type { TabsItem } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
-const items: TabsItem[] = ['推荐', '热点', '科技', '财经', '体育', '娱乐', '汽车', '军事', '国际', '游戏'].map((label, index) => ({
+const items: TabsItem[] = ['For you', 'Trending', 'Tech', 'Finance', 'Sports', 'Fun', 'Autos', 'Military', 'World', 'Games'].map((label, index) => ({
   key: index,
   label,
-  content: `${label}频道的内容`,
+  content: `${label} channel content`,
 }))
 
 const activeKey = ref<string | number>(2)

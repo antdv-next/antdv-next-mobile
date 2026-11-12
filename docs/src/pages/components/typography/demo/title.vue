@@ -2,6 +2,10 @@
 展示不同级别的标题。
 </docs>
 
+<docs lang="en-US">
+Titles of different levels.
+</docs>
+
 <template>
   <am-typography-title>h1. Antdv Next</am-typography-title>
   <am-typography-title :level="2">

@@ -44,6 +44,25 @@ body {
   color: var(--am-color-primary);
 }
 
+.m-home-locale {
+  min-width: 40px;
+  height: 32px;
+  margin-inline-start: auto;
+  padding: 0 10px;
+  color: var(--am-color-text-secondary);
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--am-color-bg-container);
+  border: 1px solid var(--am-color-border);
+  border-radius: 999px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.m-home-locale:active {
+  color: var(--am-color-primary);
+  border-color: var(--am-color-primary);
+}
+
 .m-home-desc {
   margin: 10px 4px 20px;
   color: var(--am-color-text-secondary);

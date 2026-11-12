@@ -2,6 +2,10 @@
 `formatter` 可以为每个日期设置上方 / 下方的提示信息（节假日、价格、入住 / 离店等）；`cellRender` 插槽则可以完全接管单元格内容。
 </docs>
 
+<docs lang="en-US">
+`formatter` sets the top / bottom info of each date (holidays, prices, check-in / check-out, etc.); the `cellRender` slot takes over the cell content entirely.
+</docs>
+
 <script setup lang="ts">
 import type { CalendarDay } from 'antdv-next-mobile'
 import type { Dayjs } from 'dayjs'
@@ -13,9 +17,9 @@ const hotel = ref<Dayjs[] | null>(null)
 function formatter(day: CalendarDay): CalendarDay {
   const weekend = day.date.day() === 0 || day.date.day() === 6
   if (day.type === 'start')
-    return { ...day, bottomInfo: '入住' }
+    return { ...day, bottomInfo: 'In' }
   if (day.type === 'end')
-    return { ...day, bottomInfo: '离店' }
+    return { ...day, bottomInfo: 'Out' }
   if (day.type === 'disabled')
     return day
   return { ...day, bottomInfo: weekend ? '¥468' : '¥328', className: weekend ? 'demo-weekend' : undefined }
@@ -28,15 +32,15 @@ const signed = [1, 2, 3, 5, 8, 9]
 <template>
   <am-list>
     <am-list-item
-      title="酒店预订"
-      :extra="hotel?.length ? hotel.map(date => date.format('M月D日')).join(' - ') : '入住 - 离店'"
+      title="Hotel booking"
+      :extra="hotel?.length ? hotel.map(date => date.format('M/D')).join(' - ') : 'Check-in - Check-out'"
       clickable
       @click="hotelOpen = true"
     />
-    <am-list-item title="签到日历" extra="cellRender 插槽" clickable @click="signOpen = true" />
+    <am-list-item title="Sign-in calendar" extra="cellRender slot" clickable @click="signOpen = true" />
   </am-list>
-  <am-calendar v-model:open="hotelOpen" v-model:value="hotel" selection-mode="range" :formatter="formatter" title="选择入住离店日期" />
-  <am-calendar v-model:open="signOpen" title="签到日历" :show-confirm="false" :show-mark="false">
+  <am-calendar v-model:open="hotelOpen" v-model:value="hotel" selection-mode="range" :formatter="formatter" title="Select your stay" />
+  <am-calendar v-model:open="signOpen" title="Sign-in calendar" :show-confirm="false" :show-mark="false">
     <template #cellRender="{ day }">
       <span>{{ day.text }}</span>
       <span class="demo-sign" :class="{ 'demo-sign-done': signed.includes(day.date.date()) }" />

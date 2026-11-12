@@ -2,16 +2,20 @@
 多列之间互相独立。`change` 事件的第二个参数包含每列选中的完整选项 `items` 与发生变化的列 `columnIndex`。
 </docs>
 
+<docs lang="en-US">
+Multiple columns are independent of each other. The second argument of the `change` event contains the full selected options of each column, `items`, and the column that changed, `columnIndex`.
+</docs>
+
 <script setup lang="ts">
 import type { PickerChangeInfo, PickerValue } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const columns = [
-  ['周一', '周二', '周三', '周四', '周五'].map((label, index) => ({ label, value: index + 1 })),
-  [{ label: '上午', value: 'am' }, { label: '下午', value: 'pm' }, { label: '晚上', value: 'night' }],
+  ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((label, index) => ({ label, value: index + 1 })),
+  [{ label: 'Morning', value: 'am' }, { label: 'Afternoon', value: 'pm' }, { label: 'Evening', value: 'night' }],
 ]
 const value = ref<PickerValue[]>([3, 'pm'])
-const text = ref('周三 下午')
+const text = ref('Wed Afternoon')
 
 function onChange(_: PickerValue[], info: PickerChangeInfo) {
   text.value = info.items.map(item => item?.label).join(' ')

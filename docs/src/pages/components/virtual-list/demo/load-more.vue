@@ -2,6 +2,10 @@
 滚动到底部附近时触发 `reachEnd`，在其中追加数据即可实现无限加载；数据长度变化后 `reachEnd` 可以再次触发。`footer` 插槽位于滚动容器内，适合放置「加载中」「没有更多了」。
 </docs>
 
+<docs lang="en-US">
+`reachEnd` is triggered when scrolled near the bottom; append data in it to implement infinite loading. `reachEnd` can be triggered again after the data length changes. The `footer` slot sits inside the scroll container and is a good place for "Loading" and "No more data".
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -9,7 +13,7 @@ const PAGE_SIZE = 30
 const TOTAL = 150
 
 function create(start: number, length: number) {
-  return Array.from({ length }, (_, i) => ({ id: start + i, name: `订单 ${String(start + i + 1).padStart(4, '0')}` }))
+  return Array.from({ length }, (_, i) => ({ id: start + i, name: `Order ${String(start + i + 1).padStart(4, '0')}` }))
 }
 
 const data = ref(create(0, PAGE_SIZE))
@@ -32,7 +36,7 @@ function loadMore() {
   <am-virtual-list :data="data" :height="360" :item-height="56" item-key="id" fixed class="demo-list" @reach-end="loadMore">
     <template #header>
       <div class="demo-tip">
-        已加载 {{ data.length }} / {{ TOTAL }} 条
+        Loaded {{ data.length }} / {{ TOTAL }}
       </div>
     </template>
     <template #default="{ item }">
@@ -43,7 +47,7 @@ function loadMore() {
     <template #footer>
       <div class="demo-tip demo-footer">
         <am-spin v-if="loading" size="small" />
-        <span>{{ finished ? '没有更多了' : loading ? '加载中...' : '上拉加载更多' }}</span>
+        <span>{{ finished ? 'No more data' : loading ? 'Loading...' : 'Pull up to load more' }}</span>
       </div>
     </template>
   </am-virtual-list>

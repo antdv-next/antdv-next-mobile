@@ -2,21 +2,25 @@
 包含标题、右上角操作和内容的基础卡片，`size="small"` 得到更紧凑的卡片。
 </docs>
 
+<docs lang="en-US">
+A basic card with a title, an action at the top right and content. `size="small"` gives a more compact card.
+</docs>
+
 <template>
   <am-space vertical block size="middle">
-    <am-card title="默认卡片">
+    <am-card title="Default card">
       <template #extra>
-        <a href="#">更多</a>
+        <a href="#">More</a>
       </template>
-      <p>卡片内容</p>
-      <p>卡片内容</p>
+      <p>Card content</p>
+      <p>Card content</p>
     </am-card>
-    <am-card title="小尺寸卡片" extra="2 条" size="small">
-      <p>卡片内容</p>
-      <p>卡片内容</p>
+    <am-card title="Small card" extra="2 items" size="small">
+      <p>Card content</p>
+      <p>Card content</p>
     </am-card>
     <am-card>
-      只有内容的卡片
+      Card with content only
     </am-card>
   </am-space>
 </template>

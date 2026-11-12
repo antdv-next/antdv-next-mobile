@@ -2,6 +2,10 @@
 通过 `loading` 在内容加载完成前显示加载指示器。
 </docs>
 
+<docs lang="en-US">
+Show a loading indicator with `loading` until the content has finished loading.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -19,11 +23,11 @@ function show() {
 
 <template>
   <am-button block @click="show">
-    打开并加载
+    Open and load
   </am-button>
-  <am-drawer v-model:open="open" title="订单详情" :loading="loading" height="50%">
-    <p>订单编号：202611110001</p>
-    <p>下单时间：2026-11-11 10:00</p>
-    <p>订单状态：已发货</p>
+  <am-drawer v-model:open="open" title="Order details" :loading="loading" height="50%">
+    <p>Order No.: 202611110001</p>
+    <p>Ordered at: 2026-11-11 10:00</p>
+    <p>Status: Shipped</p>
   </am-drawer>
 </template>

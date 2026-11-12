@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 import { LeftOutlined } from '@antdv-next/icons'
-import { components } from 'virtual:am-docs'
 import { computed, nextTick, onErrorCaptured, ref, shallowRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useDocs, useMessages } from '../../shared/locale'
 
 const props = defineProps<{ name: string }>()
 const route = useRoute()
 
-interface LoadedDemo { id: string, title: string, full: boolean, component: Component }
+interface LoadedDemo { id: string, full: boolean, component: Component }
 
-const entry = computed(() => components.find(c => c.name === props.name))
+const docs = useDocs()
+const t = useMessages()
+const entry = computed(() => docs.value.components.find(c => c.name === props.name))
+// titles come from the current locale, the demo components are shared by both
+const titles = computed(() => Object.fromEntries((entry.value?.demos ?? []).map(demo => [demo.id, demo.title])))
 const demos = shallowRef<LoadedDemo[]>([])
 const loading = ref(true)
 const focused = ref('')
@@ -24,14 +28,14 @@ async function load() {
   if (current) {
     const loaded = await Promise.all(current.demos.map(async (demo) => {
       try {
-        return { id: demo.id, title: demo.title, full: demo.full, component: (await demo.load()).default }
+        return { id: demo.id, full: demo.full, component: (await demo.load()).default }
       }
       catch (error) {
         errors.value[demo.id] = String(error)
-        return { id: demo.id, title: demo.title, full: demo.full, component: { render: () => null } as Component }
+        return { id: demo.id, full: demo.full, component: { render: () => null } as Component }
       }
     }))
-    if (current === entry.value)
+    if (current.name === props.name)
       demos.value = loaded
   }
   loading.value = false
@@ -64,17 +68,17 @@ onErrorCaptured((error, instance) => {
 <template>
   <div class="m-demo-page">
     <header class="m-demo-nav">
-      <RouterLink to="/" class="m-demo-back" aria-label="返回">
+      <RouterLink to="/" class="m-demo-back" :aria-label="t.mobile.back">
         <LeftOutlined />
       </RouterLink>
       {{ entry?.title ?? name }}
       <small>{{ entry?.subtitle }}</small>
     </header>
     <div v-if="!entry" class="m-demo-state">
-      未找到组件 {{ name }}
+      {{ t.mobile.notFound(name) }}
     </div>
     <div v-else-if="loading" class="m-demo-state">
-      加载中...
+      {{ t.mobile.loading }}
     </div>
     <div v-else class="m-demo-list">
       <section
@@ -85,7 +89,7 @@ onErrorCaptured((error, instance) => {
         :class="{ 'm-demo-full': demo.full, 'focused': focused === demo.id }"
       >
         <h2 class="m-demo-title">
-          {{ demo.title }}
+          {{ titles[demo.id] }}
         </h2>
         <div class="m-demo-body">
           <pre v-if="errors[demo.id]" class="m-demo-error">{{ errors[demo.id] }}</pre>

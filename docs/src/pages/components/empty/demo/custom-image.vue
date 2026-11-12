@@ -2,6 +2,10 @@
 `image` 可以是图片地址，也可以通过同名插槽放置任意节点；图片区域的高度通过 `styles.image` 或 `--am-empty-image-height` 调整。
 </docs>
 
+<docs lang="en-US">
+`image` can be an image URL, or any node can be placed through the same-named slot; adjust the height of the image area with `styles.image` or `--am-empty-image-height`.
+</docs>
+
 <script setup lang="ts">
 import { WifiOutlined } from '@antdv-next/icons'
 </script>
@@ -9,16 +13,16 @@ import { WifiOutlined } from '@antdv-next/icons'
 <template>
   <am-empty
     image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-    description="自定义图片地址"
+    description="Custom image URL"
     :styles="{ image: { height: '60px' } }"
   />
   <am-divider />
-  <am-empty description="网络不给力，请稍后重试" class="offline">
+  <am-empty description="Network error, please try again later" class="offline">
     <template #image>
       <WifiOutlined />
     </template>
     <am-button size="small">
-      重新加载
+      Reload
     </am-button>
   </am-empty>
 </template>

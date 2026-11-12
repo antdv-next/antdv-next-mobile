@@ -2,11 +2,15 @@
 在 [Popup](/components/popup) 中使用时，用 `height`（或 CSS 的 `max-height`）限定列表高度即可。弹层首次打开后，调用 `scrollTo({ key, align: 'center' })` 可以把当前选中的项滚动到中间。
 </docs>
 
+<docs lang="en-US">
+When used inside [Popup](/components/popup), just limit the list height with `height` (or CSS `max-height`). After the popup opens for the first time, call `scrollTo({ key, align: 'center' })` to scroll the currently selected item to the middle.
+</docs>
+
 <script setup lang="ts">
 import type { VirtualListExpose } from 'antdv-next-mobile'
 import { nextTick, ref } from 'vue'
 
-const cities = Array.from({ length: 5000 }, (_, index) => ({ code: `C${String(index + 1).padStart(4, '0')}`, name: `城市 ${index + 1}` }))
+const cities = Array.from({ length: 5000 }, (_, index) => ({ code: `C${String(index + 1).padStart(4, '0')}`, name: `City ${index + 1}` }))
 
 const open = ref(false)
 const selected = ref('C2600')
@@ -26,11 +30,11 @@ function select(code: string) {
 
 <template>
   <am-list>
-    <am-list-item title="选择城市" :extra="selected" clickable @click="show" />
+    <am-list-item title="Select city" :extra="selected" clickable @click="show" />
   </am-list>
   <am-popup v-model:open="open" placement="bottom" round closable>
     <div class="demo-title">
-      选择城市（5,000 个）
+      Select city (5,000)
     </div>
     <am-virtual-list ref="listRef" :data="cities" height="50vh" :item-height="48" item-key="code" fixed>
       <template #default="{ item }">

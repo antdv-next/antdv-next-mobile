@@ -2,6 +2,10 @@
 多个 `Affix` 依次吸顶，后面的标题会盖住前面的，实现分组标题的吸顶效果。`zIndex` 可以调整固定后的层级。
 </docs>
 
+<docs lang="en-US">
+Multiple `Affix`es stick to the top one after another, each later title covering the previous one, which gives sticky group titles. `zIndex` adjusts the z-index while affixed.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -15,7 +19,7 @@ const groups = ['A', 'B', 'C', 'D']
     <template v-for="(group, index) in groups" :key="group">
       <am-affix :target="getTarget" :z-index="10 + index">
         <div class="bar">
-          分组 {{ group }}
+          Group {{ group }}
         </div>
       </am-affix>
       <div v-for="i in 4" :key="i" class="row">

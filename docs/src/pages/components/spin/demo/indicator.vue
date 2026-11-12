@@ -2,6 +2,10 @@
 使用 `indicator` 插槽或属性自定义指示符。
 </docs>
 
+<docs lang="en-US">
+Use the `indicator` slot or prop to customize the indicator.
+</docs>
+
 <script setup lang="ts">
 import { LoadingOutlined, SyncOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
@@ -15,7 +19,7 @@ import { h } from 'vue'
       </template>
     </am-spin>
     <am-spin size="large" :indicator="() => h(SyncOutlined, { class: 'am-spin-icon' })" />
-    <am-spin class="custom-color" description="自定义颜色" />
+    <am-spin class="custom-color" description="Custom color" />
   </am-flex>
 </template>
 

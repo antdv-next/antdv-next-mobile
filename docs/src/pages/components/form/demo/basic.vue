@@ -2,6 +2,10 @@
 最基础的登录表单：`model` 绑定数据，`FormItem` 通过 `name` 关联字段、`rules` 声明校验。`htmlType="submit"` 的按钮会触发校验，通过后触发 `finish`，失败触发 `finishFailed`。
 </docs>
 
+<docs lang="en-US">
+The most basic login form: `model` binds the data, `FormItem` is bound to a field through `name` and declares validation with `rules`. A button with `htmlType="submit"` triggers validation, then `finish` when it passes or `finishFailed` when it fails.
+</docs>
+
 <script setup lang="ts">
 import { LockOutlined, UserOutlined } from '@antdv-next/icons'
 import { reactive, ref } from 'vue'
@@ -14,32 +18,32 @@ function onFinish(values: Record<string, any>) {
 }
 
 function onFinishFailed({ errorFields }: { errorFields: { name: (string | number)[], errors: string[] }[] }) {
-  result.value = `finishFailed: ${errorFields.map(field => field.errors[0]).join('；')}`
+  result.value = `finishFailed: ${errorFields.map(field => field.errors[0]).join('; ')}`
 }
 </script>
 
 <template>
   <am-form :model="model" name="login" @finish="onFinish" @finish-failed="onFinishFailed">
-    <am-form-item name="username" label="账号" :rules="[{ required: true, message: '请输入账号' }]">
-      <am-input v-model:value="model.username" placeholder="手机号 / 邮箱" allow-clear>
+    <am-form-item name="username" label="Account" :rules="[{ required: true, message: 'Please enter your account' }]">
+      <am-input v-model:value="model.username" placeholder="Phone / Email" allow-clear>
         <template #prefix>
           <UserOutlined />
         </template>
       </am-input>
     </am-form-item>
-    <am-form-item name="password" label="密码" :rules="[{ required: true, message: '请输入密码' }]">
-      <am-input-password v-model:value="model.password" placeholder="请输入密码">
+    <am-form-item name="password" label="Password" :rules="[{ required: true, message: 'Please enter your password' }]">
+      <am-input-password v-model:value="model.password" placeholder="Please enter">
         <template #prefix>
           <LockOutlined />
         </template>
       </am-input-password>
     </am-form-item>
-    <am-form-item name="remember" label="记住我" content-align="end">
+    <am-form-item name="remember" label="Remember" content-align="end">
       <am-switch v-model:checked="model.remember" />
     </am-form-item>
     <template #footer>
       <am-button type="primary" html-type="submit" block>
-        登录
+        Log in
       </am-button>
       <p v-if="result" style="margin: 12px 0 0; font-size: 12px; word-break: break-all; color: var(--am-color-text-tertiary)">
         {{ result }}

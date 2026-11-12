@@ -2,14 +2,18 @@
 使用 `icon` / `title` 插槽自定义渲染，插槽参数包含当前项与激活状态；通过组件变量调整激活色。
 </docs>
 
+<docs lang="en-US">
+Use the `icon` / `title` slots for custom rendering; the slot params contain the current item and the active state. The active color is adjusted with component tokens.
+</docs>
+
 <script setup lang="ts">
 import type { TabBarItem } from 'antdv-next-mobile'
 
 const items: TabBarItem[] = [
-  { key: 'home', title: '首页' },
-  { key: 'discover', title: '发现' },
-  { key: 'cart', title: '购物车', badge: 2 },
-  { key: 'me', title: '我的' },
+  { key: 'home', title: 'Home' },
+  { key: 'discover', title: 'Discover' },
+  { key: 'cart', title: 'Cart', badge: 2 },
+  { key: 'me', title: 'Me' },
 ]
 
 const emojis: Record<string, [string, string]> = {

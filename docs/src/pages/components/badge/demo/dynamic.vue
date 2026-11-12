@@ -2,6 +2,10 @@
 数字和小红点可以随数据动态变化。
 </docs>
 
+<docs lang="en-US">
+The number and the red dot can change dynamically with the data.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -27,7 +31,7 @@ const show = ref(true)
         <div class="box" />
       </am-badge>
       <am-button size="small" @click="show = !show">
-        切换小红点
+        Toggle dot
       </am-button>
     </am-space>
   </am-space>

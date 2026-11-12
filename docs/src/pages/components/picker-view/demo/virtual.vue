@@ -2,12 +2,16 @@
 滚轮默认开启虚拟滚动（`virtual`）：每列只渲染可视区域附近的选项。下面两列分别有 10,000 和 2,000 个选项，实际挂载的节点数显示在下方。
 </docs>
 
+<docs lang="en-US">
+Virtual scrolling (`virtual`) is enabled for the wheels by default: each column only renders the options near the visible area. The two columns below have 10,000 and 2,000 options respectively, and the number of nodes actually mounted is shown underneath.
+</docs>
+
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from 'vue'
 
 const columns = [
   Array.from({ length: 10000 }, (_, index) => ({ label: `${index + 1}`, value: index + 1 })),
-  Array.from({ length: 2000 }, (_, index) => ({ label: `${1000 + index} 年`, value: 1000 + index })),
+  Array.from({ length: 2000 }, (_, index) => ({ label: `Year ${1000 + index}`, value: 1000 + index })),
 ]
 const value = ref<number[]>([6666, 2026])
 
@@ -25,7 +29,7 @@ watch(value, () => nextTick(count))
     <am-picker-view v-model:value="value" :columns="columns" />
   </div>
   <div class="demo-result">
-    绑定值：{{ JSON.stringify(value) }}，共 12,000 个选项，已挂载 {{ mounted }} 个节点
+    Value: {{ JSON.stringify(value) }}, 12,000 options, {{ mounted }} nodes mounted
   </div>
 </template>
 

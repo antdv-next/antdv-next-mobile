@@ -2,6 +2,10 @@
 在表单或列表中使用，典型的购物车数量选择。
 </docs>
 
+<docs lang="en-US">
+Use in a form or a list; a typical shopping cart quantity selector.
+</docs>
+
 <script setup lang="ts">
 import { reactive } from 'vue'
 
@@ -10,13 +14,13 @@ const model = reactive({ adult: 2, child: 0, room: 1 })
 
 <template>
   <am-form :model="model" content-align="end">
-    <am-form-item name="adult" label="成人" :rules="[{ type: 'number', min: 1, message: '至少 1 位成人' }]">
+    <am-form-item name="adult" label="Adults" :rules="[{ type: 'number', min: 1, message: 'At least 1 adult' }]">
       <am-input-number v-model:value="model.adult" :min="0" :max="9" />
     </am-form-item>
-    <am-form-item name="child" label="儿童" extra="2-12 周岁">
+    <am-form-item name="child" label="Children" extra="Ages 2-12">
       <am-input-number v-model:value="model.child" :min="0" :max="6" />
     </am-form-item>
-    <am-form-item name="room" label="房间数">
+    <am-form-item name="room" label="Rooms">
       <am-input-number v-model:value="model.room" :min="1" :max="5" />
     </am-form-item>
   </am-form>

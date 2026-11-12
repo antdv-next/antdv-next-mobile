@@ -2,6 +2,10 @@
 三种尺寸与四种形态。在 `Form` 中默认使用 `borderless`。
 </docs>
 
+<docs lang="en-US">
+Three sizes and four variants. `borderless` is used by default inside a `Form`.
+</docs>
+
 <template>
   <am-flex vertical gap="middle">
     <am-flex align="center" gap="middle" wrap>

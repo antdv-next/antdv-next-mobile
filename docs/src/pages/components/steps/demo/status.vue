@@ -2,13 +2,17 @@
 `status` 指定当前步骤的状态，也可以在 `items` 中为某一步单独指定 `status`。
 </docs>
 
+<docs lang="en-US">
+`status` specifies the status of the current step; a `status` can also be set for an individual step in `items`.
+</docs>
+
 <script setup lang="ts">
 import type { StepsItem } from 'antdv-next-mobile'
 
 const items: StepsItem[] = [
-  { title: '提交申请' },
-  { title: '资料审核', content: '证件照不清晰' },
-  { title: '开通成功' },
+  { title: 'Apply' },
+  { title: 'Review', content: 'ID photo is blurry' },
+  { title: 'Activated' },
 ]
 </script>
 

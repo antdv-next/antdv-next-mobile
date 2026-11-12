@@ -2,6 +2,10 @@
 图片加载失败时触发 `error` 事件，并依次回退为 `icon`、默认插槽中的字符。
 </docs>
 
+<docs lang="en-US">
+When the image fails to load, the `error` event is triggered and the avatar falls back to `icon`, then to the characters in the default slot.
+</docs>
+
 <script setup lang="ts">
 import { UserOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -18,10 +22,10 @@ const failed = ref(0)
         </template>
       </am-avatar>
       <am-avatar src="https://example.invalid/broken.png" @error="failed++">
-        李
+        Lee
       </am-avatar>
     </am-space>
-    <span class="tip">加载失败次数：{{ failed }}</span>
+    <span class="tip">Load failures: {{ failed }}</span>
   </am-space>
 </template>
 

@@ -2,6 +2,10 @@
 与 `PullToRefresh` 组合实现「下拉刷新 + 上拉加载」：刷新时重置列表与 `hasMore`。
 </docs>
 
+<docs lang="en-US">
+Combine with `PullToRefresh` to implement "pull down to refresh + pull up to load more": reset the list and `hasMore` when refreshing.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -20,7 +24,7 @@ function fetchPage(reset: boolean) {
       refreshing.value = false
     }
     const start = list.value.length
-    list.value.push(...Array.from({ length: 10 }, (_, i) => `第 ${version} 版 - 列表项 ${start + i + 1}`))
+    list.value.push(...Array.from({ length: 10 }, (_, i) => `v${version} - Item ${start + i + 1}`))
     loading.value = false
     if (list.value.length >= 30)
       hasMore.value = false

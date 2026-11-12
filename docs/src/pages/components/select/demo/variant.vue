@@ -2,11 +2,15 @@
 支持 `variant`、`size`、`status` 与 `disabled`，与其他表单组件保持一致。
 </docs>
 
+<docs lang="en-US">
+Supports `variant`, `size`, `status` and `disabled`, consistent with other form components.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const options = ['低', '中', '高', '紧急'].map(label => ({ label, value: label }))
-const value = ref('中')
+const options = ['Low', 'Medium', 'High', 'Urgent'].map(label => ({ label, value: label }))
+const value = ref('Medium')
 </script>
 
 <template>

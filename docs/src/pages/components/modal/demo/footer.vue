@@ -2,6 +2,10 @@
 `footer` 设为 `null` 可以隐藏底部，配合 `closable` 使用；也可以通过 `footer` 插槽完全自定义，插槽参数提供 `ok` 与 `cancel` 方法。
 </docs>
 
+<docs lang="en-US">
+Set `footer` to `null` to hide the footer, together with `closable`; or fully customize it through the `footer` slot, whose params provide the `ok` and `cancel` methods.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -12,24 +16,24 @@ const custom = ref(false)
 <template>
   <am-flex vertical gap="small">
     <am-button block @click="noFooter = true">
-      无底部 + 关闭按钮
+      No footer + close button
     </am-button>
     <am-button block @click="custom = true">
-      自定义底部
+      Custom footer
     </am-button>
   </am-flex>
-  <am-modal v-model:open="noFooter" title="公告" :footer="null" closable>
-    没有底部按钮，点击右上角或遮罩关闭。
+  <am-modal v-model:open="noFooter" title="Notice" :footer="null" closable>
+    No footer buttons. Tap the top-right icon or the mask to close.
   </am-modal>
-  <am-modal v-model:open="custom" title="领取优惠券" @ok="custom = false">
-    恭喜获得一张 20 元优惠券。
+  <am-modal v-model:open="custom" title="Claim coupon" @ok="custom = false">
+    You got a ￥20 coupon.
     <template #footer="{ ok, cancel }">
       <am-flex vertical gap="small">
         <am-button type="primary" block shape="round" @click="ok">
-          立即领取
+          Claim now
         </am-button>
         <am-button type="text" block @click="cancel">
-          残忍拒绝
+          No, thanks
         </am-button>
       </am-flex>
     </template>

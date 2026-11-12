@@ -2,6 +2,10 @@
 使用 `labelRender` 与 `contentRender` 插槽自定义标签与内容；`animated` 开启内容滑动切换，组件变量可以调整指示条。
 </docs>
 
+<docs lang="en-US">
+Customize the tab titles and content with the `labelRender` and `contentRender` slots; `animated` enables sliding between content panes, and the component tokens can adjust the ink bar.
+</docs>
+
 <script setup lang="ts">
 import type { TabsItem } from 'antdv-next-mobile'
 
@@ -10,9 +14,9 @@ interface Channel extends TabsItem {
 }
 
 const items: Channel[] = [
-  { key: 'unread', label: '未读', count: 12 },
-  { key: 'read', label: '已读', count: 128 },
-  { key: 'archived', label: '归档', count: 0 },
+  { key: 'unread', label: 'Unread', count: 12 },
+  { key: 'read', label: 'Read', count: 128 },
+  { key: 'archived', label: 'Archived', count: 0 },
 ]
 </script>
 
@@ -24,7 +28,7 @@ const items: Channel[] = [
     </template>
     <template #contentRender="{ item, index }">
       <div class="pane">
-        第 {{ index + 1 }} 个标签页：{{ item.label }}（{{ (item as Channel).count }} 条）
+        Tab {{ index + 1 }}: {{ item.label }} ({{ (item as Channel).count }} items)
       </div>
     </template>
   </am-tabs>

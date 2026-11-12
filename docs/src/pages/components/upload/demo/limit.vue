@@ -2,17 +2,21 @@
 `maxCount` 限制文件数量，达到上限后隐藏上传按钮；`maxSize` 限制单个文件大小（字节）。被忽略的文件通过 `exceed` 事件通知。
 </docs>
 
+<docs lang="en-US">
+`maxCount` limits the number of files, and the upload button is hidden once the limit is reached; `maxSize` limits the size of a single file (bytes). Ignored files are reported through the `exceed` event.
+</docs>
+
 <script setup lang="ts">
 import type { UploadFile } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFile[]>([])
-const message = ref('最多 3 张，单张不超过 500KB')
+const message = ref('Up to 3 images, 500KB each')
 
 function onExceed(files: File[], reason: 'maxCount' | 'maxSize') {
   message.value = reason === 'maxCount'
-    ? `超出数量限制，已忽略 ${files.length} 个文件`
-    : `${files.map(file => file.name).join('、')} 超过 500KB`
+    ? `Limit exceeded, ${files.length} file(s) ignored`
+    : `${files.map(file => file.name).join(', ')} exceeds 500KB`
 }
 </script>
 

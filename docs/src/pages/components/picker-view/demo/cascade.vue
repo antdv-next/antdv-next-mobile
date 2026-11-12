@@ -2,14 +2,18 @@
 `columns` 传入函数时，会在每次选择后以最新的值重新计算列数据，后续列的值会自动修正为可选项，从而实现级联。
 </docs>
 
+<docs lang="en-US">
+When `columns` is a function, the column data is recomputed with the latest value after every selection, and the values of the following columns are corrected to selectable options automatically, which enables cascading.
+</docs>
+
 <script setup lang="ts">
 import type { PickerValue } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const data: Record<string, Record<string, string[]>> = {
-  浙江: { 杭州: ['西湖区', '余杭区', '滨江区'], 宁波: ['海曙区', '鄞州区'] },
-  江苏: { 南京: ['玄武区', '鼓楼区', '建邺区'], 苏州: ['姑苏区', '吴中区', '工业园区'] },
-  福建: { 福州: ['鼓楼区', '台江区'], 厦门: ['思明区', '湖里区', '集美区'] },
+  Zhejiang: { Hangzhou: ['Xihu', 'Yuhang', 'Binjiang'], Ningbo: ['Haishu', 'Yinzhou'] },
+  Jiangsu: { Nanjing: ['Xuanwu', 'Gulou', 'Jianye'], Suzhou: ['Gusu', 'Wuzhong', 'Wujiang'] },
+  Fujian: { Fuzhou: ['Gulou', 'Taijiang'], Xiamen: ['Siming', 'Huli', 'Jimei'] },
 }
 const toOptions = (list: string[]) => list.map(item => ({ label: item, value: item }))
 
@@ -20,7 +24,7 @@ function columns(value: PickerValue[]) {
   return [toOptions(Object.keys(data)), toOptions(Object.keys(cities)), toOptions(cities[city])]
 }
 
-const value = ref<PickerValue[]>(['江苏', '苏州', '工业园区'])
+const value = ref<PickerValue[]>(['Jiangsu', 'Suzhou', 'Wujiang'])
 </script>
 
 <template>

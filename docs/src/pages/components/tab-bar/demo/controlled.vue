@@ -2,16 +2,20 @@
 通过 `v-model:activeKey` 受控，并根据激活项切换页面内容。
 </docs>
 
+<docs lang="en-US">
+Controlled with `v-model:activeKey`, switching the page content according to the active item.
+</docs>
+
 <script setup lang="ts">
 import type { TabBarItem } from 'antdv-next-mobile'
 import { AppstoreOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@antdv-next/icons'
 import { computed, h, ref } from 'vue'
 
 const items: TabBarItem[] = [
-  { key: 'home', title: '首页', icon: () => h(HomeOutlined) },
-  { key: 'apps', title: '应用', icon: () => h(AppstoreOutlined) },
-  { key: 'message', title: '消息', icon: () => h(MessageOutlined) },
-  { key: 'me', title: '我的', icon: () => h(UserOutlined) },
+  { key: 'home', title: 'Home', icon: () => h(HomeOutlined) },
+  { key: 'apps', title: 'Apps', icon: () => h(AppstoreOutlined) },
+  { key: 'message', title: 'Messages', icon: () => h(MessageOutlined) },
+  { key: 'me', title: 'Me', icon: () => h(UserOutlined) },
 ]
 
 const activeKey = ref<string | number>('message')
@@ -21,7 +25,7 @@ const current = computed(() => items.find(item => item.key === activeKey.value))
 <template>
   <div class="page">
     <div class="page-body">
-      {{ current?.title }}页面
+      {{ current?.title }} page
     </div>
     <am-tab-bar v-model:active-key="activeKey" :items="items" :safe-area="false" />
   </div>

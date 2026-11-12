@@ -2,6 +2,10 @@
 `Col` 的 `flex` 属性可以实现固定宽度加自适应的布局：数字表示比例，`'80px'` 表示固定宽度，`'auto'` 填充剩余空间。
 </docs>
 
+<docs lang="en-US">
+The `flex` prop of `Col` makes fixed-width plus adaptive layouts possible: a number is a ratio, `'80px'` is a fixed width, and `'auto'` fills the remaining space.
+</docs>
+
 <template>
   <am-row>
     <am-col :flex="2">

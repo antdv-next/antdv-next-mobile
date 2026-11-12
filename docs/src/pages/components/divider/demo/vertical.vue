@@ -2,15 +2,19 @@
 使用 `orientation="vertical"` 或 `vertical` 得到行内的垂直分割线。
 </docs>
 
+<docs lang="en-US">
+Use `orientation="vertical"` or `vertical` for an inline vertical divider.
+</docs>
+
 <template>
   <div class="row">
-    文本
+    Text
     <am-divider vertical />
-    <a href="#">链接</a>
+    <a href="#">Link</a>
     <am-divider orientation="vertical" />
-    <a href="#">链接</a>
+    <a href="#">Link</a>
     <am-divider vertical variant="dashed" />
-    更多
+    More
   </div>
 </template>
 

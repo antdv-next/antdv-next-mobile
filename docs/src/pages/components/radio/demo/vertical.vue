@@ -2,6 +2,10 @@
 设置 `vertical`（或 `orientation="vertical"`）让选项垂直排列。
 </docs>
 
+<docs lang="en-US">
+Set `vertical` (or `orientation="vertical"`) to lay the options out vertically.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -11,13 +15,13 @@ const value = ref('standard')
 <template>
   <am-radio-group v-model:value="value" vertical>
     <am-radio value="standard">
-      标准配送（3-5 天）
+      Standard delivery (3-5 days)
     </am-radio>
     <am-radio value="express">
-      极速配送（次日达）
+      Express delivery (next day)
     </am-radio>
     <am-radio value="self">
-      到店自提
+      Store pickup
     </am-radio>
   </am-radio-group>
 </template>

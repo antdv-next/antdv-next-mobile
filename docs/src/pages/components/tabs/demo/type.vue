@@ -2,14 +2,18 @@
 除默认的 `line` 外，还提供 `card` 卡片样式和移动端新增的 `capsule` 胶囊样式。
 </docs>
 
+<docs lang="en-US">
+Besides the default `line`, there are also the `card` style and the `capsule` style added for mobile.
+</docs>
+
 <script setup lang="ts">
 import type { TabsItem } from 'antdv-next-mobile'
 
 const items: TabsItem[] = [
-  { key: '1', label: '全部', content: '全部订单' },
-  { key: '2', label: '待付款', content: '待付款订单' },
-  { key: '3', label: '待收货', content: '待收货订单' },
-  { key: '4', label: '已完成', content: '已完成订单' },
+  { key: '1', label: 'All', content: 'All orders' },
+  { key: '2', label: 'Unpaid', content: 'Unpaid orders' },
+  { key: '3', label: 'Shipped', content: 'Shipped orders' },
+  { key: '4', label: 'Done', content: 'Completed orders' },
 ]
 
 const contentStyles = { content: { padding: '16px' } }

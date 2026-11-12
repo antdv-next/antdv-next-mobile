@@ -2,6 +2,10 @@
 设置 `lazy` 后，图片进入视口才开始加载（基于 `IntersectionObserver`）。在下方的滚动区域内向下滚动查看效果。
 </docs>
 
+<docs lang="en-US">
+With `lazy` set, the image starts loading only after it enters the viewport (based on `IntersectionObserver`). Scroll down inside the scroll area below to see the effect.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -19,7 +23,7 @@ const loaded = ref(0)
 
 <template>
   <p class="tip">
-    已加载 {{ loaded }} / {{ images.length }} 张
+    Loaded {{ loaded }} / {{ images.length }}
   </p>
   <div class="scroller">
     <am-image

@@ -2,6 +2,10 @@
 通过 `checkedValue` 与 `unCheckedValue` 自定义开 / 关对应的值，方便直接对接后端字段。
 </docs>
 
+<docs lang="en-US">
+Customize the values for on / off with `checkedValue` and `unCheckedValue`, which makes it easy to map directly to backend fields.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 

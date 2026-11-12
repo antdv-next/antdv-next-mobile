@@ -2,18 +2,22 @@
 移动端常见的资产 / 数据概览卡片。
 </docs>
 
+<docs lang="en-US">
+An asset / data overview card that is common on mobile.
+</docs>
+
 <template>
   <div class="overview">
     <am-statistic
-      title="总资产 (元)"
+      title="Total Assets (CNY)"
       :value="268547.36"
       :precision="2"
       class="overview-total"
     />
     <div class="overview-grid">
-      <am-statistic title="昨日收益" :value="128.5" :precision="2" prefix="+" />
-      <am-statistic title="累计收益" :value="12893.4" :precision="2" />
-      <am-statistic title="持仓" :value="6" suffix="只" />
+      <am-statistic title="Yesterday" :value="128.5" :precision="2" prefix="+" />
+      <am-statistic title="Total Profit" :value="12893.4" :precision="2" />
+      <am-statistic title="Holdings" :value="6" suffix="funds" />
     </div>
   </div>
 </template>

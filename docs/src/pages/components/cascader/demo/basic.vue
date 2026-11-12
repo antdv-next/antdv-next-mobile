@@ -2,6 +2,10 @@
 `v-model:value` 绑定值路径数组。选中一项后自动进入下一级，选中叶子节点后自动提交并关闭弹层；点击页签可以回到上一级重新选择。
 </docs>
 
+<docs lang="en-US">
+Bind the value path array with `v-model:value`. Selecting an option moves to the next level automatically, and selecting a leaf node commits the value and closes the popup; tap a tab to go back to a previous level and select again.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { regions } from './data'
@@ -11,9 +15,9 @@ const value = ref<string[]>([])
 
 <template>
   <am-flex vertical gap="small">
-    <am-cascader v-model:value="value" :options="regions" title="所在地区" placeholder="请选择所在地区" allow-clear />
+    <am-cascader v-model:value="value" :options="regions" title="Region" placeholder="Please select a region" allow-clear />
     <div class="demo-result">
-      绑定值：{{ JSON.stringify(value) }}
+      Value: {{ JSON.stringify(value) }}
     </div>
   </am-flex>
 </template>

@@ -2,6 +2,10 @@
 通过 `shape` 设置胶囊按钮或圆形按钮。
 </docs>
 
+<docs lang="en-US">
+Use `shape` for a pill button or a circle button.
+</docs>
+
 <script setup lang="ts">
 import { SearchOutlined } from '@antdv-next/icons'
 </script>

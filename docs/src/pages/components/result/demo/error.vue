@@ -2,24 +2,28 @@
 失败的结果。复杂的错误说明放在默认插槽中，会显示在带底色的内容区内。
 </docs>
 
+<docs lang="en-US">
+A failed result. Put complex error details in the default slot; they are shown in a content area with a background.
+</docs>
+
 <script setup lang="ts">
 import { CloseCircleOutlined } from '@antdv-next/icons'
 </script>
 
 <template>
-  <am-result status="error" title="提交失败" sub-title="请核对并修改以下信息后，再重新提交">
+  <am-result status="error" title="Submission failed" sub-title="Please check and modify the following information before resubmitting">
     <div class="reason-title">
-      您提交的内容有如下错误：
+      The content you submitted has the following errors:
     </div>
     <div class="reason">
-      <CloseCircleOutlined class="reason-icon" /> 账户已被冻结
+      <CloseCircleOutlined class="reason-icon" /> Your account has been frozen
     </div>
     <div class="reason">
-      <CloseCircleOutlined class="reason-icon" /> 银行卡信息有误
+      <CloseCircleOutlined class="reason-icon" /> Your bank card information is incorrect
     </div>
     <template #extra>
       <am-button type="primary" block>
-        重新提交
+        Resubmit
       </am-button>
     </template>
   </am-result>

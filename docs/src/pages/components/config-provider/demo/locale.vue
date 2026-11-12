@@ -2,6 +2,10 @@
 通过 `locale` 切换组件内置文案的语言。
 </docs>
 
+<docs lang="en-US">
+Switch the language of the built-in component texts through `locale`.
+</docs>
+
 <script setup lang="ts">
 import enUS from 'antdv-next-mobile/locale/en_US'
 import zhCN from 'antdv-next-mobile/locale/zh_CN'

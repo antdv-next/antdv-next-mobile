@@ -2,34 +2,38 @@
 展示文档样例：`Typography` 作为容器，内部组合标题、段落与文本。
 </docs>
 
+<docs lang="en-US">
+A document sample: `Typography` as the container, composed of titles, paragraphs and text inside.
+</docs>
+
 <template>
   <am-typography>
     <am-typography-title :level="3">
-      介绍
+      Introduction
     </am-typography-title>
     <am-typography-paragraph>
-      蚂蚁的企业级产品是一个庞大且复杂的体系。这类产品不仅量级巨大且功能复杂，而且变动和并发频繁，常常需要设计与开发能够快速的做出响应。
+      Enterprise products at Ant form a large and complex system. They are huge in scale and rich in features, and they change frequently, so design and development have to respond quickly.
     </am-typography-paragraph>
     <am-typography-paragraph>
-      随着商业化的趋势，越来越多的企业级产品对更好的用户体验有了进一步的要求。我们希望
+      With the trend of commercialization, more and more enterprise products demand a better user experience. We hope to
       <am-typography-text strong>
-        提炼出一套统一的设计语言
+        distill a unified design language
       </am-typography-text>
-      ，帮助设计者和开发者
+      that helps designers and developers
       <am-typography-text mark>
-        快速搭建
+        quickly build
       </am-typography-text>
-      移动端界面。
+      mobile interfaces.
     </am-typography-paragraph>
     <am-typography-title :level="4">
-      设计资源
+      Design Resources
     </am-typography-title>
     <am-typography-paragraph type="secondary">
-      按 <am-typography-text keyboard>
+      Press <am-typography-text keyboard>
         Esc
-      </am-typography-text> 键退出阅读，使用 <am-typography-text code>
+      </am-typography-text> to exit reading, and install with <am-typography-text code>
         pnpm add antdv-next-mobile
-      </am-typography-text> 安装。
+      </am-typography-text>.
     </am-typography-paragraph>
   </am-typography>
 </template>

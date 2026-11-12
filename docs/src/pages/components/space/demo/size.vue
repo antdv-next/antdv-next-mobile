@@ -2,6 +2,10 @@
 通过 `size` 设置间距，支持预设值、数字（px）、CSS 长度和 `[水平, 垂直]` 数组。
 </docs>
 
+<docs lang="en-US">
+Set the spacing with `size`: presets, numbers (px), CSS lengths and a `[horizontal, vertical]` array are supported.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -23,11 +27,11 @@ const size = ref<(typeof sizes)[number]>('small')
     </am-space>
     <am-space :size="size">
       <am-button type="primary">
-        主要
+        Primary
       </am-button>
-      <am-button>默认</am-button>
+      <am-button>Default</am-button>
       <am-button type="dashed">
-        虚线
+        Dashed
       </am-button>
     </am-space>
   </am-space>

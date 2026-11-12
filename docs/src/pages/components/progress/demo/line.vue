@@ -2,6 +2,10 @@
 标准的进度条，包含进行中、活动、异常、完成等状态。
 </docs>
 
+<docs lang="en-US">
+A standard progress bar, with the in-progress, active, exception and success states.
+</docs>
+
 <template>
   <am-flex vertical gap="middle">
     <am-progress :percent="30" />

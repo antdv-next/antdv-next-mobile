@@ -2,18 +2,22 @@
 通过默认插槽自定义面板内容。开启 `showFooter` 后面板底部显示「重置 / 确定」按钮（文字取自语言包），点击确定后自动收起。插槽参数中的 `close` 也可以用来收起面板。
 </docs>
 
+<docs lang="en-US">
+Customize the panel content with the default slot. With `showFooter` enabled, "Reset / Confirm" buttons are shown at the bottom of the panel (the text comes from the locale), and the panel collapses automatically after Confirm is clicked. The `close` slot param can also be used to collapse the panel.
+</docs>
+
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 
-const tags = ['包邮', '七天退换', '当日发货', '有货', '新品', '折扣']
+const tags = ['Free shipping', 'Easy returns', 'Same day', 'In stock', 'New', 'Discount']
 const draft = ref<string[]>([])
 const applied = ref<string[]>([])
 const sort = ref('default')
 const state = reactive({ onlyStock: false })
 
 const sortOptions = [
-  { label: '综合排序', value: 'default' },
-  { label: '最新发布', value: 'new' },
+  { label: 'Default', value: 'default' },
+  { label: 'Newest', value: 'new' },
 ]
 
 function toggle(tag: string) {
@@ -30,7 +34,7 @@ function confirm() {
     <am-dropdown-item key="sort" v-model:value="sort" :options="sortOptions" />
     <am-dropdown-item
       key="filter"
-      title="筛选"
+      title="Filter"
       :highlight="applied.length > 0"
       show-footer
       @confirm="confirm"
@@ -48,23 +52,23 @@ function confirm() {
         </span>
       </div>
     </am-dropdown-item>
-    <am-dropdown-item key="more" title="更多">
+    <am-dropdown-item key="more" title="More">
       <template #default="{ close }">
         <div class="more">
-          <p>这里可以放任意内容。</p>
+          <p>Any content can go here.</p>
           <am-button
             type="primary"
             size="small"
             @click="() => { state.onlyStock = !state.onlyStock; close() }"
           >
-            {{ state.onlyStock ? '显示全部' : '仅看有货' }}并收起
+            {{ state.onlyStock ? 'Show all' : 'In stock only' }} and close
           </am-button>
         </div>
       </template>
     </am-dropdown-item>
   </am-dropdown>
   <div class="page">
-    已选标签：{{ applied.length ? applied.join('、') : '无' }}
+    Selected: {{ applied.length ? applied.join(', ') : 'None' }}
   </div>
 </template>
 

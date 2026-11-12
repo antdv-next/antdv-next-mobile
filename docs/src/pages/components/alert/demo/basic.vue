@@ -2,13 +2,17 @@
 共有四种样式 `success`、`info`、`warning`、`error`，默认为 `info`。
 </docs>
 
+<docs lang="en-US">
+There are four styles: `success`, `info`, `warning` and `error`. The default is `info`.
+</docs>
+
 <template>
   <am-flex vertical gap="small">
-    <am-alert title="成功提示的文案" type="success" />
-    <am-alert title="消息提示的文案" type="info" />
-    <am-alert title="警告提示的文案" type="warning" />
+    <am-alert title="Success Text" type="success" />
+    <am-alert title="Info Text" type="info" />
+    <am-alert title="Warning Text" type="warning" />
     <am-alert type="error">
-      错误提示的文案（默认插槽）
+      Error Text (default slot)
     </am-alert>
   </am-flex>
 </template>

@@ -2,22 +2,26 @@
 通过 `ellipsis.expanded` 受控展开状态，并监听 `expand` 事件。
 </docs>
 
+<docs lang="en-US">
+Control the expanded state through `ellipsis.expanded` and listen to the `expand` event.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const expanded = ref(false)
 const rows = ref(2)
-const text = '蚂蚁的企业级产品是一个庞大且复杂的体系。这类产品不仅量级巨大且功能复杂，而且变动和并发频繁，常常需要设计与开发能够快速的做出响应。同时这类产品中有存在很多类似的页面以及组件，可以通过抽象得到一些稳定且高复用性的内容。'
+const text = 'Enterprise products at Ant form a large and complex system. They are huge in scale and rich in features, and they change frequently, so design and development have to respond quickly. Such products also contain many similar pages and components, which can be abstracted into stable and highly reusable content.'
 </script>
 
 <template>
   <am-flex vertical gap="middle">
     <am-flex gap="small" align="center" wrap>
       <am-button size="small" @click="expanded = !expanded">
-        {{ expanded ? '收起' : '展开' }}
+        {{ expanded ? 'Collapse' : 'Expand' }}
       </am-button>
       <am-button size="small" @click="rows = rows === 2 ? 3 : 2">
-        显示 {{ rows }} 行
+        Show {{ rows }} rows
       </am-button>
     </am-flex>
     <am-typography-paragraph

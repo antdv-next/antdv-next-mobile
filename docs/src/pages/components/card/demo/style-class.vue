@@ -2,10 +2,14 @@
 通过 `classes` / `styles` 定制语义化结构，或覆盖 `--am-card-*` 组件变量调整圆角、内边距和背景。
 </docs>
 
+<docs lang="en-US">
+Customize the semantic structure through `classes` / `styles`, or override the `--am-card-*` component tokens to adjust the border radius, padding and background.
+</docs>
+
 <template>
   <am-space vertical block size="middle">
     <am-card
-      title="语义化样式"
+      title="Semantic styles"
       extra="styles"
       :styles="{
         header: { borderBottom: 0 },
@@ -13,10 +17,10 @@
         body: { paddingTop: 0 },
       }"
     >
-      去掉标题栏的分割线并收紧内容区。
+      Removes the header divider and tightens the body.
     </am-card>
-    <am-card title="组件变量" class="brand-card" variant="borderless">
-      覆盖 CSS 变量得到品牌色卡片。
+    <am-card title="Component tokens" class="brand-card" variant="borderless">
+      Override CSS variables for a brand-colored card.
     </am-card>
   </am-space>
 </template>

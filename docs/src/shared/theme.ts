@@ -9,19 +9,20 @@ export interface DocsTheme {
 
 export const STORAGE_KEY = 'am-docs-theme'
 
+/** Display names live in `shared/locale.ts` (`theme.primaryNames` / `theme.radiusNames`). */
 export const primaryPresets = [
-  { name: '拂晓蓝', color: '#1677ff' },
-  { name: '极光绿', color: '#00b96b' },
-  { name: '酱紫', color: '#722ed1' },
-  { name: '火山橙', color: '#fa541c' },
-  { name: '法式洋红', color: '#eb2f96' },
-  { name: '明青', color: '#13a8a8' },
+  { key: 'blue', color: '#1677ff' },
+  { key: 'green', color: '#00b96b' },
+  { key: 'purple', color: '#722ed1' },
+  { key: 'orange', color: '#fa541c' },
+  { key: 'magenta', color: '#eb2f96' },
+  { key: 'cyan', color: '#13a8a8' },
 ]
 
 export const radiusPresets = [
-  { name: '直角', value: 2 },
-  { name: '默认', value: 8 },
-  { name: '圆润', value: 14 },
+  { key: 'sharp', value: 2 },
+  { key: 'default', value: 8 },
+  { key: 'round', value: 14 },
 ]
 
 const defaults: DocsTheme = { dark: false, compact: false, primary: primaryPresets[0].color, radius: 8 }

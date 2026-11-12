@@ -2,6 +2,10 @@
 默认插槽的每个直接子节点为一页，左右滑动切换，默认无缝循环。
 </docs>
 
+<docs lang="en-US">
+Each direct child of the default slot is one slide. Swipe left or right to switch; it loops seamlessly by default.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -16,7 +20,7 @@ const current = ref(0)
     </div>
   </am-carousel>
   <p class="tip">
-    当前页：{{ current + 1 }} / {{ colors.length }}
+    Current: {{ current + 1 }} / {{ colors.length }}
   </p>
 </template>
 

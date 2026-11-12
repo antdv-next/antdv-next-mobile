@@ -2,6 +2,10 @@
 `round` 开启圆角，`closable` 显示关闭图标，也可以通过 `closeIcon` 属性或插槽自定义图标。
 </docs>
 
+<docs lang="en-US">
+`round` enables rounded corners and `closable` shows a close icon. The icon can also be customized with the `closeIcon` prop or slot.
+</docs>
+
 <script setup lang="ts">
 import { CloseCircleFilled } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -13,15 +17,15 @@ const custom = ref(false)
 <template>
   <am-flex vertical gap="small">
     <am-button block @click="round = true">
-      圆角 + 关闭图标
+      Round + close icon
     </am-button>
     <am-button block @click="custom = true">
-      自定义关闭图标
+      Custom close icon
     </am-button>
   </am-flex>
   <am-popup v-model:open="round" round closable height="40%">
     <div class="content">
-      圆角弹出层
+      Round popup
     </div>
   </am-popup>
   <am-popup v-model:open="custom" round closable height="40%">
@@ -29,7 +33,7 @@ const custom = ref(false)
       <CloseCircleFilled />
     </template>
     <div class="content">
-      自定义关闭图标
+      Custom close icon
     </div>
   </am-popup>
 </template>

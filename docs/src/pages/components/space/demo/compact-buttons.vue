@@ -2,6 +2,10 @@
 多个按钮组合成按钮组。`size` 统一控制组内所有成员的尺寸，组内成员也可以单独指定。
 </docs>
 
+<docs lang="en-US">
+Combine multiple buttons into a button group. `size` controls the size of all members of the group, and a member can also specify its own.
+</docs>
+
 <script setup lang="ts">
 import { DownOutlined, LeftOutlined, RightOutlined } from '@antdv-next/icons'
 </script>
@@ -9,14 +13,14 @@ import { DownOutlined, LeftOutlined, RightOutlined } from '@antdv-next/icons'
 <template>
   <am-flex vertical gap="middle" align="start">
     <am-space-compact>
-      <am-button>上一步</am-button>
-      <am-button>保存</am-button>
-      <am-button>下一步</am-button>
+      <am-button>Back</am-button>
+      <am-button>Save</am-button>
+      <am-button>Next</am-button>
     </am-space-compact>
 
     <am-space-compact>
       <am-button type="primary">
-        提交订单
+        Place order
       </am-button>
       <am-button type="primary">
         <template #icon>
@@ -45,10 +49,10 @@ import { DownOutlined, LeftOutlined, RightOutlined } from '@antdv-next/icons'
 
     <am-space-compact size="large" block>
       <am-button block>
-        取消
+        Cancel
       </am-button>
       <am-button type="primary" block>
-        确定
+        OK
       </am-button>
     </am-space-compact>
   </am-flex>

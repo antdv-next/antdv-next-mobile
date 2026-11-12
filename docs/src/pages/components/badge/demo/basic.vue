@@ -2,6 +2,10 @@
 最简单的用法：把内容放进 `Badge`，通过 `count` 设置数字。`count` 为 0 时默认隐藏，可用 `showZero` 显示。
 </docs>
 
+<docs lang="en-US">
+The simplest usage: put the content inside `Badge` and set the number with `count`. The badge is hidden by default when `count` is 0; use `showZero` to show it.
+</docs>
+
 <template>
   <am-space size="large">
     <am-badge :count="5">
@@ -10,7 +14,7 @@
     <am-badge :count="0" show-zero>
       <div class="box" />
     </am-badge>
-    <am-badge count="新">
+    <am-badge count="new">
       <div class="box" />
     </am-badge>
     <am-badge :count="5" size="small">

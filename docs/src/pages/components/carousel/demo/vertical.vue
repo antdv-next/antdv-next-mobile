@@ -2,6 +2,10 @@
 设置 `vertical`（或将 `dotPlacement` 设为 `start` / `end`）后纵向滚动，需要为组件指定高度。
 </docs>
 
+<docs lang="en-US">
+Set `vertical` (or set `dotPlacement` to `start` / `end`) to scroll vertically. The component needs an explicit height.
+</docs>
+
 <script setup lang="ts">
 const colors = ['#1677ff', '#13c2c2', '#722ed1', '#eb2f96']
 </script>

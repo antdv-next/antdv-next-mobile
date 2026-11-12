@@ -2,6 +2,10 @@
 `beforeRemove` 返回 `false` 或 resolve `false` 的 Promise 时阻止删除，可用于二次确认。`showUploadList` 可以单独关闭删除角标。
 </docs>
 
+<docs lang="en-US">
+Removal is prevented when `beforeRemove` returns `false` or a Promise that resolves `false`, which can be used for a confirmation step. `showUploadList` can turn off the remove badge individually.
+</docs>
+
 <script setup lang="ts">
 import type { UploadFile } from 'antdv-next-mobile'
 import { ref } from 'vue'
@@ -23,17 +27,17 @@ const readonlyList = ref<UploadFile[]>([
 ])
 
 function beforeRemove(file: UploadFile) {
-  return window.confirm(`确定删除 ${file.name} 吗？`)
+  return window.confirm(`Delete ${file.name}?`)
 }
 </script>
 
 <template>
   <p class="title">
-    删除前确认
+    Confirm before deleting
   </p>
   <am-upload v-model:file-list="fileList" :before-remove="beforeRemove" />
   <p class="title">
-    只读（无删除角标与上传按钮）
+    Read only (no delete badge or upload button)
   </p>
   <am-upload v-model:file-list="readonlyList" :show-upload-list="{ showRemoveIcon: false }" :max-count="2" />
 </template>

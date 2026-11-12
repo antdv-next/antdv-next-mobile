@@ -2,6 +2,10 @@
 蒙层默认渲染在当前位置。覆盖 `position` 后可以只遮住某个局部区域，此时通常需要关闭 `lockScroll`。
 </docs>
 
+<docs lang="en-US">
+The mask is rendered in place by default. By overriding `position` it can cover only a local area, in which case `lockScroll` usually needs to be turned off.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -11,11 +15,11 @@ const open = ref(false)
 <template>
   <div class="box">
     <am-button type="primary" @click="open = true">
-      遮住这个区域
+      Cover this area
     </am-button>
     <am-mask v-model:open="open" closable :lock-scroll="false" :style="{ position: 'absolute' }">
       <div class="tip">
-        点击蒙层关闭
+        Tap the mask to close
       </div>
     </am-mask>
   </div>

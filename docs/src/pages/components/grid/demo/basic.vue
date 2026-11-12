@@ -2,6 +2,10 @@
 使用 `Row` 和 `Col` 创建基础的栅格，一行被等分为 24 格。
 </docs>
 
+<docs lang="en-US">
+Create a basic grid with `Row` and `Col`; a row is divided evenly into 24 cells.
+</docs>
+
 <template>
   <am-row>
     <am-col :span="24">

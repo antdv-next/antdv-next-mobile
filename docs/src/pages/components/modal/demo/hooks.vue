@@ -2,6 +2,10 @@
 静态方法无法读取调用处的 `ConfigProvider` 上下文。通过 `Modal.useModal()` 创建的 `ContextHolder` 渲染在组件树中，对话框会跟随其所在位置的主题与语言。
 </docs>
 
+<docs lang="en-US">
+Static methods cannot read the `ConfigProvider` context of the call site. The `ContextHolder` created by `Modal.useModal()` is rendered in the component tree, so the modal follows the theme and locale of where it is placed.
+</docs>
+
 <script setup lang="ts">
 import { Modal } from 'antdv-next-mobile'
 import enUS from 'antdv-next-mobile/locale/en_US'
@@ -21,6 +25,6 @@ function show() {
     <ContextHolder />
   </am-config-provider>
   <am-button block @click="show">
-    使用 hooks 打开
+    Open with hooks
   </am-button>
 </template>

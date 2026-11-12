@@ -2,14 +2,18 @@
 `accordion` 手风琴模式，每次只展开一个面板。`v-model:activeKey` 始终返回数组。
 </docs>
 
+<docs lang="en-US">
+`accordion` mode, only one panel is expanded at a time. `v-model:activeKey` always returns an array.
+</docs>
+
 <script setup lang="ts">
 import type { CollapseItemType } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const items: CollapseItemType[] = [
-  { key: 'ship', label: '多久可以发货？', content: '付款后 24 小时内发货，预售商品以详情页说明为准。' },
-  { key: 'return', label: '支持七天无理由退货吗？', content: '支持。签收后 7 天内，商品完好且不影响二次销售即可申请。' },
-  { key: 'invoice', label: '如何开具发票？', content: '在「我的订单 - 订单详情」中点击「申请开票」，电子发票将发送到您的邮箱。' },
+  { key: 'ship', label: 'When will my order ship?', content: 'Within 24 hours after payment. For pre-sale items, see the product page.' },
+  { key: 'return', label: 'Can I return within 7 days?', content: 'Yes. Apply within 7 days of delivery if the item is intact and resalable.' },
+  { key: 'invoice', label: 'How do I get an invoice?', content: 'Tap Request Invoice in My Orders - Order Details. The e-invoice will be sent to your email.' },
 ]
 
 const activeKey = ref<(string | number)[]>(['ship'])

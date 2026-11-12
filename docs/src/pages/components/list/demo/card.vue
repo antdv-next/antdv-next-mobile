@@ -2,28 +2,32 @@
 `mode="card"` 渲染为带圆角与左右边距的卡片分组，常用于设置页。
 </docs>
 
+<docs lang="en-US">
+`mode="card"` renders a card group with rounded corners and horizontal margins, commonly used in settings pages.
+</docs>
+
 <script setup lang="ts">
 function noop() {}
 </script>
 
 <template>
-  <am-list mode="card" header="账号">
-    <am-list-item extra="张三" @click="noop">
-      昵称
+  <am-list mode="card" header="Account">
+    <am-list-item extra="John" @click="noop">
+      Nickname
     </am-list-item>
     <am-list-item extra="138****8888" @click="noop">
-      手机号
+      Phone
     </am-list-item>
   </am-list>
-  <am-list mode="card" header="通用" footer="卡片模式下 header 与 footer 会与内容对齐">
-    <am-list-item extra="简体中文" @click="noop">
-      语言
+  <am-list mode="card" header="General" footer="In card mode the header and footer align with the content">
+    <am-list-item extra="English" @click="noop">
+      Language
     </am-list-item>
-    <am-list-item extra="跟随系统" @click="noop">
-      深色模式
+    <am-list-item extra="System" @click="noop">
+      Dark mode
     </am-list-item>
     <am-list-item extra="128 MB" @click="noop">
-      清理缓存
+      Clear cache
     </am-list-item>
   </am-list>
 </template>

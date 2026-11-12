@@ -2,11 +2,15 @@
 `showSearch` 在弹层顶部显示搜索框，默认按 `label` 与 `description` 筛选。远程搜索时设置 `:filter-option="false"`，在 `search` 事件中更新 `options`，并配合 `loading` 展示加载状态。
 </docs>
 
+<docs lang="en-US">
+`showSearch` shows a search box at the top of the popup, filtering by `label` and `description` by default. For remote search, set `:filter-option="false"`, update `options` in the `search` event, and use `loading` to show the loading state.
+</docs>
+
 <script setup lang="ts">
 import type { SelectOption } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
-const cities = ['北京', '上海', '广州', '深圳', '杭州', '南京', '苏州', '成都', '重庆', '武汉', '西安', '长沙', '青岛', '厦门']
+const cities = ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen', 'Hangzhou', 'Nanjing', 'Suzhou', 'Chengdu', 'Chongqing', 'Wuhan', 'Xian', 'Changsha', 'Qingdao', 'Xiamen']
   .map(label => ({ label, value: label }))
 const city = ref<string | null>(null)
 
@@ -36,16 +40,16 @@ function onSearch(keyword: string) {
 
 <template>
   <am-flex vertical gap="small">
-    <am-select v-model:value="city" :options="cities" show-search title="选择城市" placeholder="本地搜索" />
+    <am-select v-model:value="city" :options="cities" show-search title="Select city" placeholder="Local search" />
     <am-select
       v-model:value="user"
       :options="users"
-      :show-search="{ placeholder: '输入姓名搜索' }"
+      :show-search="{ placeholder: 'Search by name' }"
       :filter-option="false"
       :loading="loading"
-      not-found-content="输入关键字开始搜索"
-      title="选择成员"
-      placeholder="远程搜索"
+      not-found-content="Type a keyword to search"
+      title="Select member"
+      placeholder="Remote search"
       @search="onSearch"
     />
   </am-flex>

@@ -2,6 +2,10 @@
 通过 `image` 在顶部展示图片，或使用 `header` 插槽放置任意内容（图标、插画等）。
 </docs>
 
+<docs lang="en-US">
+Show an image at the top with `image`, or use the `header` slot to place any content (icons, illustrations and so on).
+</docs>
+
 <script setup lang="ts">
 import { GiftFilled } from '@antdv-next/icons'
 import { ref } from 'vue'
@@ -14,20 +18,20 @@ const src = 'data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%
 <template>
   <am-flex vertical gap="small">
     <am-button block @click="image = true">
-      顶部图片
+      Top image
     </am-button>
     <am-button block @click="header = true">
-      header 插槽
+      header slot
     </am-button>
   </am-flex>
-  <am-modal v-model:open="image" title="新功能上线" :image="src" :ok-cancel="false" @ok="image = false">
-    现在可以通过拖拽调整首页卡片的顺序了。
+  <am-modal v-model:open="image" title="New feature" :image="src" :ok-cancel="false" @ok="image = false">
+    You can now drag to reorder the cards on the home page.
   </am-modal>
-  <am-modal v-model:open="header" title="签到成功" ok-text="收下奖励" :ok-cancel="false" @ok="header = false">
+  <am-modal v-model:open="header" title="Checked in" ok-text="Claim reward" :ok-cancel="false" @ok="header = false">
     <template #header>
       <GiftFilled class="gift" />
     </template>
-    已连续签到 7 天，获得 100 积分。
+    7-day streak! You earned 100 points.
   </am-modal>
 </template>
 

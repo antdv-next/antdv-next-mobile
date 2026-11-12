@@ -2,6 +2,10 @@
 `closable` 支持对象形式：自定义图标、放到头部起始位置或禁用。设为 `false` 时不显示关闭按钮。
 </docs>
 
+<docs lang="en-US">
+`closable` supports an object form: customize the icon, move it to the start of the header, or disable it. Set it to `false` to hide the close button.
+</docs>
+
 <script setup lang="ts">
 import { LeftOutlined } from '@antdv-next/icons'
 import { h, ref } from 'vue'
@@ -13,23 +17,23 @@ const none = ref(false)
 <template>
   <am-flex vertical gap="small">
     <am-button block @click="start = true">
-      关闭按钮在起始位置
+      Close button at start
     </am-button>
     <am-button block @click="none = true">
-      无关闭按钮、无标题
+      No close button, no title
     </am-button>
   </am-flex>
   <am-drawer
     v-model:open="start"
-    title="设置"
+    title="Settings"
     placement="right"
     size="large"
     :round="false"
     :closable="{ placement: 'start', closeIcon: () => h(LeftOutlined) }"
   >
-    <p>全屏的右侧抽屉，像一个新页面。</p>
+    <p>A fullscreen right drawer, like a new page.</p>
   </am-drawer>
   <am-drawer v-model:open="none" :closable="false">
-    <p>没有头部的抽屉，点击遮罩关闭。</p>
+    <p>A drawer without a header. Tap the mask to close.</p>
   </am-drawer>
 </template>

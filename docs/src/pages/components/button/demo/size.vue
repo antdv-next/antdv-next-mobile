@@ -2,6 +2,10 @@
 提供大、中、小三种尺寸，默认为中。也可以通过 `ConfigProvider` 的 `componentSize` 统一设置。
 </docs>
 
+<docs lang="en-US">
+Three sizes are provided: large, middle and small, with middle as the default. The size can also be set globally with `componentSize` of `ConfigProvider`.
+</docs>
+
 <template>
   <am-flex gap="small" align="center" wrap>
     <am-button type="primary" size="large">

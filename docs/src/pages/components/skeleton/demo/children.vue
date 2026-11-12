@@ -2,6 +2,10 @@
 加载占位图包含子组件：`loading` 为 `false` 时显示默认插槽的内容。
 </docs>
 
+<docs lang="en-US">
+Skeleton contains sub components: the content of the default slot is shown when `loading` is `false`.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -23,13 +27,13 @@ function showSkeleton() {
         <div>
           <h4>Ant Design Mobile for Vue</h4>
           <p>
-            我们为产品研发提供了一套完整的设计原则与组件，帮助团队快速搭建一致、美观的移动端界面。
+            We provide a complete set of design principles and components that help teams build consistent, beautiful mobile interfaces quickly.
           </p>
         </div>
       </div>
     </am-skeleton>
     <am-button type="primary" block :disabled="loading" @click="showSkeleton">
-      显示骨架屏
+      Show skeleton
     </am-button>
   </am-flex>
 </template>

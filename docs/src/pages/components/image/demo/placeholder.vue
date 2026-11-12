@@ -2,6 +2,10 @@
 加载中默认显示占位，可通过 `placeholder` 属性 / 插槽自定义。加载失败时使用 `fallback` 容错图片，没有容错图片时展示失败提示，也可以用 `fallback` 插槽自定义。
 </docs>
 
+<docs lang="en-US">
+A placeholder is shown by default while loading and can be customized with the `placeholder` prop / slot. When loading fails, the `fallback` image is used; without a fallback image a failure hint is shown, which can also be customized with the `fallback` slot.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -13,7 +17,7 @@ function createImage(text: string, color: string, width = 300, height = 300) {
 }
 
 const fallback = createImage('Fallback', '#8c8c8c')
-// 没有 src 时一直处于加载占位状态
+// Without src the image stays in the loading placeholder state
 const loadingSrc = ref<string>()
 </script>
 
@@ -21,35 +25,35 @@ const loadingSrc = ref<string>()
   <div class="grid">
     <div class="item">
       <am-image :src="loadingSrc" :width="96" :height="96" :radius="8" />
-      <span class="label">默认占位</span>
+      <span class="label">Default</span>
     </div>
     <div class="item">
       <am-image :src="loadingSrc" :width="96" :height="96" :radius="8">
         <template #placeholder>
-          <span class="custom">加载中</span>
+          <span class="custom">Loading</span>
         </template>
       </am-image>
-      <span class="label">自定义占位</span>
+      <span class="label">Custom</span>
     </div>
     <div class="item">
       <am-image :src="loadingSrc" :width="96" :height="96" :radius="8" :placeholder="false" class="bordered" />
-      <span class="label">无占位</span>
+      <span class="label">None</span>
     </div>
     <div class="item">
       <am-image src="broken-image.png" :width="96" :height="96" :radius="8" />
-      <span class="label">加载失败</span>
+      <span class="label">Load failed</span>
     </div>
     <div class="item">
       <am-image src="broken-image.png" :fallback="fallback" :width="96" :height="96" :radius="8" />
-      <span class="label">容错图片</span>
+      <span class="label">Fallback</span>
     </div>
     <div class="item">
       <am-image src="broken-image.png" :width="96" :height="96" :radius="8">
         <template #fallback>
-          <span class="custom">图片走丢了</span>
+          <span class="custom">Image lost</span>
         </template>
       </am-image>
-      <span class="label">自定义失败</span>
+      <span class="label">Custom error</span>
     </div>
   </div>
 </template>

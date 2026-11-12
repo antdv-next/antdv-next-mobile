@@ -2,8 +2,12 @@
 `size` 提供小、中、大三种尺寸，`shape="round"` 使用胶囊形状。
 </docs>
 
+<docs lang="en-US">
+`size` provides small, middle and large sizes, and `shape="round"` uses a pill shape.
+</docs>
+
 <script setup lang="ts">
-const options = ['列表', '看板', '日历']
+const options = ['List', 'Board', 'Calendar']
 </script>
 
 <template>

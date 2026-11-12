@@ -2,6 +2,10 @@
 `CascaderView`（即 `Cascader.View`）是不带触发器与弹层的级联视图，可以嵌入页面或自定义弹层。
 </docs>
 
+<docs lang="en-US">
+`CascaderView` (i.e. `Cascader.View`) is the cascading view without the trigger and the popup; it can be embedded in a page or a custom popup.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { regions } from './data'

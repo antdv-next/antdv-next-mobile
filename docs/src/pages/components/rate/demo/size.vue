@@ -2,6 +2,10 @@
 通过 `size` 设置三种尺寸，`count` 设置星星总数。
 </docs>
 
+<docs lang="en-US">
+`size` provides three sizes, and `count` sets the total number of stars.
+</docs>
+
 <template>
   <div class="demo-rate-list">
     <am-rate size="small" :default-value="3" />

@@ -2,6 +2,10 @@
 `strokeColor` 支持 `{ from, to }`、百分比断点对象，以及颜色数组三种渐变写法。
 </docs>
 
+<docs lang="en-US">
+`strokeColor` supports three gradient forms: `{ from, to }`, an object of percentage stops, and an array of colors.
+</docs>
+
 <template>
   <am-flex vertical gap="middle">
     <am-progress :percent="99.9" :stroke-color="{ from: '#108ee9', to: '#87d068' }" />

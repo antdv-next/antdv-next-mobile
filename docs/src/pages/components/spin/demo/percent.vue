@@ -2,6 +2,10 @@
 设置 `percent` 后，默认指示符会展示当前进度。
 </docs>
 
+<docs lang="en-US">
+With `percent` set, the default indicator shows the current progress.
+</docs>
+
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 

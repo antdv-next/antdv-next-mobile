@@ -2,6 +2,10 @@
 默认插槽可以替换内置触发器，常与 `List` 搭配；在 `Form` 中则直接使用内置触发器，自动呈现为无边框的单元格内容。
 </docs>
 
+<docs lang="en-US">
+The default slot replaces the built-in trigger and is often used together with `List`; inside a `Form`, use the built-in trigger directly, which is automatically rendered as borderless cell content.
+</docs>
+
 <script setup lang="ts">
 import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
@@ -12,16 +16,16 @@ const model = reactive<{ expire: string | null }>({ expire: null })
 </script>
 
 <template>
-  <am-list header="搭配 List">
-    <am-date-picker v-model:value="birthday" :max-date="dayjs()" :min-date="dayjs('1950-01-01')" title="出生日期">
+  <am-list header="With List">
+    <am-date-picker v-model:value="birthday" :max-date="dayjs()" :min-date="dayjs('1950-01-01')" title="Birthday">
       <template #default="{ label, toggle }">
-        <am-list-item title="出生日期" :extra="label || '请选择'" clickable @click="toggle()" />
+        <am-list-item title="Birthday" :extra="label || 'Please select'" clickable @click="toggle()" />
       </template>
     </am-date-picker>
   </am-list>
-  <am-form :model="model" header="搭配 Form">
-    <am-form-item name="expire" label="有效期至" :rules="[{ required: true, message: '请选择有效期' }]">
-      <am-date-picker v-model:value="model.expire" value-format="YYYY-MM-DD" title="证件有效期" placeholder="请选择有效期" />
+  <am-form :model="model" header="With Form">
+    <am-form-item name="expire" label="Valid until" :rules="[{ required: true, message: 'Please select a date' }]">
+      <am-date-picker v-model:value="model.expire" value-format="YYYY-MM-DD" title="ID expiry date" placeholder="Please select" />
     </am-form-item>
   </am-form>
 </template>

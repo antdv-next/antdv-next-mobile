@@ -2,21 +2,25 @@
 可以通过节点的 `icon`、`loading`，或 `dotRender` 插槽自定义时间轴点。
 </docs>
 
+<docs lang="en-US">
+Customize the dots through `icon` and `loading` of a node, or through the `dotRender` slot.
+</docs>
+
 <script setup lang="ts">
 import { CheckCircleFilled, ClockCircleOutlined, SmileOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 
 const items = [
-  { content: '创建服务现场 2026-09-01' },
-  { content: '初步排除网络异常 2026-09-01', icon: () => h(ClockCircleOutlined), color: 'red' },
-  { content: '技术测试中', loading: true },
-  { content: '等待验收', icon: () => h(SmileOutlined), color: 'green' },
+  { content: 'Create a services site 2026-09-01' },
+  { content: 'Solve initial network problems 2026-09-01', icon: () => h(ClockCircleOutlined), color: 'red' },
+  { content: 'Testing in progress', loading: true },
+  { content: 'Awaiting acceptance', icon: () => h(SmileOutlined), color: 'green' },
 ]
 
 const steps = [
-  { content: '提交申请', done: true },
-  { content: '主管审批', done: true },
-  { content: '财务打款', done: false },
+  { content: 'Submit request', done: true },
+  { content: 'Manager approval', done: true },
+  { content: 'Payment', done: false },
 ]
 </script>
 

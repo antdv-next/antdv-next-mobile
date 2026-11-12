@@ -2,6 +2,10 @@
 `size` 提供三种列表密度；`bordered` 控制列表上下的细线；内容较高时可以用 `align="start"` 让两侧内容顶部对齐。
 </docs>
 
+<docs lang="en-US">
+`size` provides three list densities; `bordered` controls the hairlines above and below the list; for tall content, use `align="start"` to align the content on both sides to the top.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -14,22 +18,22 @@ function noop() {}
     <am-segmented v-model:value="size" block :options="['small', 'middle', 'large']" />
   </div>
   <am-list :size="size" :header="`size = ${size}`" :bordered="false">
-    <am-list-item extra="内容" @click="noop">
-      列表项一
+    <am-list-item extra="Content" @click="noop">
+      Item 1
     </am-list-item>
-    <am-list-item extra="内容" @click="noop">
-      列表项二
+    <am-list-item extra="Content" @click="noop">
+      Item 2
     </am-list-item>
     <am-list-item
       align="start"
-      extra="顶部对齐"
-      description="align 为 start 时，左右两侧的内容与第一行文字对齐，而不是垂直居中。适合描述文字较多的列表项。"
+      extra="Top aligned"
+      description="With align set to start, both sides align with the first line of text instead of being vertically centered. Good for items with long descriptions."
       @click="noop"
     >
       <template #prefix>
         <span class="dot" />
       </template>
-      列表项三
+      Item 3
     </am-list-item>
   </am-list>
 </template>

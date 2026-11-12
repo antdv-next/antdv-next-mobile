@@ -2,6 +2,10 @@
 通过 `theme.components` 只调整某一类组件，对应每个组件文档中的「主题变量」。
 </docs>
 
+<docs lang="en-US">
+Use `theme.components` to adjust a single kind of component only, corresponding to the "Design Token" section of each component doc.
+</docs>
+
 <template>
   <am-config-provider
     :theme="{
@@ -11,7 +15,7 @@
     }"
   >
     <am-button type="primary" block>
-      更高更圆的按钮
+      Taller and rounder button
     </am-button>
   </am-config-provider>
 </template>

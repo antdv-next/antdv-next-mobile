@@ -2,6 +2,10 @@
 `AvatarGroup` 把多个头像叠放展示，`max.count` 限制最多显示的个数，其余折叠为 `+N`；`size` 与 `shape` 统一作用于组内头像。
 </docs>
 
+<docs lang="en-US">
+`AvatarGroup` stacks multiple avatars, `max.count` limits how many are shown and the rest are folded into `+N`; `size` and `shape` apply to all avatars in the group.
+</docs>
+
 <script setup lang="ts">
 import { UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'

@@ -2,6 +2,10 @@
 默认再次点击当前分值会清除评分，设置 `allowClear` 为 `false` 后不可清除，滑动时也至少保留一档。
 </docs>
 
+<docs lang="en-US">
+By default, clicking the current value again clears the rating. With `allowClear` set to `false` it cannot be cleared, and at least one step is kept while swiping.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 

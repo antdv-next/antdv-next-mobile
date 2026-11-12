@@ -2,19 +2,23 @@
 `format` 属性或默认插槽指定进度信息的内容。
 </docs>
 
+<docs lang="en-US">
+Specify the content of the progress info with the `format` prop or the default slot.
+</docs>
+
 <template>
   <am-flex vertical gap="middle">
     <am-progress :percent="60" :format="(percent?: number) => `${percent} / 100`" />
     <am-flex gap="middle" align="center">
-      <am-progress type="circle" :percent="75" :size="96" :format="(percent?: number) => `${percent} 天`" />
+      <am-progress type="circle" :percent="75" :size="96" :format="(percent?: number) => `${percent} Days`" />
       <am-progress type="circle" :percent="100" :size="96">
-        完成
+        Done
       </am-progress>
       <am-progress type="dashboard" :percent="86" :size="96">
         <template #default="{ percent }">
           <div class="score">
             <b>{{ percent }}</b>
-            <span>健康分</span>
+            <span>Health</span>
           </div>
         </template>
       </am-progress>

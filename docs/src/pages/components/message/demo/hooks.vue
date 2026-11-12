@@ -2,6 +2,10 @@
 通过 `message.useMessage()` 创建的 `ContextHolder` 渲染在组件树中，提示会跟随其所在 `ConfigProvider` 的主题。还可以为这个实例单独配置 `top`、`maxCount` 等。
 </docs>
 
+<docs lang="en-US">
+The `ContextHolder` created by `message.useMessage()` is rendered in the component tree, so messages follow the theme of the `ConfigProvider` it sits in. `top`, `maxCount`, etc. can also be configured for this instance alone.
+</docs>
+
 <script setup lang="ts">
 import { message } from 'antdv-next-mobile'
 
@@ -10,7 +14,7 @@ let count = 0
 
 function show() {
   count += 1
-  messageApi.success(`暗色主题的提示 ${count}，最多同时显示 2 条`)
+  messageApi.success(`Dark message ${count}, at most 2 shown at once`)
 }
 </script>
 
@@ -19,6 +23,6 @@ function show() {
     <ContextHolder />
   </am-config-provider>
   <am-button block @click="show">
-    使用 hooks 显示
+    Show with hooks
   </am-button>
 </template>

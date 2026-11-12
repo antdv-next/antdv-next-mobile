@@ -2,6 +2,10 @@
 通过 `type` 语法糖使用预设样式：主按钮、默认按钮、虚线按钮、文本按钮和链接按钮。
 </docs>
 
+<docs lang="en-US">
+Use the preset styles through the `type` syntactic sugar: primary, default, dashed, text and link buttons.
+</docs>
+
 <template>
   <am-flex gap="small" wrap>
     <am-button type="primary">

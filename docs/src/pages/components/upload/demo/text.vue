@@ -2,16 +2,20 @@
 `listType="text"` 以文件列表的形式展示，适合上传文档等非图片文件。设置 `disabled` 后不可选择与删除。
 </docs>
 
+<docs lang="en-US">
+`listType="text"` displays the files as a list, which suits non-image files such as documents. With `disabled` set, files cannot be selected or removed.
+</docs>
+
 <script setup lang="ts">
 import type { UploadFile } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFile[]>([
-  { uid: '-1', name: '项目计划书.pdf', status: 'done' },
-  { uid: '-2', name: '报价单.xlsx', status: 'uploading', percent: 48 },
-  { uid: '-3', name: '会议纪要.docx', status: 'error' },
+  { uid: '-1', name: 'project-plan.pdf', status: 'done' },
+  { uid: '-2', name: 'quotation.xlsx', status: 'uploading', percent: 48 },
+  { uid: '-3', name: 'meeting-notes.docx', status: 'error' },
 ])
-const disabledList = ref<UploadFile[]>([{ uid: '-4', name: '已归档.zip', status: 'done' }])
+const disabledList = ref<UploadFile[]>([{ uid: '-4', name: 'archived.zip', status: 'done' }])
 </script>
 
 <template>

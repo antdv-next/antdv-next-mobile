@@ -2,21 +2,25 @@
 `contentDraggable` 设为 `false` 后只能通过头部拖动面板，内容区域始终用于滚动。`header` 插槽可以自定义头部。
 </docs>
 
+<docs lang="en-US">
+With `contentDraggable` set to `false`, the panel can only be dragged by its header, and the content area is always used for scrolling. The `header` slot customizes the header.
+</docs>
+
 <template>
   <div class="stage">
     <p class="stage-tip">
-      拖动面板的标题栏
+      Drag the panel header
     </p>
     <am-floating-panel :anchors="[96, 300]" :content-draggable="false" :fixed="false">
       <template #header>
         <div class="header">
           <span class="header-bar" />
-          <span>附近的 20 个地点</span>
+          <span>20 places nearby</span>
         </div>
       </template>
       <ul class="list">
         <li v-for="i in 20" :key="i">
-          地点 {{ i }}
+          Place {{ i }}
         </li>
       </ul>
     </am-floating-panel>

@@ -2,6 +2,10 @@
 `index` 插槽自定义页码，`footer` 插槽在底部放置说明或操作按钮。
 </docs>
 
+<docs lang="en-US">
+The `index` slot customizes the page indicator, and the `footer` slot places a caption or action buttons at the bottom.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -21,23 +25,23 @@ const images = [
   createImage('4', '#eb2f96', 1200, 600),
 ]
 
-const titles = ['晨雾', '海岸线', '暮色', '远山']
+const titles = ['Morning mist', 'Coastline', 'Dusk', 'Far hills']
 const open = ref(false)
 </script>
 
 <template>
   <am-button block @click="open = true">
-    自定义页码与底部内容
+    Custom index and footer
   </am-button>
   <am-image-preview v-model:open="open" :images="images">
     <template #index="{ current, total }">
-      第 {{ current + 1 }} 张，共 {{ total }} 张
+      {{ current + 1 }} of {{ total }}
     </template>
     <template #footer="{ current }">
       <div class="footer">
         <span>{{ titles[current] }}</span>
         <am-button size="small" ghost @click="open = false">
-          关闭
+          Close
         </am-button>
       </div>
     </template>

@@ -2,20 +2,24 @@
 覆盖 `--am-list-*` 组件变量，或使用 `classes` / `styles` 定制语义化结构；`arrow` 插槽可以替换右侧箭头。
 </docs>
 
+<docs lang="en-US">
+Override the `--am-list-*` component tokens, or use `classes` / `styles` to customize the semantic structure; the `arrow` slot replaces the arrow on the right.
+</docs>
+
 <script setup lang="ts">
 import { CheckCircleOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
 
 const selected = ref('alipay')
 const methods = [
-  { key: 'alipay', title: '支付宝', description: '推荐已安装支付宝的用户使用' },
-  { key: 'wechat', title: '微信支付', description: '亿万用户的选择' },
-  { key: 'card', title: '银行卡', description: '支持储蓄卡与信用卡' },
+  { key: 'alipay', title: 'Alipay', description: 'Recommended for Alipay users' },
+  { key: 'wechat', title: 'WeChat Pay', description: 'Chosen by a billion users' },
+  { key: 'card', title: 'Bank card', description: 'Debit and credit cards' },
 ]
 </script>
 
 <template>
-  <am-list class="pay-list" mode="card" header="选择支付方式">
+  <am-list class="pay-list" mode="card" header="Payment method">
     <am-list-item
       v-for="method in methods"
       :key="method.key"

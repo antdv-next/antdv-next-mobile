@@ -2,13 +2,17 @@
 默认为水平分割线，用于分隔上下两段内容。
 </docs>
 
+<docs lang="en-US">
+A horizontal divider by default, used to separate the content above and below.
+</docs>
+
 <template>
   <div class="text">
-    移动端组件库的首要目标是在小屏幕上清晰地组织信息。
+    The first goal of a mobile component library is to organize information clearly on a small screen.
   </div>
   <am-divider />
   <div class="text">
-    分割线可以把不同主题的内容区隔开，降低阅读负担。
+    A divider separates content of different topics and makes reading easier.
   </div>
 </template>
 

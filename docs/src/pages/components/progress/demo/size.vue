@@ -2,6 +2,10 @@
 `size` 调整粗细与宽度，`percentPosition` 调整数值的位置，`inner` 会把数值显示在进度条内。
 </docs>
 
+<docs lang="en-US">
+`size` adjusts the thickness and width, `percentPosition` adjusts the position of the value, and `inner` shows the value inside the progress bar.
+</docs>
+
 <template>
   <am-flex vertical gap="middle">
     <am-progress :percent="50" size="small" />

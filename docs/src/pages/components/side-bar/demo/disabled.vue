@@ -2,18 +2,22 @@
 通过 `disabled` 禁用某一项，`change` 事件在切换时触发。
 </docs>
 
+<docs lang="en-US">
+Disable an item with `disabled`; the `change` event is triggered on switching.
+</docs>
+
 <script setup lang="ts">
 import type { SideBarItem } from 'antdv-next-mobile'
 import { ref } from 'vue'
 
 const items: SideBarItem[] = [
-  { key: 1, title: '选项一' },
-  { key: 2, title: '选项二' },
-  { key: 3, title: '选项三', disabled: true },
-  { key: 4, title: '选项四' },
+  { key: 1, title: 'Option 1' },
+  { key: 2, title: 'Option 2' },
+  { key: 3, title: 'Option 3', disabled: true },
+  { key: 4, title: 'Option 4' },
 ]
 
-const log = ref('点击左侧选项')
+const log = ref('Tap an item on the left')
 
 function handleChange(key: string | number) {
   log.value = `change: ${key}`

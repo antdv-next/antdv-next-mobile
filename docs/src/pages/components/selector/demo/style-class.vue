@@ -2,12 +2,16 @@
 通过 CSS 变量定制间距、圆角与颜色，例如做成胶囊形的标签选择。
 </docs>
 
+<docs lang="en-US">
+Customize the gap, border radius and colors through CSS variables, for example to build pill-shaped tag selection.
+</docs>
+
 <script setup lang="ts">
-const options = ['推荐', '科技', '财经', '体育', '娱乐', '汽车'].map(label => ({ label, value: label }))
+const options = ['Top', 'Tech', 'Finance', 'Sports', 'Fun', 'Autos'].map(label => ({ label, value: label }))
 </script>
 
 <template>
-  <am-selector class="demo-selector-pill" :options="options" :default-value="['科技']" :show-check-mark="false" multiple />
+  <am-selector class="demo-selector-pill" :options="options" :default-value="['Tech']" :show-check-mark="false" multiple />
 </template>
 
 <style scoped>

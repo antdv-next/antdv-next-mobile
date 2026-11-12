@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ExportOutlined, ReloadOutlined } from '@antdv-next/icons'
 import { computed, onMounted, ref, watch } from 'vue'
+import { useMessages } from '../../shared/locale'
 import { simulator } from '../state'
 
+const t = useMessages()
 const frameRef = ref<HTMLIFrameElement>()
 const base = `${import.meta.env.BASE_URL}mobile.html`
 
@@ -46,10 +48,10 @@ onMounted(() => {
   <aside class="simulator">
     <div class="simulator-toolbar">
       <span class="simulator-url">{{ simulator.page ? `/${simulator.page}` : '/' }}</span>
-      <button class="icon-btn" title="刷新" aria-label="刷新模拟器" @click="simulator.version++">
+      <button class="icon-btn" :title="t.simulator.reload" :aria-label="t.simulator.reloadLabel" @click="simulator.version++">
         <ReloadOutlined />
       </button>
-      <a class="icon-btn" :href="url" target="_blank" rel="noopener" title="在新窗口打开" aria-label="在新窗口打开">
+      <a class="icon-btn" :href="url" target="_blank" rel="noopener" :title="t.simulator.open" :aria-label="t.simulator.open">
         <ExportOutlined />
       </a>
     </div>
@@ -62,7 +64,7 @@ onMounted(() => {
           <svg width="24" height="11" viewBox="0 0 24 11" fill="none" aria-hidden="true"><rect x=".5" y=".5" width="20" height="10" rx="3" stroke="currentColor" opacity=".4" /><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor" /><path d="M22 3.6v3.8c.8-.3 1.5-1 1.5-1.9S22.800 3.900 22 3.600Z" fill="currentColor" opacity=".45" /></svg>
         </span>
       </div>
-      <iframe ref="frameRef" :src="initialUrl" title="移动端预览" class="phone-frame" />
+      <iframe ref="frameRef" :src="initialUrl" :title="t.simulator.frame" class="phone-frame" />
     </div>
   </aside>
 </template>

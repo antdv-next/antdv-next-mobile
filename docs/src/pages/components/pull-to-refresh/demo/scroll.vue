@@ -2,6 +2,10 @@
 放在固定高度的滚动容器中时，只有容器滚动到顶部才会触发下拉；向下滚动后再下拉是普通的滚动。
 </docs>
 
+<docs lang="en-US">
+Inside a fixed-height scroll container, pulling is only triggered when the container is scrolled to the top; pulling down after scrolling down is a normal scroll.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -22,7 +26,7 @@ function onRefresh() {
     <am-pull-to-refresh v-model:refreshing="refreshing" @refresh="onRefresh">
       <ul class="list">
         <li v-for="item in list" :key="item">
-          列表项 {{ item }}
+          Item {{ item }}
         </li>
       </ul>
     </am-pull-to-refresh>

@@ -2,6 +2,10 @@
 滚动到顶部后固定。`offsetTop` 设置固定时距离容器顶部的偏移。
 </docs>
 
+<docs lang="en-US">
+Affixed once it is scrolled to the top. `offsetTop` sets the offset from the top of the container while affixed.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -12,16 +16,16 @@ const getTarget = () => scroller.value ?? null
 <template>
   <div ref="scroller" class="scroller">
     <div class="block">
-      向下滚动
+      Scroll down
     </div>
     <am-affix :target="getTarget">
       <div class="bar">
-        <span>筛选栏</span>
+        <span>Filter bar</span>
         <span>offsetTop = 0</span>
       </div>
     </am-affix>
     <div v-for="i in 5" :key="i" class="block">
-      内容 {{ i }}
+      Content {{ i }}
     </div>
   </div>
 </template>

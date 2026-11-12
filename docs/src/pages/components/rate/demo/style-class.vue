@@ -2,6 +2,10 @@
 通过 CSS 变量定制星星的大小、间距与颜色，`classes` / `styles` 可定制语义化结构。
 </docs>
 
+<docs lang="en-US">
+Customize the size, gap and color of the stars through CSS variables; `classes` / `styles` customize the semantic structure.
+</docs>
+
 <template>
   <div class="demo-rate-list">
     <am-rate class="demo-rate-custom" :default-value="3" />

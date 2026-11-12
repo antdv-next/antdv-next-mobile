@@ -2,21 +2,25 @@
 在列表首屏加载时，为每一项渲染一个骨架屏。
 </docs>
 
+<docs lang="en-US">
+Render a skeleton for each item while the first screen of a list is loading.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const loading = ref(true)
 const list = [
-  { title: '系统通知', description: '你的账号已通过实名认证。' },
-  { title: '订单提醒', description: '你购买的商品已经发货，请注意查收。' },
-  { title: '活动推荐', description: '新人专享礼包已到账，点击查看。' },
+  { title: 'System notice', description: 'Your account has been verified.' },
+  { title: 'Order update', description: 'Your order has been shipped.' },
+  { title: 'Promotion', description: 'Your welcome gift has arrived, tap to view.' },
 ]
 </script>
 
 <template>
   <div class="skeleton-list">
     <div class="skeleton-list-bar">
-      <span>加载中</span>
+      <span>Loading</span>
       <am-switch v-model:checked="loading" />
     </div>
     <div v-for="item in list" :key="item.title" class="skeleton-list-item">

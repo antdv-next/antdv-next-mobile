@@ -2,14 +2,18 @@
 通过 `arrowIcon` 属性或插槽自定义箭头，`title` 插槽自定义标题；通过 `--am-dropdown-*` 组件变量调整外观。
 </docs>
 
+<docs lang="en-US">
+Customize the arrow with the `arrowIcon` prop or slot and the title with the `title` slot; adjust the look with the `--am-dropdown-*` component tokens.
+</docs>
+
 <script setup lang="ts">
 import { DownOutlined, FilterOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
 
 const value = ref('hot')
 const options = [
-  { label: '最热', value: 'hot' },
-  { label: '最新', value: 'new' },
+  { label: 'Hottest', value: 'hot' },
+  { label: 'Newest', value: 'new' },
 ]
 </script>
 
@@ -21,18 +25,18 @@ const options = [
     <am-dropdown-item key="sort" v-model:value="value" :options="options" root-class="custom-dropdown-layer" />
     <am-dropdown-item key="filter" root-class="custom-dropdown-layer">
       <template #title>
-        <b>筛选</b>
+        <b>Filter</b>
       </template>
       <template #arrowIcon>
         <FilterOutlined />
       </template>
       <div class="panel">
-        单独为这一项定制了标题与图标
+        This item has its own title and icon
       </div>
     </am-dropdown-item>
   </am-dropdown>
   <div class="page">
-    自定义箭头与主题变量
+    Custom arrow and component tokens
   </div>
 </template>
 

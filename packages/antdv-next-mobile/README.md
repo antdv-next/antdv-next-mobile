@@ -1,27 +1,28 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/antdv-next/antdv-next-mobile/main/docs/public/logo.svg" width="72" alt="logo" />
   <h1>Antdv Next Mobile</h1>
-  <p>Vue 3 移动端组件库，API 与 <a href="https://github.com/antdv-next/antdv-next">antdv-next</a> 对齐。</p>
-  <p><a href="https://m.antdv-next.com">文档 · m.antdv-next.com</a></p>
+  <p>Mobile UI component library for Vue 3, API-aligned with <a href="https://github.com/antdv-next/antdv-next">antdv-next</a>.</p>
+  <p><a href="https://m.antdv-next.com">Documentation · m.antdv-next.com</a></p>
+  <p>English · <a href="https://github.com/antdv-next/antdv-next-mobile/blob/main/packages/antdv-next-mobile/README.zh-CN.md">中文</a></p>
 </div>
 
-## 特性
+## Features
 
-- **与 PC 端 API 对齐**：`v-model:open`、`v-model:value`、`items`、`options`、`rootClass`、`classes`、`Modal.confirm`、`message.success`…… 会用 antdv-next 就会用它。
-- **为触屏设计**：底部弹层、滚轮选择器、手势滑动、下拉刷新、安全区适配。
-- **纯 CSS 变量主题**：零运行时样式，亮色 / 暗色 / 紧凑算法可组合、可嵌套，改一个变量即可全局换肤。
-- **`<script setup>` + TypeScript**：全部组件使用组合式 API 编写，类型完备。
-- **按需引入**：ESM 产物，样式随组件自动加载。
-- **组合式 API**：`useRequest`、`useLoadMore`、`useCountDown`、`useSwipe`、`useKeyboard` 等 30 余个常用函数随库导出。
-- **国际化**：内置 `zh_CN`、`en_US`。
+- **Same API as PC**: `v-model:open`, `v-model:value`, `items`, `options`, `rootClass`, `classes`, `Modal.confirm`, `message.success` ... if you know antdv-next, you already know this library.
+- **Designed for touch**: bottom popups, wheel pickers, swipe gestures, pull-to-refresh, safe-area support.
+- **Pure CSS variable theme**: zero runtime styles. Light / dark / compact algorithms combine and nest, and one variable restyles the whole app.
+- **`<script setup>` + TypeScript**: every component is written with the Composition API and fully typed.
+- **Import on demand**: ESM output, styles are loaded together with each component.
+- **Composables**: `useRequest`, `useLoadMore`, `useCountDown`, `useSwipe`, `useKeyboard` and 30+ more are exported with the library.
+- **Internationalization**: `zh_CN` and `en_US` are built in.
 
-## 安装
+## Install
 
 ```bash
 pnpm add antdv-next-mobile
 ```
 
-## 使用
+## Usage
 
 ```ts
 import AntdvNextMobile from 'antdv-next-mobile'
@@ -42,7 +43,7 @@ const open = ref(false)
 <template>
   <am-config-provider :theme="{ algorithm: theme.darkAlgorithm, token: { colorPrimary: '#00b96b' } }">
     <am-button type="primary" block @click="open = true">
-      打开
+      Open
     </am-button>
     <am-popup v-model:open="open" round closable>
       Hello
@@ -51,7 +52,21 @@ const open = ref(false)
 </template>
 ```
 
-## 主题
+The built-in texts are Chinese by default. Switch to English with a language pack:
+
+```vue
+<script setup lang="ts">
+import enUS from 'antdv-next-mobile/locale/en_US'
+</script>
+
+<template>
+  <am-config-provider :locale="enUS">
+    <App />
+  </am-config-provider>
+</template>
+```
+
+## Theme
 
 ```css
 :root {
@@ -66,22 +81,22 @@ import { applyTheme, theme } from 'antdv-next-mobile'
 applyTheme({ algorithm: [theme.darkAlgorithm, theme.compactAlgorithm] })
 ```
 
-## 开发
+## Development
 
 ```bash
 pnpm install
-pnpm dev          # 文档站 + 手机模拟器 http://localhost:5180
-pnpm test         # 单元测试
-pnpm typecheck    # 类型检查
-pnpm build        # 构建组件库
-pnpm build:site   # 构建文档站
+pnpm dev          # docs site + phone simulator at http://localhost:5180
+pnpm test         # unit tests
+pnpm typecheck    # type check
+pnpm build        # build the library
+pnpm build:site   # build the docs site
 ```
 
-目录结构与贡献约定见 [AGENTS.md](https://github.com/antdv-next/antdv-next-mobile/blob/main/AGENTS.md)。
+See [AGENTS.md](https://github.com/antdv-next/antdv-next-mobile/blob/main/AGENTS.md) for the project layout and contribution conventions.
 
-## 浏览器支持
+## Browser Support
 
-iOS Safari 16.2+、Android Chrome / WebView 111+（主题依赖 CSS `color-mix()`）。
+iOS Safari 16.2+, Android Chrome / WebView 111+ (the theme relies on CSS `color-mix()`).
 
 ## License
 

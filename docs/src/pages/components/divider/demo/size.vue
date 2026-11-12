@@ -2,6 +2,10 @@
 通过 `size` 调整水平分割线的上下间距：`small` 8px、`middle` 12px、`large`（默认）16px。
 </docs>
 
+<docs lang="en-US">
+Adjust the vertical spacing of a horizontal divider with `size`: `small` 8px, `middle` 12px, `large` (default) 16px.
+</docs>
+
 <template>
   <div class="text">
     small
@@ -16,7 +20,7 @@
   </div>
   <am-divider size="large" />
   <div class="text">
-    结束
+    End
   </div>
 </template>
 

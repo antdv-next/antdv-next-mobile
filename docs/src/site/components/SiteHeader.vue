@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import { BgColorsOutlined, GithubOutlined, MoonOutlined, SunOutlined } from '@antdv-next/icons'
-import { components, guides } from 'virtual:am-docs'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import logo from '../../assets/logo.svg'
+import { localizePath, useDocsLocale, useMessages } from '../../shared/locale'
 import { primaryPresets, radiusPresets, resetDocsTheme, useDocsTheme } from '../../shared/theme'
+import { entryLinks } from '../router'
 
 const theme = useDocsTheme()
+const docsLocale = useDocsLocale()
+const t = useMessages()
 const route = useRoute()
 const panelOpen = ref(false)
 const panelRef = ref<HTMLElement>()
 
-const guideLink = computed(() => (guides[0] ? `/docs/${guides[0].name}` : '/'))
-const componentLink = computed(() => {
-  const first = components.find(c => c.name === 'button') ?? components[0]
-  return first ? `/components/${first.name}` : '/'
-})
+const links = computed(() => entryLinks(docsLocale.locale))
+const homeLink = computed(() => localizePath('/', docsLocale.locale))
+/** The same page in the other language. */
+const switchLink = computed(() => ({
+  path: localizePath(route.path, docsLocale.locale === 'zh-CN' ? 'en-US' : 'zh-CN'),
+  hash: route.hash,
+}))
 
 function onDocClick(event: MouseEvent) {
   if (panelOpen.value && panelRef.value && !panelRef.value.contains(event.target as Node))
@@ -27,27 +32,27 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 
 <template>
   <header class="site-header">
-    <RouterLink to="/" class="site-logo">
+    <RouterLink :to="homeLink" class="site-logo">
       <img :src="logo" alt="" width="40" height="28">
       <span>Antdv Next <b>Mobile</b></span>
     </RouterLink>
     <nav class="site-nav">
-      <RouterLink :to="guideLink" :class="{ active: route.meta.type === 'guide' }">
-        指南
+      <RouterLink :to="links.guide" :class="{ active: route.meta.type === 'guide' }">
+        {{ t.nav.guide }}
       </RouterLink>
-      <RouterLink :to="componentLink" :class="{ active: route.meta.type === 'component' }">
-        组件
+      <RouterLink :to="links.component" :class="{ active: route.meta.type === 'component' }">
+        {{ t.nav.components }}
       </RouterLink>
-      <a href="https://www.antdv-next.com" target="_blank" rel="noopener">PC 组件库</a>
+      <a href="https://www.antdv-next.com" target="_blank" rel="noopener">{{ t.nav.pc }}</a>
     </nav>
     <div class="site-actions">
       <div ref="panelRef" class="theme-picker">
-        <button class="icon-btn" :class="{ active: panelOpen }" title="主题定制" aria-label="主题定制" @click="panelOpen = !panelOpen">
+        <button class="icon-btn" :class="{ active: panelOpen }" :title="t.theme.customize" :aria-label="t.theme.customize" @click="panelOpen = !panelOpen">
           <BgColorsOutlined />
         </button>
         <div v-if="panelOpen" class="theme-panel">
           <div class="theme-panel-title">
-            主色
+            {{ t.theme.primary }}
           </div>
           <div class="theme-colors">
             <button
@@ -56,16 +61,16 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
               class="theme-color"
               :class="{ active: theme.primary === preset.color }"
               :style="{ background: preset.color }"
-              :title="preset.name"
-              :aria-label="preset.name"
+              :title="t.theme.primaryNames[preset.key]"
+              :aria-label="t.theme.primaryNames[preset.key]"
               @click="theme.primary = preset.color"
             />
-            <label class="theme-color theme-color-custom" title="自定义">
-              <input v-model="theme.primary" type="color" aria-label="自定义主色">
+            <label class="theme-color theme-color-custom" :title="t.theme.custom">
+              <input v-model="theme.primary" type="color" :aria-label="t.theme.customPrimary">
             </label>
           </div>
           <div class="theme-panel-title">
-            圆角
+            {{ t.theme.radius }}
           </div>
           <div class="theme-seg">
             <button
@@ -74,29 +79,32 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
               :class="{ active: theme.radius === preset.value }"
               @click="theme.radius = preset.value"
             >
-              {{ preset.name }}
+              {{ t.theme.radiusNames[preset.key] }}
             </button>
           </div>
           <div class="theme-panel-title">
-            算法
+            {{ t.theme.algorithm }}
           </div>
           <div class="theme-seg">
             <button :class="{ active: !theme.dark }" @click="theme.dark = false">
-              亮色
+              {{ t.theme.light }}
             </button>
             <button :class="{ active: theme.dark }" @click="theme.dark = true">
-              暗色
+              {{ t.theme.dark }}
             </button>
             <button :class="{ active: theme.compact }" @click="theme.compact = !theme.compact">
-              紧凑
+              {{ t.theme.compact }}
             </button>
           </div>
           <button class="theme-reset" @click="resetDocsTheme()">
-            恢复默认
+            {{ t.theme.reset }}
           </button>
         </div>
       </div>
-      <button class="icon-btn" :title="theme.dark ? '切换到亮色' : '切换到暗色'" aria-label="切换明暗" @click="theme.dark = !theme.dark">
+      <RouterLink :to="switchLink" class="icon-btn locale-switch" :title="t.switchLocale" :aria-label="t.switchLocale">
+        {{ t.switchLocaleShort }}
+      </RouterLink>
+      <button class="icon-btn" :title="theme.dark ? t.theme.toLight : t.theme.toDark" :aria-label="t.theme.toggle" @click="theme.dark = !theme.dark">
         <SunOutlined v-if="theme.dark" />
         <MoonOutlined v-else />
       </button>

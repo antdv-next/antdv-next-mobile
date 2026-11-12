@@ -2,19 +2,23 @@
 覆盖 `--am-nav-bar-*` 组件变量，或使用 `classes` / `styles` 定制各语义化结构。
 </docs>
 
+<docs lang="en-US">
+Override the `--am-nav-bar-*` component variables, or use `classes` / `styles` to customize each semantic part.
+</docs>
+
 <script setup lang="ts">
 import { ShareAltOutlined } from '@antdv-next/icons'
 </script>
 
 <template>
   <div class="stack">
-    <am-nav-bar class="brand-bar" title="品牌色导航" back="返回" :bordered="false">
+    <am-nav-bar class="brand-bar" title="Brand color" back="Back" :bordered="false">
       <template #right>
         <ShareAltOutlined style="font-size: 20px" />
       </template>
     </am-nav-bar>
     <am-nav-bar
-      title="语义化样式"
+      title="Semantic styles"
       sub-title="styles.title / styles.subTitle"
       :styles="{ title: { alignItems: 'flex-start', maxWidth: 'none', flex: 2 }, subTitle: { color: 'var(--am-color-primary)' } }"
     />

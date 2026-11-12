@@ -2,26 +2,30 @@
 使用 `ActionSheet.show()` 指令式地打开动作面板，无需在模板中声明组件。返回的 `close` 方法可以手动关闭。
 </docs>
 
+<docs lang="en-US">
+Use `ActionSheet.show()` to open an action sheet imperatively, without declaring the component in the template. The returned `close` method closes it manually.
+</docs>
+
 <script setup lang="ts">
 import { ActionSheet, message } from 'antdv-next-mobile'
 
 function show() {
   ActionSheet.show({
-    title: '确定要删除这张照片吗？',
+    title: 'Delete this photo?',
     actions: [
-      { key: 'delete', text: '删除', danger: true, bold: true },
+      { key: 'delete', text: 'Delete', danger: true, bold: true },
     ],
-    onAction: () => message.success('已删除'),
-    onCancel: () => message.info('已取消'),
+    onAction: () => message.success('Deleted'),
+    onCancel: () => message.info('Cancelled'),
   })
 }
 
 function showAndClose() {
   const handler = ActionSheet.show({
-    extra: '3 秒后自动关闭',
+    extra: 'Closes automatically in 3s',
     actions: [
-      { key: 'a', text: '选项一' },
-      { key: 'b', text: '选项二' },
+      { key: 'a', text: 'Option 1' },
+      { key: 'b', text: 'Option 2' },
     ],
   })
   setTimeout(handler.close, 3000)
@@ -34,7 +38,7 @@ function showAndClose() {
       ActionSheet.show()
     </am-button>
     <am-button block @click="showAndClose">
-      手动关闭
+      Close manually
     </am-button>
   </am-flex>
 </template>

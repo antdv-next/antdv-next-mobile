@@ -2,6 +2,10 @@
 最简单的用法：水平排列与 `vertical` 垂直排列。
 </docs>
 
+<docs lang="en-US">
+The simplest usage: horizontal layout and vertical layout with `vertical`.
+</docs>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -12,10 +16,10 @@ const vertical = ref(false)
   <am-flex vertical gap="middle">
     <am-flex gap="small">
       <am-button :type="vertical ? 'default' : 'primary'" size="small" @click="vertical = false">
-        水平
+        Horizontal
       </am-button>
       <am-button :type="vertical ? 'primary' : 'default'" size="small" @click="vertical = true">
-        垂直
+        Vertical
       </am-button>
     </am-flex>
     <am-flex :vertical="vertical">
