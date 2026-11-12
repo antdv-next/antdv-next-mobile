@@ -1,0 +1,86 @@
+.am-rolling-text {
+  /* component tokens */
+  --am-rolling-text-color: var(--am-color-text-heading);
+  --am-rolling-text-font-size: 24px;
+  --am-rolling-text-font-weight: var(--am-font-weight-strong);
+  --am-rolling-text-gap: 0px;
+  --am-rolling-text-item-height: 40px;
+  --am-rolling-text-item-width: auto;
+  --am-rolling-text-item-background: transparent;
+  --am-rolling-text-item-border-radius: 0;
+  /* set by the component */
+  --am-rolling-text-duration: 2s;
+
+  display: inline-flex;
+  gap: var(--am-rolling-text-gap);
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--am-rolling-text-color);
+  font-weight: var(--am-rolling-text-font-weight);
+  font-size: var(--am-rolling-text-font-size);
+  font-family: var(--am-font-family);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--am-rolling-text-item-height);
+  white-space: nowrap;
+  vertical-align: middle;
+  /* figures keep their reading order in rtl pages */
+  direction: ltr;
+}
+
+.am-rolling-text-item {
+  display: inline-block;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--am-rolling-text-item-width);
+  height: var(--am-rolling-text-item-height);
+  overflow: hidden;
+  text-align: center;
+  background: var(--am-rolling-text-item-background);
+  border-radius: var(--am-rolling-text-item-border-radius);
+}
+
+.am-rolling-text-item-box {
+  --am-rolling-text-distance: calc(var(--am-rolling-text-item-height) * var(--am-rolling-text-steps, 0) * -1);
+  --am-rolling-text-start: 0px;
+  --am-rolling-text-end: var(--am-rolling-text-distance);
+
+  display: block;
+  transform: translateY(var(--am-rolling-text-start));
+  will-change: transform;
+}
+
+.am-rolling-text-down .am-rolling-text-item-box {
+  --am-rolling-text-start: var(--am-rolling-text-distance);
+  --am-rolling-text-end: 0px;
+}
+
+.am-rolling-text-item-figure {
+  display: block;
+  height: var(--am-rolling-text-item-height);
+}
+
+.am-rolling-text-separator {
+  flex: none;
+  height: var(--am-rolling-text-item-height);
+}
+
+.am-rolling-text-rolling .am-rolling-text-item-box {
+  animation: am-rolling-text-roll var(--am-rolling-text-duration) ease-in-out var(--am-rolling-text-delay, 0s) both;
+}
+
+@keyframes am-rolling-text-roll {
+  from {
+    transform: translateY(var(--am-rolling-text-start));
+  }
+
+  to {
+    transform: translateY(var(--am-rolling-text-end));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-rolling-text-rolling .am-rolling-text-item-box {
+    transform: translateY(var(--am-rolling-text-end));
+    animation: none;
+  }
+}

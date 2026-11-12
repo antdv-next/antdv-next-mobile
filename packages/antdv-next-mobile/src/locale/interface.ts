@@ -31,6 +31,9 @@ export interface Locale {
   DatePicker: {
     placeholder: string
     rangePlaceholder: [string, string]
+    /** tab texts of the range picker */
+    rangeStart: string
+    rangeEnd: string
     year: string
     quarter: string
     month: string
@@ -66,6 +69,7 @@ export interface Locale {
   PullToRefresh: { pulling: string, canRelease: string, refreshing: string, complete: string }
   InfiniteScroll: { loading: string, noMore: string, failed: string, retry: string }
   Upload: { upload: string, uploading: string, uploadError: string, removeFile: string, previewFile: string }
+  Signature: { clear: string, confirm: string, tips: string }
   Pagination: { prev: string, next: string }
   NumberKeyboard: { done: string, delete: string }
   Typography: { expand: string, collapse: string, copy: string, copied: string }

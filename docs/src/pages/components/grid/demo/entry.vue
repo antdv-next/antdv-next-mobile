@@ -1,12 +1,13 @@
 <docs lang="zh-CN">
-移动端最常见的用法：用栅格搭建首页的宫格入口。
+移动端最常见的用法：用 `Grid` 搭建首页的宫格入口。通过 `items` 传入入口数据，`columns` 设置列数（默认 4 列），点击时触发 `itemClick`。
 </docs>
 
 <docs lang="en-US">
-The most common usage on mobile: build the grid entries of a home page with the grid.
+The most common usage on mobile: build the entries of a home page with `Grid`. Pass the entries through `items`, set the number of columns with `columns` (4 by default) and listen to `itemClick`.
 </docs>
 
 <script setup lang="ts">
+import type { GridItemType } from 'antdv-next-mobile'
 import {
   AppstoreOutlined,
   CreditCardOutlined,
@@ -17,46 +18,31 @@ import {
   StarOutlined,
   WalletOutlined,
 } from '@antdv-next/icons'
+import { Toast } from 'antdv-next-mobile'
+import { h } from 'vue'
 
-const entries = [
-  { icon: WalletOutlined, text: 'Wallet' },
-  { icon: CreditCardOutlined, text: 'Cards' },
-  { icon: GiftOutlined, text: 'Coupons' },
-  { icon: ShoppingOutlined, text: 'Orders' },
-  { icon: StarOutlined, text: 'Favorites' },
-  { icon: EnvironmentOutlined, text: 'Address' },
-  { icon: CustomerServiceOutlined, text: 'Support' },
-  { icon: AppstoreOutlined, text: 'More' },
+const items: GridItemType[] = [
+  { key: 'wallet', icon: h(WalletOutlined), title: 'Wallet' },
+  { key: 'cards', icon: h(CreditCardOutlined), title: 'Cards' },
+  { key: 'coupons', icon: h(GiftOutlined), title: 'Coupons', badge: 3 },
+  { key: 'orders', icon: h(ShoppingOutlined), title: 'Orders', badge: true },
+  { key: 'favorites', icon: h(StarOutlined), title: 'Favorites' },
+  { key: 'address', icon: h(EnvironmentOutlined), title: 'Address' },
+  { key: 'support', icon: h(CustomerServiceOutlined), title: 'Support', disabled: true },
+  { key: 'more', icon: h(AppstoreOutlined), title: 'More' },
 ]
+
+function handleClick(item: GridItemType) {
+  Toast.show(`Tapped ${item.title}`)
+}
 </script>
 
 <template>
-  <am-row :gutter="[0, 16]">
-    <am-col v-for="entry in entries" :key="entry.text" :span="6">
-      <div class="entry">
-        <component :is="entry.icon" class="entry-icon" />
-        <span>{{ entry.text }}</span>
-      </div>
-    </am-col>
-  </am-row>
+  <am-grid :items="items" class="entries" @item-click="handleClick" />
 </template>
 
 <style scoped>
-.entry {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-  color: var(--am-color-text);
-  font-size: var(--am-font-size-sm);
-}
-
-.entry:active {
-  opacity: var(--am-opacity-active);
-}
-
-.entry-icon {
-  color: var(--am-color-primary);
-  font-size: 26px;
+.entries {
+  --am-grid-icon-color: var(--am-color-primary);
 }
 </style>

@@ -9,7 +9,8 @@ group:
 ## When To Use {#when-to-use}
 
 - When the user needs to enter a date (birthday, ID expiry date, appointment time, etc.).
-- When a date range has to be selected, or you want to see a whole month calendar at a glance, use [Calendar](/components/calendar).
+- When a date range has to be selected, use `DatePicker.RangePicker`.
+- When you want to see a whole month calendar at a glance, use [Calendar](/components/calendar).
 
 The API is aligned with `DatePicker` in antdv-next: `value` takes and emits [dayjs](https://day.js.org/) objects by default, and formatted strings once `valueFormat` is set; `picker` switches the granularity and `showTime` adds time columns. On mobile, bottom wheels replace the calendar panel, and the value is only committed after tapping "OK".
 
@@ -23,6 +24,10 @@ The API is aligned with `DatePicker` in antdv-next: `value` takes and emits [day
 <demo src="./demo/filter.vue">Filter options and custom labels</demo>
 <demo src="./demo/custom-trigger.vue" full>Custom trigger</demo>
 <demo src="./demo/view.vue">Inline view DatePickerView</demo>
+<demo src="./demo/range-basic.vue">Date range with RangePicker</demo>
+<demo src="./demo/range-picker.vue">Range precision and format</demo>
+<demo src="./demo/range-limit.vue">Range limits, empty and disabled sides</demo>
+<demo src="./demo/range-form.vue" full>Range: form and custom trigger</demo>
 
 ## API
 
@@ -129,9 +134,42 @@ The inline wheel view, also available as `DatePicker.View`. It supports all the 
 | change | Triggered when the wheels settle on a new date | `(date: Dayjs \| string, dateString: string) => void` |
 | update:value | `v-model:value` update | `(date: Dayjs \| string) => void` |
 
-### Date range {#range}
+### RangePicker {#range}
 
-There is no `DatePicker.RangePicker` on mobile. To select a date range, use `selection-mode="range"` of [Calendar](/components/calendar) (which can act as a form field through the `trigger` prop); you can also place two DatePickers and constrain each other with `minDate` / `maxDate`.
+`DatePicker.RangePicker` (`<am-range-picker>`, named export `DateRangePicker`) selects a date range in a single bottom popup with two tabs, "Start / End", each showing a set of wheels. Tapping the start or the end part of the trigger opens the matching tab; the minimum of the end wheels follows the chosen start, and "OK" commits both sides together. To pick a range visually on a calendar you can also use `selection-mode="range"` of [Calendar](/components/calendar).
+
+It supports every date prop of DatePicker (`valueFormat`, `picker`, `showTime`, `format`, `minDate`, `maxDate`, `disabledDate`, `disabledTime`, `defaultPickerValue`, `use12Hours`, `hourStep`, `minuteStep`, `secondStep`, `filter`, `renderLabel`, `itemHeight`, `visibleItemCount`, `virtual`) and the popup / trigger props (`open`, `defaultOpen`, `title`, `okText`, `cancelText`, `allowClear`, `status`, `variant`, `size`, `trigger`, `suffixIcon`, `getContainer`, `zIndex`, `maskClosable`, `destroyOnHidden`, `id`, `rootClass`, `classes`, `styles`). The following props differ:
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| value (v-model) | The committed range, `null` means that side is empty | `[Dayjs \| string \| null, Dayjs \| string \| null] \| null` | - |
+| defaultValue | Default range (uncontrolled) | `[Dayjs \| string \| null, Dayjs \| string \| null] \| null` | - |
+| placeholder | Placeholders of the start and the end | `[string, string]` | `['Start date', 'End date']` |
+| separator | Separator between the two sides of the trigger, the same-named slot wins | `VueNode` | `<SwapRightOutlined />` |
+| allowEmpty | Allow a side to stay empty: a side without a value whose tab was never opened is committed as `null` | `boolean \| [boolean, boolean]` | `false` |
+| disabled | Whether disabled; pass a tuple to disable one side only, a disabled side keeps its value and its tab cannot be selected | `boolean \| [boolean, boolean]` | `false` |
+
+| Event | Description | Type |
+| --- | --- | --- |
+| change | Fired when the committed range changes (confirm or clear, `null` on clear) | `(dates: [Dayjs \| string \| null, Dayjs \| string \| null] \| null, dateStrings: [string, string]) => void` |
+| calendarChange | Fired when a wheel settles on a new date, the value is not committed yet | `(dates, dateStrings: [string, string], info: { range: 'start' \| 'end' }) => void` |
+| confirm | Fired when the confirm button is tapped | `(dates, dateStrings: [string, string]) => void` |
+| cancel | Fired when the cancel button or the mask is tapped | `() => void` |
+| openChange | Fired when the popup opens / closes | `(open: boolean) => void` |
+| clear | Fired when the clear icon is tapped | `() => void` |
+
+| Slot | Description | Params |
+| --- | --- | --- |
+| default | Custom trigger, replaces the built-in input | `{ open, value, label, labels, disabled, toggle }` |
+| separator | Separator of the trigger | - |
+| title | Popup title | - |
+| suffixIcon | Suffix icon of the trigger | - |
+| header | Content between the tabs and the wheels | - |
+| footer | Content below the wheels | - |
+
+| Method | Description | Type |
+| --- | --- | --- |
+| toggle | Toggle the popup; accepts the target state and the tab to open on | `(open?: boolean, range?: 'start' \| 'end') => void` |
 
 ## Design Token {#design-token}
 
@@ -140,11 +178,20 @@ See [Picker](/components/picker#design-token) for the trigger and popup tokens, 
 | Token | Description | Default |
 | --- | --- | --- |
 | `--am-date-picker-view-font-size` | Font size of the wheel options | `var(--am-font-size-lg)` |
+| `--am-range-picker-separator-color` | Color of the RangePicker separator | `var(--am-color-text-quaternary)` |
+| `--am-range-picker-gap` | Gap between the two sides and the separator of RangePicker | `var(--am-padding-xs)` |
+| `--am-range-picker-tabs-padding` | Padding of the RangePicker tab bar (declared on `.am-range-picker-tabs`) | `var(--am-padding-xs) var(--am-padding)` |
+| `--am-range-picker-tab-padding-block` | Block padding of a tab | `6px` |
+| `--am-range-picker-tab-title-font-size` | Font size of the tab title | `var(--am-font-size-sm)` |
+| `--am-range-picker-tab-value-font-size` | Font size of the tab date | `var(--am-font-size)` |
+| `--am-range-picker-tab-active-color` | Color of the date of the active tab | `var(--am-color-primary)` |
 
 ## Differences from PC {#diff}
 
 - Bottom wheels replace the dropdown calendar panel, and the value is committed after tapping "OK" (equivalent to `needConfirm` always being `true` on PC); adds the `confirm`, `cancel` and `select` events.
-- No panel / input related APIs such as `RangePicker`, `multiple`, `presets`, `showNow`, `showWeek`, `mode`, `panelRender`, `cellRender`, `renderExtraFooter`, `components`, `placement`, `prefix`, `inputReadOnly`; the trigger cannot be typed into.
+- `RangePicker` uses "Start / End" tabs with wheels inside one bottom popup instead of the two calendar panels of PC: the end is kept from going before the start (there is no `order` auto sorting); `allowEmpty` means "a side without a value whose tab was never opened stays empty"; `calendarChange` fires when a wheel settles; `presets`, `id: { start, end }` and the `focus` / `blur` events are not supported, and it adds the `confirm`, `cancel`, `clear` events and `toggle(open, range)`.
+- `disabledDate` of `RangePicker` does not provide `info.from`; there are no shortcut sub components such as `DatePicker.MonthPicker`, use the `picker` prop.
+- No panel / input related APIs such as `multiple`, `presets`, `showNow`, `showWeek`, `mode`, `panelRender`, `cellRender`, `renderExtraFooter`, `components`, `placement`, `prefix`, `inputReadOnly`; the trigger cannot be typed into.
 - `picker` adds `'time'` (i.e. TimePicker); `picker="week"` uses ISO weeks (the week starts on Monday) and its default format is `GGGG-[W]WW`.
 - `minDate` / `maxDate` default to ten years before and after (wheels need a finite range); `disabledDate` only applies to the last column of the current granularity, and the matching options are grayed out and skipped automatically.
 - `allowClear` defaults to `false` and only supports a boolean.

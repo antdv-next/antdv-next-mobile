@@ -21,6 +21,8 @@ const zhCN: Locale = {
   DatePicker: {
     placeholder: '请选择日期',
     rangePlaceholder: ['开始日期', '结束日期'],
+    rangeStart: '开始',
+    rangeEnd: '结束',
     year: '年',
     quarter: '季度',
     month: '月',
@@ -103,6 +105,7 @@ const zhCN: Locale = {
   PullToRefresh: { pulling: '下拉刷新', canRelease: '释放立即刷新', refreshing: '加载中...', complete: '刷新成功' },
   InfiniteScroll: { loading: '加载中...', noMore: '没有更多了', failed: '加载失败', retry: '重新加载' },
   Upload: { upload: '上传', uploading: '上传中...', uploadError: '上传失败', removeFile: '删除文件', previewFile: '预览文件' },
+  Signature: { clear: '清空', confirm: '确认', tips: '当前浏览器不支持 Canvas，无法使用签名' },
   Pagination: { prev: '上一页', next: '下一页' },
   NumberKeyboard: { done: '完成', delete: '删除' },
   Typography: { expand: '展开', collapse: '收起', copy: '复制', copied: '复制成功' },

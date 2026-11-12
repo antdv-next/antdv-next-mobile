@@ -1,4 +1,5 @@
-import type { Numeric } from '../_util/type'
+import type { CSSProperties } from 'vue'
+import type { Key, Numeric, VueNode } from '../_util/type'
 
 export type RowAlign = 'top' | 'middle' | 'bottom' | 'stretch'
 export type RowJustify = 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'space-evenly'
@@ -39,4 +40,115 @@ export interface ColProps {
 
 export interface ColSlots {
   default?: () => any
+}
+
+export type GridGap = number | string
+export type GridOrientation = 'horizontal' | 'vertical'
+
+export interface GridItemType {
+  key?: Key
+  icon?: VueNode
+  title?: VueNode
+  /** Number / text badge, `true` renders a dot */
+  badge?: number | string | boolean
+  /** Number of columns the item spans */
+  span?: Numeric
+  disabled?: boolean
+  class?: string
+  style?: CSSProperties
+}
+
+export interface GridSemanticClassNames {
+  root?: string
+  item?: string
+  icon?: string
+  title?: string
+  badge?: string
+}
+
+export interface GridSemanticStyles {
+  root?: CSSProperties
+  item?: CSSProperties
+  icon?: CSSProperties
+  title?: CSSProperties
+  badge?: CSSProperties
+}
+
+export interface GridProps {
+  /** Data-driven items; `GridItem` children of the default slot are rendered after them */
+  items?: GridItemType[]
+  /** Number of columns */
+  columns?: Numeric
+  /** Spacing between items, `[horizontal, vertical]` for both directions. Numbers are px. */
+  gap?: GridGap | [GridGap, GridGap]
+  /** Show the hairlines between items */
+  bordered?: boolean
+  /** Keep every item square */
+  square?: boolean
+  /** `vertical`: icon above the title; `horizontal`: icon beside the title */
+  orientation?: GridOrientation
+  /** Press feedback and button semantics on the items */
+  clickable?: boolean
+  /** Size of the icons. Numbers are px. */
+  iconSize?: Numeric
+  rootClass?: string
+  classes?: GridSemanticClassNames
+  styles?: GridSemanticStyles
+}
+
+export interface GridEmits {
+  /** An item of `items` was tapped (disabled items do not fire) */
+  itemClick: [item: GridItemType, index: number, event: MouseEvent]
+}
+
+export interface GridItemSlotContext {
+  item: GridItemType
+  index: number
+}
+
+export interface GridSlots {
+  /** `GridItem`s */
+  default?: () => any
+  /** Icon of the `items` entries */
+  icon?: (ctx: GridItemSlotContext) => any
+  /** Title of the `items` entries */
+  title?: (ctx: GridItemSlotContext) => any
+}
+
+export interface GridItemSemanticClassNames {
+  root?: string
+  icon?: string
+  title?: string
+  badge?: string
+}
+
+export interface GridItemSemanticStyles {
+  root?: CSSProperties
+  icon?: CSSProperties
+  title?: CSSProperties
+  badge?: CSSProperties
+}
+
+export interface GridItemProps {
+  icon?: VueNode
+  title?: VueNode
+  /** Number / text badge, `true` renders a dot */
+  badge?: number | string | boolean
+  /** Number of columns the item spans */
+  span?: Numeric
+  disabled?: boolean
+  rootClass?: string
+  classes?: GridItemSemanticClassNames
+  styles?: GridItemSemanticStyles
+}
+
+export interface GridItemEmits {
+  click: [event: MouseEvent]
+}
+
+export interface GridItemSlots {
+  /** Replaces the whole content of the item */
+  default?: () => any
+  icon?: () => any
+  title?: () => any
 }

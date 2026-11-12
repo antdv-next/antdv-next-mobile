@@ -21,6 +21,8 @@ const enUS: Locale = {
   DatePicker: {
     placeholder: 'Select date',
     rangePlaceholder: ['Start date', 'End date'],
+    rangeStart: 'Start',
+    rangeEnd: 'End',
     year: '',
     quarter: 'Q',
     month: '',
@@ -103,6 +105,7 @@ const enUS: Locale = {
   PullToRefresh: { pulling: 'Pull to refresh', canRelease: 'Release to refresh', refreshing: 'Loading...', complete: 'Refreshed' },
   InfiniteScroll: { loading: 'Loading...', noMore: 'No more', failed: 'Failed to load', retry: 'Retry' },
   Upload: { upload: 'Upload', uploading: 'Uploading...', uploadError: 'Upload error', removeFile: 'Remove file', previewFile: 'Preview file' },
+  Signature: { clear: 'Clear', confirm: 'Confirm', tips: 'Canvas is not supported in this browser' },
   Pagination: { prev: 'Previous', next: 'Next' },
   NumberKeyboard: { done: 'Done', delete: 'Delete' },
   Typography: { expand: 'Expand', collapse: 'Collapse', copy: 'Copy', copied: 'Copied' },

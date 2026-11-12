@@ -1,6 +1,8 @@
 import type { Dayjs } from 'dayjs'
+import type { GetContainer, SizeType, ValidateStatus, VueNode } from '../_util/type'
+import type { Variant } from '../form/context'
 import type { PickerOption, PickerViewSemanticClassNames, PickerViewSemanticStyles } from '../picker-view/interface'
-import type { PickerFieldProps, PickerTriggerSlotProps } from '../picker/interface'
+import type { PickerFieldProps, PickerFieldSemanticClassNames, PickerFieldSemanticStyles, PickerTriggerSlotProps } from '../picker/interface'
 
 /** A dayjs object, or a string in `valueFormat` when `valueFormat` is set. */
 export type DatePickerValue = Dayjs | string
@@ -98,5 +100,93 @@ export interface DatePickerSlots {
   /** Content between the header and the wheels */
   header?: () => any
   /** Content below the wheels */
+  footer?: () => any
+}
+
+/** `[start, end]`, same value type as DatePicker on both sides. `null`: that side is empty. */
+export type RangePickerValue = [DatePickerValue | null, DatePickerValue | null]
+
+export type RangePickerRange = 'start' | 'end'
+
+export interface RangePickerInfo {
+  /** the side that changed */
+  range: RangePickerRange
+}
+
+export interface RangePickerProps extends DatePickerBaseProps {
+  /** Committed `[start, end]`. Supports `v-model:value`. */
+  value?: RangePickerValue | null
+  defaultValue?: RangePickerValue | null
+  /** Placeholders of the start and the end side */
+  placeholder?: [string, string]
+  /** Separator between the two sides of the trigger, the `separator` slot wins */
+  separator?: VueNode
+  /** Allow a side to stay empty: a side without a value whose tab was never opened is committed as `null` */
+  allowEmpty?: boolean | [boolean, boolean]
+  /** Disable the field, or one side of it with `[start, end]` (a disabled side keeps its value) */
+  disabled?: boolean | [boolean, boolean]
+  /** Whether the popup is open. Supports `v-model:open`. */
+  open?: boolean
+  defaultOpen?: boolean
+  /** Show a clear icon when there is a value */
+  allowClear?: boolean
+  status?: ValidateStatus
+  variant?: Variant
+  size?: SizeType
+  /** Render the built-in input-like trigger. `false`: control the popup with `v-model:open` only. */
+  trigger?: boolean
+  /** Suffix icon of the trigger, the `suffixIcon` slot wins. `null` hides it. */
+  suffixIcon?: VueNode
+  id?: string
+  /** Title of the popup header, the `title` slot wins */
+  title?: VueNode
+  okText?: string
+  cancelText?: string
+  /** Teleport target of the popup. Default `document.body`; `false` renders in place. */
+  getContainer?: GetContainer
+  zIndex?: number
+  /** Close (cancel) when the mask is clicked */
+  maskClosable?: boolean
+  /** Unmount the popup content when closed */
+  destroyOnHidden?: boolean
+  rootClass?: string
+  classes?: PickerFieldSemanticClassNames
+  styles?: PickerFieldSemanticStyles
+}
+
+export interface RangePickerEmits {
+  'update:value': [value: RangePickerValue | null]
+  'update:open': [open: boolean]
+  'openChange': [open: boolean]
+  /** The committed value changed (confirm or clear) */
+  'change': [value: RangePickerValue | null, dateStrings: [string, string]]
+  /** A wheel moved, the value is not committed yet (same as PC) */
+  'calendarChange': [value: RangePickerValue, dateStrings: [string, string], info: RangePickerInfo]
+  'confirm': [value: RangePickerValue, dateStrings: [string, string]]
+  'cancel': []
+  'clear': []
+}
+
+export interface RangePickerTriggerSlotProps {
+  open: boolean
+  value: RangePickerValue | null
+  /** text shown by the built-in trigger (`''` when empty) */
+  label: string
+  /** formatted start and end (`''` when empty) */
+  labels: [string, string]
+  disabled: boolean
+  /** `range`: the tab to open on */
+  toggle: (open?: boolean, range?: RangePickerRange) => void
+}
+
+export interface RangePickerSlots {
+  /** Custom trigger */
+  default?: (props: RangePickerTriggerSlotProps) => any
+  title?: () => any
+  suffixIcon?: () => any
+  separator?: () => any
+  /** Content between the tabs and the wheel */
+  header?: () => any
+  /** Content below the wheel */
   footer?: () => any
 }

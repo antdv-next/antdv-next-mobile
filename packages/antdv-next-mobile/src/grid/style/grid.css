@@ -1,0 +1,172 @@
+.am-grid {
+  /* component tokens */
+  --am-grid-columns: 4;
+  --am-grid-background: var(--am-color-bg-container);
+  --am-grid-color: var(--am-color-text);
+  --am-grid-font-size: var(--am-font-size-sm);
+  --am-grid-icon-size: 28px;
+  --am-grid-icon-color: currentcolor;
+  --am-grid-item-padding: var(--am-padding) var(--am-padding-xs);
+  --am-grid-item-gap: var(--am-padding-xs);
+  --am-grid-item-radius: 0px;
+  --am-grid-border-color: var(--am-color-split);
+  --am-grid-badge-color: var(--am-color-error);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--am-grid-columns), minmax(0, 1fr));
+  box-sizing: border-box;
+  color: var(--am-grid-color);
+  font-size: var(--am-grid-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+}
+
+.am-grid-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--am-grid-item-gap);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--am-grid-item-padding);
+  color: var(--am-grid-color, var(--am-color-text));
+  background: var(--am-grid-background, var(--am-color-bg-container));
+  border-radius: var(--am-grid-item-radius, 0);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-grid-horizontal > .am-grid-item {
+  flex-direction: row;
+}
+
+.am-grid-square > .am-grid-item {
+  aspect-ratio: 1;
+}
+
+.am-grid-item-clickable {
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: background var(--am-motion-duration-fast);
+}
+
+.am-grid-item-clickable:active {
+  background: color-mix(in srgb, var(--am-grid-background, var(--am-color-bg-container)), var(--am-color-text-base) 5%);
+}
+
+.am-grid-item-clickable:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: -2px;
+}
+
+.am-grid-item-disabled {
+  cursor: not-allowed;
+}
+
+.am-grid-item-disabled > * {
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-grid-item-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--am-grid-icon-color, currentcolor);
+  font-size: var(--am-grid-icon-size, 28px);
+  line-height: 1;
+}
+
+.am-grid-item-icon img {
+  display: block;
+  width: 1em;
+  height: 1em;
+  object-fit: contain;
+}
+
+.am-grid-item-title {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+/* the title holds the badge when there is no icon */
+.am-grid-item-title:has(> .am-grid-item-badge) {
+  overflow: visible;
+}
+
+/* the bubble is BaseBadge; only its size tokens and position are set here */
+.am-grid-item-badge {
+  --am-base-badge-size: 16px;
+  --am-base-badge-font-size: 10px;
+  --am-base-badge-bg: var(--am-grid-badge-color, var(--am-color-error));
+
+  position: absolute;
+  top: 0;
+  inset-inline-start: 100%;
+  padding: 0 4px;
+  font-weight: 500;
+  transform: translate(-50%, -25%);
+}
+
+[dir='rtl'] .am-grid-item-badge {
+  transform: translate(50%, -25%);
+}
+
+.am-grid-item-badge-dot {
+  padding: 0;
+  transform: translate(-50%, 0);
+}
+
+[dir='rtl'] .am-grid-item-badge-dot {
+  transform: translate(50%, 0);
+}
+
+/* hairlines: the grid draws top + start, every item draws end + bottom */
+.am-grid-bordered::before,
+.am-grid-bordered > .am-grid-item::after {
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 200%;
+  height: 200%;
+  border: 0 var(--am-line-type) var(--am-grid-border-color);
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  content: '';
+  pointer-events: none;
+}
+
+[dir='rtl'] .am-grid-bordered::before,
+[dir='rtl'] .am-grid-bordered > .am-grid-item::after {
+  transform-origin: 100% 0;
+}
+
+.am-grid-bordered::before {
+  border-block-start-width: var(--am-line-width);
+  border-inline-start-width: var(--am-line-width);
+}
+
+.am-grid-bordered > .am-grid-item::after {
+  border-block-end-width: var(--am-line-width);
+  border-inline-end-width: var(--am-line-width);
+}
+
+/* with a gap every item is a card with its own outline */
+.am-grid-gapped.am-grid-bordered::before {
+  display: none;
+}
+
+.am-grid-gapped.am-grid-bordered > .am-grid-item::after {
+  border-width: var(--am-line-width);
+  border-radius: calc(var(--am-grid-item-radius) * 2);
+}

@@ -1,0 +1,30 @@
+/*
+ * Highlight is inline text: the root deliberately inherits font and color from its context
+ * instead of setting its own (the exception to the "root sets its own font" rule).
+ */
+.am-highlight {
+  /* component tokens */
+  --am-highlight-color: var(--am-color-primary);
+  --am-highlight-background: transparent;
+  --am-highlight-font-weight: inherit;
+  --am-highlight-padding-inline: 0;
+  --am-highlight-border-radius: 0;
+
+  box-sizing: border-box;
+}
+
+.am-highlight-tag {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 var(--am-highlight-padding-inline);
+  color: var(--am-highlight-color);
+  font-weight: var(--am-highlight-font-weight);
+  font-style: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  text-decoration: inherit;
+  background: var(--am-highlight-background);
+  border-radius: var(--am-highlight-border-radius);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

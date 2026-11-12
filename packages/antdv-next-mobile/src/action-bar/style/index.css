@@ -1,0 +1,192 @@
+.am-action-bar {
+  /* component tokens */
+  --am-action-bar-height: 50px;
+  --am-action-bar-background: var(--am-color-bg-container);
+  --am-action-bar-padding-inline: var(--am-padding-xs);
+  --am-action-bar-z-index: 100;
+  --am-action-bar-icon-width: 48px;
+  --am-action-bar-icon-size: 20px;
+  --am-action-bar-icon-color: var(--am-color-text);
+  --am-action-bar-icon-font-size: 10px;
+  --am-action-bar-icon-text-color: var(--am-color-text-secondary);
+  --am-action-bar-badge-color: var(--am-color-error);
+  --am-action-bar-button-height: var(--am-control-height);
+  --am-action-bar-button-font-size: var(--am-font-size);
+  --am-action-bar-button-gap: var(--am-padding-xs);
+  --am-action-bar-safe-area-bottom: 0px;
+
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1.5;
+}
+
+.am-action-bar-safe-area {
+  --am-action-bar-safe-area-bottom: constant(safe-area-inset-bottom);
+  --am-action-bar-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.am-action-bar-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: content-box;
+  height: var(--am-action-bar-height);
+  padding: 0 var(--am-action-bar-padding-inline) var(--am-action-bar-safe-area-bottom);
+  background: var(--am-action-bar-background);
+}
+
+.am-action-bar-bordered > .am-action-bar-content::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-top: var(--am-line-width) var(--am-line-type) var(--am-color-split);
+  transform: scaleY(0.5);
+  transform-origin: top;
+  content: '';
+  pointer-events: none;
+}
+
+.am-action-bar-fixed > .am-action-bar-content {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--am-action-bar-z-index);
+}
+
+.am-action-bar-placeholder {
+  height: calc(var(--am-action-bar-height) + var(--am-action-bar-safe-area-bottom));
+}
+
+/* ---------- prefix: free area that takes the remaining width ---------- */
+.am-action-bar-prefix {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-inline: var(--am-padding-xs);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* next to a prefix the buttons keep their own width */
+.am-action-bar-prefix ~ .am-button.am-action-bar-button {
+  flex: none;
+  min-width: 96px;
+}
+
+/* ---------- icon action ---------- */
+.am-action-bar-icon {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--am-action-bar-icon-width);
+  height: 100%;
+  padding: 0 var(--am-padding-xxs);
+  color: var(--am-action-bar-icon-text-color);
+  font-size: var(--am-action-bar-icon-font-size);
+  line-height: 1.2;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.am-action-bar-icon:active {
+  opacity: var(--am-opacity-active);
+}
+
+.am-action-bar-icon:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: -2px;
+}
+
+.am-action-bar-icon-disabled,
+.am-action-bar-icon-disabled:active {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-action-bar-icon-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--am-action-bar-icon-size);
+  color: var(--am-action-bar-icon-color);
+  font-size: var(--am-action-bar-icon-size);
+  line-height: 1;
+}
+
+.am-action-bar-icon-text {
+  position: relative;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+/* only a text: make it read like a text action */
+.am-action-bar-icon-text:first-child {
+  color: var(--am-action-bar-icon-color);
+  font-size: var(--am-font-size);
+}
+
+/* the bubble is BaseBadge; only its size tokens and position are set here */
+.am-action-bar-icon-badge {
+  --am-base-badge-size: 16px;
+  --am-base-badge-font-size: 10px;
+  --am-base-badge-bg: var(--am-action-bar-badge-color);
+
+  position: absolute;
+  top: 0;
+  inset-inline-start: 100%;
+  padding: 0 4px;
+  font-weight: 500;
+  transform: translate(-50%, -35%);
+}
+
+[dir='rtl'] .am-action-bar-icon-badge {
+  transform: translate(50%, -35%);
+}
+
+.am-action-bar-icon-badge-dot {
+  padding: 0;
+  transform: translate(-50%, -10%);
+}
+
+[dir='rtl'] .am-action-bar-icon-badge-dot {
+  transform: translate(50%, -10%);
+}
+
+/* ---------- button: library Button, adjacent ones join into one pill ---------- */
+.am-button.am-action-bar-button {
+  --am-button-height: var(--am-action-bar-button-height);
+  --am-button-font-size: var(--am-action-bar-button-font-size);
+  --am-button-border-radius: calc(var(--am-action-bar-button-height) / 2);
+  --am-button-font-weight: 500;
+
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* space between the icon actions and the first button */
+.am-action-bar-icon + .am-action-bar-button {
+  margin-inline-start: var(--am-action-bar-button-gap);
+}
+
+/* logical radii, so the pill mirrors itself in rtl */
+.am-button.am-action-bar-button + .am-action-bar-button {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.am-button.am-action-bar-button:has(+ .am-action-bar-button) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}

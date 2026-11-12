@@ -1,0 +1,90 @@
+.am-barrage {
+  /* component tokens */
+  --am-barrage-color: var(--am-color-white);
+  --am-barrage-font-size: var(--am-font-size-lg);
+  --am-barrage-font-weight: var(--am-font-weight-strong);
+  --am-barrage-shadow-color: var(--am-color-bg-mask);
+  --am-barrage-row-height: 24px;
+  --am-barrage-row-gap: var(--am-margin-xxs);
+  /* internal: 1 flies towards the left, -1 towards the right (rtl) */
+  --am-barrage-direction: 1;
+
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+}
+
+[dir='rtl'] .am-barrage,
+.am-barrage[dir='rtl'] {
+  --am-barrage-direction: -1;
+}
+
+.am-barrage-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/*
+ * A bullet has to travel "container width + its own width", which plain CSS can not express in one
+ * transform. So the full-width track slides in by its own width (= the container width) while the
+ * bullet slides out by its own width: both are linear, composited and need no measuring.
+ */
+.am-barrage-track {
+  position: absolute;
+  top: calc(
+    var(--am-barrage-offset, 0px) + var(--am-barrage-row, 0) *
+      (var(--am-barrage-row-height) + var(--am-barrage-row-gap))
+  );
+  display: flex;
+  align-items: center;
+  height: var(--am-barrage-row-height);
+  inset-inline: 0;
+  animation: am-barrage-track var(--am-barrage-duration, 4000ms) linear var(--am-barrage-delay, 0ms) both;
+  will-change: transform;
+}
+
+.am-barrage-item {
+  flex: none;
+  box-sizing: border-box;
+  color: var(--am-barrage-color);
+  font-weight: var(--am-barrage-font-weight);
+  font-size: var(--am-barrage-font-size);
+  line-height: var(--am-barrage-row-height);
+  white-space: nowrap;
+  text-shadow:
+    0 0 2px var(--am-barrage-shadow-color),
+    0 1px 2px var(--am-barrage-shadow-color);
+  animation: am-barrage-item var(--am-barrage-duration, 4000ms) linear var(--am-barrage-delay, 0ms) both;
+  will-change: transform;
+}
+
+.am-barrage-paused .am-barrage-track,
+.am-barrage-paused .am-barrage-item {
+  animation-play-state: paused;
+}
+
+@keyframes am-barrage-track {
+  from {
+    transform: translateX(calc(100% * var(--am-barrage-direction, 1)));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes am-barrage-item {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% * var(--am-barrage-direction, 1)));
+  }
+}

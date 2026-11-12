@@ -1,7 +1,93 @@
-/* DatePicker is composed of the shared picker trigger, picker popup and PickerView. */
+/* DatePicker / RangePicker are composed of the shared picker trigger, picker popup, Segmented and PickerView. */
 .am-date-picker-view {
   --am-date-picker-view-font-size: var(--am-font-size-lg);
 
   font-size: var(--am-date-picker-view-font-size);
   font-variant-numeric: tabular-nums;
+}
+
+/* ---------- RangePicker: trigger ---------- */
+.am-range-picker {
+  --am-range-picker-separator-color: var(--am-color-text-quaternary);
+  --am-range-picker-gap: var(--am-padding-xs);
+}
+
+.am-range-picker .am-range-picker-content {
+  display: flex;
+  gap: var(--am-range-picker-gap);
+  align-items: center;
+}
+
+.am-range-picker-input {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.am-range-picker-input-placeholder {
+  color: var(--am-picker-trigger-placeholder-color);
+}
+
+.am-range-picker-input-disabled {
+  color: var(--am-color-text-disabled);
+}
+
+.am-range-picker-separator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--am-range-picker-separator-color);
+}
+
+[dir='rtl'] .am-range-picker-separator > .anticon {
+  transform: scaleX(-1);
+}
+
+/* ---------- RangePicker: start / end tabs of the popup ---------- */
+.am-range-picker-tabs {
+  --am-range-picker-tabs-padding: var(--am-padding-xs) var(--am-padding);
+  --am-range-picker-tab-padding-block: 6px;
+  --am-range-picker-tab-title-font-size: var(--am-font-size-sm);
+  --am-range-picker-tab-value-font-size: var(--am-font-size);
+  --am-range-picker-tab-active-color: var(--am-color-primary);
+
+  flex: none;
+  box-sizing: border-box;
+  padding: var(--am-range-picker-tabs-padding);
+}
+
+.am-range-picker-tab {
+  padding-block: var(--am-range-picker-tab-padding-block);
+}
+
+.am-range-picker-tab-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  max-width: 100%;
+}
+
+.am-range-picker-tab-title {
+  font-size: var(--am-range-picker-tab-title-font-size);
+}
+
+.am-range-picker-tab-value {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: var(--am-range-picker-tab-value-font-size);
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.am-segmented-item-selected .am-range-picker-tab-value {
+  color: var(--am-range-picker-tab-active-color);
+}
+
+.am-range-picker-tab-value-empty,
+.am-segmented-item-selected .am-range-picker-tab-value-empty {
+  color: var(--am-color-text-placeholder);
 }

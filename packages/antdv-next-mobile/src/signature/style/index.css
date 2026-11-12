@@ -1,0 +1,75 @@
+.am-signature {
+  --am-signature-height: 200px;
+  --am-signature-bg: var(--am-color-bg-container);
+  --am-signature-border-width: var(--am-line-width);
+  --am-signature-border-style: dashed;
+  --am-signature-border-color: var(--am-color-border);
+  --am-signature-border-radius: var(--am-border-radius-lg);
+  --am-signature-pen-color: var(--am-color-text);
+  --am-signature-placeholder-color: var(--am-color-text-placeholder);
+  --am-signature-placeholder-font-size: var(--am-font-size-lg);
+  --am-signature-footer-gap: var(--am-margin-xs);
+  --am-signature-footer-margin: var(--am-margin-sm);
+
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-signature-content {
+  position: relative;
+  box-sizing: border-box;
+  height: var(--am-signature-height);
+  overflow: hidden;
+  background: var(--am-signature-bg);
+  border: var(--am-signature-border-width) var(--am-signature-border-style) var(--am-signature-border-color);
+  border-radius: var(--am-signature-border-radius);
+}
+
+.am-signature-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* resolved with getComputedStyle() as the default pen color, so it follows the theme */
+  color: var(--am-signature-pen-color);
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.am-signature-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--am-padding-sm);
+  color: var(--am-signature-placeholder-color);
+  font-size: var(--am-signature-placeholder-font-size);
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.am-signature-footer {
+  display: flex;
+  gap: var(--am-signature-footer-gap);
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: var(--am-signature-footer-margin);
+}
+
+.am-signature-disabled .am-signature-content {
+  background: var(--am-color-bg-container-disabled);
+}
+
+.am-signature-disabled .am-signature-canvas {
+  cursor: not-allowed;
+}
