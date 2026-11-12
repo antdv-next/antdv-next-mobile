@@ -1,0 +1,39 @@
+import type { ComputedRef, InjectionKey } from 'vue'
+import type { ValidateStatus } from '../_util/type'
+import { computed, inject } from 'vue'
+
+/**
+ * Contract between FormItem and any data-entry component rendered inside it.
+ * Data-entry components call `onFieldChange()` after their value changed and
+ * `onFieldBlur()` on blur so FormItem can run the matching validation trigger.
+ */
+export interface FormItemInputContext {
+  /** validate status of the wrapping FormItem (`''` when none) */
+  status: ComputedRef<ValidateStatus>
+  /** id for the native control, generated from the field name */
+  id: ComputedRef<string | undefined>
+  onFieldChange: () => void
+  onFieldBlur: () => void
+  /** true when rendered inside a FormItem */
+  isFormItemInput: boolean
+}
+
+export const formItemInputContextKey: InjectionKey<FormItemInputContext> = Symbol('AmFormItemInputContext')
+
+const defaultContext: FormItemInputContext = {
+  status: computed(() => '' as ValidateStatus),
+  id: computed(() => undefined),
+  onFieldChange: () => {},
+  onFieldBlur: () => {},
+  isFormItemInput: false,
+}
+
+export function useFormItemInputContext(): FormItemInputContext {
+  return inject(formItemInputContextKey, defaultContext)
+}
+
+/** `props.status` > FormItem validate status. Returns `'error' | 'warning' | ...`. */
+export function useMergedStatus(status: () => ValidateStatus | undefined) {
+  const ctx = useFormItemInputContext()
+  return computed<ValidateStatus>(() => status() ?? ctx.status.value)
+}

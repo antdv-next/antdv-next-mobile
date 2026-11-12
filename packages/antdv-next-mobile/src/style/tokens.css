@@ -1,0 +1,259 @@
+/**
+ * Design tokens of antdv-next-mobile.
+ *
+ * Token names are aligned with antdv-next (Ant Design) tokens: `colorPrimary` -> `--am-color-primary`.
+ *
+ * - "seed" tokens are plain values, declared once on `:root`.
+ * - "map" tokens are derived from seeds with `color-mix()`. They are re-declared on every
+ *   `.am-theme` scope (ConfigProvider root, teleported popups), because a custom property that
+ *   references another one is resolved where it is declared. This is what makes
+ *   `--am-color-primary: red` on any ConfigProvider re-theme everything below it.
+ * - algorithms (dark / compact) only override seeds, so they compose and nest freely.
+ */
+:root,
+.am-theme-light {
+  /* ---------- seed: brand & functional colors ---------- */
+  --am-color-primary: #1677ff;
+  --am-color-success: #52c41a;
+  --am-color-warning: #faad14;
+  --am-color-error: #ff4d4f;
+
+  /* ---------- seed: neutral bases ---------- */
+  --am-color-text-base: #000;
+  --am-color-bg-base: #fff;
+  /* mixing targets used to derive lighter / darker steps, swapped in dark mode */
+  --am-color-mix-light: #fff;
+  --am-color-mix-dark: #000;
+
+  /* ---------- seed: mixing ratios (what the dark algorithm tweaks) ---------- */
+  --am-alpha-text: 88%;
+  --am-mix-bg-container: 0%;
+  --am-mix-bg-elevated: 0%;
+  --am-mix-bg-layout: 4%;
+  --am-mix-bg-spotlight: 85%;
+  --am-alpha-fill: 15%;
+  --am-alpha-fill-secondary: 6%;
+  --am-alpha-fill-tertiary: 4%;
+  --am-alpha-fill-quaternary: 2%;
+  --am-mix-border: 15%;
+  --am-mix-border-secondary: 6%;
+  --am-alpha-split: 6%;
+  --am-color-bg-mask: rgb(0 0 0 / 45%);
+  --am-box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+  --am-box-shadow-secondary: 0 2px 8px 0 rgb(0 0 0 / 10%);
+
+  color-scheme: light;
+}
+
+/* ---------- seed: typography, size, motion ---------- */
+:root {
+  /* ---------- typography ---------- */
+  --am-font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  --am-font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  --am-font-size: 14px;
+  --am-font-size-sm: 12px;
+  --am-font-size-lg: 16px;
+  --am-font-size-xl: 18px;
+  --am-font-size-heading-1: 32px;
+  --am-font-size-heading-2: 26px;
+  --am-font-size-heading-3: 22px;
+  --am-font-size-heading-4: 18px;
+  --am-font-size-heading-5: 16px;
+  --am-line-height: 1.5715;
+  --am-line-height-sm: 1.6667;
+  --am-line-height-lg: 1.5;
+  --am-font-weight-strong: 600;
+
+  /* ---------- size ---------- */
+  --am-control-height: 40px;
+  --am-control-height-sm: 30px;
+  --am-control-height-lg: 48px;
+  --am-control-height-xs: 24px;
+  --am-line-width: 1px;
+  --am-line-type: solid;
+
+  --am-border-radius: 8px;
+  --am-border-radius-xs: 2px;
+  --am-border-radius-sm: 4px;
+  --am-border-radius-lg: 12px;
+  --am-border-radius-xl: 16px;
+
+  --am-padding-xxs: 4px;
+  --am-padding-xs: 8px;
+  --am-padding-sm: 12px;
+  --am-padding: 16px;
+  --am-padding-md: 20px;
+  --am-padding-lg: 24px;
+  --am-padding-xl: 32px;
+
+  --am-margin-xxs: 4px;
+  --am-margin-xs: 8px;
+  --am-margin-sm: 12px;
+  --am-margin: 16px;
+  --am-margin-md: 20px;
+  --am-margin-lg: 24px;
+  --am-margin-xl: 32px;
+
+  /* ---------- motion ---------- */
+  --am-motion-duration-fast: 0.1s;
+  --am-motion-duration-mid: 0.2s;
+  --am-motion-duration-slow: 0.3s;
+  --am-motion-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --am-motion-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --am-motion-ease-out-circ: cubic-bezier(0.08, 0.82, 0.17, 1);
+
+  /* ---------- misc ---------- */
+  --am-opacity-disabled: 0.4;
+  --am-opacity-active: 0.7;
+  --am-z-index-base: 0;
+  --am-z-index-popup-base: 1000;
+}
+
+/* ---------- dark algorithm ---------- */
+.am-theme-dark,
+[data-am-theme~='dark'] {
+  --am-color-primary: #1668dc;
+  --am-color-success: #49aa19;
+  --am-color-warning: #d89614;
+  --am-color-error: #dc4446;
+
+  --am-color-text-base: #fff;
+  --am-color-bg-base: #000;
+  --am-color-mix-light: #000;
+  --am-color-mix-dark: #fff;
+
+  --am-alpha-text: 85%;
+  --am-mix-bg-container: 8%;
+  --am-mix-bg-elevated: 12%;
+  --am-mix-bg-layout: 0%;
+  --am-mix-bg-spotlight: 26%;
+  --am-alpha-fill: 18%;
+  --am-alpha-fill-secondary: 12%;
+  --am-alpha-fill-tertiary: 8%;
+  --am-alpha-fill-quaternary: 4%;
+  --am-mix-border: 26%;
+  --am-mix-border-secondary: 19%;
+  --am-alpha-split: 12%;
+  --am-color-bg-mask: rgb(0 0 0 / 65%);
+  --am-box-shadow: 0 6px 16px 0 rgb(0 0 0 / 32%), 0 3px 6px -4px rgb(0 0 0 / 48%), 0 9px 28px 8px rgb(0 0 0 / 20%);
+  --am-box-shadow-secondary: 0 2px 8px 0 rgb(0 0 0 / 40%);
+
+  color-scheme: dark;
+}
+
+/* ---------- compact algorithm ---------- */
+.am-theme-compact,
+[data-am-theme~='compact'] {
+  --am-font-size: 13px;
+  --am-font-size-sm: 11px;
+  --am-font-size-lg: 15px;
+  --am-font-size-xl: 17px;
+
+  --am-control-height: 34px;
+  --am-control-height-sm: 26px;
+  --am-control-height-lg: 42px;
+  --am-control-height-xs: 20px;
+
+  --am-border-radius: 6px;
+  --am-border-radius-lg: 8px;
+  --am-border-radius-xl: 12px;
+
+  --am-padding-xxs: 2px;
+  --am-padding-xs: 6px;
+  --am-padding-sm: 8px;
+  --am-padding: 12px;
+  --am-padding-md: 16px;
+  --am-padding-lg: 20px;
+  --am-padding-xl: 24px;
+
+  --am-margin-xxs: 2px;
+  --am-margin-xs: 6px;
+  --am-margin-sm: 8px;
+  --am-margin: 12px;
+  --am-margin-md: 16px;
+  --am-margin-lg: 20px;
+  --am-margin-xl: 24px;
+}
+
+/* ---------- map tokens: derived from seeds on every theme scope ---------- */
+:root,
+.am-theme {
+  /* ---------- alias ---------- */
+  --am-color-info: var(--am-color-primary);
+  --am-color-link: var(--am-color-primary);
+  --am-color-white: #fff;
+  --am-color-black: #000;
+
+  /* ---------- map: primary ---------- */
+  --am-color-primary-bg: color-mix(in srgb, var(--am-color-primary) 8%, var(--am-color-bg-container));
+  --am-color-primary-bg-hover: color-mix(in srgb, var(--am-color-primary) 16%, var(--am-color-bg-container));
+  --am-color-primary-border: color-mix(in srgb, var(--am-color-primary) 45%, var(--am-color-bg-container));
+  --am-color-primary-border-hover: color-mix(in srgb, var(--am-color-primary) 65%, var(--am-color-bg-container));
+  --am-color-primary-hover: color-mix(in srgb, var(--am-color-primary) 82%, var(--am-color-mix-light));
+  --am-color-primary-active: color-mix(in srgb, var(--am-color-primary) 85%, var(--am-color-mix-dark));
+  --am-color-primary-text: var(--am-color-primary);
+
+  /* ---------- map: success ---------- */
+  --am-color-success-bg: color-mix(in srgb, var(--am-color-success) 10%, var(--am-color-bg-container));
+  --am-color-success-border: color-mix(in srgb, var(--am-color-success) 45%, var(--am-color-bg-container));
+  --am-color-success-hover: color-mix(in srgb, var(--am-color-success) 82%, var(--am-color-mix-light));
+  --am-color-success-active: color-mix(in srgb, var(--am-color-success) 85%, var(--am-color-mix-dark));
+  --am-color-success-text: var(--am-color-success);
+
+  /* ---------- map: warning ---------- */
+  --am-color-warning-bg: color-mix(in srgb, var(--am-color-warning) 10%, var(--am-color-bg-container));
+  --am-color-warning-border: color-mix(in srgb, var(--am-color-warning) 45%, var(--am-color-bg-container));
+  --am-color-warning-hover: color-mix(in srgb, var(--am-color-warning) 82%, var(--am-color-mix-light));
+  --am-color-warning-active: color-mix(in srgb, var(--am-color-warning) 85%, var(--am-color-mix-dark));
+  --am-color-warning-text: var(--am-color-warning);
+
+  /* ---------- map: error ---------- */
+  --am-color-error-bg: color-mix(in srgb, var(--am-color-error) 8%, var(--am-color-bg-container));
+  --am-color-error-bg-hover: color-mix(in srgb, var(--am-color-error) 16%, var(--am-color-bg-container));
+  --am-color-error-border: color-mix(in srgb, var(--am-color-error) 45%, var(--am-color-bg-container));
+  --am-color-error-hover: color-mix(in srgb, var(--am-color-error) 82%, var(--am-color-mix-light));
+  --am-color-error-active: color-mix(in srgb, var(--am-color-error) 85%, var(--am-color-mix-dark));
+  --am-color-error-text: var(--am-color-error);
+
+  /* ---------- map: info ---------- */
+  --am-color-info-bg: color-mix(in srgb, var(--am-color-info) 8%, var(--am-color-bg-container));
+  --am-color-info-border: color-mix(in srgb, var(--am-color-info) 45%, var(--am-color-bg-container));
+  --am-color-info-text: var(--am-color-info);
+
+  /* ---------- map: text ---------- */
+  --am-color-text: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-text), transparent);
+  --am-color-text-secondary: color-mix(in srgb, var(--am-color-text-base) 65%, transparent);
+  --am-color-text-tertiary: color-mix(in srgb, var(--am-color-text-base) 45%, transparent);
+  --am-color-text-quaternary: color-mix(in srgb, var(--am-color-text-base) 25%, transparent);
+  --am-color-text-heading: var(--am-color-text);
+  --am-color-text-label: var(--am-color-text-secondary);
+  --am-color-text-description: var(--am-color-text-tertiary);
+  --am-color-text-placeholder: var(--am-color-text-quaternary);
+  --am-color-text-disabled: var(--am-color-text-quaternary);
+  --am-color-text-light-solid: #fff;
+  --am-color-icon: var(--am-color-text-tertiary);
+  --am-color-icon-hover: var(--am-color-text);
+
+  /* ---------- map: background ---------- */
+  --am-color-bg-container: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-container), var(--am-color-bg-base));
+  --am-color-bg-elevated: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-elevated), var(--am-color-bg-base));
+  --am-color-bg-layout: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-layout), var(--am-color-bg-base));
+  --am-color-bg-spotlight: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-spotlight), var(--am-color-bg-base));
+  --am-color-bg-container-disabled: var(--am-color-fill-tertiary);
+  --am-color-bg-text-active: var(--am-color-fill);
+
+  /* ---------- map: fill ---------- */
+  --am-color-fill: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill), transparent);
+  --am-color-fill-secondary: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill-secondary), transparent);
+  --am-color-fill-tertiary: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill-tertiary), transparent);
+  --am-color-fill-quaternary: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill-quaternary), transparent);
+  --am-color-fill-content: var(--am-color-fill-secondary);
+  --am-color-fill-alter: var(--am-color-fill-quaternary);
+
+  /* ---------- map: border ---------- */
+  --am-color-border: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-border), var(--am-color-bg-base));
+  --am-color-border-secondary: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-border-secondary), var(--am-color-bg-base));
+  --am-color-split: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-split), transparent);
+}

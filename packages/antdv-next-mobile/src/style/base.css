@@ -1,0 +1,154 @@
+/* Shared base rules & motions. Kept tiny on purpose: no global element resets. */
+.am-config-provider {
+  display: contents;
+}
+
+.anticon {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.anticon > * {
+  line-height: 1;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.anticon-spin,
+.am-spin-icon {
+  animation: am-rotate 1s linear infinite;
+}
+
+/* 1px hairline helpers */
+.am-hairline-top,
+.am-hairline-bottom {
+  position: relative;
+}
+
+.am-hairline-top::before,
+.am-hairline-bottom::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  border-top: var(--am-line-width) var(--am-line-type) var(--am-color-split);
+  transform: scaleY(0.5);
+  content: '';
+  pointer-events: none;
+}
+
+.am-hairline-top::before {
+  top: 0;
+  transform-origin: top;
+}
+
+.am-hairline-bottom::after {
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+.am-overflow-hidden {
+  overflow: hidden !important;
+}
+
+.am-safe-area-top {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+
+.am-safe-area-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@keyframes am-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- motions (used with <Transition name="am-fade"> etc.) ---------- */
+.am-fade-enter-active,
+.am-fade-leave-active {
+  transition: opacity var(--am-motion-duration-slow) var(--am-motion-ease-out);
+}
+
+.am-fade-enter-from,
+.am-fade-leave-to {
+  opacity: 0;
+}
+
+.am-zoom-enter-active,
+.am-zoom-leave-active {
+  transition:
+    opacity var(--am-motion-duration-mid) var(--am-motion-ease-out),
+    transform var(--am-motion-duration-mid) var(--am-motion-ease-out);
+}
+
+.am-zoom-enter-from,
+.am-zoom-leave-to {
+  transform: scale(0.85);
+  opacity: 0;
+}
+
+.am-slide-bottom-enter-active,
+.am-slide-bottom-leave-active,
+.am-slide-top-enter-active,
+.am-slide-top-leave-active,
+.am-slide-left-enter-active,
+.am-slide-left-leave-active,
+.am-slide-right-enter-active,
+.am-slide-right-leave-active {
+  transition: transform var(--am-motion-duration-slow) var(--am-motion-ease-out-circ);
+}
+
+.am-slide-bottom-enter-from,
+.am-slide-bottom-leave-to {
+  transform: translate3d(0, 100%, 0);
+}
+
+.am-slide-top-enter-from,
+.am-slide-top-leave-to {
+  transform: translate3d(0, -100%, 0);
+}
+
+.am-slide-left-enter-from,
+.am-slide-left-leave-to {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.am-slide-right-enter-from,
+.am-slide-right-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-fade-enter-active,
+  .am-fade-leave-active,
+  .am-zoom-enter-active,
+  .am-zoom-leave-active,
+  .am-slide-bottom-enter-active,
+  .am-slide-bottom-leave-active,
+  .am-slide-top-enter-active,
+  .am-slide-top-leave-active,
+  .am-slide-left-enter-active,
+  .am-slide-left-leave-active,
+  .am-slide-right-enter-active,
+  .am-slide-right-leave-active {
+    transition-duration: 0.01s;
+  }
+}

@@ -1,0 +1,246 @@
+.am-button {
+  /* component tokens */
+  --am-button-height: var(--am-control-height);
+  --am-button-font-size: var(--am-font-size-lg);
+  --am-button-padding-inline: var(--am-padding);
+  --am-button-border-radius: var(--am-border-radius);
+  --am-button-font-weight: 400;
+  --am-button-icon-gap: 6px;
+  /* resolved by color-* classes */
+  --am-button-c: var(--am-color-primary);
+  --am-button-c-active: var(--am-color-primary-active);
+  --am-button-c-bg: var(--am-color-primary-bg);
+  --am-button-c-bg-active: var(--am-color-primary-bg-hover);
+  --am-button-solid-text: var(--am-color-text-light-solid);
+
+  position: relative;
+  display: inline-flex;
+  gap: var(--am-button-icon-gap);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--am-button-height);
+  margin: 0;
+  padding: 0 var(--am-button-padding-inline);
+  color: var(--am-color-text);
+  font-weight: var(--am-button-font-weight);
+  font-size: var(--am-button-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  background: transparent;
+  border: var(--am-line-width) solid transparent;
+  border-radius: var(--am-button-border-radius);
+  outline: none;
+  cursor: pointer;
+  transition:
+    background-color var(--am-motion-duration-mid),
+    border-color var(--am-motion-duration-mid),
+    color var(--am-motion-duration-mid),
+    opacity var(--am-motion-duration-mid);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+.am-button:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: 1px;
+}
+
+.am-button-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  font-size: 1.1em;
+}
+
+.am-button-content {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.am-button-icon-end {
+  flex-direction: row-reverse;
+}
+
+/* ---------- colors ---------- */
+.am-button-color-default {
+  --am-button-c: var(--am-color-text);
+  --am-button-c-active: var(--am-color-text-secondary);
+  --am-button-c-bg: var(--am-color-fill-tertiary);
+  --am-button-c-bg-active: var(--am-color-fill-secondary);
+  --am-button-solid-text: var(--am-color-bg-container);
+}
+
+.am-button-color-danger {
+  --am-button-c: var(--am-color-error);
+  --am-button-c-active: var(--am-color-error-active);
+  --am-button-c-bg: var(--am-color-error-bg);
+  --am-button-c-bg-active: var(--am-color-error-bg-hover);
+}
+
+.am-button-color-success {
+  --am-button-c: var(--am-color-success);
+  --am-button-c-active: var(--am-color-success-active);
+  --am-button-c-bg: var(--am-color-success-bg);
+  --am-button-c-bg-active: var(--am-color-success-border);
+}
+
+.am-button-color-warning {
+  --am-button-c: var(--am-color-warning);
+  --am-button-c-active: var(--am-color-warning-active);
+  --am-button-c-bg: var(--am-color-warning-bg);
+  --am-button-c-bg-active: var(--am-color-warning-border);
+}
+
+/* ---------- variants ---------- */
+.am-button-variant-solid {
+  color: var(--am-button-solid-text);
+  background: var(--am-button-c);
+}
+
+.am-button-variant-solid:active {
+  background: var(--am-button-c-active);
+}
+
+.am-button-variant-outlined,
+.am-button-variant-dashed {
+  color: var(--am-button-c);
+  background: var(--am-color-bg-container);
+  border-color: var(--am-button-c);
+}
+
+.am-button-variant-dashed {
+  border-style: dashed;
+}
+
+.am-button-color-default.am-button-variant-outlined,
+.am-button-color-default.am-button-variant-dashed {
+  border-color: var(--am-color-border);
+}
+
+.am-button-variant-outlined:active,
+.am-button-variant-dashed:active {
+  background: var(--am-button-c-bg);
+}
+
+.am-button-variant-filled {
+  color: var(--am-button-c);
+  background: var(--am-button-c-bg);
+}
+
+.am-button-variant-filled:active {
+  background: var(--am-button-c-bg-active);
+}
+
+.am-button-variant-text {
+  color: var(--am-button-c);
+}
+
+.am-button-variant-text:active {
+  background: var(--am-button-c-bg);
+}
+
+.am-button-variant-link {
+  height: auto;
+  padding: 0;
+  color: var(--am-button-c);
+  border: 0;
+}
+
+.am-button-variant-link:active {
+  opacity: var(--am-opacity-active);
+}
+
+/* ---------- ghost: for complex backgrounds ---------- */
+.am-button-ghost,
+.am-button-ghost:active {
+  background: transparent;
+}
+
+.am-button-ghost.am-button-variant-solid {
+  color: var(--am-button-c);
+  border-color: var(--am-button-c);
+}
+
+.am-button-ghost.am-button-color-default {
+  color: var(--am-color-white);
+  border-color: var(--am-color-white);
+}
+
+.am-button-ghost:active {
+  opacity: var(--am-opacity-active);
+}
+
+/* ---------- sizes ---------- */
+.am-button-sm {
+  --am-button-height: var(--am-control-height-sm);
+  --am-button-font-size: var(--am-font-size);
+  --am-button-padding-inline: var(--am-padding-sm);
+  --am-button-border-radius: var(--am-border-radius-sm);
+  --am-button-icon-gap: 4px;
+}
+
+.am-button-lg {
+  --am-button-height: var(--am-control-height-lg);
+  --am-button-font-size: var(--am-font-size-xl);
+  --am-button-padding-inline: var(--am-padding-lg);
+  --am-button-border-radius: var(--am-border-radius-lg);
+}
+
+/* ---------- shapes ---------- */
+.am-button-round {
+  --am-button-border-radius: 999px;
+}
+
+.am-button-circle {
+  --am-button-border-radius: 50%;
+
+  width: var(--am-button-height);
+  padding: 0;
+}
+
+.am-button-icon-only:not(.am-button-variant-link) {
+  width: var(--am-button-height);
+  padding: 0;
+}
+
+.am-button-block {
+  display: flex;
+  width: 100%;
+}
+
+/* ---------- states ---------- */
+.am-button-loading {
+  cursor: default;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.am-button-disabled,
+.am-button-disabled:active {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-button-disabled.am-button-variant-solid:active {
+  background: var(--am-button-c);
+}
+
+.am-button-disabled.am-button-variant-outlined:active,
+.am-button-disabled.am-button-variant-dashed:active {
+  background: var(--am-color-bg-container);
+}
+
+.am-button-disabled.am-button-variant-filled:active {
+  background: var(--am-button-c-bg);
+}
+
+.am-button-disabled.am-button-variant-text:active {
+  background: transparent;
+}

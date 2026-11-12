@@ -1,0 +1,39 @@
+{
+  "name": "antdv-next-mobile-workspace",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.25.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antdv-next/antdv-next-mobile.git"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "pnpm -F docs dev",
+    "build": "pnpm -F antdv-next-mobile build",
+    "build:site": "pnpm -F docs build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint . --fix",
+    "ci:lint": "eslint",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:dev",
+    "@types/node": "catalog:dev",
+    "@vitejs/plugin-vue": "catalog:dev",
+    "@vue/test-utils": "catalog:dev",
+    "@vue/tsconfig": "catalog:dev",
+    "eslint": "catalog:dev",
+    "eslint-plugin-format": "catalog:dev",
+    "jsdom": "catalog:dev",
+    "typescript": "catalog:dev",
+    "vite": "catalog:dev",
+    "vitest": "catalog:dev",
+    "vue": "catalog:prod",
+    "vue-tsc": "catalog:dev"
+  }
+}

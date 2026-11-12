@@ -1,0 +1,122 @@
+.am-popup-root {
+  --am-popup-z-index: var(--am-z-index-popup-base);
+  --am-popup-bg: var(--am-color-bg-elevated);
+  --am-popup-border-radius: var(--am-border-radius-xl);
+  --am-popup-close-size: 18px;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--am-popup-z-index);
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  pointer-events: none;
+}
+
+.am-popup-mask {
+  position: absolute;
+  inset: 0;
+  background: var(--am-color-bg-mask);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.am-popup {
+  position: absolute;
+  box-sizing: border-box;
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--am-popup-bg);
+  pointer-events: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.am-popup-bottom {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: 90%;
+}
+
+.am-popup-top {
+  top: 0;
+  right: 0;
+  left: 0;
+  max-height: 90%;
+}
+
+.am-popup-left {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 90%;
+}
+
+.am-popup-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 90%;
+}
+
+.am-popup-center {
+  inset: 0;
+  width: fit-content;
+  max-width: calc(100% - 48px);
+  height: fit-content;
+  max-height: calc(100% - 96px);
+  margin: auto;
+  border-radius: var(--am-popup-border-radius);
+}
+
+.am-popup-round.am-popup-bottom {
+  border-radius: var(--am-popup-border-radius) var(--am-popup-border-radius) 0 0;
+}
+
+.am-popup-round.am-popup-top {
+  border-radius: 0 0 var(--am-popup-border-radius) var(--am-popup-border-radius);
+}
+
+.am-popup-round.am-popup-left {
+  border-radius: 0 var(--am-popup-border-radius) var(--am-popup-border-radius) 0;
+}
+
+.am-popup-round.am-popup-right {
+  border-radius: var(--am-popup-border-radius) 0 0 var(--am-popup-border-radius);
+}
+
+.am-popup-safe-area {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.am-popup-close {
+  position: absolute;
+  top: var(--am-padding-sm);
+  right: var(--am-padding-sm);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: var(--am-padding-xxs);
+  color: var(--am-color-icon);
+  font-size: var(--am-popup-close-size);
+  line-height: 1;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-popup-close:active {
+  color: var(--am-color-icon-hover);
+}
+
+[dir='rtl'] .am-popup-close {
+  right: auto;
+  left: var(--am-padding-sm);
+}

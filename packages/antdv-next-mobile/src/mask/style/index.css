@@ -1,0 +1,10 @@
+.am-mask {
+  --am-mask-z-index: var(--am-z-index-popup-base);
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--am-mask-z-index);
+  box-sizing: border-box;
+  background: var(--am-color-bg-mask);
+  touch-action: none;
+}

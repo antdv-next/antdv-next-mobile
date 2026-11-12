@@ -1,0 +1,27 @@
+{
+  "name": "docs",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@antdv-next/icons": "catalog:prod",
+    "antdv-next-mobile": "workspace:*",
+    "dayjs": "catalog:prod",
+    "vue": "catalog:prod",
+    "vue-router": "catalog:docs"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "catalog:docs",
+    "@vitejs/plugin-vue": "catalog:dev",
+    "markdown-it": "catalog:docs",
+    "shiki": "catalog:docs",
+    "vite": "catalog:dev",
+    "vue-tsc": "catalog:dev"
+  }
+}

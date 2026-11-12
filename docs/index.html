@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Antdv Next Mobile：与 antdv-next API 对齐的 Vue 3 移动端组件库" />
+    <title>Antdv Next Mobile</title>
+    <script>
+      // apply the saved color scheme before first paint
+      try {
+        var s = JSON.parse(localStorage.getItem('am-docs-theme') || '{}')
+        var dark = s.dark == null ? matchMedia('(prefers-color-scheme: dark)').matches : s.dark
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+      }
+      catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/site/main.ts"></script>
+  </body>
+</html>

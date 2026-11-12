@@ -1,0 +1,34 @@
+shellEmulator: true
+
+packages:
+  - packages/*
+  - docs
+
+catalogs:
+  dev:
+    '@antfu/eslint-config': ^7.7.3
+    '@types/node': ^25.9.6
+    '@vitejs/plugin-vue': ^6.0.8
+    '@vue/test-utils': ^2.5.0
+    '@vue/tsconfig': ^0.8.1
+    eslint: ^9.39.5
+    eslint-plugin-format: ^2.0.1
+    jsdom: ^27.4.0
+    typescript: ~5.9.3
+    vite: ^8.3.0
+    vite-plugin-lib-inject-css: ^2.2.2
+    vitest: 5.0.0
+    vue-tsc: ^3.3.11
+  docs:
+    '@types/markdown-it': 14.2.0
+    markdown-it: 14.3.1
+    shiki: ^4.4.3
+    vue-router: ^4.6.4
+  prod:
+    '@antdv-next/icons': ^1.1.2
+    '@v-c/async-validator': ^1.0.2
+    dayjs: ^1.11.23
+    vue: ^3.5.42
+
+onlyBuiltDependencies:
+  - esbuild
