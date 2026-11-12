@@ -3,6 +3,7 @@ import { BgColorsOutlined, GithubOutlined, MoonOutlined, SunOutlined } from '@an
 import { components, guides } from 'virtual:am-docs'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import logo from '../../assets/logo.svg'
 import { primaryPresets, radiusPresets, resetDocsTheme, useDocsTheme } from '../../shared/theme'
 
 const theme = useDocsTheme()
@@ -27,7 +28,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 <template>
   <header class="site-header">
     <RouterLink to="/" class="site-logo">
-      <img src="/logo.svg" alt="" width="30" height="30">
+      <img :src="logo" alt="" width="40" height="28">
       <span>Antdv Next <b>Mobile</b></span>
     </RouterLink>
     <nav class="site-nav">

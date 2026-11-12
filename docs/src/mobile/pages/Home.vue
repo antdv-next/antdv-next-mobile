@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RightOutlined } from '@antdv-next/icons'
 import { components } from 'virtual:am-docs'
+import logo from '../../assets/logo.svg'
 
 interface Group { title: string, order: number, items: typeof components }
 
@@ -19,7 +20,7 @@ groups.sort((a, b) => a.order - b.order)
 <template>
   <div class="m-home">
     <div class="m-home-hero">
-      <img src="/logo.svg" alt="">
+      <img :src="logo" alt="">
       <h1>Antdv Next <b>Mobile</b></h1>
     </div>
     <p class="m-home-desc">

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="56" viewBox="10 22 80 56" fill="none">
+  <defs>
+    <linearGradient id="am-leg-l" x1="21" y1="63" x2="33" y2="33" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A5CFF"/>
+      <stop offset=".55" stop-color="#0E9BFF"/>
+      <stop offset="1" stop-color="#22D0FF"/>
+    </linearGradient>
+    <linearGradient id="am-fold-l" x1="34" y1="36" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A6EEB"/>
+      <stop offset=".5" stop-color="#1281FA"/>
+      <stop offset="1" stop-color="#2BA9FF"/>
+    </linearGradient>
+    <linearGradient id="am-fold-r" x1="50" y1="52" x2="68" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#16B2FF"/>
+      <stop offset="1" stop-color="#2CE6FF"/>
+    </linearGradient>
+    <linearGradient id="am-leg-r" x1="67" y1="34" x2="80" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1C8FF2"/>
+      <stop offset=".5" stop-color="#19BDFF"/>
+      <stop offset="1" stop-color="#1BE2FF"/>
+    </linearGradient>
+    <linearGradient id="am-heart" x1="50" y1="60" x2="50" y2="71" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF5F57"/>
+      <stop offset="1" stop-color="#F8404B"/>
+    </linearGradient>
+  </defs>
+  <g stroke-width="13.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- right leg, tucked under the right peak -->
+    <path d="M67 33.4 78.6 62.6" stroke="url(#am-leg-r)"/>
+    <!-- right fold: valley up to the right peak -->
+    <path d="M50 50.6 67 33.4" stroke="url(#am-fold-r)"/>
+    <!-- left fold: left peak down to the valley, over the right fold -->
+    <path d="M33 33.4 50 50.6" stroke="url(#am-fold-l)"/>
+    <!-- left leg, wrapping over the left peak -->
+    <path d="M21.4 62.6 33 33.4" stroke="url(#am-leg-l)"/>
+  </g>
+  <!-- the red "v" of the antdv-next family -->
+  <path d="M41.8 61.4 50 69.6l8.2-8.2" stroke="url(#am-heart)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
