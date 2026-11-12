@@ -1,12 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
   <defs>
-    <linearGradient id="g" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#4096ff"/>
-      <stop offset="1" stop-color="#1668dc"/>
+    <linearGradient id="am-red" x1=".7" y1="-.13" x2=".48" y2="1.22">
+      <stop offset="0" stop-color="#FA816E"/>
+      <stop offset=".41" stop-color="#F74A5C"/>
+      <stop offset="1" stop-color="#F51D2C"/>
+    </linearGradient>
+    <linearGradient id="am-blue" x1=".55" y1=".3" x2="-.01" y2=".68">
+      <stop offset="0" stop-color="#29CDFF"/>
+      <stop offset=".36" stop-color="#148EFF"/>
+      <stop offset="1" stop-color="#0A60FF"/>
+    </linearGradient>
+    <linearGradient id="am-fold" x1=".5" y1="0" x2=".4" y2="1.17">
+      <stop offset="0" stop-color="#4285EB"/>
+      <stop offset="1" stop-color="#2EC7FF"/>
     </linearGradient>
   </defs>
-  <rect x="14" y="4" width="36" height="56" rx="9" fill="url(#g)"/>
-  <rect x="19" y="11" width="26" height="36" rx="4" fill="#fff" fill-opacity=".94"/>
-  <path d="M26 39l6-18 6 18m-9.6-6h7.2" stroke="#1668dc" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="32" cy="53.5" r="2.6" fill="#fff"/>
+  <!-- the antdv-next "A" -->
+  <path fill="url(#am-blue)" fill-rule="evenodd" d="M45.07,20.46C50.32,17.44,57.02,19.25,60.04,24.49L87.18,71.67C88.86,74.59,87.87,78.33,84.96,80.03C84.95,80.04,84.94,80.04,84.93,80.05C82.03,81.72,78.32,80.73,76.65,77.83L52.22,35.55C52.04,35.23,51.78,34.98,51.46,34.8C50.48,34.23,49.23,34.56,48.66,35.55L24.2,77.93C24.19,77.95,24.18,77.97,24.17,77.98C22.5,80.82,18.84,81.77,16,80.09C13.12,78.4,12.15,74.71,13.81,71.81L41.04,24.5C42,22.82,43.39,21.43,45.07,20.46Z"/>
+  <path fill="url(#am-fold)" fill-rule="evenodd" d="M56.65,29.79C60.05,29.79,62.59,31.11,64.28,33.75L86.62,72.63C88.3,75.56,87.3,79.3,84.38,81C84.37,81,84.36,81.01,84.36,81.01C81.45,82.68,77.73,81.68,76.06,78.77L55.22,42.55L51.64,36.51C51.46,36.2,51.2,35.94,50.88,35.77C49.89,35.21,48.64,35.56,48.08,36.55L48.06,36.6C50.39,32.06,53.26,29.79,56.65,29.79Z"/>
+  <!-- mobile: a phone standing inside the A, in the family red -->
+  <rect x="41.2" y="51" width="17.6" height="29" rx="5.2" stroke="url(#am-red)" stroke-width="4.4"/>
+  <path d="M47.6 73.2h4.8" stroke="#F63A49" stroke-width="2.6" stroke-linecap="round"/>
 </svg>

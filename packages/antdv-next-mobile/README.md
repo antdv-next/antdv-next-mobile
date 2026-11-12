@@ -11,6 +11,7 @@
 - **纯 CSS 变量主题**：零运行时样式，亮色 / 暗色 / 紧凑算法可组合、可嵌套，改一个变量即可全局换肤。
 - **`<script setup>` + TypeScript**：全部组件使用组合式 API 编写，类型完备。
 - **按需引入**：ESM 产物，样式随组件自动加载。
+- **组合式 API**：`useRequest`、`useLoadMore`、`useCountDown`、`useSwipe`、`useKeyboard` 等 30 余个常用函数随库导出。
 - **国际化**：内置 `zh_CN`、`en_US`。
 
 ## 安装

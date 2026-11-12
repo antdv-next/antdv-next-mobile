@@ -28,6 +28,7 @@ packages/antdv-next-mobile/src/
   style/                 # tokens.css (design tokens), base.css (motions, helpers)
   _util/                 # shared helpers: type.ts, index.ts, vnode.ts, RenderNode.ts, withInstall.ts, mount.ts, hooks/
   _base/                 # internal primitives: Portal, Spinner, BaseBadge
+  hooks/                 # public composables (useRequest, useLoadMore, useCountDown, useSwipe ...), re-exports _util/hooks
   config-provider/       # ConfigProvider + useConfig / useSize / useDisabled / usePopupTheme
   locale/                # interface.ts, zh_CN.ts, en_US.ts, useLocale()
   theme/                 # ThemeConfig, algorithms, applyTheme, useToken
