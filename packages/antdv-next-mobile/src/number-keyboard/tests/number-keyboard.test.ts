@@ -138,6 +138,22 @@ describe('NumberKeyboard', () => {
     expect(wrapper.emitted('input')).toEqual([['5']])
   })
 
+  it('ignores the click a desktop browser fires after an emulated touch', async () => {
+    vi.useFakeTimers()
+    const wrapper = mount(NumberKeyboard, { props: { open: true, getContainer: false } })
+    const key = wrapper.findAll('.am-number-keyboard-key')[0]
+    await key.trigger('touchstart', touches())
+    await key.trigger('touchend')
+    await key.trigger('click')
+    expect(wrapper.emitted('input')).toEqual([['1']])
+    expect(wrapper.emitted('update:value')).toEqual([['1']])
+    // a later mouse-only click still works
+    vi.advanceTimersByTime(600)
+    await key.trigger('click')
+    vi.useRealTimers()
+    expect(wrapper.emitted('input')).toEqual([['1'], ['1']])
+  })
+
   it('cancels the press when the finger moves away', async () => {
     const wrapper = mount(NumberKeyboard, { props: { open: true, getContainer: false } })
     const key = wrapper.findAll('.am-number-keyboard-key')[0]

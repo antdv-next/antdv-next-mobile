@@ -161,6 +161,9 @@ function onClose() {
 const activeKey = shallowRef<KeyConfig>()
 let repeatTimer: ReturnType<typeof setTimeout> | undefined
 let repeated = false
+/** time of the last touchend, to drop the click a browser still fires after it */
+let lastTouchEnd = 0
+const GHOST_CLICK_DELAY = 500
 
 function stopRepeat() {
   clearTimeout(repeatTimer)
@@ -193,6 +196,7 @@ function onTouchMove(event: TouchEvent) {
 
 function onTouchEnd(key: KeyConfig, event: TouchEvent) {
   stopRepeat()
+  lastTouchEnd = Date.now()
   if (activeKey.value !== key)
     return
   activeKey.value = undefined
@@ -200,6 +204,14 @@ function onTouchEnd(key: KeyConfig, event: TouchEvent) {
   preventDefault(event)
   if (!repeated)
     press(key)
+}
+
+function onClick(key: KeyConfig) {
+  // the touch already pressed the key: `preventDefault` on touchend does not stop the click
+  // everywhere (desktop touch emulation, synthetic touch events)
+  if (Date.now() - lastTouchEnd < GHOST_CLICK_DELAY)
+    return
+  press(key)
 }
 
 function onTouchCancel() {
@@ -288,7 +300,7 @@ function keyClass(key: KeyConfig) {
                 @touchmove.passive="onTouchMove"
                 @touchend="onTouchEnd(key, $event)"
                 @touchcancel="onTouchCancel"
-                @click="press(key)"
+                @click="onClick(key)"
               >
                 <template v-if="key.type === 'delete'">
                   <slot name="delete">
@@ -328,7 +340,7 @@ function keyClass(key: KeyConfig) {
                 @touchmove.passive="onTouchMove"
                 @touchend="onTouchEnd(key, $event)"
                 @touchcancel="onTouchCancel"
-                @click="press(key)"
+                @click="onClick(key)"
               >
                 <template v-if="key.type === 'delete'">
                   <slot name="delete">
