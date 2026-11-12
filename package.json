@@ -19,6 +19,7 @@
     "lint": "eslint . --fix",
     "ci:lint": "eslint",
     "check:base": "node scripts/check-base-layer.mjs",
+    "gen:components": "node scripts/generate-components.mjs",
     "check": "pnpm ci:lint && pnpm check:base && pnpm typecheck && pnpm test",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",

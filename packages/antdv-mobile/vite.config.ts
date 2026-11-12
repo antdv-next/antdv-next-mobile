@@ -45,6 +45,8 @@ export default defineConfig({
         'index': join(root, 'src/index.ts'),
         'locale/zh_CN': join(root, 'src/locale/zh_CN.ts'),
         'locale/en_US': join(root, 'src/locale/en_US.ts'),
+        // build-time only (unplugin-vue-components), never imported by the runtime entry
+        'resolver/index': join(root, 'src/resolver/index.ts'),
       },
       formats: ['es'],
     },

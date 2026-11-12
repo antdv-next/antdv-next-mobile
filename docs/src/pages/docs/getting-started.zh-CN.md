@@ -63,6 +63,47 @@ import { Button, message } from '@antdv-next/mobile'
 import '@antdv-next/mobile/style.css'
 ```
 
+## 自动导入 {#auto-import}
+
+配合 [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components)，可以在模板里直接写 `<am-button>`，不需要全局注册，也不需要手动导入。resolver 随 `@antdv-next/mobile` 一起发布，组件列表始终与已安装的版本一致。
+
+```bash
+pnpm add -D unplugin-vue-components
+```
+
+```ts
+// vite.config.ts
+import { AntdvNextMobileResolver } from '@antdv-next/mobile/resolver'
+import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    Components({
+      resolvers: [AntdvNextMobileResolver()],
+    }),
+  ],
+})
+```
+
+Webpack、Rspack、Rollup、esbuild 的用法相同，只需把 `unplugin-vue-components/vite` 换成对应的入口。
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| exclude | 不需要自动导入的组件或图标，匹配标签名（`AmButton`）或导出名（`Button`） | `string \| RegExp \| (string \| RegExp)[]` | - |
+| resolveIcons | 是否同时自动导入 `@antdv-next/icons` 的图标（`<SearchOutlined />`） | `boolean` | `false` |
+
+```ts
+AntdvNextMobileResolver({
+  resolveIcons: true,
+  exclude: ['AmButton', /^AmInput/],
+})
+```
+
+`message`、`Modal.confirm` 等静态方法不是模板组件，仍然需要手动导入。
+
 ## 视口与安全区 {#viewport}
 
 在 `index.html` 中设置视口，`viewport-fit=cover` 用于开启安全区适配：

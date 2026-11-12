@@ -23,7 +23,7 @@
 
 ```
 packages/antdv-mobile/src/
-  components.ts          # public export list (do not reorder / rename without updating docs)
+  components.ts          # public export list (do not reorder / rename without updating docs); run `pnpm gen:components` after changing it
   index.ts               # install + re-exports
   style/                 # tokens.css (design tokens), base.css (motions, helpers)
   _util/                 # shared helpers: type.ts, index.ts, vnode.ts, RenderNode.ts, withInstall.ts, mount.ts, hooks/
@@ -33,6 +33,7 @@ packages/antdv-mobile/src/
   locale/                # interface.ts, zh_CN.ts, en_US.ts, useLocale()
   theme/                 # ThemeConfig, algorithms, applyTheme, useToken
   form/context.ts        # FormItem <-> field contract (useFormItemInputContext, useMergedStatus)
+  resolver/              # `@antdv-next/mobile/resolver` for unplugin-vue-components; `components.ts` is generated
   <component>/
     <Component>.vue      # one SFC per (sub) component
     interface.ts         # Props / Emits / Slots / exposed types — the typed contract
@@ -216,6 +217,7 @@ pnpm test                # vitest
 pnpm typecheck           # vue-tsc for the library and the docs
 pnpm lint                # eslint --fix (@antfu/eslint-config)
 pnpm check:base          # architecture guard: components must be built on the base layer
+pnpm gen:components      # regenerate src/resolver/components.ts and global.d.ts from src/components.ts
 pnpm check               # lint + check:base + typecheck + test (what CI runs)
 pnpm build               # library -> packages/antdv-mobile/dist
 ```

@@ -12,7 +12,7 @@
 - **Designed for touch**: bottom popups, wheel pickers, swipe gestures, pull-to-refresh, safe-area support.
 - **Pure CSS variable theme**: zero runtime styles. Light / dark / compact algorithms combine and nest, and one variable restyles the whole app.
 - **`<script setup>` + TypeScript**: every component is written with the Composition API and fully typed.
-- **Import on demand**: ESM output, styles are loaded together with each component.
+- **Import on demand**: ESM output, styles are loaded together with each component. Auto import through `@antdv-next/mobile/resolver` (unplugin-vue-components).
 - **Composables**: `useRequest`, `useLoadMore`, `useCountDown`, `useSwipe`, `useKeyboard` and 30+ more are exported with the library.
 - **Internationalization**: `zh_CN` and `en_US` are built in.
 
