@@ -1,0 +1,100 @@
+.am-swipe-action {
+  --am-swipe-action-button-padding: var(--am-padding);
+  --am-swipe-action-button-min-width: 64px;
+  --am-swipe-action-button-font-size: var(--am-font-size-lg);
+  --am-swipe-action-button-color: var(--am-color-text-light-solid);
+  --am-swipe-action-button-default-bg: var(--am-color-text-tertiary);
+  --am-swipe-action-duration: 0.35s;
+
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  /* vertical scrolling stays native, horizontal gestures are handled here */
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-swipe-action-track {
+  position: relative;
+  transition: transform var(--am-swipe-action-duration) var(--am-motion-ease-out-circ);
+  will-change: transform;
+}
+
+.am-swipe-action-content {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.am-swipe-action-actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  overflow: hidden;
+  transition: width var(--am-swipe-action-duration) var(--am-motion-ease-out-circ);
+}
+
+.am-swipe-action-dragging .am-swipe-action-actions {
+  transition: none;
+}
+
+.am-swipe-action-left {
+  right: 100%;
+}
+
+.am-swipe-action-right {
+  left: 100%;
+}
+
+.am-swipe-action-button {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--am-swipe-action-button-min-width);
+  height: 100%;
+  margin: 0;
+  padding: 0 var(--am-swipe-action-button-padding);
+  color: var(--am-swipe-action-button-color);
+  font-size: var(--am-swipe-action-button-font-size);
+  font-family: inherit;
+  line-height: 1.2;
+  white-space: nowrap;
+  background: var(--am-swipe-action-button-default-bg);
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-swipe-action-button:active {
+  opacity: var(--am-opacity-active);
+}
+
+.am-swipe-action-button-primary {
+  background: var(--am-color-primary);
+}
+
+.am-swipe-action-button-danger {
+  background: var(--am-color-error);
+}
+
+.am-swipe-action-button-warning {
+  background: var(--am-color-warning);
+}
+
+.am-swipe-action-button-success {
+  background: var(--am-color-success);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-swipe-action {
+    --am-swipe-action-duration: 0.01s;
+  }
+}

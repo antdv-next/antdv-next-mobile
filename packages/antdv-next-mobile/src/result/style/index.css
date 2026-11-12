@@ -1,0 +1,138 @@
+.am-result {
+  /* component tokens */
+  --am-result-padding: var(--am-padding-xl) var(--am-padding);
+  --am-result-icon-size: 64px;
+  --am-result-icon-color: var(--am-color-info);
+  --am-result-image-height: 140px;
+  --am-result-title-font-size: 20px;
+  --am-result-subtitle-font-size: var(--am-font-size);
+  --am-result-body-bg: var(--am-color-fill-alter);
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--am-result-padding);
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  text-align: center;
+}
+
+.am-result-success {
+  --am-result-icon-color: var(--am-color-success);
+}
+
+.am-result-error {
+  --am-result-icon-color: var(--am-color-error);
+}
+
+.am-result-warning {
+  --am-result-icon-color: var(--am-color-warning);
+}
+
+.am-result-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--am-margin-md);
+  color: var(--am-result-icon-color);
+  font-size: var(--am-result-icon-size);
+  line-height: 1;
+}
+
+.am-result-image {
+  height: var(--am-result-image-height);
+}
+
+.am-result-image svg {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+}
+
+.am-result-title {
+  color: var(--am-color-text-heading);
+  font-weight: var(--am-font-weight-strong);
+  font-size: var(--am-result-title-font-size);
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+
+.am-result-subtitle {
+  margin-top: var(--am-margin-xs);
+  color: var(--am-color-text-description);
+  font-size: var(--am-result-subtitle-font-size);
+  overflow-wrap: break-word;
+}
+
+.am-result-body {
+  margin-top: var(--am-margin-lg);
+  padding: var(--am-padding);
+  text-align: start;
+  background: var(--am-result-body-bg);
+  border-radius: var(--am-border-radius);
+}
+
+.am-result-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--am-margin-sm);
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--am-margin-lg);
+}
+
+/* ---------- built-in 403 / 404 / 500 illustration (tokens only) ---------- */
+.am-result-exception-shadow {
+  fill: var(--am-color-fill-secondary);
+}
+
+.am-result-exception-window {
+  fill: var(--am-color-bg-container);
+  stroke: var(--am-color-border);
+  stroke-width: 1.5;
+}
+
+.am-result-exception-bar {
+  fill: color-mix(in srgb, var(--am-color-text-base) 8%, var(--am-color-bg-container));
+  stroke: var(--am-color-border);
+  stroke-width: 1.5;
+}
+
+.am-result-exception-dot {
+  fill: var(--am-color-border);
+}
+
+.am-result-exception-code {
+  fill: var(--am-color-primary);
+  font-weight: 700;
+  font-size: 40px;
+  font-family: var(--am-font-family);
+  letter-spacing: 2px;
+}
+
+.am-result-exception-accent {
+  fill: var(--am-color-primary-bg-hover);
+  stroke: var(--am-color-primary);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.am-result-exception-accent-ring {
+  fill: var(--am-color-bg-container);
+  stroke: var(--am-color-primary);
+  stroke-width: 3;
+}
+
+.am-result-exception-accent-line,
+.am-result-exception-accent-mark {
+  fill: none;
+  stroke: var(--am-color-primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.am-result-exception-accent-mark {
+  stroke-width: 2.5;
+}

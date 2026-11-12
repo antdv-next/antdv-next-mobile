@@ -94,16 +94,20 @@ export function getScrollParent(el?: Element | null, root: ScrollElement | undef
   return root as ScrollElement
 }
 
+function isWindow(el: ScrollElement): el is Window {
+  return el === window
+}
+
 export function getScrollTop(el: ScrollElement): number {
-  const top = 'scrollTop' in el ? el.scrollTop : el.scrollY
+  const top = isWindow(el) ? el.scrollY : el.scrollTop
   return Math.max(top, 0)
 }
 
 export function setScrollTop(el: ScrollElement, value: number) {
-  if ('scrollTop' in el)
-    el.scrollTop = value
-  else
+  if (isWindow(el))
     el.scrollTo(el.scrollX, value)
+  else
+    el.scrollTop = value
 }
 
 export function preventDefault(event: Event, isStopPropagation?: boolean) {

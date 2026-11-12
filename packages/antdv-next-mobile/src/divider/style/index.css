@@ -1,0 +1,96 @@
+.am-divider {
+  /* component tokens */
+  --am-divider-color: var(--am-color-split);
+  --am-divider-line-width: var(--am-line-width);
+  --am-divider-margin: var(--am-margin);
+  --am-divider-vertical-margin: var(--am-margin-xs);
+  --am-divider-text-color: var(--am-color-text);
+  --am-divider-text-font-size: var(--am-font-size-lg);
+  --am-divider-text-padding: var(--am-padding-sm);
+  --am-divider-placement-rail-width: 5%;
+  --am-divider-style: solid;
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--am-divider-text-color);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  border: 0 var(--am-divider-style) var(--am-divider-color);
+}
+
+.am-divider-dashed {
+  --am-divider-style: dashed;
+}
+
+.am-divider-dotted {
+  --am-divider-style: dotted;
+}
+
+/* ---------- horizontal ---------- */
+.am-divider-horizontal {
+  display: flex;
+  clear: both;
+  width: 100%;
+  min-width: 100%;
+  margin-block: var(--am-divider-margin);
+  border-top-width: var(--am-divider-line-width);
+}
+
+.am-divider-horizontal.am-divider-md {
+  --am-divider-margin: var(--am-margin-sm);
+}
+
+.am-divider-horizontal.am-divider-sm {
+  --am-divider-margin: var(--am-margin-xs);
+}
+
+/* ---------- vertical ---------- */
+.am-divider-vertical {
+  position: relative;
+  top: -0.06em;
+  display: inline-block;
+  height: 0.9em;
+  margin-inline: var(--am-divider-vertical-margin);
+  vertical-align: middle;
+  border-inline-start-width: var(--am-divider-line-width);
+}
+
+/* ---------- with text ---------- */
+.am-divider-with-text {
+  align-items: center;
+  font-weight: var(--am-font-weight-strong);
+  font-size: var(--am-divider-text-font-size);
+  white-space: nowrap;
+  text-align: center;
+  border-top-width: 0;
+}
+
+.am-divider-plain {
+  --am-divider-text-color: var(--am-color-text-tertiary);
+  --am-divider-text-font-size: var(--am-font-size);
+
+  font-weight: normal;
+}
+
+.am-divider-rail {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 0 var(--am-divider-style) var(--am-divider-color);
+  border-top-width: var(--am-divider-line-width);
+}
+
+.am-divider-content {
+  display: inline-block;
+  flex: none;
+  max-width: 80%;
+  padding-inline: var(--am-divider-text-padding);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.am-divider-with-text-start > .am-divider-rail-start,
+.am-divider-with-text-end > .am-divider-rail-end {
+  flex: 0 0 var(--am-divider-placement-rail-width);
+}

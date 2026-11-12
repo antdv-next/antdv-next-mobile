@@ -1,0 +1,198 @@
+.am-carousel {
+  --am-carousel-dot-width: 16px;
+  --am-carousel-dot-height: 3px;
+  --am-carousel-dot-active-width: 24px;
+  --am-carousel-dot-gap: 4px;
+  --am-carousel-dot-offset: 12px;
+  --am-carousel-dot-color: var(--am-color-white);
+  --am-carousel-dot-opacity: 0.3;
+  --am-carousel-dot-border-radius: 3px;
+
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-carousel-vertical {
+  touch-action: pan-x;
+}
+
+.am-carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition-timing-function: var(--am-motion-ease-out);
+  transition-property: transform;
+  will-change: transform;
+}
+
+.am-carousel-vertical .am-carousel-track {
+  flex-direction: column;
+}
+
+.am-carousel-slide {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.am-carousel-vertical .am-carousel-slide {
+  height: 100%;
+}
+
+.am-carousel-fade .am-carousel-track {
+  display: grid;
+}
+
+.am-carousel-fade .am-carousel-slide {
+  grid-area: 1 / 1;
+  transition-timing-function: var(--am-motion-ease-in-out);
+  transition-property: opacity;
+  pointer-events: none;
+}
+
+.am-carousel-fade .am-carousel-slide-active {
+  pointer-events: auto;
+}
+
+/* ---------- dots ---------- */
+.am-carousel-dots {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  gap: var(--am-carousel-dot-gap);
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.am-carousel-dots-bottom,
+.am-carousel-dots-top {
+  right: 0;
+  left: 0;
+}
+
+.am-carousel-dots-bottom {
+  bottom: var(--am-carousel-dot-offset);
+}
+
+.am-carousel-dots-top {
+  top: var(--am-carousel-dot-offset);
+}
+
+.am-carousel-dots-start,
+.am-carousel-dots-end {
+  top: 0;
+  bottom: 0;
+  flex-direction: column;
+}
+
+.am-carousel-dots-start {
+  inset-inline-start: var(--am-carousel-dot-offset);
+}
+
+.am-carousel-dots-end {
+  inset-inline-end: var(--am-carousel-dot-offset);
+}
+
+.am-carousel-dot {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--am-carousel-dot-width);
+  height: var(--am-carousel-dot-height);
+  overflow: hidden;
+  border-radius: var(--am-carousel-dot-border-radius);
+  cursor: pointer;
+  transition:
+    width var(--am-motion-duration-slow),
+    height var(--am-motion-duration-slow);
+}
+
+/* enlarge the touch target without changing the layout */
+.am-carousel-dot::before {
+  position: absolute;
+  inset: 0;
+  background: var(--am-carousel-dot-color);
+  opacity: var(--am-carousel-dot-opacity);
+  content: '';
+}
+
+.am-carousel-dot-active {
+  width: var(--am-carousel-dot-active-width);
+}
+
+.am-carousel-dot-active::before {
+  opacity: 1;
+}
+
+.am-carousel-dots-start .am-carousel-dot,
+.am-carousel-dots-end .am-carousel-dot {
+  width: var(--am-carousel-dot-height);
+  height: var(--am-carousel-dot-width);
+}
+
+.am-carousel-dots-start .am-carousel-dot-active,
+.am-carousel-dots-end .am-carousel-dot-active {
+  height: var(--am-carousel-dot-active-width);
+}
+
+.am-carousel-dot-progress::before {
+  opacity: var(--am-carousel-dot-opacity);
+}
+
+.am-carousel-dot-progress::after {
+  position: absolute;
+  inset: 0;
+  background: var(--am-carousel-dot-color);
+  transform-origin: 0 0;
+  animation: am-carousel-dot-progress var(--am-carousel-dot-duration, 3s) linear forwards;
+  content: '';
+}
+
+.am-carousel-rtl .am-carousel-dot-progress::after {
+  transform-origin: 100% 0;
+}
+
+.am-carousel-dots-start .am-carousel-dot-progress::after,
+.am-carousel-dots-end .am-carousel-dot-progress::after {
+  animation-name: am-carousel-dot-progress-vertical;
+}
+
+@keyframes am-carousel-dot-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes am-carousel-dot-progress-vertical {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-carousel-dot-progress::after {
+    animation: none;
+  }
+}

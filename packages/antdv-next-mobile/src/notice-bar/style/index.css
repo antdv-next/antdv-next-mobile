@@ -1,0 +1,171 @@
+.am-notice-bar {
+  /* component tokens */
+  --am-notice-bar-height: var(--am-control-height);
+  --am-notice-bar-font-size: var(--am-font-size);
+  --am-notice-bar-icon-size: 16px;
+  --am-notice-bar-padding-inline: var(--am-padding-sm);
+  --am-notice-bar-gap: var(--am-margin-xs);
+  --am-notice-bar-border-radius: var(--am-border-radius);
+  /* resolved by color classes */
+  --am-notice-bar-color: var(--am-color-warning-active);
+  --am-notice-bar-bg: var(--am-color-warning-bg);
+  --am-notice-bar-border-color: var(--am-color-warning-border);
+
+  display: flex;
+  gap: var(--am-notice-bar-gap);
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--am-notice-bar-height);
+  padding: 0 var(--am-notice-bar-padding-inline);
+  color: var(--am-notice-bar-color);
+  font-size: var(--am-notice-bar-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  background: var(--am-notice-bar-bg);
+  border: 0 var(--am-line-type) var(--am-notice-bar-border-color);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- colors ---------- */
+.am-notice-bar-default {
+  --am-notice-bar-color: var(--am-color-text);
+  --am-notice-bar-bg: var(--am-color-fill-tertiary);
+  --am-notice-bar-border-color: var(--am-color-border);
+}
+
+.am-notice-bar-info {
+  --am-notice-bar-color: var(--am-color-info);
+  --am-notice-bar-bg: var(--am-color-info-bg);
+  --am-notice-bar-border-color: var(--am-color-info-border);
+}
+
+.am-notice-bar-success {
+  --am-notice-bar-color: var(--am-color-success-active);
+  --am-notice-bar-bg: var(--am-color-success-bg);
+  --am-notice-bar-border-color: var(--am-color-success-border);
+}
+
+.am-notice-bar-error {
+  --am-notice-bar-color: var(--am-color-error);
+  --am-notice-bar-bg: var(--am-color-error-bg);
+  --am-notice-bar-border-color: var(--am-color-error-border);
+}
+
+/* ---------- border & shape ---------- */
+.am-notice-bar-bordered {
+  border-width: var(--am-line-width);
+}
+
+.am-notice-bar-bordered-block {
+  border-block-width: var(--am-line-width);
+}
+
+.am-notice-bar-neutral {
+  border-radius: var(--am-notice-bar-border-radius);
+}
+
+.am-notice-bar-rounded {
+  border-radius: 999px;
+}
+
+.am-notice-bar-neutral.am-notice-bar-bordered-block,
+.am-notice-bar-rounded.am-notice-bar-bordered-block {
+  border-width: var(--am-line-width);
+}
+
+/* ---------- parts ---------- */
+.am-notice-bar-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  font-size: var(--am-notice-bar-icon-size);
+  line-height: 1;
+}
+
+.am-notice-bar-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.am-notice-bar-content {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition-timing-function: linear;
+  transition-property: transform;
+}
+
+.am-notice-bar-scrolling .am-notice-bar-content {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  will-change: transform;
+}
+
+.am-notice-bar-wrap {
+  padding-block: var(--am-padding-xs);
+}
+
+.am-notice-bar-wrap .am-notice-bar-content {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.am-notice-bar-wrap .am-notice-bar-icon,
+.am-notice-bar-wrap .am-notice-bar-close {
+  align-self: flex-start;
+  height: calc(var(--am-notice-bar-font-size) * var(--am-line-height));
+}
+
+.am-notice-bar-extra {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+}
+
+.am-notice-bar-close {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font-size: var(--am-font-size-sm);
+  line-height: 1;
+  background: transparent;
+  border: 0;
+  outline: none;
+  opacity: 0.75;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+.am-notice-bar-close::after {
+  position: absolute;
+  inset: -12px;
+  content: '';
+}
+
+.am-notice-bar-close:active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-notice-bar-scrolling .am-notice-bar-content {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform: none !important;
+    transition: none;
+  }
+}

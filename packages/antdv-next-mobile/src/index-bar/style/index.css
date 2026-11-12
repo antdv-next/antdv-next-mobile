@@ -1,0 +1,120 @@
+.am-index-bar {
+  /* component tokens */
+  --am-index-bar-highlight-color: var(--am-color-primary);
+  --am-index-bar-index-size: 16px;
+  --am-index-bar-index-font-size: 10px;
+  --am-index-bar-index-color: var(--am-color-text-secondary);
+  --am-index-bar-anchor-height: 32px;
+  --am-index-bar-anchor-padding-inline: var(--am-padding);
+  --am-index-bar-anchor-font-size: var(--am-font-size);
+  --am-index-bar-anchor-color: var(--am-color-text-secondary);
+  --am-index-bar-anchor-background: var(--am-color-bg-layout);
+  --am-index-bar-hint-size: 48px;
+  --am-index-bar-z-index: 10;
+  --am-index-bar-sticky-offset-top: 0px;
+
+  position: relative;
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+}
+
+/* zero-height sticky layer: keeps the side bar inside any scroll container without `position: fixed` */
+.am-index-bar-float {
+  position: sticky;
+  top: var(--am-index-bar-sticky-offset-top);
+  z-index: calc(var(--am-index-bar-z-index) + 1);
+  height: 0;
+}
+
+.am-index-bar-sidebar {
+  position: absolute;
+  top: calc(var(--am-index-bar-viewport-height, 100vh) / 2);
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--am-padding-xs) var(--am-padding-xxs);
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-index-bar-index {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--am-index-bar-index-size);
+  height: var(--am-index-bar-index-size);
+  color: var(--am-index-bar-index-color);
+  font-size: var(--am-index-bar-index-font-size);
+  line-height: 1;
+  border-radius: 50%;
+  transition:
+    background-color var(--am-motion-duration-fast),
+    color var(--am-motion-duration-fast);
+}
+
+.am-index-bar-index-active {
+  color: var(--am-color-text-light-solid);
+  font-weight: 500;
+  background: var(--am-index-bar-highlight-color);
+}
+
+.am-index-bar-hint {
+  position: absolute;
+  top: calc(var(--am-index-bar-viewport-height, 100vh) / 2);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--am-index-bar-hint-size);
+  height: var(--am-index-bar-hint-size);
+  padding: 0 var(--am-padding-xs);
+  box-sizing: border-box;
+  color: var(--am-color-text-light-solid);
+  font-weight: 500;
+  font-size: var(--am-font-size-heading-3);
+  line-height: 1;
+  background: var(--am-color-bg-mask);
+  border-radius: var(--am-border-radius);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ---------- anchor ---------- */
+.am-index-bar-anchor-sentinel {
+  height: 0;
+  pointer-events: none;
+}
+
+.am-index-bar-anchor {
+  box-sizing: border-box;
+  height: var(--am-index-bar-anchor-height, 32px);
+  padding: 0 var(--am-index-bar-anchor-padding-inline, 16px);
+  overflow: hidden;
+  color: var(--am-index-bar-anchor-color, var(--am-color-text-secondary));
+  font-weight: 500;
+  font-size: var(--am-index-bar-anchor-font-size, 14px);
+  font-family: var(--am-font-family);
+  line-height: var(--am-index-bar-anchor-height, 32px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: var(--am-index-bar-anchor-background, var(--am-color-bg-layout));
+  transition: color var(--am-motion-duration-mid);
+}
+
+.am-index-bar-anchor-sticky {
+  position: sticky;
+  top: var(--am-index-bar-sticky-offset-top, 0px);
+  z-index: var(--am-index-bar-z-index, 10);
+}
+
+.am-index-bar-anchor-sticky.am-index-bar-anchor-active {
+  color: var(--am-index-bar-highlight-color, var(--am-color-primary));
+}

@@ -1,0 +1,173 @@
+.am-switch {
+  /* component tokens */
+  --am-switch-height: 30px;
+  --am-switch-min-width: 50px;
+  --am-switch-handle-size: 26px;
+  --am-switch-padding: 2px;
+  --am-switch-font-size: var(--am-font-size-sm);
+  --am-switch-color: var(--am-color-primary);
+  --am-switch-color-active: var(--am-color-primary-active);
+  --am-switch-bg: var(--am-color-text-quaternary);
+  --am-switch-bg-active: var(--am-color-text-tertiary);
+  --am-switch-handle-bg: var(--am-color-white);
+  --am-switch-duration: var(--am-motion-duration-mid);
+
+  position: relative;
+  display: inline-block;
+  flex: none;
+  box-sizing: border-box;
+  min-width: var(--am-switch-min-width);
+  height: var(--am-switch-height);
+  margin: 0;
+  padding: 0;
+  color: var(--am-color-text-light-solid);
+  font-size: var(--am-switch-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-switch-height);
+  vertical-align: middle;
+  background: var(--am-switch-bg);
+  border: 0;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  transition: background-color var(--am-switch-duration);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+.am-switch:active {
+  background: var(--am-switch-bg-active);
+}
+
+.am-switch:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: 1px;
+}
+
+.am-switch-handle {
+  position: absolute;
+  top: var(--am-switch-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-switch-handle-size);
+  height: var(--am-switch-handle-size);
+  color: var(--am-switch-bg);
+  font-size: calc(var(--am-switch-handle-size) * 0.55);
+  line-height: 1;
+  background: var(--am-switch-handle-bg);
+  border-radius: 999px;
+  box-shadow: var(--am-box-shadow-secondary);
+  transition:
+    inset-inline-start var(--am-switch-duration) var(--am-motion-ease-in-out),
+    width var(--am-switch-duration) var(--am-motion-ease-in-out),
+    color var(--am-switch-duration);
+  inset-inline-start: var(--am-switch-padding);
+}
+
+/* the handle stretches while pressed, like the native iOS switch */
+.am-switch:not(.am-switch-disabled):active .am-switch-handle {
+  width: calc(var(--am-switch-handle-size) + 4px);
+}
+
+.am-switch-inner {
+  display: grid;
+  align-items: center;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  transition:
+    padding-inline-start var(--am-switch-duration) var(--am-motion-ease-in-out),
+    padding-inline-end var(--am-switch-duration) var(--am-motion-ease-in-out);
+  padding-inline: calc(var(--am-switch-handle-size) + var(--am-switch-padding) * 2 + 2px)
+    calc(var(--am-switch-padding) * 2 + 6px);
+}
+
+/* both texts share one grid cell, so the track is as wide as the longest one */
+.am-switch-inner-checked,
+.am-switch-inner-unchecked {
+  display: block;
+  grid-area: 1 / 1;
+  overflow: hidden;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: center;
+  transition: opacity var(--am-switch-duration);
+  pointer-events: none;
+}
+
+.am-switch-inner-checked {
+  opacity: 0;
+}
+
+/* ---------- checked ---------- */
+.am-switch-checked {
+  background: var(--am-switch-color);
+}
+
+.am-switch-checked:active {
+  background: var(--am-switch-color-active);
+}
+
+.am-switch-checked .am-switch-handle {
+  color: var(--am-switch-color);
+  inset-inline-start: calc(100% - var(--am-switch-handle-size) - var(--am-switch-padding));
+}
+
+.am-switch-checked:not(.am-switch-disabled):active .am-switch-handle {
+  inset-inline-start: calc(100% - var(--am-switch-handle-size) - var(--am-switch-padding) - 4px);
+}
+
+.am-switch-checked .am-switch-inner {
+  padding-inline: calc(var(--am-switch-padding) * 2 + 6px)
+    calc(var(--am-switch-handle-size) + var(--am-switch-padding) * 2 + 2px);
+}
+
+.am-switch-checked .am-switch-inner-checked {
+  opacity: 1;
+}
+
+.am-switch-checked .am-switch-inner-unchecked {
+  opacity: 0;
+}
+
+/* ---------- small ---------- */
+.am-switch-small {
+  --am-switch-height: 22px;
+  --am-switch-min-width: 36px;
+  --am-switch-handle-size: 18px;
+}
+
+/* ---------- states ---------- */
+.am-switch-loading,
+.am-switch-disabled {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-switch-loading {
+  cursor: default;
+  opacity: 0.65;
+}
+
+.am-switch-disabled:not(.am-switch-checked):active {
+  background: var(--am-switch-bg);
+}
+
+.am-switch-disabled.am-switch-checked:active {
+  background: var(--am-switch-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-switch,
+  .am-switch-handle,
+  .am-switch-inner,
+  .am-switch-inner-checked,
+  .am-switch-inner-unchecked {
+    transition-duration: 0.01s;
+  }
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ConfigContext, ConfigProviderProps, ConfigProviderSlots } from './context'
-import { computed, provide } from 'vue'
+import { computed, provide, useId } from 'vue'
 import { mergeTheme, resolveTheme } from '../theme/util'
 import { configContextKey, useConfig } from './context'
 import '../style'
@@ -15,7 +15,9 @@ defineSlots<ConfigProviderSlots>()
 const parent = useConfig()
 
 const themeConfig = computed(() => mergeTheme(parent.themeConfig.value, props.theme))
-const theme = computed(() => resolveTheme(themeConfig.value))
+// unique, SSR-stable class for the stylesheet that carries component tokens
+const scope = `am-scope-${useId().replace(/[^\w-]/g, '')}`
+const theme = computed(() => resolveTheme(themeConfig.value, scope))
 
 const context: ConfigContext = {
   locale: computed(() => props.locale ?? parent.locale.value),
@@ -26,6 +28,9 @@ const context: ConfigContext = {
   themeConfig,
   theme,
 }
+
+// a literal <style> tag is stripped by the SFC compiler
+const styleTag = 'style'
 
 provide(configContextKey, context)
 </script>
@@ -38,6 +43,9 @@ provide(configContextKey, context)
     :dir="context.direction.value"
     v-bind="$attrs"
   >
+    <component :is="styleTag" v-if="theme.css">
+      {{ theme.css }}
+    </component>
     <slot />
   </div>
 </template>

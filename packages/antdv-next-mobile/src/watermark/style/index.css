@@ -1,0 +1,18 @@
+.am-watermark {
+  /* component tokens */
+  --am-watermark-color: var(--am-color-fill);
+
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.am-watermark-full-page {
+  position: static;
+  overflow: visible;
+}
+
+/* The canvas text color is read from here so that it follows the theme. */
+.am-watermark-layer {
+  color: var(--am-watermark-color);
+}

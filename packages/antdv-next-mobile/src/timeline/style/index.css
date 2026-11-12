@@ -1,0 +1,159 @@
+.am-timeline {
+  /* component tokens */
+  --am-timeline-dot-size: 10px;
+  --am-timeline-dot-border-width: 2px;
+  --am-timeline-dot-bg: var(--am-color-bg-container);
+  --am-timeline-icon-size: 16px;
+  --am-timeline-rail-width: 20px;
+  --am-timeline-tail-width: 2px;
+  --am-timeline-tail-color: var(--am-color-border);
+  --am-timeline-item-gap: var(--am-margin-sm);
+  --am-timeline-item-padding-bottom: var(--am-padding-md);
+  --am-timeline-title-color: var(--am-color-text-secondary);
+  --am-timeline-title-span: 25%;
+  --am-timeline-font-size: var(--am-font-size);
+  /* resolved by item color classes */
+  --am-timeline-item-color: var(--am-color-primary);
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--am-color-text);
+  font-size: var(--am-timeline-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  list-style: none;
+}
+
+.am-timeline-item {
+  position: relative;
+  display: flex;
+  gap: var(--am-timeline-item-gap);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.am-timeline-item-color-red {
+  --am-timeline-item-color: var(--am-color-error);
+}
+
+.am-timeline-item-color-green {
+  --am-timeline-item-color: var(--am-color-success);
+}
+
+.am-timeline-item-color-gray {
+  --am-timeline-item-color: var(--am-color-text-quaternary);
+}
+
+/* ---------- rail ---------- */
+.am-timeline-item-rail {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  justify-content: center;
+  width: var(--am-timeline-rail-width);
+}
+
+/* tail: from the dot of this item to the dot of the next one */
+.am-timeline-item-rail::after {
+  position: absolute;
+  inset-block: calc(var(--am-timeline-font-size) * var(--am-line-height) / 2 + var(--am-timeline-dot-size) / 2 + 2px)
+    calc(var(--am-timeline-dot-size) / 2 - var(--am-timeline-font-size) * var(--am-line-height) / 2 + 2px);
+  inset-inline-start: calc(50% - var(--am-timeline-tail-width) / 2);
+  width: var(--am-timeline-tail-width);
+  background: var(--am-timeline-tail-color);
+  border-radius: var(--am-timeline-tail-width);
+  content: '';
+}
+
+.am-timeline-item-last .am-timeline-item-rail::after {
+  display: none;
+}
+
+/* the tail leading to the pending node is dashed */
+.am-timeline-pending:not(.am-timeline-reverse) .am-timeline-item:nth-last-child(2) .am-timeline-item-rail::after,
+.am-timeline-pending.am-timeline-reverse .am-timeline-item-pending .am-timeline-item-rail::after {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--am-timeline-tail-color) 0,
+    var(--am-timeline-tail-color) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.am-timeline-item-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-timeline-dot-size);
+  height: var(--am-timeline-dot-size);
+  margin-block-start: calc((var(--am-timeline-font-size) * var(--am-line-height) - var(--am-timeline-dot-size)) / 2);
+  color: var(--am-timeline-item-color);
+  background: var(--am-timeline-dot-bg);
+  border: var(--am-timeline-dot-border-width) solid var(--am-timeline-item-color);
+  border-radius: 50%;
+}
+
+.am-timeline-filled .am-timeline-item-icon {
+  background: var(--am-timeline-item-color);
+}
+
+.am-timeline-item-icon-custom,
+.am-timeline-filled .am-timeline-item-icon-custom {
+  width: auto;
+  min-width: var(--am-timeline-icon-size);
+  height: calc(var(--am-timeline-font-size) * var(--am-line-height));
+  margin-block-start: 0;
+  font-size: var(--am-timeline-icon-size);
+  line-height: 1;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+/* ---------- title & content ---------- */
+.am-timeline-item-content {
+  flex: 1;
+  min-width: 0;
+  padding-block-end: var(--am-timeline-item-padding-bottom);
+  word-break: break-word;
+}
+
+.am-timeline-item-last .am-timeline-item-content {
+  padding-block-end: 0;
+}
+
+.am-timeline-item-title {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--am-timeline-title-span);
+  min-width: 0;
+  color: var(--am-timeline-title-color);
+  text-align: end;
+  word-break: break-word;
+}
+
+.am-timeline-mode-alternate .am-timeline-item-title {
+  flex: 1;
+  width: auto;
+}
+
+/* placement end: content before the rail, title after it */
+.am-timeline-item-placement-end {
+  flex-direction: row-reverse;
+}
+
+.am-timeline-item-placement-end .am-timeline-item-content {
+  text-align: end;
+}
+
+.am-timeline-item-placement-end .am-timeline-item-title {
+  text-align: start;
+}

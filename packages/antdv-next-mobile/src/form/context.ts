@@ -37,3 +37,17 @@ export function useMergedStatus(status: () => ValidateStatus | undefined) {
   const ctx = useFormItemInputContext()
   return computed<ValidateStatus>(() => status() ?? ctx.status.value)
 }
+
+export type Variant = 'outlined' | 'filled' | 'borderless' | 'underlined'
+
+/**
+ * Provided by Form (`variant` prop). Fields inside a Form default to `borderless`
+ * because FormItem already draws the cell; standalone fields default to `outlined`.
+ */
+export const variantContextKey: InjectionKey<ComputedRef<Variant | undefined>> = Symbol('AmVariantContext')
+
+/** `props.variant` > Form `variant` > `'outlined'`. */
+export function useVariant(variant: () => Variant | undefined) {
+  const formVariant = inject(variantContextKey, undefined)
+  return computed<Variant>(() => variant() ?? formVariant?.value ?? 'outlined')
+}

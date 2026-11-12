@@ -1,0 +1,52 @@
+.am-pull-to-refresh {
+  --am-pull-to-refresh-head-color: var(--am-color-text-description);
+  --am-pull-to-refresh-head-font-size: var(--am-font-size);
+  --am-pull-to-refresh-icon-size: 16px;
+
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  user-select: none;
+  /* the page keeps scrolling vertically, the browser pull-to-refresh is replaced */
+  overscroll-behavior-y: contain;
+}
+
+.am-pull-to-refresh-track {
+  position: relative;
+  height: 100%;
+  transition-timing-function: var(--am-motion-ease-out);
+  transition-property: transform;
+}
+
+.am-pull-to-refresh-head {
+  position: absolute;
+  left: 0;
+  display: flex;
+  gap: var(--am-margin-xs);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  color: var(--am-pull-to-refresh-head-color);
+  font-size: var(--am-pull-to-refresh-head-font-size);
+  transform: translateY(-100%);
+}
+
+.am-pull-to-refresh-icon {
+  font-size: var(--am-pull-to-refresh-icon-size);
+}
+
+.am-pull-to-refresh-content {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-pull-to-refresh-track {
+    transition-duration: 0.01s !important;
+  }
+}

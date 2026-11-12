@@ -1,0 +1,36 @@
+<docs lang="zh-CN">
+`size` 支持 `default`、`large` 两种预设，也可以传入数字（px）或字符串。还可以用 `height` / `width` 精确指定。
+</docs>
+
+<script setup lang="ts">
+import type { DrawerSize } from 'antdv-next-mobile'
+import { ref } from 'vue'
+
+const open = ref(false)
+const size = ref<DrawerSize>('default')
+
+function show(value: DrawerSize) {
+  size.value = value
+  open.value = true
+}
+</script>
+
+<template>
+  <am-flex gap="small" wrap>
+    <am-button @click="show('default')">
+      default
+    </am-button>
+    <am-button @click="show('large')">
+      large
+    </am-button>
+    <am-button @click="show(320)">
+      320px
+    </am-button>
+    <am-button @click="show('60%')">
+      60%
+    </am-button>
+  </am-flex>
+  <am-drawer v-model:open="open" :size="size" :title="`size = ${size}`">
+    <p>一些内容...</p>
+  </am-drawer>
+</template>

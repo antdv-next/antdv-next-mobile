@@ -1,0 +1,151 @@
+.am-descriptions {
+  /* component tokens */
+  --am-descriptions-title-color: var(--am-color-text-heading);
+  --am-descriptions-title-font-size: var(--am-font-size-lg);
+  --am-descriptions-title-margin-bottom: var(--am-margin-sm);
+  --am-descriptions-label-color: var(--am-color-text-tertiary);
+  --am-descriptions-content-color: var(--am-color-text);
+  --am-descriptions-font-size: var(--am-font-size);
+  --am-descriptions-item-padding-bottom: var(--am-padding-sm);
+  --am-descriptions-column-gap: var(--am-margin);
+  --am-descriptions-colon-margin-end: 8px;
+  --am-descriptions-label-width: 30%;
+  --am-descriptions-label-bg: var(--am-color-fill-alter);
+  --am-descriptions-border-color: var(--am-color-border-secondary);
+  --am-descriptions-border-radius: var(--am-border-radius);
+  --am-descriptions-cell-padding: var(--am-padding-sm) var(--am-padding);
+
+  box-sizing: border-box;
+  color: var(--am-descriptions-content-color);
+  font-size: var(--am-descriptions-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+}
+
+.am-descriptions-sm {
+  --am-descriptions-item-padding-bottom: var(--am-padding-xs);
+  --am-descriptions-cell-padding: var(--am-padding-xs) var(--am-padding-sm);
+}
+
+.am-descriptions-lg {
+  --am-descriptions-item-padding-bottom: var(--am-padding);
+  --am-descriptions-cell-padding: var(--am-padding) var(--am-padding-lg);
+}
+
+/* ---------- header ---------- */
+.am-descriptions-header {
+  display: flex;
+  gap: var(--am-margin-xs);
+  align-items: center;
+  margin-block-end: var(--am-descriptions-title-margin-bottom);
+}
+
+.am-descriptions-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--am-descriptions-title-color);
+  font-weight: var(--am-font-weight-strong);
+  font-size: var(--am-descriptions-title-font-size);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.am-descriptions-extra {
+  flex: none;
+  margin-inline-start: auto;
+  color: var(--am-descriptions-content-color);
+}
+
+/* ---------- view ---------- */
+.am-descriptions-view {
+  display: grid;
+  column-gap: var(--am-descriptions-column-gap);
+}
+
+.am-descriptions-item {
+  display: flex;
+  box-sizing: border-box;
+  min-width: 0;
+  padding-block-end: var(--am-descriptions-item-padding-bottom);
+}
+
+.am-descriptions-item-label {
+  flex: none;
+  max-width: 50%;
+  color: var(--am-descriptions-label-color);
+}
+
+.am-descriptions-item-label::after {
+  position: relative;
+  inset-block-start: -0.5px;
+  margin-inline: 2px var(--am-descriptions-colon-margin-end);
+  content: ':';
+}
+
+.am-descriptions-item-no-colon::after {
+  content: '';
+}
+
+.am-descriptions-item-content {
+  flex: 1;
+  min-width: 0;
+  color: var(--am-descriptions-content-color);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.am-descriptions-content-end .am-descriptions-item-content {
+  text-align: end;
+}
+
+/* ---------- vertical ---------- */
+.am-descriptions-vertical .am-descriptions-item {
+  flex-direction: column;
+}
+
+.am-descriptions-vertical .am-descriptions-item-label {
+  max-width: none;
+  padding-block-end: var(--am-padding-xxs);
+}
+
+.am-descriptions-vertical .am-descriptions-item-label::after {
+  margin-inline-end: 0;
+}
+
+/* ---------- bordered: a grid whose gaps are the borders ---------- */
+.am-descriptions-bordered .am-descriptions-view {
+  gap: var(--am-line-width);
+  overflow: hidden;
+  background: var(--am-descriptions-border-color);
+  border: var(--am-line-width) var(--am-line-type) var(--am-descriptions-border-color);
+  border-radius: var(--am-descriptions-border-radius);
+}
+
+.am-descriptions-bordered .am-descriptions-item {
+  padding: 0;
+  background: var(--am-color-bg-container);
+}
+
+.am-descriptions-bordered .am-descriptions-item-label,
+.am-descriptions-bordered .am-descriptions-item-content {
+  box-sizing: border-box;
+  padding: var(--am-descriptions-cell-padding);
+}
+
+.am-descriptions-bordered .am-descriptions-item-label {
+  width: var(--am-descriptions-label-width);
+  max-width: none;
+  background: var(--am-descriptions-label-bg);
+  border-inline-end: var(--am-line-width) var(--am-line-type) var(--am-descriptions-border-color);
+}
+
+.am-descriptions-bordered .am-descriptions-item-label::after {
+  display: none;
+}
+
+.am-descriptions-bordered.am-descriptions-vertical .am-descriptions-item-label {
+  width: auto;
+  border-inline-end: 0;
+  border-block-end: var(--am-line-width) var(--am-line-type) var(--am-descriptions-border-color);
+}

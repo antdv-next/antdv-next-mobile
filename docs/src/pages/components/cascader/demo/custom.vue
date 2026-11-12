@@ -1,0 +1,63 @@
+<docs lang="zh-CN">
+`displayRender` 自定义触发器中显示的内容（如只显示最后一级），`fieldNames` 适配已有的数据结构，`option` 插槽自定义选项内容。
+</docs>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { regions } from './data'
+
+const value = ref(['zhejiang', 'hangzhou', 'xihu'])
+
+const departments = [
+  {
+    name: '研发中心',
+    id: 1,
+    count: 128,
+    items: [
+      { name: '前端组', id: 11, count: 32 },
+      { name: '后端组', id: 12, count: 56 },
+      { name: '测试组', id: 13, count: 40 },
+    ],
+  },
+  {
+    name: '产品中心',
+    id: 2,
+    count: 36,
+    items: [
+      { name: '产品组', id: 21, count: 20 },
+      { name: '设计组', id: 22, count: 16 },
+    ],
+  },
+]
+const department = ref<number[]>([])
+
+const displayRender = (labels: string[]) => labels[labels.length - 1]
+</script>
+
+<template>
+  <am-flex vertical gap="small">
+    <am-cascader v-model:value="value" :options="regions" :display-render="displayRender" title="只显示最后一级" />
+    <am-cascader
+      v-model:value="department"
+      :options="departments"
+      :field-names="{ label: 'name', value: 'id', children: 'items' }"
+      title="选择部门"
+      placeholder="请选择部门"
+    >
+      <template #option="{ option }">
+        <am-flex justify="space-between">
+          <span>{{ option.name }}</span>
+          <span class="demo-count">{{ option.count }} 人</span>
+        </am-flex>
+      </template>
+    </am-cascader>
+  </am-flex>
+</template>
+
+<style>
+.demo-count {
+  color: var(--am-color-text-tertiary);
+  font-weight: 400;
+  font-size: 13px;
+}
+</style>

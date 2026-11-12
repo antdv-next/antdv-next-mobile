@@ -1,0 +1,101 @@
+.am-empty {
+  /* component tokens */
+  --am-empty-padding-block: var(--am-padding-xl);
+  --am-empty-image-height: 100px;
+  --am-empty-image-height-normal: 40px;
+  --am-empty-description-color: var(--am-color-text-description);
+  --am-empty-description-font-size: var(--am-font-size);
+  /* illustration */
+  --am-empty-image-fill: var(--am-color-fill-secondary);
+  --am-empty-image-fill-strong: var(--am-color-fill);
+  --am-empty-image-surface: var(--am-color-bg-container);
+  --am-empty-image-stroke: var(--am-color-border);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--am-empty-padding-block) var(--am-padding);
+  color: var(--am-empty-description-color);
+  font-size: var(--am-empty-description-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  text-align: center;
+}
+
+.am-empty-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--am-empty-image-height);
+  margin-bottom: var(--am-margin-xs);
+}
+
+.am-empty-image img,
+.am-empty-image svg {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+}
+
+.am-empty-image svg {
+  width: auto;
+}
+
+.am-empty-description {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.am-empty-footer {
+  margin-top: var(--am-margin);
+}
+
+.am-empty-normal {
+  --am-empty-padding-block: var(--am-padding-lg);
+  --am-empty-image-height: var(--am-empty-image-height-normal);
+  --am-empty-description-color: var(--am-color-text-placeholder);
+}
+
+/* ---------- built-in illustrations (tokens only, so they follow dark mode) ---------- */
+.am-empty-img-shadow {
+  fill: var(--am-empty-image-fill);
+}
+
+.am-empty-img-cloud {
+  fill: var(--am-empty-image-fill-strong);
+}
+
+.am-empty-img-back {
+  fill: var(--am-empty-image-fill-strong);
+}
+
+.am-empty-img-paper {
+  fill: var(--am-empty-image-surface);
+  stroke: var(--am-empty-image-stroke);
+  stroke-width: 1;
+}
+
+.am-empty-img-line {
+  fill: none;
+  stroke: var(--am-empty-image-stroke);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.am-empty-img-front {
+  fill: color-mix(in srgb, var(--am-color-text-base) 9%, var(--am-color-bg-container));
+  stroke: var(--am-empty-image-stroke);
+  stroke-width: 1;
+}
+
+.am-empty-img-simple-box {
+  fill: var(--am-empty-image-surface);
+  stroke: var(--am-empty-image-stroke);
+  stroke-width: 1;
+}
+
+.am-empty-img-simple-front {
+  fill: var(--am-color-fill-quaternary);
+}

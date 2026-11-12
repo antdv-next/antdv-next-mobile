@@ -1,0 +1,169 @@
+.am-select-panel {
+  --am-select-list-max-height: 360px;
+  --am-select-list-min-height: 160px;
+  --am-select-font-size: var(--am-font-size-lg);
+  --am-select-option-height: 48px;
+  --am-select-option-padding-inline: var(--am-padding);
+  --am-select-active-color: var(--am-color-primary);
+  --am-select-description-color: var(--am-color-text-tertiary);
+  --am-select-disabled-color: var(--am-color-text-disabled);
+  --am-select-search-bg: var(--am-color-fill-tertiary);
+  --am-select-search-height: 36px;
+  --am-select-check-size: 20px;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 0;
+  color: var(--am-color-text);
+  font-size: var(--am-select-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-select-search {
+  display: flex;
+  flex: none;
+  gap: var(--am-padding-xs);
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--am-select-search-height);
+  margin: 0 var(--am-select-option-padding-inline) var(--am-padding-xs);
+  padding: 0 var(--am-padding-sm);
+  background: var(--am-select-search-bg);
+  border-radius: var(--am-border-radius);
+}
+
+.am-select-search-icon {
+  flex: none;
+  color: var(--am-color-icon);
+}
+
+.am-select-search-input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: inherit;
+  background: transparent;
+  border: 0;
+  outline: none;
+  appearance: none;
+}
+
+.am-select-search-input::placeholder {
+  color: var(--am-color-text-placeholder);
+}
+
+.am-select-search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.am-select-list {
+  flex: 1;
+  min-height: var(--am-select-list-min-height);
+  max-height: var(--am-select-list-max-height);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.am-select-group {
+  padding: var(--am-padding-xs) var(--am-select-option-padding-inline) var(--am-padding-xxs);
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-font-size-sm);
+}
+
+.am-select-option {
+  display: flex;
+  gap: var(--am-padding-sm);
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--am-select-option-height);
+  padding: var(--am-padding-xs) var(--am-select-option-padding-inline);
+  cursor: pointer;
+}
+
+.am-select-option:active {
+  background: var(--am-color-fill-tertiary);
+}
+
+.am-select-option-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.am-select-option-description {
+  color: var(--am-select-description-color);
+  font-size: var(--am-font-size-sm);
+}
+
+.am-select-option-icon {
+  flex: none;
+  color: var(--am-select-active-color);
+}
+
+.am-select-option-check {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-select-check-size);
+  height: var(--am-select-check-size);
+  color: var(--am-color-text-light-solid);
+  font-size: calc(var(--am-select-check-size) * 0.6);
+  border: var(--am-line-width) var(--am-line-type) var(--am-color-border);
+  border-radius: 50%;
+  transition:
+    background-color var(--am-motion-duration-mid),
+    border-color var(--am-motion-duration-mid);
+}
+
+.am-select-option-selected .am-select-option-check {
+  background: var(--am-select-active-color);
+  border-color: var(--am-select-active-color);
+}
+
+.am-select-panel:not(.am-select-panel-multiple) .am-select-option-selected {
+  color: var(--am-select-active-color);
+  font-weight: var(--am-font-weight-strong);
+}
+
+.am-select-option-disabled,
+.am-select-option-disabled:active {
+  color: var(--am-select-disabled-color);
+  background: transparent;
+  cursor: not-allowed;
+}
+
+.am-select-option-disabled .am-select-option-description {
+  color: inherit;
+}
+
+.am-select-option-disabled .am-select-option-check {
+  background: var(--am-color-bg-container-disabled);
+}
+
+.am-select-loading,
+.am-select-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--am-padding-xl) var(--am-padding);
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-font-size);
+}
+
+.am-select-loading {
+  color: var(--am-select-active-color);
+  font-size: 24px;
+}
+
+.am-select-omitted {
+  margin-inline-start: var(--am-margin-xxs);
+}

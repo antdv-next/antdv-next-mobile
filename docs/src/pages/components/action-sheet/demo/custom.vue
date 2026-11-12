@@ -1,0 +1,71 @@
+<docs lang="zh-CN">
+默认插槽可以在动作列表上方放置任意内容，`action` 插槽用于自定义每个动作的渲染。设置 `closeOnAction` 为 `false` 后点击动作不会自动关闭。
+</docs>
+
+<script setup lang="ts">
+import type { ActionSheetAction } from 'antdv-next-mobile'
+import { CheckOutlined } from '@antdv-next/icons'
+import { ref } from 'vue'
+
+const open = ref(false)
+const selected = ref('wechat')
+const actions: ActionSheetAction[] = [
+  { key: 'wechat', text: '微信支付' },
+  { key: 'alipay', text: '支付宝' },
+  { key: 'card', text: '银行卡' },
+]
+</script>
+
+<template>
+  <am-button block @click="open = true">
+    自定义内容
+  </am-button>
+  <am-action-sheet
+    v-model:open="open"
+    :actions="actions"
+    :close-on-action="false"
+    cancel-text="完成"
+    @action="selected = String($event.key)"
+  >
+    <div class="amount">
+      <small>支付金额</small>
+      <strong>¥ 128.00</strong>
+    </div>
+    <template #action="{ action }">
+      <span class="pay-item">
+        {{ action.text }}
+        <CheckOutlined v-if="selected === action.key" class="pay-check" />
+      </span>
+    </template>
+  </am-action-sheet>
+</template>
+
+<style scoped>
+.amount {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  padding: 20px 16px;
+  color: var(--am-color-text);
+}
+
+.amount small {
+  color: var(--am-color-text-secondary);
+}
+
+.amount strong {
+  font-size: 28px;
+}
+
+.pay-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pay-check {
+  color: var(--am-color-primary);
+}
+</style>

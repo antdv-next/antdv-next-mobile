@@ -42,7 +42,7 @@ export function parseFrontmatter(source: string): { data: Frontmatter, content: 
   match[1].split(/\r?\n/).forEach((line) => {
     if (!line.trim() || line.trim().startsWith('#'))
       return
-    const m = /^(\s*)([\w-]+):\s*(.*)$/.exec(line)
+    const m = /^(\s*)([\w-]+):(.*)$/.exec(line)
     if (!m)
       return
     const [, indent, key, rawValue] = m
@@ -80,7 +80,7 @@ function slugify(text: string) {
     .trim()
     .toLowerCase()
     .replace(/[\s.]+/g, '-')
-    .replace(/[^\w一-龥-]/g, '')
+    .replace(/[^\w\p{Script=Han}-]/gu, '')
 }
 
 function escapeHtml(str: string) {

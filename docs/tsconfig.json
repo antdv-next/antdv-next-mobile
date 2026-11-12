@@ -1,17 +1,17 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "types": ["node", "vite/client"],
-    "strict": true,
-    "noUncheckedIndexedAccess": false,
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
     "paths": {
       "antdv-next-mobile": ["../packages/antdv-next-mobile/src/index.ts"],
       "antdv-next-mobile/locale/*": ["../packages/antdv-next-mobile/src/locale/*"],
       "@site/*": ["./src/site/*"],
       "@mobile/*": ["./src/mobile/*"]
-    }
+    },
+    "types": ["node", "vite/client"],
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": false,
+    "noEmit": true
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "plugins/**/*.ts", "vite.config.ts", "env.d.ts"]
 }

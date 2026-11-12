@@ -1,0 +1,169 @@
+.am-number-keyboard {
+  --am-number-keyboard-z-index: var(--am-z-index-popup-base);
+  --am-number-keyboard-bg: var(--am-color-bg-layout);
+  --am-number-keyboard-key-height: 48px;
+  --am-number-keyboard-key-font-size: 24px;
+  --am-number-keyboard-key-bg: var(--am-color-bg-container);
+  --am-number-keyboard-key-active-bg: var(--am-color-fill);
+  --am-number-keyboard-key-radius: var(--am-border-radius);
+  --am-number-keyboard-gap: 6px;
+  --am-number-keyboard-padding: 6px;
+  --am-number-keyboard-title-height: 40px;
+  --am-number-keyboard-title-color: var(--am-color-text-secondary);
+  --am-number-keyboard-title-font-size: var(--am-font-size-lg);
+  --am-number-keyboard-close-color: var(--am-color-primary);
+  --am-number-keyboard-confirm-bg: var(--am-color-primary);
+  --am-number-keyboard-confirm-active-bg: var(--am-color-primary-active);
+  --am-number-keyboard-confirm-color: var(--am-color-text-light-solid);
+  --am-number-keyboard-confirm-font-size: var(--am-font-size-lg);
+
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  background: var(--am-number-keyboard-bg);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-number-keyboard-fixed {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--am-number-keyboard-z-index);
+}
+
+.am-number-keyboard-safe-area {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.am-number-keyboard-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--am-number-keyboard-title-height);
+  padding-top: var(--am-number-keyboard-padding);
+  color: var(--am-number-keyboard-title-color);
+  font-size: var(--am-number-keyboard-title-font-size);
+}
+
+.am-number-keyboard-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.am-number-keyboard-close {
+  position: absolute;
+  top: var(--am-number-keyboard-padding);
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0 var(--am-padding);
+  color: var(--am-number-keyboard-close-color);
+  font-size: var(--am-font-size);
+  font-family: inherit;
+  background: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.am-number-keyboard-close:active {
+  opacity: var(--am-opacity-active);
+}
+
+[dir='rtl'] .am-number-keyboard-close,
+[dir='rtl'].am-number-keyboard .am-number-keyboard-close {
+  right: auto;
+  left: 0;
+}
+
+.am-number-keyboard-body {
+  display: flex;
+  gap: var(--am-number-keyboard-gap);
+  padding: var(--am-number-keyboard-padding);
+  /* digits read left-to-right in every locale */
+  direction: ltr;
+}
+
+.am-number-keyboard-keys {
+  display: grid;
+  flex: 3;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--am-number-keyboard-gap);
+}
+
+.am-number-keyboard-sidebar {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--am-number-keyboard-gap);
+}
+
+.am-number-keyboard-sidebar .am-number-keyboard-key-wrapper {
+  flex: 1;
+}
+
+.am-number-keyboard-key-wrapper {
+  position: relative;
+  min-width: 0;
+}
+
+.am-number-keyboard-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--am-number-keyboard-key-height);
+  font-size: var(--am-number-keyboard-key-font-size);
+  line-height: 1.2;
+  background: var(--am-number-keyboard-key-bg);
+  border-radius: var(--am-number-keyboard-key-radius);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+
+.am-number-keyboard-key:active,
+.am-number-keyboard-key-active {
+  background-image: linear-gradient(var(--am-number-keyboard-key-active-bg), var(--am-number-keyboard-key-active-bg));
+}
+
+.am-number-keyboard-key-large {
+  height: 100%;
+  min-height: var(--am-number-keyboard-key-height);
+}
+
+.am-number-keyboard-key-blank,
+.am-number-keyboard-key-blank:active {
+  background: transparent;
+  cursor: default;
+}
+
+.am-number-keyboard-key-delete {
+  font-size: var(--am-font-size-lg);
+}
+
+.am-number-keyboard-delete-icon {
+  width: 32px;
+  height: 22px;
+}
+
+.am-number-keyboard-key-confirm {
+  color: var(--am-number-keyboard-confirm-color);
+  font-size: var(--am-number-keyboard-confirm-font-size);
+  background: var(--am-number-keyboard-confirm-bg);
+}
+
+.am-number-keyboard-key-confirm:active,
+.am-number-keyboard-key-confirm.am-number-keyboard-key-active {
+  background: var(--am-number-keyboard-confirm-active-bg);
+}

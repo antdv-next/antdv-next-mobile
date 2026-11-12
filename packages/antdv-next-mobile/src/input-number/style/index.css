@@ -1,0 +1,232 @@
+.am-input-number {
+  /* component tokens */
+  --am-input-number-height: var(--am-control-height-sm);
+  --am-input-number-font-size: var(--am-font-size-lg);
+  --am-input-number-input-width: 48px;
+  --am-input-number-gap: 2px;
+  --am-input-number-border-radius: var(--am-border-radius-sm);
+  --am-input-number-color: var(--am-color-text);
+  --am-input-number-background: var(--am-color-bg-container);
+  --am-input-number-filled-background: var(--am-color-fill-tertiary);
+  --am-input-number-border-color: var(--am-color-border);
+  --am-input-number-active-border-color: var(--am-color-primary);
+  --am-input-number-action-color: var(--am-color-primary);
+  --am-input-number-action-background: var(--am-color-fill-tertiary);
+  --am-input-number-action-active-background: var(--am-color-fill);
+
+  position: relative;
+  display: inline-flex;
+  gap: var(--am-input-number-gap);
+  align-items: stretch;
+  box-sizing: border-box;
+  height: var(--am-input-number-height);
+  margin: 0;
+  color: var(--am-input-number-color);
+  font-size: var(--am-input-number-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1.2;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-input-number-wrapper {
+  display: inline-flex;
+  flex: 1;
+  gap: var(--am-margin-xxs);
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 0 var(--am-padding-xxs);
+  background: var(--am-input-number-background);
+  border: var(--am-line-width) var(--am-line-type) var(--am-input-number-border-color);
+  border-radius: var(--am-input-number-border-radius);
+  transition:
+    border-color var(--am-motion-duration-mid),
+    background-color var(--am-motion-duration-mid);
+}
+
+.am-input-number-input {
+  flex: 1;
+  box-sizing: border-box;
+  width: var(--am-input-number-input-width);
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  /* >= 16px keeps iOS Safari from zooming in on focus */
+  font-size: inherit;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  line-height: inherit;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  caret-color: var(--am-input-number-active-border-color);
+  appearance: none;
+}
+
+.am-input-number-input::placeholder {
+  color: var(--am-color-text-placeholder);
+  opacity: 1;
+}
+
+.am-input-number-prefix,
+.am-input-number-suffix {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--am-color-text-tertiary);
+}
+
+.am-input-number-action {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-input-number-height);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--am-input-number-action-color);
+  font-size: 0.85em;
+  background: var(--am-input-number-action-background);
+  border: 0;
+  border-radius: var(--am-input-number-border-radius);
+  outline: none;
+  cursor: pointer;
+  transition: background-color var(--am-motion-duration-fast);
+  user-select: none;
+  touch-action: manipulation;
+  appearance: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* a larger touch target than the visible button */
+.am-input-number-action::after {
+  position: absolute;
+  inset: -6px;
+  content: '';
+}
+
+.am-input-number-action:active {
+  background: var(--am-input-number-action-active-background);
+}
+
+.am-input-number-action-disabled,
+.am-input-number-action-disabled:active {
+  color: var(--am-color-text-disabled);
+  background: var(--am-input-number-action-background);
+  cursor: not-allowed;
+}
+
+/* ---------- variants ---------- */
+.am-input-number-outlined.am-input-number-focused .am-input-number-wrapper,
+.am-input-number-underlined.am-input-number-focused .am-input-number-wrapper {
+  border-color: var(--am-input-number-active-border-color);
+}
+
+.am-input-number-filled .am-input-number-wrapper,
+.am-input-number-borderless .am-input-number-wrapper {
+  background: var(--am-input-number-filled-background);
+  border-color: transparent;
+}
+
+.am-input-number-filled.am-input-number-focused .am-input-number-wrapper {
+  background: var(--am-input-number-background);
+  border-color: var(--am-input-number-active-border-color);
+}
+
+.am-input-number-underlined .am-input-number-wrapper {
+  background: transparent;
+  border-width: 0 0 var(--am-line-width);
+  border-radius: 0;
+}
+
+/* ---------- mode: input ---------- */
+.am-input-number-mode-input {
+  --am-input-number-height: var(--am-control-height);
+  --am-input-number-border-radius: var(--am-border-radius);
+
+  display: inline-flex;
+  width: 100%;
+}
+
+.am-input-number-mode-input .am-input-number-wrapper {
+  padding: 0 var(--am-padding-sm);
+}
+
+.am-input-number-mode-input .am-input-number-input {
+  width: 100%;
+  text-align: start;
+}
+
+.am-input-number-mode-input.am-input-number-borderless {
+  height: auto;
+  min-height: var(--am-form-item-content-min-height, 24px);
+}
+
+.am-input-number-mode-input.am-input-number-borderless .am-input-number-wrapper {
+  padding: 0;
+  background: transparent;
+}
+
+.am-form-item-content-end .am-input-number-mode-input .am-input-number-input {
+  text-align: end;
+}
+
+/* ---------- sizes ---------- */
+.am-input-number-sm {
+  --am-input-number-height: var(--am-control-height-xs);
+  --am-input-number-input-width: 40px;
+}
+
+.am-input-number-lg {
+  --am-input-number-height: var(--am-control-height);
+  --am-input-number-input-width: 56px;
+  --am-input-number-border-radius: var(--am-border-radius);
+}
+
+.am-input-number-mode-input.am-input-number-sm {
+  --am-input-number-height: var(--am-control-height-sm);
+  --am-input-number-border-radius: var(--am-border-radius-sm);
+}
+
+.am-input-number-mode-input.am-input-number-lg {
+  --am-input-number-height: var(--am-control-height-lg);
+  --am-input-number-border-radius: var(--am-border-radius-lg);
+}
+
+/* ---------- status ---------- */
+.am-input-number-status-error {
+  --am-input-number-border-color: var(--am-color-error);
+  --am-input-number-active-border-color: var(--am-color-error);
+  --am-input-number-filled-background: var(--am-color-error-bg);
+}
+
+.am-input-number-status-warning {
+  --am-input-number-border-color: var(--am-color-warning);
+  --am-input-number-active-border-color: var(--am-color-warning);
+  --am-input-number-filled-background: var(--am-color-warning-bg);
+}
+
+/* ---------- disabled ---------- */
+.am-input-number-disabled {
+  color: var(--am-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.am-input-number-disabled .am-input-number-input {
+  cursor: not-allowed;
+  opacity: 1;
+  -webkit-text-fill-color: currentcolor;
+}
+
+.am-input-number-disabled.am-input-number-outlined .am-input-number-wrapper {
+  background: var(--am-color-bg-container-disabled);
+}

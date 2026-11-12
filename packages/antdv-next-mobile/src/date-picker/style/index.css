@@ -1,0 +1,7 @@
+/* DatePicker is composed of the shared picker trigger, picker popup and PickerView. */
+.am-date-picker-view {
+  --am-date-picker-view-font-size: var(--am-font-size-lg);
+
+  font-size: var(--am-date-picker-view-font-size);
+  font-variant-numeric: tabular-nums;
+}

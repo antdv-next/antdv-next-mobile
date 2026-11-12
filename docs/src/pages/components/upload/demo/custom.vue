@@ -1,0 +1,40 @@
+<docs lang="zh-CN">
+默认插槽自定义上传按钮的内容，`columns` 设置宫格列数，`capture` 可直接调起相机，也可以覆盖 `--am-upload-*` 变量调整外观。
+</docs>
+
+<script setup lang="ts">
+import type { UploadFile } from 'antdv-next-mobile'
+import { CameraOutlined } from '@antdv-next/icons'
+import { ref } from 'vue'
+
+const fileList = ref<UploadFile[]>([])
+</script>
+
+<template>
+  <am-upload v-model:file-list="fileList" accept="image/*" capture="environment" :columns="3" class="custom-upload">
+    <div class="trigger">
+      <CameraOutlined class="trigger-icon" />
+      <span>拍照上传</span>
+    </div>
+  </am-upload>
+</template>
+
+<style scoped>
+.custom-upload {
+  --am-upload-gap: 12px;
+  --am-upload-item-border-radius: 12px;
+}
+
+.trigger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  color: var(--am-color-text-description);
+  font-size: 12px;
+}
+
+.trigger-icon {
+  font-size: 24px;
+}
+</style>

@@ -1,0 +1,29 @@
+<docs lang="zh-CN">
+通过 `placement` 设置抽屉滑出的方向。
+</docs>
+
+<script setup lang="ts">
+import type { DrawerPlacement } from 'antdv-next-mobile'
+import { ref } from 'vue'
+
+const open = ref(false)
+const placement = ref<DrawerPlacement>('bottom')
+const placements: DrawerPlacement[] = ['top', 'right', 'bottom', 'left']
+
+function show(value: DrawerPlacement) {
+  placement.value = value
+  open.value = true
+}
+</script>
+
+<template>
+  <am-flex gap="small" wrap>
+    <am-button v-for="item in placements" :key="item" @click="show(item)">
+      {{ item }}
+    </am-button>
+  </am-flex>
+  <am-drawer v-model:open="open" :placement="placement" :title="`从 ${placement} 滑出`">
+    <p>一些内容...</p>
+    <p>一些内容...</p>
+  </am-drawer>
+</template>

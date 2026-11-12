@@ -1,0 +1,159 @@
+.am-segmented {
+  /* component tokens */
+  --am-segmented-height: var(--am-control-height-sm);
+  --am-segmented-padding: 2px;
+  --am-segmented-font-size: var(--am-font-size);
+  --am-segmented-item-padding-inline: var(--am-padding-sm);
+  --am-segmented-background: var(--am-color-fill-secondary);
+  --am-segmented-color: var(--am-color-text-secondary);
+  --am-segmented-selected-color: var(--am-color-text);
+  --am-segmented-selected-background: var(--am-color-bg-elevated);
+  --am-segmented-border-radius: var(--am-border-radius);
+  --am-segmented-item-border-radius: calc(var(--am-segmented-border-radius) - var(--am-segmented-padding));
+
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: var(--am-segmented-padding);
+  color: var(--am-segmented-color);
+  font-size: var(--am-segmented-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1.2;
+  vertical-align: top;
+  background: var(--am-segmented-background);
+  border-radius: var(--am-segmented-border-radius);
+}
+
+.am-segmented-group {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.am-segmented-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  background: var(--am-segmented-selected-background);
+  border-radius: var(--am-segmented-item-border-radius);
+  box-shadow: var(--am-box-shadow-secondary);
+  pointer-events: none;
+}
+
+.am-segmented-thumb-animated {
+  transition:
+    transform var(--am-motion-duration-slow) var(--am-motion-ease-in-out),
+    width var(--am-motion-duration-slow) var(--am-motion-ease-in-out),
+    height var(--am-motion-duration-slow) var(--am-motion-ease-in-out);
+}
+
+.am-segmented-item {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: calc(var(--am-segmented-height) - var(--am-segmented-padding) * 2);
+  padding: 0 var(--am-segmented-item-padding-inline);
+  text-align: center;
+  border-radius: var(--am-segmented-item-border-radius);
+  outline: none;
+  cursor: pointer;
+  transition: color var(--am-motion-duration-mid);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.am-segmented-item:not(.am-segmented-item-selected, .am-segmented-item-disabled):active {
+  color: var(--am-segmented-selected-color);
+  background: var(--am-color-fill-secondary);
+}
+
+.am-segmented-item:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: -2px;
+}
+
+.am-segmented-item-selected {
+  color: var(--am-segmented-selected-color);
+}
+
+/* fallback before the thumb can be measured */
+.am-segmented:not(.am-segmented-with-thumb) .am-segmented-item-selected {
+  background: var(--am-segmented-selected-background);
+  box-shadow: var(--am-box-shadow-secondary);
+}
+
+.am-segmented-item-disabled {
+  color: var(--am-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.am-segmented-item-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+}
+
+.am-segmented-item-label {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- block ---------- */
+.am-segmented-block {
+  display: block;
+  width: 100%;
+}
+
+.am-segmented-block .am-segmented-item {
+  flex: 1 1 0;
+}
+
+/* ---------- vertical ---------- */
+.am-segmented-vertical .am-segmented-group {
+  flex-direction: column;
+}
+
+.am-segmented-vertical .am-segmented-item {
+  justify-content: flex-start;
+}
+
+/* ---------- sizes ---------- */
+.am-segmented-sm {
+  --am-segmented-height: var(--am-control-height-xs);
+  --am-segmented-font-size: var(--am-font-size-sm);
+  --am-segmented-item-padding-inline: var(--am-padding-xs);
+  --am-segmented-border-radius: var(--am-border-radius-sm);
+}
+
+.am-segmented-lg {
+  --am-segmented-height: var(--am-control-height);
+  --am-segmented-font-size: var(--am-font-size-lg);
+  --am-segmented-item-padding-inline: var(--am-padding);
+}
+
+/* ---------- shape ---------- */
+.am-segmented-round {
+  --am-segmented-border-radius: 999px;
+  --am-segmented-item-border-radius: 999px;
+}
+
+.am-segmented-round.am-segmented-vertical {
+  --am-segmented-border-radius: calc(var(--am-segmented-height) / 2);
+  --am-segmented-item-border-radius: calc(var(--am-segmented-height) / 2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-segmented-thumb-animated {
+    transition-duration: 0.01s;
+  }
+}

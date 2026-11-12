@@ -1,0 +1,31 @@
+.am-flex {
+  /* component tokens */
+  --am-flex-gap-small: var(--am-padding-xs);
+  --am-flex-gap-middle: var(--am-padding);
+  --am-flex-gap-large: var(--am-padding-lg);
+
+  display: flex;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.am-flex-vertical {
+  flex-direction: column;
+}
+
+.am-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.am-flex-gap-small {
+  gap: var(--am-flex-gap-small);
+}
+
+.am-flex-gap-middle {
+  gap: var(--am-flex-gap-middle);
+}
+
+.am-flex-gap-large {
+  gap: var(--am-flex-gap-large);
+}

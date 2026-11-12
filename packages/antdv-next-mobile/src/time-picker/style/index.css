@@ -1,0 +1,4 @@
+/* TimePicker is DatePicker in `time` mode: shared picker trigger + picker popup + PickerView. */
+.am-time-picker {
+  font-variant-numeric: tabular-nums;
+}

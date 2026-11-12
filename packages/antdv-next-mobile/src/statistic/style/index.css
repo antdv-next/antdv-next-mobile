@@ -1,0 +1,62 @@
+.am-statistic {
+  /* component tokens */
+  --am-statistic-title-color: var(--am-color-text-description);
+  --am-statistic-title-font-size: var(--am-font-size);
+  --am-statistic-title-margin: var(--am-margin-xxs);
+  --am-statistic-content-color: var(--am-color-text-heading);
+  --am-statistic-content-font-size: 24px;
+  --am-statistic-content-font-weight: 400;
+  --am-statistic-decimal-font-size: 0.75em;
+  --am-statistic-gap: 4px;
+
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+}
+
+.am-statistic-header {
+  margin-block-end: var(--am-statistic-title-margin);
+}
+
+.am-statistic-title {
+  color: var(--am-statistic-title-color);
+  font-size: var(--am-statistic-title-font-size);
+}
+
+.am-statistic-content {
+  color: var(--am-statistic-content-color);
+  font-weight: var(--am-statistic-content-font-weight);
+  font-size: var(--am-statistic-content-font-size);
+  line-height: 1.3;
+  word-break: break-all;
+  font-variant-numeric: tabular-nums;
+}
+
+.am-statistic-content-value {
+  display: inline-block;
+  direction: ltr;
+}
+
+.am-statistic-content-value-decimal {
+  font-size: var(--am-statistic-decimal-font-size);
+}
+
+.am-statistic-content-prefix,
+.am-statistic-content-suffix {
+  display: inline-block;
+}
+
+.am-statistic-content-prefix {
+  margin-inline-end: var(--am-statistic-gap);
+}
+
+.am-statistic-content-suffix {
+  margin-inline-start: var(--am-statistic-gap);
+  font-size: 0.67em;
+}
+
+.am-statistic-skeleton {
+  padding-block: 8px;
+}

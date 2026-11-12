@@ -41,7 +41,11 @@ export default defineConfig({
     cssCodeSplit: true,
     minify: false,
     lib: {
-      entry: join(root, 'src/index.ts'),
+      entry: {
+        'index': join(root, 'src/index.ts'),
+        'locale/zh_CN': join(root, 'src/locale/zh_CN.ts'),
+        'locale/en_US': join(root, 'src/locale/en_US.ts'),
+      },
       formats: ['es'],
     },
     rollupOptions: {

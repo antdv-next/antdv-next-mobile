@@ -2,10 +2,13 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "composite": false,
+    "paths": {
+      "csstype": ["./node_modules/csstype"]
+    },
     "types": ["node", "vite/client", "vitest/globals"],
     "strict": true,
-    "noUncheckedIndexedAccess": false,
     "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noEmit": true

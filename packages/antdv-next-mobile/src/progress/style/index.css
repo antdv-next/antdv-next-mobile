@@ -1,0 +1,269 @@
+.am-progress {
+  /* component tokens */
+  --am-progress-color: var(--am-color-primary);
+  --am-progress-rail-color: var(--am-color-fill-secondary);
+  --am-progress-success-color: var(--am-color-success);
+  --am-progress-exception-color: var(--am-color-error);
+  --am-progress-line-height: 8px;
+  --am-progress-line-border-radius: 100px;
+  --am-progress-info-color: var(--am-color-text);
+  --am-progress-info-font-size: var(--am-font-size);
+  --am-progress-info-gap: var(--am-margin-xs);
+  --am-progress-circle-info-color: var(--am-color-text);
+  --am-progress-steps-item-width: 14px;
+  --am-progress-steps-gap: 2px;
+  /* resolved by status classes */
+  --am-progress-track-color: var(--am-progress-color);
+
+  box-sizing: border-box;
+  color: var(--am-progress-info-color);
+  font-size: var(--am-progress-info-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1;
+}
+
+.am-progress-status-success {
+  --am-progress-track-color: var(--am-progress-success-color);
+}
+
+.am-progress-status-exception {
+  --am-progress-track-color: var(--am-progress-exception-color);
+}
+
+.am-progress-indicator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.am-progress-status-success .am-progress-indicator,
+.am-progress-status-exception .am-progress-indicator {
+  color: var(--am-progress-track-color);
+}
+
+/* ---------- line ---------- */
+.am-progress-line {
+  display: flex;
+  gap: var(--am-progress-info-gap);
+  align-items: center;
+  width: 100%;
+}
+
+.am-progress-line .am-progress-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.am-progress-line .am-progress-rail {
+  position: relative;
+  width: 100%;
+  height: var(--am-progress-line-height);
+  overflow: hidden;
+  background: var(--am-progress-rail-color);
+  border-radius: var(--am-progress-line-border-radius);
+}
+
+.am-progress-line .am-progress-track {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  display: flex;
+  align-items: center;
+  background: var(--am-progress-track-color);
+  border-radius: var(--am-progress-line-border-radius);
+  transition: width var(--am-motion-duration-slow) var(--am-motion-ease-in-out);
+}
+
+.am-progress-line .am-progress-track-success {
+  background: var(--am-progress-success-color);
+}
+
+.am-progress-line .am-progress-indicator {
+  min-width: 2em;
+  font-size: 1em;
+}
+
+.am-progress-line.am-progress-status-success .am-progress-indicator,
+.am-progress-line.am-progress-status-exception .am-progress-indicator {
+  font-size: 1.15em;
+}
+
+.am-progress-small {
+  --am-progress-line-height: 6px;
+  --am-progress-info-font-size: var(--am-font-size-sm);
+  --am-progress-steps-item-width: 2px;
+}
+
+/* info position */
+.am-progress-line-align-start.am-progress-line-position-outer {
+  flex-direction: row-reverse;
+}
+
+.am-progress-line-align-center.am-progress-line-position-outer {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.am-progress-line-align-center.am-progress-line-position-outer .am-progress-indicator {
+  justify-content: center;
+}
+
+.am-progress-line-position-inner {
+  --am-progress-line-height: 20px;
+}
+
+.am-progress-line-position-inner .am-progress-track {
+  min-width: max-content;
+}
+
+.am-progress-line .am-progress-indicator-inner {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 0 var(--am-padding-xs);
+  color: var(--am-color-text-light-solid);
+  font-size: var(--am-font-size-sm);
+  justify-content: flex-end;
+}
+
+.am-progress-line-align-start .am-progress-indicator-inner {
+  justify-content: flex-start;
+}
+
+.am-progress-line-align-center .am-progress-indicator-inner {
+  justify-content: center;
+}
+
+/* active */
+.am-progress-status-active .am-progress-track::before {
+  position: absolute;
+  inset: 0;
+  background: var(--am-color-white);
+  border-radius: inherit;
+  opacity: 0;
+  animation: am-progress-active 2.4s var(--am-motion-ease-out-circ) infinite;
+  content: '';
+}
+
+[dir='rtl'] .am-progress-status-active .am-progress-track::before {
+  animation-name: am-progress-active-rtl;
+}
+
+/* ---------- steps ---------- */
+.am-progress-steps {
+  display: inline-flex;
+  width: auto;
+}
+
+.am-progress-steps .am-progress-steps-body {
+  display: flex;
+  flex: none;
+  gap: var(--am-progress-steps-gap);
+  align-items: center;
+}
+
+.am-progress-steps-item {
+  flex: none;
+  width: var(--am-progress-steps-item-width);
+  height: var(--am-progress-line-height);
+  background: var(--am-progress-rail-color);
+  transition: background-color var(--am-motion-duration-slow);
+}
+
+.am-progress-steps-item-active {
+  background: var(--am-progress-track-color);
+}
+
+/* ---------- circle ---------- */
+.am-progress-circle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.am-progress-circle .am-progress-body {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.am-progress-circle-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.am-progress-circle .am-progress-rail {
+  stroke: var(--am-progress-rail-color);
+}
+
+.am-progress-circle .am-progress-track {
+  transition:
+    stroke-dasharray var(--am-motion-duration-slow) var(--am-motion-ease-in-out),
+    stroke var(--am-motion-duration-slow);
+  stroke: var(--am-progress-track-color);
+}
+
+.am-progress-circle .am-progress-track-success {
+  stroke: var(--am-progress-success-color);
+}
+
+.am-progress-circle .am-progress-track-empty {
+  opacity: 0;
+}
+
+.am-progress-circle .am-progress-indicator {
+  position: absolute;
+  inset: 0;
+  justify-content: center;
+  padding: 0 12%;
+  color: var(--am-progress-circle-info-color);
+  white-space: normal;
+  text-align: center;
+}
+
+.am-progress-circle.am-progress-status-success .am-progress-indicator,
+.am-progress-circle.am-progress-status-exception .am-progress-indicator {
+  color: var(--am-progress-track-color);
+  font-size: 1.3em;
+}
+
+@keyframes am-progress-active {
+  0% {
+    transform: translateX(-100%) scaleX(0);
+    opacity: 0.1;
+  }
+
+  20% {
+    transform: translateX(-100%) scaleX(0);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes am-progress-active-rtl {
+  0% {
+    transform: translateX(100%) scaleX(0);
+    opacity: 0.1;
+  }
+
+  20% {
+    transform: translateX(100%) scaleX(0);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-progress-status-active .am-progress-track::before {
+    animation: none;
+  }
+}

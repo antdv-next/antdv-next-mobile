@@ -1,0 +1,149 @@
+.am-spin {
+  /* component tokens */
+  --am-spin-color: var(--am-color-primary);
+  --am-spin-size: 28px;
+  --am-spin-stroke-width: 4;
+  --am-spin-description-color: var(--am-color-text-secondary);
+  --am-spin-description-font-size: var(--am-font-size);
+  --am-spin-gap: var(--am-margin-xs);
+  --am-spin-mask-bg: color-mix(in srgb, var(--am-color-bg-container) 60%, transparent);
+  --am-spin-z-index: var(--am-z-index-popup-base);
+
+  display: none;
+  flex-direction: column;
+  gap: var(--am-spin-gap);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: var(--am-spin-color);
+  font-size: var(--am-spin-description-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.am-spin-spinning {
+  display: inline-flex;
+}
+
+.am-spin-indicator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--am-spin-size);
+  line-height: 1;
+}
+
+.am-spin-icon-svg {
+  width: var(--am-spin-size);
+  height: var(--am-spin-size);
+  animation: am-rotate 0.9s linear infinite;
+}
+
+.am-spin-icon-track,
+.am-spin-icon-rail {
+  stroke: currentcolor;
+  stroke-width: var(--am-spin-stroke-width);
+  stroke-linecap: round;
+}
+
+.am-spin-icon-track {
+  transition: stroke-dashoffset var(--am-motion-duration-slow);
+  stroke-dasharray: 90 150;
+}
+
+.am-spin-icon-rail {
+  opacity: 0.2;
+}
+
+.am-spin-icon-progress {
+  transform: rotate(-90deg);
+  animation: none;
+}
+
+.am-spin-description {
+  color: var(--am-spin-description-color);
+}
+
+/* ---------- sizes ---------- */
+.am-spin-sm {
+  --am-spin-size: 20px;
+  --am-spin-description-font-size: var(--am-font-size-sm);
+  --am-spin-gap: var(--am-margin-xxs);
+}
+
+.am-spin-lg {
+  --am-spin-size: 40px;
+  --am-spin-description-font-size: var(--am-font-size-lg);
+}
+
+/* ---------- nested ---------- */
+.am-spin-wrapper {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.am-spin-section {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity var(--am-motion-duration-slow),
+    visibility var(--am-motion-duration-slow);
+  pointer-events: none;
+}
+
+.am-spin-section.am-spin-spinning {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.am-spin-container {
+  position: relative;
+  transition: opacity var(--am-motion-duration-slow);
+}
+
+.am-spin-blur {
+  opacity: 0.4;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---------- fullscreen ---------- */
+.am-spin-fullscreen {
+  --am-spin-color: var(--am-color-white);
+  --am-spin-description-color: var(--am-color-white);
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--am-spin-z-index);
+  background: var(--am-color-bg-mask);
+  touch-action: none;
+}
+
+.am-spin-fullscreen.am-spin-spinning {
+  display: flex;
+  animation: am-spin-fade-in var(--am-motion-duration-slow);
+}
+
+@keyframes am-spin-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-spin-icon-svg {
+    animation-duration: 2.4s;
+  }
+}

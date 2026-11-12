@@ -1,0 +1,575 @@
+/* =====================================================================
+ * Input
+ * ================================================================== */
+.am-input,
+.am-textarea {
+  /* component tokens */
+  --am-input-height: var(--am-control-height);
+  --am-input-font-size: var(--am-font-size-lg);
+  --am-input-padding-inline: var(--am-padding-sm);
+  --am-input-border-radius: var(--am-border-radius);
+  --am-input-color: var(--am-color-text);
+  --am-input-placeholder-color: var(--am-color-text-placeholder);
+  --am-input-background: var(--am-color-bg-container);
+  --am-input-border-color: var(--am-color-border);
+  --am-input-active-border-color: var(--am-color-primary);
+  --am-input-filled-background: var(--am-color-fill-tertiary);
+  --am-input-affix-color: var(--am-color-text-tertiary);
+  --am-input-affix-gap: var(--am-margin-xs);
+  --am-input-clear-size: 16px;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  color: var(--am-input-color);
+  font-size: var(--am-input-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height-lg);
+  background: var(--am-input-background);
+  border: var(--am-line-width) var(--am-line-type) var(--am-input-border-color);
+  border-radius: var(--am-input-border-radius);
+  transition:
+    border-color var(--am-motion-duration-mid),
+    background-color var(--am-motion-duration-mid);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-input {
+  display: inline-flex;
+  gap: var(--am-input-affix-gap);
+  align-items: center;
+  height: var(--am-input-height);
+  padding: 0 var(--am-input-padding-inline);
+  vertical-align: middle;
+}
+
+.am-input-input,
+.am-textarea-input {
+  flex: 1;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  /* >= 16px keeps iOS Safari from zooming in on focus */
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  caret-color: var(--am-input-active-border-color);
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-input-input {
+  height: 100%;
+}
+
+.am-input-input::placeholder,
+.am-textarea-input::placeholder {
+  color: var(--am-input-placeholder-color);
+  opacity: 1;
+}
+
+.am-input-input::-webkit-search-cancel-button,
+.am-input-input::-webkit-search-decoration {
+  display: none;
+  appearance: none;
+}
+
+.am-input-input[type='number']::-webkit-inner-spin-button,
+.am-input-input[type='number']::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.am-input-prefix,
+.am-input-suffix,
+.am-input-count {
+  display: inline-flex;
+  flex: none;
+  gap: var(--am-input-affix-gap);
+  align-items: center;
+  color: var(--am-input-affix-color);
+}
+
+.am-input-count,
+.am-textarea-count {
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-font-size-sm);
+  white-space: nowrap;
+}
+
+.am-input-clear,
+.am-textarea-clear {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  /* enlarge the touch target without changing the layout */
+  margin: -8px;
+  padding: 8px;
+  color: var(--am-color-text-quaternary);
+  font-size: var(--am-input-clear-size);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.am-input-clear:active,
+.am-textarea-clear:active {
+  color: var(--am-color-text-tertiary);
+}
+
+/* ---------- alignment ---------- */
+.am-input-align-center,
+.am-textarea-align-center {
+  text-align: center;
+}
+
+.am-input-align-end,
+.am-textarea-align-end,
+.am-form-item-content-end .am-input:not(.am-input-align-start, .am-input-align-center),
+.am-form-item-content-end .am-textarea:not(.am-textarea-align-start, .am-textarea-align-center) {
+  text-align: end;
+}
+
+/* ---------- sizes ---------- */
+.am-input-sm,
+.am-textarea-sm {
+  --am-input-height: var(--am-control-height-sm);
+  --am-input-padding-inline: var(--am-padding-xs);
+  --am-input-border-radius: var(--am-border-radius-sm);
+}
+
+.am-input-lg,
+.am-textarea-lg {
+  --am-input-height: var(--am-control-height-lg);
+  --am-input-font-size: var(--am-font-size-xl);
+  --am-input-padding-inline: var(--am-padding);
+  --am-input-border-radius: var(--am-border-radius-lg);
+}
+
+/* ---------- variants ---------- */
+.am-input-outlined.am-input-focused,
+.am-textarea-outlined.am-textarea-focused {
+  border-color: var(--am-input-active-border-color);
+}
+
+.am-input-filled,
+.am-textarea-filled {
+  background: var(--am-input-filled-background);
+  border-color: transparent;
+}
+
+.am-input-filled.am-input-focused,
+.am-textarea-filled.am-textarea-focused {
+  background: var(--am-input-background);
+  border-color: var(--am-input-active-border-color);
+}
+
+.am-input-borderless,
+.am-textarea-borderless {
+  background: transparent;
+  border-color: transparent;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.am-input-borderless {
+  height: auto;
+  min-height: var(--am-form-item-content-min-height, 24px);
+  padding: 0;
+}
+
+.am-input-underlined,
+.am-textarea-underlined {
+  background: transparent;
+  border-width: 0 0 var(--am-line-width);
+  border-radius: 0;
+}
+
+.am-input-underlined {
+  padding-inline: 0;
+}
+
+.am-input-underlined.am-input-focused,
+.am-textarea-underlined.am-textarea-focused {
+  border-color: var(--am-input-active-border-color);
+}
+
+/* ---------- status ---------- */
+.am-input-status-error,
+.am-textarea-status-error {
+  --am-input-border-color: var(--am-color-error);
+  --am-input-active-border-color: var(--am-color-error);
+  --am-input-filled-background: var(--am-color-error-bg);
+}
+
+.am-input-status-warning,
+.am-textarea-status-warning {
+  --am-input-border-color: var(--am-color-warning);
+  --am-input-active-border-color: var(--am-color-warning);
+  --am-input-filled-background: var(--am-color-warning-bg);
+}
+
+.am-input-borderless.am-input-status-error,
+.am-textarea-borderless.am-textarea-status-error {
+  --am-input-color: var(--am-color-error);
+}
+
+.am-input-borderless.am-input-status-warning,
+.am-textarea-borderless.am-textarea-status-warning {
+  --am-input-color: var(--am-color-warning);
+}
+
+/* ---------- disabled ---------- */
+.am-input-disabled,
+.am-textarea-disabled {
+  color: var(--am-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.am-input-disabled.am-input-outlined,
+.am-textarea-disabled.am-textarea-outlined {
+  background: var(--am-color-bg-container-disabled);
+}
+
+.am-input-disabled .am-input-input,
+.am-textarea-disabled .am-textarea-input {
+  cursor: not-allowed;
+  /* iOS dims disabled inputs on its own */
+  opacity: 1;
+  -webkit-text-fill-color: currentcolor;
+}
+
+/* =====================================================================
+ * TextArea
+ * ================================================================== */
+.am-textarea {
+  display: inline-flex;
+  flex-direction: column;
+  padding: var(--am-padding-xs) var(--am-input-padding-inline);
+  vertical-align: middle;
+}
+
+.am-textarea-input {
+  display: block;
+  flex: none;
+  height: auto;
+  min-height: 1.5em;
+  overflow-y: auto;
+  resize: none;
+}
+
+.am-textarea-allow-clear .am-textarea-input {
+  padding-inline-end: calc(var(--am-input-clear-size) + var(--am-input-affix-gap));
+}
+
+.am-textarea-clear {
+  position: absolute;
+  top: var(--am-padding-xs);
+  inset-inline-end: var(--am-input-padding-inline);
+  height: 1.5em;
+  margin-block: 0;
+  padding-block: 0;
+}
+
+.am-textarea-count {
+  align-self: flex-end;
+  margin-top: var(--am-margin-xxs);
+}
+
+.am-textarea-borderless {
+  padding: 0;
+}
+
+.am-textarea-borderless .am-textarea-clear {
+  top: 0;
+  inset-inline-end: 0;
+}
+
+.am-textarea-underlined {
+  padding-inline: 0;
+}
+
+.am-textarea-underlined .am-textarea-clear {
+  inset-inline-end: 0;
+}
+
+/* =====================================================================
+ * Password
+ * ================================================================== */
+.am-input-password-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: -8px;
+  padding: 8px;
+  color: var(--am-color-text-tertiary);
+  font-size: 18px;
+  line-height: 1;
+  outline: none;
+  cursor: pointer;
+}
+
+.am-input-password-icon:active {
+  color: var(--am-color-text);
+}
+
+.am-input-disabled .am-input-password-icon {
+  color: var(--am-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* =====================================================================
+ * Search
+ * ================================================================== */
+.am-input-search {
+  --am-input-search-height: 36px;
+  --am-input-search-border-radius: var(--am-border-radius);
+  --am-input-search-gap: var(--am-margin-sm);
+  --am-input-search-action-color: var(--am-color-primary);
+
+  display: flex;
+  gap: var(--am-input-search-gap);
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size-lg);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height-lg);
+}
+
+.am-input-search-round {
+  --am-input-search-border-radius: 999px;
+}
+
+.am-input-search-sm {
+  --am-input-search-height: var(--am-control-height-sm);
+}
+
+.am-input-search-lg {
+  --am-input-search-height: var(--am-control-height);
+}
+
+.am-input-search .am-input-search-input {
+  --am-input-height: var(--am-input-search-height);
+  --am-input-border-radius: var(--am-input-search-border-radius);
+
+  flex: 1;
+}
+
+.am-input-search-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.05em;
+}
+
+.am-input-search-button,
+.am-input-search-cancel {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--am-input-search-height);
+  margin: 0;
+  padding: 0;
+  color: var(--am-input-search-action-color);
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-input-search-cancel {
+  color: var(--am-color-text);
+}
+
+.am-input-search-button:active,
+.am-input-search-cancel:active {
+  opacity: var(--am-opacity-active);
+}
+
+.am-input-search-button:disabled {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+/* =====================================================================
+ * OTP
+ * ================================================================== */
+.am-otp {
+  --am-otp-cell-size: var(--am-control-height-lg);
+  --am-otp-gap: var(--am-margin-xs);
+  --am-otp-font-size: var(--am-font-size-heading-3);
+  --am-otp-border-radius: var(--am-border-radius);
+  --am-otp-border-color: var(--am-color-border);
+  --am-otp-active-border-color: var(--am-color-primary);
+  --am-otp-background: var(--am-color-bg-container);
+  --am-otp-filled-background: var(--am-color-fill-tertiary);
+
+  position: relative;
+  display: inline-flex;
+  gap: var(--am-otp-gap);
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  color: var(--am-color-text);
+  font-size: var(--am-otp-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-otp-input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: transparent;
+  /* >= 16px keeps iOS Safari from zooming in on focus */
+  font-size: 16px;
+  background: transparent;
+  border: 0;
+  outline: none;
+  opacity: 0;
+  caret-color: transparent;
+  appearance: none;
+}
+
+.am-otp-cell {
+  display: inline-flex;
+  flex: 1 1 var(--am-otp-cell-size);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-otp-cell-size);
+  min-width: 0;
+  max-width: var(--am-otp-cell-size);
+  height: var(--am-otp-cell-size);
+  font-weight: var(--am-font-weight-strong);
+  font-variant-numeric: tabular-nums;
+  background: var(--am-otp-background);
+  border: var(--am-line-width) var(--am-line-type) var(--am-otp-border-color);
+  border-radius: var(--am-otp-border-radius);
+  transition:
+    border-color var(--am-motion-duration-mid),
+    background-color var(--am-motion-duration-mid);
+}
+
+.am-otp-cell-active {
+  border-color: var(--am-otp-active-border-color);
+}
+
+.am-otp-caret {
+  width: 2px;
+  height: 45%;
+  background: var(--am-otp-active-border-color);
+  border-radius: 1px;
+  animation: am-otp-blink 1s steps(1) infinite;
+}
+
+.am-otp-separator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--am-color-text-quaternary);
+}
+
+/* ---------- variants ---------- */
+.am-otp-filled .am-otp-cell {
+  background: var(--am-otp-filled-background);
+  border-color: transparent;
+}
+
+.am-otp-filled .am-otp-cell-active {
+  background: var(--am-otp-background);
+  border-color: var(--am-otp-active-border-color);
+}
+
+.am-otp-borderless .am-otp-cell {
+  background: var(--am-otp-filled-background);
+  border-color: transparent;
+}
+
+.am-otp-borderless .am-otp-cell-active {
+  border-color: var(--am-otp-active-border-color);
+}
+
+.am-otp-underlined .am-otp-cell {
+  background: transparent;
+  border-width: 0 0 2px;
+  border-radius: 0;
+}
+
+/* ---------- sizes ---------- */
+.am-otp-sm {
+  --am-otp-cell-size: var(--am-control-height);
+  --am-otp-font-size: var(--am-font-size-xl);
+  --am-otp-border-radius: var(--am-border-radius-sm);
+}
+
+.am-otp-lg {
+  --am-otp-cell-size: 56px;
+  --am-otp-font-size: var(--am-font-size-heading-2);
+  --am-otp-border-radius: var(--am-border-radius-lg);
+}
+
+/* ---------- status ---------- */
+.am-otp-status-error {
+  --am-otp-border-color: var(--am-color-error);
+  --am-otp-active-border-color: var(--am-color-error);
+  --am-otp-filled-background: var(--am-color-error-bg);
+}
+
+.am-otp-status-warning {
+  --am-otp-border-color: var(--am-color-warning);
+  --am-otp-active-border-color: var(--am-color-warning);
+  --am-otp-filled-background: var(--am-color-warning-bg);
+}
+
+.am-otp-disabled {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-otp-disabled .am-otp-input {
+  cursor: not-allowed;
+}
+
+@keyframes am-otp-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-otp-caret {
+    animation: none;
+  }
+}

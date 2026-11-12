@@ -1,0 +1,229 @@
+.am-list {
+  /* component tokens */
+  --am-list-background: var(--am-color-bg-container);
+  --am-list-font-size: var(--am-font-size-lg);
+  --am-list-border-color: var(--am-color-split);
+  --am-list-header-color: var(--am-color-text-tertiary);
+  --am-list-header-font-size: var(--am-font-size);
+  --am-list-header-padding: var(--am-padding-sm) var(--am-padding) var(--am-padding-xs);
+  --am-list-card-margin-inline: var(--am-margin-sm);
+  --am-list-card-border-radius: var(--am-border-radius-lg);
+  --am-list-item-padding-inline: var(--am-padding);
+  --am-list-item-padding-block: var(--am-padding-sm);
+  --am-list-item-min-height: 48px;
+  --am-list-item-prefix-gap: var(--am-padding-sm);
+  --am-list-item-description-color: var(--am-color-text-tertiary);
+  --am-list-item-description-font-size: var(--am-font-size);
+  --am-list-item-extra-color: var(--am-color-text-tertiary);
+  --am-list-item-arrow-color: var(--am-color-text-quaternary);
+
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-list-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height-lg);
+}
+
+.am-list-sm {
+  --am-list-font-size: var(--am-font-size);
+  --am-list-item-padding-block: var(--am-padding-xs);
+  --am-list-item-min-height: 40px;
+  --am-list-item-description-font-size: var(--am-font-size-sm);
+}
+
+.am-list-lg {
+  --am-list-item-padding-block: var(--am-padding);
+  --am-list-item-min-height: 56px;
+}
+
+.am-list-header,
+.am-list-footer {
+  box-sizing: border-box;
+  padding: var(--am-list-header-padding);
+  color: var(--am-list-header-color);
+  font-size: var(--am-list-header-font-size);
+  line-height: var(--am-line-height);
+}
+
+.am-list-footer {
+  padding: var(--am-padding-xs) var(--am-padding) var(--am-padding-sm);
+}
+
+.am-list-body {
+  position: relative;
+  background: var(--am-list-background);
+}
+
+.am-list-default.am-list-bordered > .am-list-body::before,
+.am-list-default.am-list-bordered > .am-list-body::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  border-top: var(--am-line-width) var(--am-line-type) var(--am-list-border-color);
+  transform: scaleY(0.5);
+  content: '';
+  pointer-events: none;
+}
+
+.am-list-default.am-list-bordered > .am-list-body::before {
+  top: 0;
+  transform-origin: top;
+}
+
+.am-list-default.am-list-bordered > .am-list-body::after {
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+/* ---------- card ---------- */
+.am-list-card > .am-list-body {
+  margin: 0 var(--am-list-card-margin-inline);
+  overflow: hidden;
+  border-radius: var(--am-list-card-border-radius);
+}
+
+.am-list-card > .am-list-header,
+.am-list-card > .am-list-footer {
+  padding-inline: calc(var(--am-list-card-margin-inline) + var(--am-list-item-padding-inline));
+}
+
+/* ---------- empty / loading ---------- */
+.am-list-empty,
+.am-list-spin {
+  display: flex;
+  gap: var(--am-padding-xs);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--am-padding-lg) var(--am-padding);
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-font-size);
+}
+
+.am-list-spin {
+  padding: var(--am-padding) var(--am-padding);
+}
+
+/* ---------- item ---------- */
+.am-list-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding-inline-start: var(--am-list-item-padding-inline, 16px);
+  color: var(--am-color-text);
+  font-size: var(--am-list-font-size, var(--am-font-size-lg));
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height-lg);
+  text-decoration: none;
+  background: var(--am-list-background, var(--am-color-bg-container));
+  outline: none;
+  transition: background-color var(--am-motion-duration-mid);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-list-item-clickable {
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.am-list-item-clickable:active {
+  background: color-mix(in srgb, var(--am-list-background, var(--am-color-bg-container)), var(--am-color-text-base) 5%);
+}
+
+.am-list-item:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: -2px;
+}
+
+.am-list-item-disabled {
+  cursor: not-allowed;
+}
+
+.am-list-item-disabled > * {
+  opacity: var(--am-opacity-disabled);
+  pointer-events: none;
+}
+
+.am-list-item-prefix {
+  display: flex;
+  flex: none;
+  align-items: center;
+  padding-block: var(--am-list-item-padding-block, 12px);
+  padding-inline-end: var(--am-list-item-prefix-gap, 12px);
+}
+
+.am-list-item-main {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  gap: var(--am-padding-xs);
+  align-items: center;
+  align-self: stretch;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: var(--am-list-item-min-height, 48px);
+  padding-block: var(--am-list-item-padding-block, 12px);
+  padding-inline-end: var(--am-list-item-padding-inline, 16px);
+}
+
+/* hairline between items, inset from the title */
+.am-list-item + .am-list-item > .am-list-item-main::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-top: var(--am-line-width) var(--am-line-type) var(--am-list-border-color, var(--am-color-split));
+  transform: scaleY(0.5);
+  transform-origin: top;
+  content: '';
+  pointer-events: none;
+}
+
+.am-list-item-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.am-list-item-title {
+  word-break: break-word;
+}
+
+.am-list-item-description {
+  margin-top: 2px;
+  color: var(--am-list-item-description-color, var(--am-color-text-tertiary));
+  font-size: var(--am-list-item-description-font-size, var(--am-font-size));
+  line-height: var(--am-line-height);
+  word-break: break-word;
+}
+
+.am-list-item-extra {
+  flex: none;
+  max-width: 70%;
+  color: var(--am-list-item-extra-color, var(--am-color-text-tertiary));
+  text-align: end;
+  word-break: break-word;
+}
+
+.am-list-item-arrow {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--am-list-item-arrow-color, var(--am-color-text-quaternary));
+  font-size: 14px;
+}
+
+[dir='rtl'] .am-list-item-arrow > .anticon {
+  transform: scaleX(-1);
+}
+
+.am-list-item-align-start,
+.am-list-item-align-start > .am-list-item-main {
+  align-items: flex-start;
+}
+
+.am-list-item-align-start .am-list-item-arrow {
+  height: calc(var(--am-list-font-size, var(--am-font-size-lg)) * var(--am-line-height-lg));
+}

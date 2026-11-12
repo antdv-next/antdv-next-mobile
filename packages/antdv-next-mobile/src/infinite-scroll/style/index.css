@@ -1,0 +1,54 @@
+.am-infinite-scroll {
+  --am-infinite-scroll-color: var(--am-color-text-description);
+  --am-infinite-scroll-font-size: var(--am-font-size);
+  --am-infinite-scroll-indicator-height: 48px;
+  --am-infinite-scroll-retry-color: var(--am-color-primary);
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* `up`: the indicator and the sentinel sit above the list */
+.am-infinite-scroll-up .am-infinite-scroll-placeholder {
+  order: -2;
+}
+
+.am-infinite-scroll-up .am-infinite-scroll-indicator {
+  order: -1;
+}
+
+.am-infinite-scroll-placeholder {
+  height: 0;
+  pointer-events: none;
+}
+
+.am-infinite-scroll-indicator > div {
+  display: flex;
+  gap: var(--am-margin-xs);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--am-infinite-scroll-indicator-height);
+  padding: var(--am-padding-xs) var(--am-padding);
+  color: var(--am-infinite-scroll-color);
+  font-size: var(--am-infinite-scroll-font-size);
+  text-align: center;
+}
+
+.am-infinite-scroll-error {
+  cursor: pointer;
+}
+
+.am-infinite-scroll-error:active {
+  opacity: var(--am-opacity-active);
+}
+
+.am-infinite-scroll-retry {
+  color: var(--am-infinite-scroll-retry-color);
+}

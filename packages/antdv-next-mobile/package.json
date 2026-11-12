@@ -15,13 +15,17 @@
   },
   "keywords": ["vue", "vue3", "mobile", "ui", "components", "antd", "antdv-next"],
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "**/style/**"
   ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./global": {
+      "types": "./global.d.ts"
     },
     "./style.css": "./dist/style.css",
     "./dist/style.css": "./dist/style.css",
@@ -51,6 +55,7 @@
   "dependencies": {
     "@antdv-next/icons": "catalog:prod",
     "@v-c/async-validator": "catalog:prod",
+    "csstype": "catalog:prod",
     "dayjs": "catalog:prod"
   },
   "devDependencies": {

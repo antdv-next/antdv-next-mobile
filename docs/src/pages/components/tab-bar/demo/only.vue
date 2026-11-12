@@ -1,0 +1,38 @@
+<docs lang="zh-CN">
+`title` 与 `icon` 都是可选的，可以只展示图标或只展示文字；`disabled` 禁用某一项。
+</docs>
+
+<script setup lang="ts">
+import type { TabBarItem } from 'antdv-next-mobile'
+import { AppstoreOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@antdv-next/icons'
+import { h } from 'vue'
+
+const iconOnly: TabBarItem[] = [
+  { key: 'home', icon: () => h(HomeOutlined) },
+  { key: 'apps', icon: () => h(AppstoreOutlined) },
+  { key: 'message', icon: () => h(MessageOutlined), badge: true },
+  { key: 'me', icon: () => h(UserOutlined) },
+]
+
+const titleOnly: TabBarItem[] = [
+  { key: 'home', title: '首页' },
+  { key: 'apps', title: '应用', badge: 3 },
+  { key: 'message', title: '消息', disabled: true },
+  { key: 'me', title: '我的' },
+]
+</script>
+
+<template>
+  <div class="stack">
+    <am-tab-bar :items="iconOnly" :safe-area="false" />
+    <am-tab-bar :items="titleOnly" :safe-area="false" />
+  </div>
+</template>
+
+<style scoped>
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+</style>

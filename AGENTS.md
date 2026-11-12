@@ -79,6 +79,8 @@ defineSlots<FooSlots>()
   Boolean props that need a tri-state must default to `undefined` in `withDefaults` (Vue casts absent booleans to `false`).
 - **Render props (`VueNode`)**: every render-type prop has a same-named slot; the slot wins:
   `<slot name="icon"><RenderNode :node="icon" /></slot>`. Type them as `VueNode` (or `RenderNodeFn<Ctx>` and pass `:params`).
+  `VueNode` includes `boolean`, so Vue casts an absent prop to `false`: when `false` is meaningful (e.g. `icon: false`
+  hides the icon) declare `undefined` as its default in `withDefaults`.
 - **attrs**: `inheritAttrs: false` and `v-bind="$attrs"` on the root element so `class` / `style` / `data-*` land on the
   root and user values win. Support `rootClass`, and `classes` / `styles` for the meaningful semantic parts
   (always at least `root`).

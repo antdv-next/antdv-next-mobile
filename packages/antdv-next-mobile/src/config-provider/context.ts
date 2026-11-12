@@ -2,7 +2,7 @@ import type { ComputedRef, InjectionKey } from 'vue'
 import type { DirectionType, SizeType } from '../_util/type'
 import type { Locale } from '../locale/interface'
 import type { ResolvedTheme, ThemeConfig } from '../theme/interface'
-import { computed, inject, reactive } from 'vue'
+import { computed, inject, shallowReactive } from 'vue'
 import zhCN from '../locale/zh_CN'
 import { resolveTheme } from '../theme/util'
 
@@ -45,7 +45,7 @@ export interface GlobalConfig {
 }
 
 /** Global config used by components rendered outside any ConfigProvider (incl. static APIs such as `Modal.confirm`). */
-export const globalConfig = reactive<GlobalConfig>({})
+export const globalConfig = shallowReactive<GlobalConfig>({})
 
 /** `ConfigProvider.config({ theme, locale })`: config for static methods (message / Modal.confirm / toast ...). */
 export function setGlobalConfig(config: GlobalConfig) {

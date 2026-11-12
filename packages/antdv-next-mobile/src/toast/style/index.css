@@ -1,0 +1,83 @@
+.am-toast-root {
+  --am-toast-z-index: 2020;
+  --am-toast-bg: color-mix(in srgb, var(--am-color-black) 75%, transparent);
+  --am-toast-color: var(--am-color-white);
+  --am-toast-font-size: var(--am-font-size);
+  --am-toast-padding: var(--am-padding-xs) var(--am-padding-sm);
+  --am-toast-border-radius: var(--am-border-radius);
+  --am-toast-max-width: 70%;
+  --am-toast-min-width: 96px;
+  --am-toast-icon-size: 36px;
+  --am-toast-offset: 15%;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--am-toast-z-index);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: var(--am-toast-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  pointer-events: none;
+}
+
+/* maskClickable = false: swallow every touch below the toast */
+.am-toast-root-block {
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.am-toast {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-sizing: border-box;
+  width: max-content;
+  min-width: var(--am-toast-min-width);
+  max-width: var(--am-toast-max-width);
+  padding: var(--am-toast-padding);
+  color: var(--am-toast-color);
+  text-align: center;
+  word-break: break-word;
+  background: var(--am-toast-bg);
+  border-radius: var(--am-toast-border-radius);
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.am-toast-top {
+  top: var(--am-toast-offset);
+}
+
+.am-toast-bottom {
+  top: calc(100% - var(--am-toast-offset));
+}
+
+.am-toast-with-icon {
+  min-width: 120px;
+  padding: var(--am-padding) var(--am-padding-sm);
+}
+
+.am-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--am-toast-icon-size);
+  line-height: 1;
+}
+
+.am-toast-icon + .am-toast-content {
+  margin-top: var(--am-margin-xs);
+}
+
+.am-toast-fade-enter-active,
+.am-toast-fade-leave-active {
+  transition: opacity var(--am-motion-duration-mid) var(--am-motion-ease-out);
+}
+
+.am-toast-fade-enter-from,
+.am-toast-fade-leave-to {
+  opacity: 0;
+}

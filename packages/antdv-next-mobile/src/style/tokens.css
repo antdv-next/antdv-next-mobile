@@ -237,10 +237,22 @@
   --am-color-icon-hover: var(--am-color-text);
 
   /* ---------- map: background ---------- */
-  --am-color-bg-container: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-container), var(--am-color-bg-base));
-  --am-color-bg-elevated: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-elevated), var(--am-color-bg-base));
+  --am-color-bg-container: color-mix(
+    in srgb,
+    var(--am-color-text-base) var(--am-mix-bg-container),
+    var(--am-color-bg-base)
+  );
+  --am-color-bg-elevated: color-mix(
+    in srgb,
+    var(--am-color-text-base) var(--am-mix-bg-elevated),
+    var(--am-color-bg-base)
+  );
   --am-color-bg-layout: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-layout), var(--am-color-bg-base));
-  --am-color-bg-spotlight: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-bg-spotlight), var(--am-color-bg-base));
+  --am-color-bg-spotlight: color-mix(
+    in srgb,
+    var(--am-color-text-base) var(--am-mix-bg-spotlight),
+    var(--am-color-bg-base)
+  );
   --am-color-bg-container-disabled: var(--am-color-fill-tertiary);
   --am-color-bg-text-active: var(--am-color-fill);
 
@@ -248,12 +260,20 @@
   --am-color-fill: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill), transparent);
   --am-color-fill-secondary: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill-secondary), transparent);
   --am-color-fill-tertiary: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill-tertiary), transparent);
-  --am-color-fill-quaternary: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-fill-quaternary), transparent);
+  --am-color-fill-quaternary: color-mix(
+    in srgb,
+    var(--am-color-text-base) var(--am-alpha-fill-quaternary),
+    transparent
+  );
   --am-color-fill-content: var(--am-color-fill-secondary);
   --am-color-fill-alter: var(--am-color-fill-quaternary);
 
   /* ---------- map: border ---------- */
   --am-color-border: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-border), var(--am-color-bg-base));
-  --am-color-border-secondary: color-mix(in srgb, var(--am-color-text-base) var(--am-mix-border-secondary), var(--am-color-bg-base));
+  --am-color-border-secondary: color-mix(
+    in srgb,
+    var(--am-color-text-base) var(--am-mix-border-secondary),
+    var(--am-color-bg-base)
+  );
   --am-color-split: color-mix(in srgb, var(--am-color-text-base) var(--am-alpha-split), transparent);
 }

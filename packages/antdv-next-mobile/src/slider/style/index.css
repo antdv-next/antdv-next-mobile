@@ -1,0 +1,253 @@
+.am-slider {
+  /* component tokens */
+  --am-slider-rail-size: 4px;
+  --am-slider-handle-size: 24px;
+  --am-slider-dot-size: 8px;
+  --am-slider-rail-bg: var(--am-color-fill-secondary);
+  --am-slider-track-bg: var(--am-color-primary);
+  --am-slider-handle-bg: var(--am-color-white);
+  --am-slider-handle-shadow: 0 1px 4px 0 rgb(0 0 0 / 24%), 0 0 1px 0 rgb(0 0 0 / 16%);
+  --am-slider-dot-border-color: var(--am-color-border);
+  --am-slider-vertical-height: 200px;
+
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  /* keeps the handle inside the box and gives the rail a comfortable touch target */
+  padding: calc((var(--am-control-height) - var(--am-slider-rail-size)) / 2) calc(var(--am-slider-handle-size) / 2);
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  cursor: pointer;
+  user-select: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-slider-body {
+  position: relative;
+  height: var(--am-slider-rail-size);
+}
+
+.am-slider-rail {
+  position: absolute;
+  inset: 0;
+  background: var(--am-slider-rail-bg);
+  border-radius: var(--am-slider-rail-size);
+}
+
+.am-slider-track {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: var(--am-slider-track-bg);
+  border-radius: var(--am-slider-rail-size);
+}
+
+.am-slider-step {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.am-slider-dot {
+  position: absolute;
+  top: 50%;
+  box-sizing: border-box;
+  width: var(--am-slider-dot-size);
+  height: var(--am-slider-dot-size);
+  margin-top: calc(var(--am-slider-dot-size) / -2);
+  margin-inline: calc(var(--am-slider-dot-size) / -2);
+  background: var(--am-color-bg-container);
+  border: 2px solid var(--am-slider-dot-border-color);
+  border-radius: 50%;
+}
+
+.am-slider-dot-active {
+  border-color: var(--am-slider-track-bg);
+}
+
+.am-slider-handle {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--am-slider-handle-size);
+  height: var(--am-slider-handle-size);
+  margin-top: calc(var(--am-slider-handle-size) / -2);
+  margin-inline: calc(var(--am-slider-handle-size) / -2);
+  outline: none;
+  cursor: grab;
+}
+
+/* enlarges the touch target of the handle to 44px */
+.am-slider-handle::before {
+  position: absolute;
+  inset: calc((var(--am-slider-handle-size) - 44px) / 2);
+  content: '';
+}
+
+.am-slider-thumb {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: var(--am-slider-handle-bg);
+  border-radius: 50%;
+  box-shadow: var(--am-slider-handle-shadow);
+  transition: transform var(--am-motion-duration-fast);
+}
+
+.am-slider-handle-active {
+  z-index: 1;
+  cursor: grabbing;
+}
+
+.am-slider-handle-active .am-slider-thumb {
+  transform: scale(1.12);
+}
+
+.am-slider-handle:focus-visible .am-slider-thumb {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: 1px;
+}
+
+.am-slider-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 1;
+  min-width: 28px;
+  padding: 4px 8px;
+  color: var(--am-color-text-light-solid);
+  font-size: var(--am-font-size-sm);
+  line-height: 1.4;
+  white-space: nowrap;
+  text-align: center;
+  background: var(--am-color-bg-spotlight);
+  border-radius: var(--am-border-radius-sm);
+  box-shadow: var(--am-box-shadow-secondary);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.am-slider-tooltip::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border: 4px solid transparent;
+  border-top-color: var(--am-color-bg-spotlight);
+  content: '';
+}
+
+.am-slider-mark {
+  position: absolute;
+  top: calc(var(--am-slider-rail-size) + var(--am-slider-handle-size) / 2 + 2px);
+  right: 0;
+  left: 0;
+}
+
+.am-slider-mark-text {
+  position: absolute;
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-font-size-sm);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.am-slider-mark-text-active {
+  color: var(--am-color-text);
+}
+
+.am-slider-horizontal.am-slider-with-marks {
+  margin-bottom: var(--am-margin-xs);
+  padding-bottom: calc((var(--am-control-height) - var(--am-slider-rail-size)) / 2 + 12px);
+}
+
+.am-slider-horizontal.am-slider-reverse .am-slider-mark-text,
+[dir='rtl'] .am-slider-horizontal .am-slider-mark-text {
+  transform: translateX(50%);
+}
+
+[dir='rtl'] .am-slider-horizontal.am-slider-reverse .am-slider-mark-text {
+  transform: translateX(-50%);
+}
+
+/* ---------- vertical ---------- */
+.am-slider-vertical {
+  display: inline-block;
+  height: var(--am-slider-vertical-height);
+  padding: calc(var(--am-slider-handle-size) / 2) calc((var(--am-control-height) - var(--am-slider-rail-size)) / 2);
+  vertical-align: top;
+  touch-action: pan-x;
+}
+
+.am-slider-vertical .am-slider-body {
+  width: var(--am-slider-rail-size);
+  height: 100%;
+}
+
+.am-slider-vertical .am-slider-track {
+  top: auto;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.am-slider-vertical .am-slider-dot,
+.am-slider-vertical .am-slider-handle {
+  top: auto;
+  left: 50%;
+  margin-inline: 0;
+}
+
+.am-slider-vertical .am-slider-dot {
+  margin: calc(var(--am-slider-dot-size) / -2);
+}
+
+.am-slider-vertical .am-slider-handle {
+  margin: calc(var(--am-slider-handle-size) / -2);
+}
+
+.am-slider-vertical .am-slider-mark {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: calc(var(--am-slider-rail-size) + var(--am-slider-handle-size) / 2 + 6px);
+}
+
+.am-slider-vertical .am-slider-mark-text {
+  transform: translateY(50%);
+}
+
+.am-slider-vertical.am-slider-reverse .am-slider-mark-text {
+  transform: translateY(-50%);
+}
+
+[dir='rtl'] .am-slider-vertical .am-slider-mark {
+  right: calc(var(--am-slider-rail-size) + var(--am-slider-handle-size) / 2 + 6px);
+  left: auto;
+}
+
+/* ---------- disabled ---------- */
+.am-slider-disabled {
+  cursor: not-allowed;
+}
+
+.am-slider-disabled .am-slider-track,
+.am-slider-disabled .am-slider-dot-active {
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-slider-disabled .am-slider-handle {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-slider-thumb {
+    transition: none;
+  }
+}

@@ -1,0 +1,238 @@
+/* ---------- trigger: shared by every picker field ---------- */
+.am-picker-trigger {
+  --am-picker-trigger-height: var(--am-control-height);
+  --am-picker-trigger-font-size: var(--am-font-size-lg);
+  --am-picker-trigger-padding-inline: var(--am-padding-sm);
+  --am-picker-trigger-border-radius: var(--am-border-radius);
+  --am-picker-trigger-color: var(--am-color-text);
+  --am-picker-trigger-placeholder-color: var(--am-color-text-placeholder);
+  --am-picker-trigger-icon-color: var(--am-color-icon);
+  --am-picker-trigger-bg: var(--am-color-bg-container);
+  --am-picker-trigger-border-color: var(--am-color-border);
+  --am-picker-trigger-active-border-color: var(--am-color-primary);
+
+  display: flex;
+  gap: var(--am-padding-xs);
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--am-picker-trigger-height);
+  padding: 0 var(--am-picker-trigger-padding-inline);
+  color: var(--am-picker-trigger-color);
+  font-size: var(--am-picker-trigger-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height-lg);
+  background: var(--am-picker-trigger-bg);
+  border: var(--am-line-width) var(--am-line-type) var(--am-picker-trigger-border-color);
+  border-radius: var(--am-picker-trigger-border-radius);
+  outline: none;
+  cursor: pointer;
+  transition:
+    border-color var(--am-motion-duration-mid),
+    background-color var(--am-motion-duration-mid);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-picker-trigger-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.am-picker-trigger-placeholder {
+  color: var(--am-picker-trigger-placeholder-color);
+}
+
+.am-picker-trigger-suffix {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--am-picker-trigger-icon-color);
+  font-size: 0.875em;
+  line-height: 1;
+}
+
+.am-picker-trigger-clear {
+  /* enlarge the touch target without changing the layout */
+  margin: calc(var(--am-padding-xs) * -1);
+  padding: var(--am-padding-xs);
+  font-size: 1em;
+}
+
+.am-picker-trigger-clear:active {
+  color: var(--am-color-icon-hover);
+}
+
+.am-picker-trigger-open,
+.am-picker-trigger:focus-visible {
+  border-color: var(--am-picker-trigger-active-border-color);
+}
+
+/* ---------- variants ---------- */
+.am-picker-trigger-filled {
+  --am-picker-trigger-bg: var(--am-color-fill-tertiary);
+  --am-picker-trigger-border-color: transparent;
+}
+
+.am-picker-trigger-filled.am-picker-trigger-open {
+  --am-picker-trigger-bg: var(--am-color-bg-container);
+}
+
+/* plain text, same look as a borderless Input: the wrapping cell (FormItem) draws the box */
+.am-picker-trigger-borderless {
+  min-height: var(--am-form-item-content-min-height, 24px);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.am-picker-trigger-underlined {
+  padding-inline: 0;
+  background: transparent;
+  border-width: 0 0 var(--am-line-width);
+  border-radius: 0;
+}
+
+/* ---------- status ---------- */
+.am-picker-trigger-status-error {
+  --am-picker-trigger-border-color: var(--am-color-error);
+  --am-picker-trigger-active-border-color: var(--am-color-error);
+}
+
+.am-picker-trigger-status-warning {
+  --am-picker-trigger-border-color: var(--am-color-warning);
+  --am-picker-trigger-active-border-color: var(--am-color-warning);
+}
+
+.am-picker-trigger-filled.am-picker-trigger-status-error {
+  --am-picker-trigger-bg: var(--am-color-error-bg);
+  --am-picker-trigger-border-color: transparent;
+}
+
+.am-picker-trigger-filled.am-picker-trigger-status-warning {
+  --am-picker-trigger-bg: var(--am-color-warning-bg);
+  --am-picker-trigger-border-color: transparent;
+}
+
+/* without a border the status colours the text, like a borderless Input */
+.am-picker-trigger-borderless.am-picker-trigger-status-error {
+  --am-picker-trigger-color: var(--am-color-error);
+}
+
+.am-picker-trigger-borderless.am-picker-trigger-status-warning {
+  --am-picker-trigger-color: var(--am-color-warning);
+}
+
+/* ---------- sizes ---------- */
+.am-picker-trigger-sm {
+  --am-picker-trigger-height: var(--am-control-height-sm);
+  --am-picker-trigger-font-size: var(--am-font-size);
+  --am-picker-trigger-padding-inline: var(--am-padding-xs);
+  --am-picker-trigger-border-radius: var(--am-border-radius-sm);
+}
+
+.am-picker-trigger-lg {
+  --am-picker-trigger-height: var(--am-control-height-lg);
+  --am-picker-trigger-font-size: var(--am-font-size-xl);
+  --am-picker-trigger-padding-inline: var(--am-padding);
+  --am-picker-trigger-border-radius: var(--am-border-radius-lg);
+}
+
+/* ---------- disabled ---------- */
+.am-picker-trigger-disabled {
+  --am-picker-trigger-color: var(--am-color-text-disabled);
+  --am-picker-trigger-bg: var(--am-color-bg-container-disabled);
+
+  cursor: not-allowed;
+}
+
+.am-picker-trigger-disabled.am-picker-trigger-borderless,
+.am-picker-trigger-disabled.am-picker-trigger-underlined {
+  background: transparent;
+}
+
+/* ---------- popup with header: shared by every picker field ---------- */
+.am-picker-popup {
+  --am-picker-popup-header-height: 48px;
+  --am-picker-popup-title-font-size: var(--am-font-size-lg);
+  --am-picker-popup-button-font-size: var(--am-font-size-lg);
+  --am-picker-popup-confirm-color: var(--am-color-primary);
+  --am-picker-popup-cancel-color: var(--am-color-text-secondary);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.am-picker-popup-header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--am-picker-popup-header-height);
+}
+
+.am-picker-popup-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--am-color-text);
+  font-weight: var(--am-font-weight-strong);
+  font-size: var(--am-picker-popup-title-font-size);
+  white-space: nowrap;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.am-picker-popup-button {
+  flex: none;
+  box-sizing: border-box;
+  min-width: 64px;
+  height: var(--am-picker-popup-header-height);
+  margin: 0;
+  padding: 0 var(--am-padding);
+  font-size: var(--am-picker-popup-button-font-size);
+  font-family: inherit;
+  background: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+.am-picker-popup-button:active {
+  opacity: var(--am-opacity-active);
+}
+
+.am-picker-popup-button:disabled {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-picker-popup-cancel {
+  color: var(--am-picker-popup-cancel-color);
+  text-align: start;
+}
+
+.am-picker-popup-confirm {
+  color: var(--am-picker-popup-confirm-color);
+  text-align: end;
+}
+
+/* keep the title centred when one of the buttons is hidden */
+.am-picker-popup-header > .am-picker-popup-title:first-child {
+  padding-inline-start: 64px;
+}
+
+.am-picker-popup-header > .am-picker-popup-title:last-child {
+  padding-inline-end: 64px;
+}
+
+.am-picker-popup-header > .am-picker-popup-title:first-child:last-child {
+  padding-inline: var(--am-padding);
+}

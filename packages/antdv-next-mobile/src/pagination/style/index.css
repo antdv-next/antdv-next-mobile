@@ -1,0 +1,137 @@
+.am-pagination {
+  /* component tokens */
+  --am-pagination-item-size: 34px;
+  --am-pagination-item-gap: 4px;
+  --am-pagination-font-size: var(--am-font-size);
+  --am-pagination-color: var(--am-color-text);
+  --am-pagination-item-background: transparent;
+  --am-pagination-item-active-color: var(--am-color-text-light-solid);
+  --am-pagination-item-active-background: var(--am-color-primary);
+  --am-pagination-item-border-radius: var(--am-border-radius);
+  --am-pagination-simple-button-background: var(--am-color-fill-tertiary);
+  --am-pagination-simple-button-padding-inline: var(--am-padding);
+
+  box-sizing: border-box;
+  color: var(--am-pagination-color);
+  font-size: var(--am-pagination-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1.2;
+}
+
+.am-pagination-total {
+  margin-bottom: var(--am-margin-xs);
+  color: var(--am-color-text-secondary);
+  text-align: center;
+}
+
+.am-pagination-list {
+  display: flex;
+  gap: var(--am-pagination-item-gap);
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.am-pagination-item {
+  display: inline-flex;
+  flex: 0 1 var(--am-pagination-item-size);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 24px;
+  height: var(--am-pagination-item-size);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  background: var(--am-pagination-item-background);
+  border-radius: var(--am-pagination-item-border-radius);
+  outline: none;
+  cursor: pointer;
+  transition:
+    background-color var(--am-motion-duration-mid),
+    color var(--am-motion-duration-mid);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.am-pagination-item:not(.am-pagination-item-active, .am-pagination-item-disabled):active {
+  background: var(--am-color-fill-secondary);
+}
+
+.am-pagination-item:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: 1px;
+}
+
+.am-pagination-item-active {
+  color: var(--am-pagination-item-active-color);
+  font-weight: 500;
+  background: var(--am-pagination-item-active-background);
+}
+
+.am-pagination-jump-prev,
+.am-pagination-jump-next {
+  color: var(--am-color-text-tertiary);
+}
+
+.am-pagination-item-disabled {
+  color: var(--am-color-text-disabled);
+  cursor: not-allowed;
+}
+
+[dir='rtl'] .am-pagination-prev .anticon,
+[dir='rtl'] .am-pagination-next .anticon {
+  transform: scaleX(-1);
+}
+
+/* ---------- simple ---------- */
+.am-pagination-simple .am-pagination-list {
+  justify-content: space-between;
+}
+
+.am-pagination-simple .am-pagination-item {
+  flex: none;
+  min-width: 72px;
+  padding: 0 var(--am-pagination-simple-button-padding-inline);
+  background: var(--am-pagination-simple-button-background);
+}
+
+.am-pagination-simple-pager {
+  display: inline-flex;
+  flex: 1 1 auto;
+  gap: var(--am-padding-xxs);
+  align-items: center;
+  justify-content: center;
+  color: var(--am-color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.am-pagination-simple-current {
+  color: var(--am-color-primary);
+  font-weight: 500;
+}
+
+/* ---------- sizes ---------- */
+.am-pagination-sm {
+  --am-pagination-item-size: 28px;
+  --am-pagination-font-size: var(--am-font-size-sm);
+  --am-pagination-item-border-radius: var(--am-border-radius-sm);
+  --am-pagination-simple-button-padding-inline: var(--am-padding-sm);
+}
+
+.am-pagination-lg {
+  --am-pagination-item-size: 40px;
+  --am-pagination-font-size: var(--am-font-size-lg);
+}
+
+/* ---------- disabled ---------- */
+.am-pagination-disabled .am-pagination-item-active {
+  color: var(--am-color-text-disabled);
+  background: var(--am-color-fill-secondary);
+}
+
+.am-pagination-disabled .am-pagination-simple-current {
+  color: inherit;
+}

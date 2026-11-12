@@ -1,0 +1,45 @@
+<docs lang="zh-CN">
+设置 `delay` 后，加载时间短于延迟的请求不会出现加载效果，避免界面闪烁。
+</docs>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const loading = ref(false)
+
+function request(duration: number) {
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+  }, duration)
+}
+</script>
+
+<template>
+  <am-flex vertical gap="middle">
+    <am-spin :spinning="loading" :delay="500">
+      <div class="delay-box">
+        延迟 500ms 显示加载效果
+      </div>
+    </am-spin>
+    <am-flex gap="small">
+      <am-button block @click="request(300)">
+        请求 300ms
+      </am-button>
+      <am-button type="primary" block @click="request(2000)">
+        请求 2s
+      </am-button>
+    </am-flex>
+  </am-flex>
+</template>
+
+<style scoped>
+.delay-box {
+  padding: 32px 16px;
+  color: var(--am-color-text-secondary);
+  font-size: var(--am-font-size);
+  text-align: center;
+  background: var(--am-color-fill-quaternary);
+  border-radius: var(--am-border-radius);
+}
+</style>

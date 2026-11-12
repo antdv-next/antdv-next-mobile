@@ -1,0 +1,28 @@
+<docs lang="zh-CN">
+`fieldNames` 可以直接使用后端返回的数据结构；`label` 等插槽可以完全自定义选项内容。
+</docs>
+
+<script setup lang="ts">
+import { EnvironmentOutlined } from '@antdv-next/icons'
+import { ref } from 'vue'
+
+const cities = [
+  { name: '杭州', code: 330100, remark: '浙江' },
+  { name: '上海', code: 310000, remark: '直辖市' },
+  { name: '成都', code: 510100, remark: '四川', closed: true },
+]
+const value = ref([330100])
+</script>
+
+<template>
+  <am-selector
+    v-model:value="value"
+    :options="cities"
+    :columns="3"
+    :field-names="{ label: 'name', value: 'code', description: 'remark', disabled: 'closed' }"
+  >
+    <template #label="{ option, checked }">
+      <EnvironmentOutlined v-if="checked" /> {{ option.name }}
+    </template>
+  </am-selector>
+</template>

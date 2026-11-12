@@ -1,0 +1,32 @@
+<docs lang="zh-CN">
+通过 `v-model:open` 控制显示，`images` 传入图片列表。左右滑动切换，双指或双击缩放，单击或下拉关闭。
+</docs>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+function createImage(text: string, color: string, width = 900, height = 1200) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`
+    + `<rect width="100%" height="100%" fill="${color}"/>`
+    + `<circle cx="${width * 0.75}" cy="${height * 0.25}" r="${width * 0.08}" fill="#fff" fill-opacity="0.6"/>`
+    + `<path d="M0 ${height} L${width * 0.35} ${height * 0.55} L${width * 0.6} ${height * 0.8} L${width * 0.8} ${height * 0.65} L${width} ${height} Z" fill="#fff" fill-opacity="0.35"/>`
+    + `<text x="50%" y="50%" fill="#fff" font-size="${width / 6}" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${text}</text></svg>`
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`
+}
+
+const images = [
+  createImage('1', '#1677ff'),
+  createImage('2', '#13c2c2', 1200, 800),
+  createImage('3', '#722ed1'),
+  createImage('4', '#eb2f96', 1200, 600),
+]
+
+const open = ref(false)
+</script>
+
+<template>
+  <am-button type="primary" block @click="open = true">
+    预览图片
+  </am-button>
+  <am-image-preview v-model:open="open" :images="images" />
+</template>

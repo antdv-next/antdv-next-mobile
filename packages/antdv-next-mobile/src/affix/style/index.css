@@ -1,0 +1,11 @@
+.am-affix-wrapper {
+  --am-affix-z-index: 10;
+
+  box-sizing: border-box;
+}
+
+.am-affix {
+  position: fixed;
+  z-index: var(--am-affix-z-index);
+  box-sizing: border-box;
+}

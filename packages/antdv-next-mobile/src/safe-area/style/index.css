@@ -1,0 +1,18 @@
+.am-safe-area {
+  /* component tokens: multiplier of the inset, e.g. `2` doubles the reserved space */
+  --am-safe-area-multiple: 1;
+
+  display: block;
+  box-sizing: content-box;
+  width: 100%;
+}
+
+.am-safe-area-position-top {
+  padding-top: calc(constant(safe-area-inset-top) * var(--am-safe-area-multiple));
+  padding-top: calc(env(safe-area-inset-top) * var(--am-safe-area-multiple));
+}
+
+.am-safe-area-position-bottom {
+  padding-bottom: calc(constant(safe-area-inset-bottom) * var(--am-safe-area-multiple));
+  padding-bottom: calc(env(safe-area-inset-bottom) * var(--am-safe-area-multiple));
+}

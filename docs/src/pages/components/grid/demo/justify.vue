@@ -1,0 +1,61 @@
+<docs lang="zh-CN">
+`justify` 控制列在水平方向上的排列方式，`align` 控制垂直方向上的对齐方式。
+</docs>
+
+<script setup lang="ts">
+const justifyOptions = ['start', 'center', 'end', 'space-between', 'space-around', 'space-evenly'] as const
+</script>
+
+<template>
+  <template v-for="justify in justifyOptions" :key="justify">
+    <div class="label">
+      justify="{{ justify }}"
+    </div>
+    <am-row :justify="justify" align="middle" class="box">
+      <am-col :span="5">
+        <div class="cell">
+          5
+        </div>
+      </am-col>
+      <am-col :span="5">
+        <div class="cell tall">
+          5
+        </div>
+      </am-col>
+      <am-col :span="5">
+        <div class="cell">
+          5
+        </div>
+      </am-col>
+    </am-row>
+  </template>
+</template>
+
+<style scoped>
+.label {
+  margin: 12px 0 8px;
+  color: var(--am-color-text-secondary);
+  font-size: var(--am-font-size-sm);
+}
+
+.label:first-child {
+  margin-top: 0;
+}
+
+.box {
+  background: var(--am-color-fill-tertiary);
+}
+
+.cell {
+  padding: 8px 0;
+  color: var(--am-color-text-light-solid);
+  font-size: var(--am-font-size-sm);
+  text-align: center;
+  background: var(--am-color-primary);
+}
+
+.cell.tall {
+  padding: 16px 0;
+  background: var(--am-color-primary-hover);
+}
+</style>

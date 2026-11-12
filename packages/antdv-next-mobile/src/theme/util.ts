@@ -67,8 +67,11 @@ export function mergeTheme(parent: ThemeConfig | undefined, theme: ThemeConfig |
   }
 }
 
-/** Turns a `ThemeConfig` into the class names + inline CSS variables of a theme scope element. */
-export function resolveTheme(theme?: ThemeConfig): ResolvedTheme {
+/**
+ * Turns a `ThemeConfig` into the class names + inline CSS variables of a theme scope element.
+ * `scope` is a unique class name for that element; it is required for component tokens to apply.
+ */
+export function resolveTheme(theme?: ThemeConfig, scope?: string): ResolvedTheme {
   const algorithms = normalizeAlgorithms(theme?.algorithm)
   const className = ['am-theme']
   const isDark = algorithms.includes('dark')
@@ -86,19 +89,49 @@ export function resolveTheme(theme?: ThemeConfig): ResolvedTheme {
     if (value !== undefined && value !== null)
       style[tokenToCssVarName(key)] = tokenValue(key, value)
   })
+
+  let css = ''
   const components = theme?.components ?? {}
-  Object.keys(components).forEach((name) => {
-    const componentToken = components[name] ?? {}
-    Object.keys(componentToken).forEach((key) => {
-      const value = componentToken[key]
-      if (value !== undefined && value !== null)
-        style[tokenToCssVarName(key, name)] = tokenValue(key, value)
+  if (scope) {
+    Object.keys(components).forEach((name) => {
+      const componentToken = components[name] ?? {}
+      const declarations = Object.keys(componentToken)
+        .filter(key => componentToken[key] !== undefined && componentToken[key] !== null)
+        .map(key => `${tokenToCssVarName(key, name)}:${tokenValue(key, componentToken[key]!)};`)
+        .join('')
+      if (!declarations)
+        return
+      const root = `.${CSS_VAR_PREFIX}-${toKebab(name)}`
+      // `:where()` keeps the specificity of a single class: later in the document than the
+      // library css, so it wins over the component defaults without `!important`.
+      const selector = [`${root}`, `${root}-root`]
+        .flatMap(sel => [`:where(.${scope}) ${sel}`, `${sel}:where(.${scope})`])
+        .join(',')
+      css += `${selector}{${declarations}}`
     })
-  })
-  return { className, style, algorithms, isDark, token }
+    if (css)
+      className.push(scope)
+  }
+  return { className, style, css, algorithms, isDark, token }
 }
 
 const appliedKey = '__amAppliedTheme'
+const GLOBAL_SCOPE = 'am-scope-global'
+const GLOBAL_STYLE_ID = 'am-theme-global'
+
+function setGlobalComponentCss(css: string) {
+  let el = document.getElementById(GLOBAL_STYLE_ID)
+  if (!css) {
+    el?.parentNode?.removeChild(el)
+    return
+  }
+  if (!el) {
+    el = document.createElement('style')
+    el.id = GLOBAL_STYLE_ID
+    document.head.appendChild(el)
+  }
+  el.textContent = css
+}
 
 /**
  * Applies a theme to an element (default `<html>`), so the page background,
@@ -109,18 +142,28 @@ export function applyTheme(theme?: ThemeConfig, target?: HTMLElement) {
   if (!inBrowser)
     return () => {}
   const el = target ?? document.documentElement
-  const prev: ResolvedTheme | undefined = (el as any)[appliedKey]
-  if (prev) {
-    prev.className.forEach(c => c !== 'am-theme' && el.classList.remove(c))
-    Object.keys(prev.style).forEach(k => el.style.removeProperty(k))
-  }
-  const resolved = resolveTheme(theme)
-  resolved.className.forEach(c => el.classList.add(c))
-  Object.keys(resolved.style).forEach(k => el.style.setProperty(k, resolved.style[k]))
-  ;(el as any)[appliedKey] = resolved
-  return () => {
+  const isRoot = el === document.documentElement
+  const clear = (resolved: ResolvedTheme) => {
     resolved.className.forEach(c => el.classList.remove(c))
     Object.keys(resolved.style).forEach(k => el.style.removeProperty(k))
+    if (isRoot)
+      setGlobalComponentCss('')
+  }
+  const prev: ResolvedTheme | undefined = (el as any)[appliedKey]
+  if (prev)
+    clear(prev)
+  // component tokens need a stylesheet, which is only managed for the document root
+  const resolved = resolveTheme(theme, isRoot ? GLOBAL_SCOPE : undefined)
+  resolved.className.forEach(c => el.classList.add(c))
+  Object.keys(resolved.style).forEach(k => el.style.setProperty(k, resolved.style[k]))
+  if (isRoot)
+    setGlobalComponentCss(resolved.css)
+  ;(el as any)[appliedKey] = resolved
+  return () => {
+    // a later applyTheme() call already replaced this one
+    if ((el as any)[appliedKey] !== resolved)
+      return
+    clear(resolved)
     delete (el as any)[appliedKey]
   }
 }

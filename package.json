@@ -29,6 +29,7 @@
     "@vue/tsconfig": "catalog:dev",
     "eslint": "catalog:dev",
     "eslint-plugin-format": "catalog:dev",
+    "jiti": "catalog:dev",
     "jsdom": "catalog:dev",
     "typescript": "catalog:dev",
     "vite": "catalog:dev",

@@ -1,0 +1,94 @@
+.am-avatar {
+  /* component tokens */
+  --am-avatar-size: 40px;
+  --am-avatar-font-size: 18px;
+  --am-avatar-icon-size: 20px;
+  --am-avatar-border-radius: var(--am-border-radius);
+  --am-avatar-bg: var(--am-color-text-placeholder);
+  --am-avatar-color: var(--am-color-text-light-solid);
+  --am-avatar-group-overlap: -8px;
+  --am-avatar-group-border-color: var(--am-color-bg-container);
+
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-avatar-size);
+  height: var(--am-avatar-size);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: var(--am-avatar-color);
+  font-size: var(--am-avatar-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  background: var(--am-avatar-bg);
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-avatar-square {
+  border-radius: var(--am-avatar-border-radius);
+}
+
+.am-avatar-sm {
+  --am-avatar-size: 28px;
+  --am-avatar-font-size: 14px;
+  --am-avatar-icon-size: 14px;
+  --am-avatar-border-radius: var(--am-border-radius-sm);
+}
+
+.am-avatar-lg {
+  --am-avatar-size: 56px;
+  --am-avatar-font-size: 24px;
+  --am-avatar-icon-size: 28px;
+  --am-avatar-border-radius: var(--am-border-radius-lg);
+}
+
+.am-avatar-image {
+  background: transparent;
+}
+
+.am-avatar-icon {
+  font-size: var(--am-avatar-icon-size);
+}
+
+.am-avatar-img,
+.am-avatar > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.am-avatar-string {
+  display: inline-block;
+  flex: none;
+  transform-origin: center;
+}
+
+/* ---------- group ---------- */
+.am-avatar-group {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.am-avatar-group > .am-avatar,
+.am-avatar-group > * > .am-avatar {
+  box-shadow: 0 0 0 2px var(--am-avatar-group-border-color);
+}
+
+.am-avatar-group > *:not(:first-child) {
+  margin-inline-start: var(--am-avatar-group-overlap);
+}
+
+.am-avatar-group-overflow {
+  --am-avatar-bg: color-mix(in srgb, var(--am-color-text-base) 15%, var(--am-color-bg-container));
+  --am-avatar-color: var(--am-color-text-secondary);
+}

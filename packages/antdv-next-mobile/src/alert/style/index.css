@@ -1,0 +1,164 @@
+.am-alert {
+  /* component tokens */
+  --am-alert-padding-block: var(--am-padding-xs);
+  --am-alert-padding-inline: var(--am-padding-sm);
+  --am-alert-border-radius: var(--am-border-radius);
+  --am-alert-font-size: var(--am-font-size);
+  --am-alert-icon-size: 16px;
+  --am-alert-with-description-padding: var(--am-padding-sm) var(--am-padding);
+  --am-alert-with-description-icon-size: 22px;
+  --am-alert-title-color: var(--am-color-text-heading);
+  --am-alert-description-color: var(--am-color-text);
+  /* resolved by type classes */
+  --am-alert-color: var(--am-color-info);
+  --am-alert-bg: var(--am-color-info-bg);
+  --am-alert-border-color: var(--am-color-info-border);
+
+  position: relative;
+  display: flex;
+  gap: var(--am-margin-xs);
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--am-alert-padding-block) var(--am-alert-padding-inline);
+  overflow: hidden;
+  color: var(--am-alert-description-color);
+  font-size: var(--am-alert-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  word-wrap: break-word;
+  background: var(--am-alert-bg);
+  border: var(--am-line-width) var(--am-line-type) var(--am-alert-border-color);
+  border-radius: var(--am-alert-border-radius);
+}
+
+.am-alert-success {
+  --am-alert-color: var(--am-color-success);
+  --am-alert-bg: var(--am-color-success-bg);
+  --am-alert-border-color: var(--am-color-success-border);
+}
+
+.am-alert-warning {
+  --am-alert-color: var(--am-color-warning);
+  --am-alert-bg: var(--am-color-warning-bg);
+  --am-alert-border-color: var(--am-color-warning-border);
+}
+
+.am-alert-error {
+  --am-alert-color: var(--am-color-error);
+  --am-alert-bg: var(--am-color-error-bg);
+  --am-alert-border-color: var(--am-color-error-border);
+}
+
+.am-alert-outlined {
+  --am-alert-bg: var(--am-color-bg-container);
+}
+
+.am-alert-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--am-alert-color);
+  font-size: var(--am-alert-icon-size);
+  line-height: 1;
+}
+
+.am-alert-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.am-alert-title {
+  color: var(--am-alert-title-color);
+}
+
+.am-alert-description {
+  color: var(--am-alert-description-color);
+}
+
+.am-alert-actions {
+  flex: none;
+  margin-inline-start: var(--am-margin-xxs);
+}
+
+.am-alert-close {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  color: var(--am-color-icon);
+  font-size: var(--am-font-size-sm);
+  line-height: 1;
+  background: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+/* enlarge the touch target without changing the layout */
+.am-alert-close::after {
+  position: absolute;
+  inset: -14px;
+  content: '';
+}
+
+.am-alert-close:active {
+  color: var(--am-color-icon-hover);
+}
+
+.am-alert-close:disabled {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+/* ---------- with description ---------- */
+.am-alert-with-description {
+  gap: var(--am-margin-sm);
+  align-items: flex-start;
+  padding: var(--am-alert-with-description-padding);
+}
+
+.am-alert-with-description .am-alert-icon {
+  font-size: var(--am-alert-with-description-icon-size);
+}
+
+.am-alert-with-description .am-alert-title {
+  margin-block-end: var(--am-margin-xxs);
+  font-size: var(--am-font-size-lg);
+  font-weight: var(--am-font-weight-strong);
+}
+
+.am-alert-with-description .am-alert-close {
+  margin-block-start: 4px;
+}
+
+/* ---------- banner ---------- */
+.am-alert-banner {
+  border: 0;
+  border-radius: 0;
+}
+
+/* ---------- motion ---------- */
+.am-alert-motion-leave-active {
+  transition:
+    height var(--am-motion-duration-slow) var(--am-motion-ease-in-out),
+    opacity var(--am-motion-duration-slow) var(--am-motion-ease-in-out),
+    padding-block var(--am-motion-duration-slow) var(--am-motion-ease-in-out),
+    margin-block var(--am-motion-duration-slow) var(--am-motion-ease-in-out);
+}
+
+.am-alert-motion-leave-to {
+  margin-block: 0 !important;
+  padding-block: 0 !important;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-alert-motion-leave-active {
+    transition-duration: 0.01s;
+  }
+}

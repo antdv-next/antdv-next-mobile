@@ -1,0 +1,256 @@
+.am-form,
+.am-form-item-standalone {
+  /* component tokens */
+  --am-form-background: var(--am-color-bg-container);
+  --am-form-font-size: var(--am-font-size-lg);
+  --am-form-label-width: 5.6em;
+  --am-form-label-color: var(--am-color-text);
+  --am-form-label-gap: var(--am-padding-sm);
+  --am-form-item-padding-block: 9px;
+  --am-form-item-padding-inline: var(--am-padding);
+  --am-form-item-content-min-height: 30px;
+  --am-form-item-active-background: var(--am-color-fill-tertiary);
+  --am-form-explain-font-size: var(--am-font-size-sm);
+  --am-form-header-color: var(--am-color-text-tertiary);
+  --am-form-card-radius: var(--am-border-radius-lg);
+  --am-form-card-margin: var(--am-margin-sm);
+}
+
+.am-form {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--am-color-text);
+  font-size: var(--am-form-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height-lg);
+}
+
+.am-form-header {
+  box-sizing: border-box;
+  padding: var(--am-padding-sm) var(--am-form-item-padding-inline) var(--am-padding-xs);
+  color: var(--am-form-header-color);
+  font-size: var(--am-font-size);
+}
+
+.am-form-body {
+  position: relative;
+  background: var(--am-form-background);
+}
+
+.am-form-footer {
+  box-sizing: border-box;
+  padding: var(--am-padding) var(--am-form-item-padding-inline);
+}
+
+/* ---------- card mode ---------- */
+.am-form-card .am-form-body {
+  margin: 0 var(--am-form-card-margin);
+  overflow: hidden;
+  border-radius: var(--am-form-card-radius);
+}
+
+.am-form-card .am-form-header,
+.am-form-card .am-form-footer {
+  padding-inline: calc(var(--am-form-card-margin) + var(--am-form-item-padding-inline));
+}
+
+/* ---------- item ---------- */
+.am-form-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: var(--am-form-item-padding-block) var(--am-form-item-padding-inline);
+  color: var(--am-color-text);
+  font-size: var(--am-form-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height-lg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-form-item-standalone {
+  background: var(--am-form-background);
+}
+
+.am-form-item-hidden {
+  display: none;
+}
+
+/* hairline between two visible items */
+.am-form-item:not(.am-form-item-hidden) ~ .am-form-item:not(.am-form-item-hidden)::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: var(--am-form-item-padding-inline);
+  box-sizing: border-box;
+  border-top: var(--am-line-width) var(--am-line-type) var(--am-color-split);
+  transform: scaleY(0.5);
+  transform-origin: top;
+  content: '';
+  pointer-events: none;
+}
+
+.am-form-item-clickable {
+  cursor: pointer;
+  transition: background-color var(--am-motion-duration-mid);
+}
+
+.am-form-item-clickable:active {
+  background: var(--am-form-item-active-background);
+}
+
+/* ---------- label ---------- */
+.am-form-item-label {
+  display: flex;
+  flex: none;
+  align-items: center;
+  box-sizing: border-box;
+  width: var(--am-form-label-width);
+  min-height: var(--am-form-item-content-min-height);
+  margin-inline-end: var(--am-form-label-gap);
+  color: var(--am-form-label-color);
+}
+
+.am-form-item-label > label {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  color: inherit;
+  font-size: inherit;
+}
+
+.am-form-item-label-end {
+  justify-content: flex-end;
+  text-align: end;
+}
+
+.am-form-item-label-text {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.am-form-item-label-wrap .am-form-item-label-text {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.am-form-item-colon::after {
+  margin-inline: 2px 0;
+  content: ':';
+}
+
+.am-form-item-required-mark {
+  flex: none;
+  margin-inline-end: 4px;
+  color: var(--am-color-error);
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+}
+
+.am-form-item-optional {
+  flex: none;
+  margin-inline-start: 2px;
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-font-size-sm);
+}
+
+/* ---------- control ---------- */
+.am-form-item-control {
+  flex: 1;
+  min-width: 0;
+}
+
+.am-form-item-control-input {
+  display: flex;
+  align-items: center;
+  min-height: var(--am-form-item-content-min-height);
+}
+
+.am-form-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.am-form-item-content > * {
+  vertical-align: middle;
+}
+
+.am-form-item-content-end .am-form-item-content,
+.am-form-item-content-end .am-form-item-explain,
+.am-form-item-content-end .am-form-item-extra {
+  text-align: end;
+}
+
+.am-form-item-arrow,
+.am-form-item-feedback-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  margin-inline-start: var(--am-margin-xs);
+  font-size: var(--am-font-size);
+}
+
+.am-form-item-arrow {
+  color: var(--am-color-text-quaternary);
+}
+
+.am-form-item-has-success .am-form-item-feedback-icon {
+  color: var(--am-color-success);
+}
+
+.am-form-item-has-warning .am-form-item-feedback-icon {
+  color: var(--am-color-warning);
+}
+
+.am-form-item-has-error .am-form-item-feedback-icon {
+  color: var(--am-color-error);
+}
+
+.am-form-item-has-validating .am-form-item-feedback-icon {
+  color: var(--am-color-primary);
+}
+
+.am-form-item-explain,
+.am-form-item-extra {
+  margin-top: var(--am-margin-xxs);
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-form-explain-font-size);
+  line-height: var(--am-line-height);
+  word-break: break-word;
+}
+
+.am-form-item-explain-error {
+  color: var(--am-color-error);
+}
+
+.am-form-item-explain-warning {
+  color: var(--am-color-warning);
+}
+
+/* ---------- vertical ---------- */
+.am-form-item-vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.am-form-item-vertical > .am-form-item-label {
+  width: auto;
+  min-height: 0;
+  margin-inline-end: 0;
+  margin-bottom: var(--am-margin-xxs);
+  color: var(--am-color-text-secondary);
+  font-size: var(--am-font-size);
+}
+
+/* ---------- rtl ---------- */
+[dir='rtl'] .am-form-item:not(.am-form-item-hidden) ~ .am-form-item:not(.am-form-item-hidden)::before {
+  right: var(--am-form-item-padding-inline);
+  left: 0;
+}
+
+[dir='rtl'] .am-form-item-arrow {
+  transform: scaleX(-1);
+}

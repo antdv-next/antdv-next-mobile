@@ -1,0 +1,111 @@
+.am-picker-view {
+  --am-picker-view-item-height: 40px;
+  --am-picker-view-visible-count: 5;
+  --am-picker-view-font-size: var(--am-font-size-lg);
+  --am-picker-view-color: var(--am-color-text);
+  --am-picker-view-disabled-color: var(--am-color-text-disabled);
+  --am-picker-view-indicator-bg: var(--am-color-fill-tertiary);
+  --am-picker-view-indicator-radius: var(--am-border-radius);
+  --am-picker-view-indicator-inset: var(--am-padding-xs);
+  --am-picker-view-mask-opacity: 0.15;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(var(--am-picker-view-item-height) * var(--am-picker-view-visible-count));
+  overflow: hidden;
+  color: var(--am-picker-view-color);
+  font-size: var(--am-picker-view-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-picker-view-columns {
+  position: relative;
+  display: flex;
+  height: 100%;
+  /* fades the options away from the centre; works on any background, so it is dark-mode safe */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / var(--am-picker-view-mask-opacity)),
+    #000 calc(50% - var(--am-picker-view-item-height) / 2),
+    #000 calc(50% + var(--am-picker-view-item-height) / 2),
+    rgb(0 0 0 / var(--am-picker-view-mask-opacity))
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / var(--am-picker-view-mask-opacity)),
+    #000 calc(50% - var(--am-picker-view-item-height) / 2),
+    #000 calc(50% + var(--am-picker-view-item-height) / 2),
+    rgb(0 0 0 / var(--am-picker-view-mask-opacity))
+  );
+}
+
+.am-picker-view-column {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  outline: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.am-picker-view-column-wrapper {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.68, 1);
+  will-change: transform;
+}
+
+.am-picker-view-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--am-picker-view-item-height);
+  padding: 0 var(--am-padding-xxs);
+  cursor: pointer;
+}
+
+.am-picker-view-item-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.am-picker-view-item-disabled {
+  color: var(--am-picker-view-disabled-color);
+  cursor: not-allowed;
+}
+
+.am-picker-view-indicator {
+  position: absolute;
+  top: 50%;
+  right: var(--am-picker-view-indicator-inset);
+  left: var(--am-picker-view-indicator-inset);
+  box-sizing: border-box;
+  height: var(--am-picker-view-item-height);
+  background: var(--am-picker-view-indicator-bg);
+  border-radius: var(--am-picker-view-indicator-radius);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.am-picker-view-spin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--am-color-primary);
+  font-size: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-picker-view-column-wrapper {
+    transition-duration: 0.01s !important;
+  }
+}

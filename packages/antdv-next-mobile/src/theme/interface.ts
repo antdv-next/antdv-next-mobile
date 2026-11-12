@@ -136,8 +136,14 @@ export interface ThemeConfig {
 export interface ResolvedTheme {
   /** class list for the theme scope element */
   className: string[]
-  /** inline css variables for the theme scope element */
+  /** inline css variables for the theme scope element (global tokens) */
   style: Record<string, string>
+  /**
+   * Stylesheet text carrying the component tokens (`theme.components`). Components declare their
+   * own tokens on their root class, so an inherited variable could never override them; a scoped
+   * rule targeting the component root does.
+   */
+  css: string
   algorithms: ThemeAlgorithmName[]
   isDark: boolean
   token: AliasToken

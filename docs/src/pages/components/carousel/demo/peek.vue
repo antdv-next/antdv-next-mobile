@@ -1,0 +1,57 @@
+<docs lang="zh-CN">
+通过 `slideSize` 与 `trackOffset`（均为百分比）露出相邻的卡片。非循环模式下 `stuckAtBoundary` 让首尾卡片贴边。
+</docs>
+
+<script setup lang="ts">
+const colors = ['#1677ff', '#13c2c2', '#722ed1', '#eb2f96', '#fa8c16']
+</script>
+
+<template>
+  <p class="title">
+    循环
+  </p>
+  <am-carousel :slide-size="80" :track-offset="10" :dots="false">
+    <div v-for="(color, index) in colors" :key="color" class="card">
+      <div class="card-inner" :style="{ background: color }">
+        {{ index + 1 }}
+      </div>
+    </div>
+  </am-carousel>
+  <p class="title">
+    不循环，首尾贴边
+  </p>
+  <am-carousel :slide-size="80" :track-offset="10" :infinite="false" :dots="false">
+    <div v-for="(color, index) in colors" :key="color" class="card">
+      <div class="card-inner" :style="{ background: color }">
+        {{ index + 1 }}
+      </div>
+    </div>
+  </am-carousel>
+</template>
+
+<style scoped>
+.title {
+  margin: 0 0 8px;
+  color: var(--am-color-text-description);
+  font-size: 14px;
+}
+
+.title:not(:first-child) {
+  margin-top: 16px;
+}
+
+.card {
+  box-sizing: border-box;
+  padding: 0 4px;
+}
+
+.card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  color: #fff;
+  font-size: 32px;
+  border-radius: 12px;
+}
+</style>

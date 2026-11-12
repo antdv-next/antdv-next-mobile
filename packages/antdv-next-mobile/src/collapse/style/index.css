@@ -1,0 +1,214 @@
+.am-collapse {
+  /* component tokens */
+  --am-collapse-header-padding: var(--am-padding-sm) var(--am-padding);
+  --am-collapse-header-min-height: 48px;
+  --am-collapse-header-font-size: var(--am-font-size-lg);
+  --am-collapse-header-color: var(--am-color-text);
+  --am-collapse-header-background: var(--am-color-bg-container);
+  --am-collapse-content-padding: var(--am-padding-sm) var(--am-padding);
+  --am-collapse-content-font-size: var(--am-font-size);
+  --am-collapse-content-color: var(--am-color-text-secondary);
+  --am-collapse-content-background: var(--am-color-bg-container);
+  --am-collapse-icon-size: 14px;
+  --am-collapse-icon-color: var(--am-color-text-tertiary);
+  --am-collapse-border-color: var(--am-color-split);
+
+  position: relative;
+  box-sizing: border-box;
+  color: var(--am-collapse-header-color);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+}
+
+.am-collapse-sm {
+  --am-collapse-header-padding: var(--am-padding-xs) var(--am-padding-sm);
+  --am-collapse-header-min-height: 40px;
+  --am-collapse-header-font-size: var(--am-font-size);
+  --am-collapse-content-padding: var(--am-padding-xs) var(--am-padding-sm);
+  --am-collapse-icon-size: 12px;
+}
+
+.am-collapse-lg {
+  --am-collapse-header-padding: var(--am-padding) var(--am-padding-md);
+  --am-collapse-header-min-height: 56px;
+  --am-collapse-header-font-size: var(--am-font-size-xl);
+  --am-collapse-content-padding: var(--am-padding) var(--am-padding-md);
+  --am-collapse-content-font-size: var(--am-font-size-lg);
+}
+
+.am-collapse-item {
+  position: relative;
+  box-sizing: border-box;
+  color: var(--am-collapse-header-color);
+  font-family: var(--am-font-family);
+}
+
+/* ---------- hairlines ---------- */
+.am-collapse-bordered::before,
+.am-collapse-bordered::after,
+.am-collapse-bordered > .am-collapse-item + .am-collapse-item::before,
+.am-collapse-bordered > .am-collapse-item > .am-collapse-panel::before {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  border-top: var(--am-line-width) var(--am-line-type) var(--am-collapse-border-color);
+  transform: scaleY(0.5);
+  content: '';
+  pointer-events: none;
+}
+
+.am-collapse-bordered::before,
+.am-collapse-bordered > .am-collapse-item + .am-collapse-item::before,
+.am-collapse-bordered > .am-collapse-item > .am-collapse-panel::before {
+  top: 0;
+  transform-origin: top;
+}
+
+.am-collapse-bordered::after {
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+/* ---------- header ---------- */
+.am-collapse-header {
+  display: flex;
+  gap: var(--am-padding-xs);
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--am-collapse-header-min-height, 48px);
+  padding: var(--am-collapse-header-padding, 12px 16px);
+  font-size: var(--am-collapse-header-font-size, 16px);
+  line-height: var(--am-line-height-lg);
+  background: var(--am-collapse-header-background, var(--am-color-bg-container));
+  outline: none;
+  cursor: pointer;
+  transition: background-color var(--am-motion-duration-mid);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.am-collapse-header:active {
+  background: color-mix(
+    in srgb,
+    var(--am-collapse-header-background, var(--am-color-bg-container)),
+    var(--am-color-text-base) 4%
+  );
+}
+
+.am-collapse-header:focus-visible {
+  outline: 2px solid var(--am-color-primary-border);
+  outline-offset: -2px;
+}
+
+.am-collapse-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.am-collapse-extra {
+  flex: none;
+  color: var(--am-color-text-tertiary);
+  font-size: var(--am-font-size);
+}
+
+.am-collapse-expand-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--am-collapse-icon-color, var(--am-color-text-tertiary));
+  font-size: var(--am-collapse-icon-size, 14px);
+}
+
+.am-collapse-icon-end .am-collapse-expand-icon {
+  order: 3;
+}
+
+.am-collapse-arrow {
+  transition: transform var(--am-motion-duration-slow) var(--am-motion-ease-out);
+}
+
+[dir='rtl'] .am-collapse-arrow {
+  transform: rotate(180deg);
+}
+
+.am-collapse-item-active > .am-collapse-header .am-collapse-arrow,
+[dir='rtl'] .am-collapse-item-active > .am-collapse-header .am-collapse-arrow {
+  transform: rotate(90deg);
+}
+
+/* only a part of the header toggles */
+.am-collapse-item-collapsible-header > .am-collapse-header,
+.am-collapse-item-collapsible-icon > .am-collapse-header {
+  cursor: default;
+}
+
+.am-collapse-item-collapsible-header > .am-collapse-header:active,
+.am-collapse-item-collapsible-icon > .am-collapse-header:active,
+.am-collapse-item-disabled > .am-collapse-header:active {
+  background: var(--am-collapse-header-background, var(--am-color-bg-container));
+}
+
+.am-collapse-item-collapsible-header > .am-collapse-header > .am-collapse-title {
+  flex: 0 1 auto;
+  margin-inline-end: auto;
+  cursor: pointer;
+}
+
+.am-collapse-item-collapsible-icon > .am-collapse-header > .am-collapse-expand-icon {
+  /* larger touch target */
+  margin: -8px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.am-collapse-item-disabled > .am-collapse-header {
+  color: var(--am-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.am-collapse-item-disabled > .am-collapse-header .am-collapse-expand-icon {
+  color: inherit;
+}
+
+/* ---------- content ---------- */
+.am-collapse-panel {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--am-collapse-content-color, var(--am-color-text-secondary));
+  font-size: var(--am-collapse-content-font-size, 14px);
+  background: var(--am-collapse-content-background, var(--am-color-bg-container));
+}
+
+.am-collapse-body {
+  box-sizing: border-box;
+  padding: var(--am-collapse-content-padding, 12px 16px);
+}
+
+.am-collapse-motion-enter-active,
+.am-collapse-motion-leave-active {
+  transition: height var(--am-motion-duration-slow) var(--am-motion-ease-in-out);
+  will-change: height;
+}
+
+/* ---------- ghost ---------- */
+.am-collapse-ghost {
+  --am-collapse-header-background: transparent;
+  --am-collapse-content-background: transparent;
+}
+
+.am-collapse-ghost .am-collapse-header:active {
+  background: var(--am-color-fill-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-collapse-motion-enter-active,
+  .am-collapse-motion-leave-active,
+  .am-collapse-arrow {
+    transition-duration: 0.01s;
+  }
+}

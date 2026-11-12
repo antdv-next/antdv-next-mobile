@@ -1,0 +1,26 @@
+<docs lang="zh-CN">
+`DatePickerView`（即 `DatePicker.View`）是不带触发器与弹层的滚轮视图，可以直接嵌入页面，值随滚动实时更新。
+</docs>
+
+<script setup lang="ts">
+import dayjs from 'dayjs'
+import { ref } from 'vue'
+
+const value = ref(dayjs())
+</script>
+
+<template>
+  <am-date-picker-view v-model:value="value" :visible-item-count="3" />
+  <div class="demo-result">
+    {{ value.format('YYYY-MM-DD') }}
+  </div>
+</template>
+
+<style scoped>
+.demo-result {
+  margin-top: 12px;
+  color: var(--am-color-text-secondary);
+  font-size: 14px;
+  text-align: center;
+}
+</style>
