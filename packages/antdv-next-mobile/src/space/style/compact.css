@@ -154,6 +154,53 @@
   pointer-events: none;
 }
 
+/* ---------- InputSearch: one item whose border lives on the inner input ---------- */
+.am-space-compact .am-input-search.am-compact-item,
+.am-space-compact .am-input-search.am-compact-vertical-item {
+  --am-input-search-height: var(--am-compact-height);
+  --am-input-search-border-radius: var(--am-compact-radius);
+}
+
+.am-space-compact .am-input-search.am-compact-item {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+}
+
+.am-space-compact .am-input-search.am-compact-item:not(.am-compact-last-item) .am-input-search-input {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.am-space-compact .am-input-search.am-compact-item:not(.am-compact-first-item) .am-input-search-input {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.am-space-compact .am-input-search.am-compact-vertical-item:not(.am-compact-vertical-last-item) .am-input-search-input {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.am-space-compact
+  .am-input-search.am-compact-vertical-item:not(.am-compact-vertical-first-item)
+  .am-input-search-input {
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+}
+
+/* ---------- TextArea: grows with its content, the row follows its height ---------- */
+.am-space-compact .am-textarea.am-compact-item {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  height: auto;
+}
+
+.am-space-compact:not(.am-space-compact-vertical):has(> .am-textarea) > .am-compact-item {
+  height: auto;
+}
+
 /* ---------- InputNumber: its border lives on inner parts ---------- */
 .am-space-compact .am-input-number.am-compact-item {
   --am-input-number-gap: 0px;

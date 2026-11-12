@@ -24,6 +24,7 @@ group:
 <demo src="./demo/block.vue">块级模式</demo>
 <demo src="./demo/compact.vue">紧凑组合</demo>
 <demo src="./demo/compact-fields.vue">组合选择类字段</demo>
+<demo src="./demo/compact-search.vue">搜索框与多行文本</demo>
 <demo src="./demo/compact-buttons.vue">按钮组</demo>
 <demo src="./demo/compact-vertical.vue">纵向组合</demo>
 <demo src="./demo/compact-nested.vue">嵌套与表单</demo>
@@ -48,7 +49,7 @@ group:
 
 ### Space.Compact {#space-compact}
 
-把多个带边框的组件拼成一个无缝的整体。可参与组合的组件：`Button`、`Input`、`Input.Password`、`InputNumber`、`Select`、`Picker`、`DatePicker`、`TimePicker`、`Cascader`、`Calendar`（触发器模式）以及 `Space.Addon`。
+把多个带边框的组件拼成一个无缝的整体。可参与组合的组件：`Button`、`Input`、`Input.Password`、`Input.Search`、`TextArea`、`InputNumber`、`Select`、`Picker`、`DatePicker`、`TimePicker`、`Cascader`、`Calendar`（触发器模式）以及 `Space.Addon`。
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -60,6 +61,7 @@ group:
 | rootClass | 根节点类名 | `string` | - |
 
 - 横向组合中，`Input`、选择类字段和输入模式的 `InputNumber` 会平分剩余宽度；需要固定宽度时给它加上 `style="flex: 0 0 96px"`。
+- `Input.Search` 在组内默认变为带边框、非胶囊形的分段；`TextArea` 会撑开所在的行，同行成员跟随其高度。
 - 组内字段默认使用 `outlined` 变体，即使处在默认无边框的 `Form` 中；显式设置 `variant` 时以设置为准。
 - 从组内字段弹出的浮层（选择器面板等）不属于该分组，其中的组件不受影响。
 

@@ -6,7 +6,7 @@ import Space, { SpaceAddon, SpaceCompact } from '..'
 import Button from '../../button'
 import ConfigProvider from '../../config-provider'
 import Form from '../../form'
-import Input from '../../input'
+import Input, { InputSearch, TextArea } from '../../input'
 import InputNumber from '../../input-number'
 import Picker from '../../picker'
 import Popup from '../../popup'
@@ -148,6 +148,42 @@ describe('Space.Compact', () => {
     const inPopup = document.querySelector('.in-popup')!
     expect(inPopup.classList.contains('am-compact-item')).toBe(false)
     wrapper.unmount()
+  })
+
+  it('InputSearch joins as one item: bordered segment, its inner input is not an item', () => {
+    const wrapper = mount(SpaceCompact, {
+      props: { size: 'large' },
+      slots: { default: () => [h(InputSearch, { class: 'search' }), h(Button, null, () => 'Go')] },
+    })
+    const search = wrapper.find('.am-input-search')
+    expect(search.classes()).toEqual(expect.arrayContaining(['am-compact-item', 'am-compact-first-item', 'am-input-search-lg']))
+    expect(search.classes()).not.toContain('am-input-search-round')
+    const inner = wrapper.find('.am-input-search-input')
+    expect(inner.classes()).toContain('am-input-outlined')
+    expect(inner.classes().some(c => c.startsWith('am-compact'))).toBe(false)
+    expect(wrapper.findAll('.am-compact-item')).toHaveLength(2)
+
+    // explicit props still win
+    const explicit = mount(SpaceCompact, { slots: { default: () => h(InputSearch, { variant: 'filled', round: true }) } })
+    expect(explicit.find('.am-input-search').classes()).toContain('am-input-search-round')
+    expect(explicit.find('.am-input-search-input').classes()).toContain('am-input-filled')
+  })
+
+  it('InputSearch keeps its filled, round look outside a group', () => {
+    const wrapper = mount(InputSearch)
+    expect(wrapper.classes()).toContain('am-input-search-round')
+    expect(wrapper.find('.am-input-search-input').classes()).toContain('am-input-filled')
+    expect(wrapper.classes().some(c => c.includes('compact'))).toBe(false)
+  })
+
+  it('TextArea joins a group and follows its size', () => {
+    const wrapper = mount(SpaceCompact, {
+      props: { vertical: true, size: 'small' },
+      slots: { default: () => [h(Input), h(TextArea, { rows: 3 })] },
+    })
+    const textarea = wrapper.find('.am-textarea')
+    expect(textarea.classes()).toEqual(expect.arrayContaining(['am-compact-vertical-item', 'am-compact-vertical-last-item', 'am-textarea-sm', 'am-textarea-outlined']))
+    expect(mount(TextArea).classes().some(c => c.includes('compact'))).toBe(false)
   })
 
   it('components outside a group are untouched', () => {

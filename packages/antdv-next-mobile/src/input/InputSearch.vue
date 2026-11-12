@@ -3,6 +3,7 @@ import type { InputFocusOptions, InputInstance, InputSearchEmits, InputSearchPro
 import { SearchOutlined } from '@antdv-next/icons'
 import { computed, ref } from 'vue'
 import { Spinner } from '../_base'
+import { provideNoCompact, useCompactItemContext } from '../_base/compact'
 import { isRenderable } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
@@ -21,20 +22,26 @@ const props = withDefaults(defineProps<InputSearchProps>(), {
   clearTrigger: 'always',
   prefix: undefined,
   suffix: undefined,
-  variant: 'filled',
+  variant: undefined,
   inputmode: 'search',
   enterkeyhint: 'search',
   enterButton: undefined,
   searchIcon: undefined,
   cancelText: undefined,
-  round: true,
+  round: undefined,
 })
 const emit = defineEmits<InputSearchEmits>()
 const slots = defineSlots<InputSearchSlots>()
 
 const locale = useLocale('InputSearch')
 const disabled = useDisabled(() => props.disabled)
-const size = useSize(() => props.size)
+// The search bar joins a Space.Compact group as one item; its inner Input must not join again.
+const compact = useCompactItemContext()
+provideNoCompact()
+const size = useSize(() => props.size ?? compact.size.value)
+// standalone: the filled, pill-shaped mobile search bar; in a group: a bordered segment
+const mergedVariant = computed(() => props.variant ?? (compact.inCompact.value ? 'outlined' : 'filled'))
+const mergedRound = computed(() => props.round ?? !compact.inCompact.value)
 const rootRef = ref<HTMLElement>()
 const inputRef = ref<InputInstance>()
 const focused = ref(false)
@@ -94,10 +101,11 @@ const classNames = computed(() => [
   {
     'am-input-search-sm': size.value === 'small',
     'am-input-search-lg': size.value === 'large',
-    'am-input-search-round': props.round,
+    'am-input-search-round': mergedRound.value,
     'am-input-search-focused': focused.value,
     'am-input-search-disabled': disabled.value,
   },
+  compact.classes.value,
   props.rootClass,
   props.classes?.root,
 ])
@@ -134,7 +142,7 @@ defineExpose({
       :suffix="suffix"
       :size="size"
       :status="status"
-      :variant="variant"
+      :variant="mergedVariant"
       :inputmode="inputmode"
       :enterkeyhint="enterkeyhint"
       :autofocus="autofocus"
