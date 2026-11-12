@@ -60,8 +60,10 @@ export interface Locale {
     rangePrompt: (maxRange: number) => string
   }
   Cascader: { placeholder: string, select: string }
+  ColorPicker: { presetEmpty: string, transparent: string, singleColor: string, gradientColor: string }
   Select: { placeholder: string, notFoundContent: string }
   Empty: { description: string }
+  QRCode: { expired: string, refresh: string, scanned: string }
   Form: { optional: string, defaultValidateMessages: ValidateMessages }
   Image: { preview: string, loadFailed: string }
   Input: { placeholder: string, clear: string }

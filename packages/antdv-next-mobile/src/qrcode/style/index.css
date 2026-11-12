@@ -1,0 +1,76 @@
+.am-qrcode {
+  /* component tokens */
+  --am-qrcode-color: var(--am-color-text);
+  --am-qrcode-bg: var(--am-color-bg-container);
+  --am-qrcode-padding: var(--am-padding-sm);
+  --am-qrcode-border-radius: var(--am-border-radius-lg);
+  --am-qrcode-border-color: var(--am-color-border-secondary);
+  --am-qrcode-cover-bg: color-mix(in srgb, var(--am-color-bg-container) 96%, transparent);
+  --am-qrcode-cover-color: var(--am-color-text);
+  --am-qrcode-font-size: var(--am-font-size);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  padding: var(--am-qrcode-padding);
+  overflow: hidden;
+  color: var(--am-qrcode-color);
+  font-size: var(--am-qrcode-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  background-color: var(--am-qrcode-bg);
+  border: var(--am-line-width) solid var(--am-qrcode-border-color);
+  border-radius: var(--am-qrcode-border-radius);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-qrcode-borderless {
+  padding: 0;
+  border-color: transparent;
+  border-radius: 0;
+}
+
+.am-qrcode-canvas,
+.am-qrcode-svg {
+  display: block;
+  flex: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.am-qrcode-icon {
+  display: none;
+}
+
+.am-qrcode-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--am-padding-xs);
+  color: var(--am-qrcode-cover-color);
+  text-align: center;
+  background: var(--am-qrcode-cover-bg);
+}
+
+.am-qrcode-expired,
+.am-qrcode-scanned {
+  max-width: 100%;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.am-qrcode-loading {
+  color: var(--am-color-primary);
+  font-size: 24px;
+}

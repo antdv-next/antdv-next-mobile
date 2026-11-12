@@ -1,0 +1,95 @@
+/*
+ * BorderBeam is a decoration layer rendered inside its host: it has no text, so the root
+ * deliberately sets no font (the exception to the "root sets its own font" rule).
+ */
+.am-border-beam {
+  /* component tokens (the props write the same variables inline) */
+  --am-border-beam-color: var(--am-color-primary);
+  --am-border-beam-color-end: var(--am-color-primary-hover);
+  --am-border-beam-beam-gradient: linear-gradient(
+    to left,
+    var(--am-border-beam-color) 0%,
+    var(--am-border-beam-color-end) 70%,
+    transparent
+  );
+  --am-border-beam-line-width: var(--am-line-width);
+  --am-border-beam-size: 100px;
+  --am-border-beam-duration: 6s;
+  --am-border-beam-delay: 0s;
+  --am-border-beam-inset-offset: 0px;
+  --am-border-beam-opacity: 0.95;
+  --am-border-beam-z-index: 1;
+
+  /* container: hidden unless the browser can draw the effect */
+  position: absolute;
+  inset: var(--am-border-beam-inset-offset);
+  z-index: var(--am-border-beam-z-index);
+  display: none;
+  box-sizing: border-box;
+  padding: var(--am-border-beam-line-width);
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@supports ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+  /* only the ring between the border box and the content box stays visible */
+  .am-border-beam {
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  @supports (offset-path: rect(0 auto auto 0 round 1px)) {
+    .am-border-beam {
+      display: block;
+    }
+
+    /* a square gradient that travels along the border of the layer */
+    .am-border-beam::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--am-border-beam-size);
+      aspect-ratio: 1 / 1;
+      background-image: var(--am-border-beam-beam-gradient);
+      opacity: var(--am-border-beam-opacity);
+      animation: am-border-beam-move var(--am-border-beam-duration) linear var(--am-border-beam-delay) infinite;
+      content: '';
+      offset-anchor: 90% 50%;
+      offset-distance: 0%;
+      offset-path: rect(0 auto auto 0 round var(--am-border-beam-size));
+      offset-rotate: auto;
+      will-change: offset-distance;
+    }
+  }
+}
+
+@keyframes am-border-beam-move {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* the beam is a closed loop: mirror its travel direction with the reading direction */
+[dir='rtl'] .am-border-beam::before {
+  animation-direction: reverse;
+  offset-rotate: reverse;
+}
+
+/* purely decorative: no beam at all when motion is reduced */
+@media (prefers-reduced-motion: reduce) {
+  .am-border-beam::before {
+    display: none;
+    animation: none;
+  }
+}

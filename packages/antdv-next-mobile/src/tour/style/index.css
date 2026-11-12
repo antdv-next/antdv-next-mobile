@@ -1,0 +1,293 @@
+.am-tour {
+  /* component tokens */
+  --am-tour-z-index: calc(var(--am-z-index-popup-base) + 1);
+  --am-tour-width: min(300px, calc(100vw - 32px));
+  --am-tour-bg: var(--am-color-bg-elevated);
+  --am-tour-color: var(--am-color-text);
+  --am-tour-title-color: var(--am-color-text-heading);
+  --am-tour-font-size: var(--am-font-size);
+  --am-tour-title-font-size: var(--am-font-size-lg);
+  --am-tour-padding: var(--am-padding);
+  --am-tour-border-radius: var(--am-border-radius-lg);
+  --am-tour-shadow: var(--am-box-shadow);
+  --am-tour-mask-color: var(--am-color-bg-mask);
+  --am-tour-arrow-size: 10px;
+  --am-tour-arrow-offset: 50%;
+  --am-tour-indicator-size: 6px;
+  --am-tour-indicator-color: var(--am-color-fill);
+  --am-tour-indicator-active-color: var(--am-color-primary);
+  --am-tour-close-size: 24px;
+  --am-tour-close-color: var(--am-color-icon);
+  --am-tour-close-active-bg: var(--am-color-bg-text-active);
+  --am-tour-motion-duration: var(--am-motion-duration-slow);
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--am-tour-z-index);
+  box-sizing: border-box;
+  /* never visible (children are absolutely positioned): lets the script read the safe areas */
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow: hidden;
+  color: var(--am-tour-color);
+  font-size: var(--am-tour-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- mask ---------- */
+.am-tour-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.am-tour-mask-fill {
+  fill: var(--am-tour-mask-color);
+}
+
+.am-tour-mask-cover {
+  pointer-events: auto;
+  fill: transparent;
+}
+
+.am-tour-target-placeholder {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.am-tour-target-disabled {
+  pointer-events: auto;
+}
+
+/* ---------- panel ---------- */
+.am-tour-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: var(--am-tour-width);
+  max-width: calc(100% - 32px);
+  pointer-events: auto;
+}
+
+.am-tour-primary {
+  --am-tour-bg: var(--am-color-primary);
+  --am-tour-color: var(--am-color-text-light-solid);
+  --am-tour-title-color: var(--am-color-text-light-solid);
+  --am-tour-indicator-color: color-mix(in srgb, var(--am-color-text-light-solid) 35%, transparent);
+  --am-tour-indicator-active-color: var(--am-color-text-light-solid);
+  --am-tour-close-color: var(--am-color-text-light-solid);
+  --am-tour-close-active-bg: color-mix(in srgb, var(--am-color-text-light-solid) 20%, transparent);
+
+  color: var(--am-tour-color);
+}
+
+.am-tour-arrow {
+  position: absolute;
+  width: var(--am-tour-arrow-size);
+  height: var(--am-tour-arrow-size);
+  background: var(--am-tour-bg);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.am-tour-side-top .am-tour-arrow {
+  bottom: calc(var(--am-tour-arrow-size) / -2);
+  left: calc(var(--am-tour-arrow-offset) - var(--am-tour-arrow-size) / 2);
+}
+
+.am-tour-side-bottom .am-tour-arrow {
+  top: calc(var(--am-tour-arrow-size) / -2);
+  left: calc(var(--am-tour-arrow-offset) - var(--am-tour-arrow-size) / 2);
+}
+
+.am-tour-side-left .am-tour-arrow {
+  top: calc(var(--am-tour-arrow-offset) - var(--am-tour-arrow-size) / 2);
+  right: calc(var(--am-tour-arrow-size) / -2);
+}
+
+.am-tour-side-right .am-tour-arrow {
+  top: calc(var(--am-tour-arrow-offset) - var(--am-tour-arrow-size) / 2);
+  left: calc(var(--am-tour-arrow-size) / -2);
+}
+
+.am-tour-section {
+  position: relative;
+  box-sizing: border-box;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  text-align: start;
+  background: var(--am-tour-bg);
+  border-radius: var(--am-tour-border-radius);
+  box-shadow: var(--am-tour-shadow);
+  -webkit-overflow-scrolling: touch;
+}
+
+.am-tour-close {
+  position: absolute;
+  top: var(--am-tour-padding);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-tour-close-size);
+  height: var(--am-tour-close-size);
+  margin: 0;
+  padding: 0;
+  color: var(--am-tour-close-color);
+  font-size: var(--am-font-size);
+  line-height: 1;
+  background: none;
+  border: 0;
+  border-radius: var(--am-border-radius-sm);
+  outline: none;
+  cursor: pointer;
+  transition: background-color var(--am-motion-duration-mid);
+  appearance: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  inset-inline-end: var(--am-tour-padding);
+}
+
+/* touch target of at least 40px */
+.am-tour-close::after {
+  position: absolute;
+  inset: calc((var(--am-tour-close-size) - 40px) / 2);
+  content: '';
+}
+
+.am-tour-close:active {
+  background: var(--am-tour-close-active-bg);
+}
+
+.am-tour-cover {
+  padding: calc(var(--am-tour-padding) + var(--am-tour-close-size) + var(--am-padding-xs)) var(--am-tour-padding) 0;
+  text-align: center;
+}
+
+.am-tour-cover img,
+.am-tour-cover video {
+  display: block;
+  width: 100%;
+  border-radius: var(--am-border-radius-sm);
+}
+
+.am-tour-header {
+  box-sizing: border-box;
+  padding: var(--am-tour-padding) var(--am-tour-padding) var(--am-padding-xs);
+  word-break: break-word;
+  padding-inline-end: calc(var(--am-tour-padding) + var(--am-tour-close-size) + var(--am-padding-xs));
+}
+
+.am-tour-cover + .am-tour-header {
+  padding-top: var(--am-padding-sm);
+  padding-inline-end: var(--am-tour-padding);
+}
+
+.am-tour-title {
+  color: var(--am-tour-title-color);
+  font-weight: var(--am-font-weight-strong);
+  font-size: var(--am-tour-title-font-size);
+  line-height: var(--am-line-height-lg);
+}
+
+.am-tour-description {
+  padding: 0 var(--am-tour-padding);
+  overflow-wrap: break-word;
+}
+
+/* no title: the description starts the panel and keeps clear of the close icon */
+.am-tour-description:first-child,
+.am-tour-close + .am-tour-description {
+  padding-top: var(--am-tour-padding);
+  padding-inline-end: calc(var(--am-tour-padding) + var(--am-tour-close-size) + var(--am-padding-xs));
+}
+
+.am-tour-cover + .am-tour-description {
+  padding-top: var(--am-padding-sm);
+}
+
+.am-tour-footer {
+  display: flex;
+  gap: var(--am-padding-xs);
+  align-items: center;
+  padding: var(--am-padding-sm) var(--am-tour-padding) var(--am-tour-padding);
+}
+
+.am-tour-indicators {
+  display: inline-flex;
+  flex: none;
+  gap: var(--am-tour-indicator-size);
+  align-items: center;
+}
+
+.am-tour-indicator {
+  display: inline-block;
+  width: var(--am-tour-indicator-size);
+  height: var(--am-tour-indicator-size);
+  background: var(--am-tour-indicator-color);
+  border-radius: 50%;
+  transition: background-color var(--am-motion-duration-mid);
+}
+
+.am-tour-indicator-active {
+  background: var(--am-tour-indicator-active-color);
+}
+
+.am-tour-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--am-margin-xs);
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  margin-inline-start: auto;
+}
+
+/* small buttons, touch target of at least 40px */
+.am-tour-actions .am-button::after {
+  position: absolute;
+  inset: -6px 0;
+  content: '';
+}
+
+/* primary type: the next button is inverted (white background, primary text) */
+.am-tour-primary .am-tour-next-btn {
+  --am-button-c: var(--am-color-text-light-solid);
+  --am-button-c-active: color-mix(in srgb, var(--am-color-text-light-solid) 85%, var(--am-color-primary));
+  --am-button-solid-text: var(--am-color-primary);
+}
+
+/* ---------- motion: follow the step, not the scroll ---------- */
+.am-tour-animated .am-tour-mask-hole {
+  transition:
+    x var(--am-tour-motion-duration) var(--am-motion-ease-out),
+    y var(--am-tour-motion-duration) var(--am-motion-ease-out),
+    width var(--am-tour-motion-duration) var(--am-motion-ease-out),
+    height var(--am-tour-motion-duration) var(--am-motion-ease-out);
+}
+
+.am-tour-animated .am-tour-panel {
+  transition:
+    left var(--am-tour-motion-duration) var(--am-motion-ease-out),
+    top var(--am-tour-motion-duration) var(--am-motion-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-tour-animated .am-tour-mask-hole,
+  .am-tour-animated .am-tour-panel {
+    transition: none;
+  }
+}

@@ -1,0 +1,226 @@
+.am-tree {
+  /* component tokens */
+  --am-tree-item-height: 44px;
+  --am-tree-indent-size: 24px;
+  --am-tree-switcher-size: 40px;
+  --am-tree-padding-inline: 0px;
+  --am-tree-font-size: var(--am-font-size-lg);
+  --am-tree-color: var(--am-color-text);
+  --am-tree-background: var(--am-color-bg-container);
+  --am-tree-switcher-color: var(--am-color-text-tertiary);
+  --am-tree-switcher-icon-size: 12px;
+  --am-tree-icon-color: var(--am-color-text-secondary);
+  --am-tree-title-padding-inline: var(--am-padding-xs);
+  --am-tree-node-radius: var(--am-border-radius);
+  --am-tree-node-active-background: var(--am-color-fill-tertiary);
+  --am-tree-node-selected-background: var(--am-color-primary-bg);
+  --am-tree-node-selected-color: var(--am-color-text);
+  --am-tree-line-color: var(--am-color-border);
+  --am-tree-highlight-color: var(--am-color-primary);
+  --am-tree-disabled-color: var(--am-color-text-disabled);
+
+  box-sizing: border-box;
+  padding: 0 var(--am-tree-padding-inline);
+  color: var(--am-tree-color);
+  font-size: var(--am-tree-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  background: var(--am-tree-background);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- row ---------- */
+.am-tree-treenode {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  min-height: var(--am-tree-item-height);
+}
+
+/* one step per level; the units inside only exist to draw the guide lines */
+.am-tree-indent {
+  display: flex;
+  flex: none;
+  align-self: stretch;
+  width: calc(var(--am-tree-level, 0) * var(--am-tree-indent-size));
+  user-select: none;
+}
+
+.am-tree-indent-unit {
+  position: relative;
+  flex: none;
+  width: var(--am-tree-indent-size);
+}
+
+/* ---------- switcher ---------- */
+.am-tree-switcher {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-tree-switcher-size);
+  color: var(--am-tree-switcher-color);
+  font-size: var(--am-tree-switcher-icon-size);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.am-tree-switcher-noop {
+  cursor: default;
+}
+
+.am-tree-switcher:not(.am-tree-switcher-noop):active {
+  opacity: var(--am-opacity-active);
+}
+
+.am-tree-switcher-icon,
+.am-tree-switcher-line-icon,
+.am-tree-switcher-loading-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.am-tree-switcher-icon {
+  transition: transform var(--am-motion-duration-mid);
+}
+
+.am-tree-switcher-close .am-tree-switcher-icon {
+  transform: rotate(-90deg);
+}
+
+.am-tree-switcher-line-icon,
+.am-tree-switcher-loading-icon {
+  position: relative;
+  z-index: 1;
+  font-size: calc(var(--am-tree-switcher-icon-size) + 4px);
+}
+
+.am-tree-switcher-loading-icon {
+  color: var(--am-tree-highlight-color);
+}
+
+/* ---------- checkbox (the library Checkbox, stretched to the row for a full-height touch target) ---------- */
+.am-tree .am-tree-checkbox {
+  flex: none;
+  align-self: stretch;
+  min-height: 0;
+  padding-inline: var(--am-padding-xxs);
+}
+
+/* ---------- content ---------- */
+.am-tree-node-content-wrapper {
+  position: relative;
+  display: flex;
+  gap: var(--am-padding-xs);
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--am-padding-xxs) var(--am-tree-title-padding-inline);
+  border-radius: var(--am-tree-node-radius);
+  cursor: pointer;
+  transition: background-color var(--am-motion-duration-mid);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.am-tree-block-node .am-tree-node-content-wrapper {
+  flex: 1;
+}
+
+.am-tree-node-content-wrapper:active {
+  background: var(--am-tree-node-active-background);
+}
+
+.am-tree-node-content-wrapper.am-tree-node-selected {
+  color: var(--am-tree-node-selected-color);
+  background: var(--am-tree-node-selected-background);
+}
+
+.am-tree-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--am-tree-icon-color);
+  line-height: 1;
+}
+
+.am-tree-title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.am-tree-filter-node .am-tree-title {
+  color: var(--am-tree-highlight-color);
+  font-weight: var(--am-font-weight-strong);
+}
+
+/* ---------- disabled ---------- */
+.am-tree-treenode-disabled .am-tree-node-content-wrapper {
+  color: var(--am-tree-disabled-color);
+  cursor: not-allowed;
+}
+
+.am-tree-treenode-disabled .am-tree-node-content-wrapper:active {
+  background: transparent;
+}
+
+.am-tree-treenode-disabled .am-tree-icon {
+  color: inherit;
+}
+
+/* ---------- guide lines ---------- */
+
+/* the line of a level runs through the middle of the switcher column of that level */
+.am-tree-show-line .am-tree-indent-unit::before,
+.am-tree-switcher-leaf-line::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: calc(var(--am-tree-switcher-size) / 2);
+  border-inline-start: var(--am-line-width) solid var(--am-tree-line-color);
+  content: '';
+}
+
+/* no more siblings below at that level */
+.am-tree-show-line .am-tree-indent-unit-end::before {
+  display: none;
+}
+
+.am-tree-switcher-leaf-line {
+  position: absolute;
+  inset: 0;
+}
+
+.am-tree-switcher-leaf-line::after {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: calc(var(--am-tree-switcher-size) / 2);
+  inset-inline-end: var(--am-padding-xxs);
+  border-top: var(--am-line-width) solid var(--am-tree-line-color);
+  content: '';
+}
+
+.am-tree-treenode-leaf-last .am-tree-switcher-leaf-line::before {
+  bottom: 50%;
+}
+
+/* ---------- rtl ---------- */
+[dir='rtl'] .am-tree-switcher-close .am-tree-switcher-icon {
+  transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-tree-switcher-icon,
+  .am-tree-node-content-wrapper {
+    transition: none;
+  }
+}

@@ -1,0 +1,91 @@
+/* Listy renders through VirtualList: `.am-listy` sits on its root, the scroll container */
+.am-listy {
+  /* component tokens */
+  --am-listy-item-padding-block: var(--am-padding-sm);
+  --am-listy-item-padding-inline: var(--am-padding);
+  --am-listy-item-border-color: var(--am-color-split);
+  --am-listy-item-active-bg: var(--am-color-fill-tertiary);
+  --am-listy-group-header-padding-block: var(--am-padding-xs);
+  --am-listy-group-header-color: var(--am-color-text-description);
+  --am-listy-group-header-font-weight: var(--am-font-weight-strong);
+  --am-listy-group-header-bg: var(--am-color-bg-container);
+  --am-listy-group-header-fill: var(--am-color-fill-alter);
+  --am-listy-group-header-z-index: 1;
+
+  position: relative;
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  /* a measured row must not jump when the browser re-anchors the scroll position */
+  overflow-anchor: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-listy-scroll-x {
+  overflow-x: auto;
+}
+
+/* never narrower than the container, whatever `scrollWidth` says */
+.am-listy-scroll-x > .am-virtual-list-holder {
+  min-width: 100%;
+}
+
+/* ---------- item ---------- */
+.am-listy-item {
+  box-sizing: border-box;
+  padding: var(--am-listy-item-padding-block) var(--am-listy-item-padding-inline);
+  border-bottom: var(--am-line-width) solid var(--am-listy-item-border-color);
+}
+
+.am-listy-hoverable .am-listy-item {
+  transition: background-color var(--am-motion-duration-mid) var(--am-motion-ease-in-out);
+}
+
+.am-listy-hoverable .am-listy-item:active {
+  background-color: var(--am-listy-item-active-bg);
+}
+
+@media (hover: hover) {
+  .am-listy-hoverable .am-listy-item:hover {
+    background-color: var(--am-listy-item-active-bg);
+  }
+}
+
+/* ---------- group header ---------- */
+.am-listy-group-header {
+  box-sizing: border-box;
+  padding: var(--am-listy-group-header-padding-block) var(--am-listy-item-padding-inline);
+  color: var(--am-listy-group-header-color);
+  font-weight: var(--am-listy-group-header-font-weight);
+  /* opaque, so the rows never show through the pinned header */
+  background-color: var(--am-listy-group-header-bg);
+  background-image: linear-gradient(var(--am-listy-group-header-fill), var(--am-listy-group-header-fill));
+}
+
+/* zero-height sticky layer at the top of the scroll container: holds the pinned header */
+.am-listy > .am-virtual-list-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--am-listy-group-header-z-index);
+  height: 0;
+}
+
+.am-listy-group-header-fixed {
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  will-change: transform;
+}
+
+/* as wide as the scrolled content, so it scrolls horizontally with the rows */
+.am-listy-scroll-x .am-listy-group-header-fixed {
+  inset-inline-end: auto;
+  min-width: 100%;
+}
+
+/* ---------- rtl ---------- */
+.am-listy-rtl {
+  direction: rtl;
+}

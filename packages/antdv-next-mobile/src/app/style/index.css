@@ -1,0 +1,12 @@
+.am-app {
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-app-rtl {
+  direction: rtl;
+}

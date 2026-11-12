@@ -44,6 +44,7 @@ Toast.show({ content: '保存成功', icon: 'success' })
 | Toast.loading | 显示加载提示。默认不自动关闭（`duration: 0`）并阻止背景点击（`maskClickable: false`） | `(config?: ToastShowConfig \| string) => { close }` |
 | Toast.clear | 关闭当前显示的提示 | `() => void` |
 | Toast.config | 全局配置 | `(options: ToastConfigOptions) => void` |
+| Toast.useToast | 返回 `[toast, ContextHolder]`：提示渲染在 `<ContextHolder />` 所在的位置，跟随其所在的 `ConfigProvider`（也可以通过 `App.useApp().toast` 获得） | `(config?: ToastConfigOptions) => [ToastInstance, Component]` |
 
 返回的 `close` 方法只会关闭它对应的那一条提示：如果它已被新的提示替换，调用 `close` 不会有任何效果。
 

@@ -47,8 +47,10 @@ const zhCN: Locale = {
     rangePrompt: maxRange => `最多选择 ${maxRange} 天`,
   },
   Cascader: { placeholder: '请选择', select: '请选择' },
+  ColorPicker: { presetEmpty: '暂无', transparent: '无色', singleColor: '单色', gradientColor: '渐变色' },
   Select: { placeholder: '请选择', notFoundContent: '暂无数据' },
   Empty: { description: '暂无数据' },
+  QRCode: { expired: '二维码过期', refresh: '点击刷新', scanned: '已扫描' },
   Form: {
     optional: '（可选）',
     defaultValidateMessages: {

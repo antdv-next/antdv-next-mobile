@@ -40,7 +40,7 @@ If you are familiar with antdv-next, treat this page as a cheat sheet.
 | Select | Select, Selector | Select pops up a list from the bottom; Selector is a flat tile selection |
 | Cascader | Cascader | Level-by-level selection in a bottom popup |
 | DatePicker, TimePicker | Same name | Wheel picker, same value types (dayjs / `valueFormat`) |
-| DatePicker.RangePicker | Calendar | Range selection on a calendar |
+| DatePicker.RangePicker | DatePicker.RangePicker, Calendar | Start / end tabs with wheels in a bottom popup; Calendar offers range selection on a calendar |
 | Upload | Upload | Image upload in a grid by default |
 | Avatar, Badge, Card, Collapse, Descriptions, Empty, Image, Tag, Timeline, Statistic | Same name | Same API |
 | List | List / ListItem | The most common cell list on mobile |
@@ -49,14 +49,23 @@ If you are familiar with antdv-next, treat this page as a cheat sheet.
 | Drawer | Drawer, Popup | Popup is the lower-level popup layer |
 | Modal | Modal | iOS-style dialog, same static methods |
 | message | message, Toast | Toast is a centered light-weight prompt |
+| notification | notification | Full-width card at the top / bottom, swipe to dismiss |
+| App | App | `App.useApp()` additionally returns `toast` |
 | Popover | Popover | Triggered by tap, supports a menu mode |
 | FloatButton | FloatButton | Additionally supports dragging and edge snapping |
 | Affix | Affix | Same API |
-| Table, Tree, Transfer, Mentions, Tour, Splitter, etc. | - | Not suitable for small screens, not provided yet |
+| QRCode | QRCode | Built-in encoder, additionally exposes `toDataURL()` |
+| Tour | Tour | The panel adapts to narrow screens and prefers top / bottom placements |
+| Tree | Tree | The whole row is tappable; no drag and drop or keyboard navigation |
+| ColorPicker | ColorPicker, ColorPickerPanel | Picked in a bottom popup; gradients are not supported yet |
+| Masonry | Masonry | `columns` accepts a number only, 2 by default |
+| BorderBeam | BorderBeam | The beam hugs the inside of the border when the host clips its overflow |
+| Listy | Listy | Built on VirtualList, `virtual` is on by default |
+| Table, Transfer, Mentions, Splitter, etc. | - | Not suitable for small screens, not provided yet |
 
 ## Mobile-only components {#mobile-only}
 
-NavBar, TabBar, SideBar, IndexBar, Popup, Mask, ActionSheet, Toast, NoticeBar, Picker, PickerView, Calendar, Selector, NumberKeyboard, PullToRefresh, InfiniteScroll, SwipeAction, FloatingPanel, ImagePreview, SafeArea.
+NavBar, TabBar, SideBar, IndexBar, Popup, Mask, ActionSheet, Toast, NoticeBar, Picker, PickerView, Calendar, Selector, NumberKeyboard, PullToRefresh, InfiniteScroll, SwipeAction, FloatingPanel, ImagePreview, SafeArea, Grid / GridItem, ActionBar, ShareSheet, Signature, Highlight, RollingText, Barrage.
 
 ## Migration example {#example}
 

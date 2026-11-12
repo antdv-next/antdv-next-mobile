@@ -1,4 +1,4 @@
-import type { AppContext, CSSProperties } from 'vue'
+import type { AppContext, Component, CSSProperties } from 'vue'
 import type { VueNode } from '../_util/type'
 
 export type ToastPosition = 'top' | 'center' | 'bottom'
@@ -32,7 +32,7 @@ export interface ToastHandler {
   close: () => void
 }
 
-export interface ToastApi {
+export interface ToastInstance {
   show: (config: ToastShowConfig | string) => ToastHandler
   success: (config: ToastShowConfig | string) => ToastHandler
   fail: (config: ToastShowConfig | string) => ToastHandler
@@ -40,7 +40,12 @@ export interface ToastApi {
   loading: (config?: ToastShowConfig | string) => ToastHandler
   /** Close the current toast */
   clear: () => void
+}
+
+export interface ToastApi extends ToastInstance {
   config: (options: ToastConfigOptions) => void
+  /** `const [toast, ContextHolder] = Toast.useToast()` */
+  useToast: (config?: ToastConfigOptions) => [ToastInstance, Component]
 }
 
 /** Props of the internal toast component */

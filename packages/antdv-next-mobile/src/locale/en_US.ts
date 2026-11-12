@@ -47,8 +47,10 @@ const enUS: Locale = {
     rangePrompt: maxRange => `Choose no more than ${maxRange} days`,
   },
   Cascader: { placeholder: 'Please select', select: 'Select' },
+  ColorPicker: { presetEmpty: 'Empty', transparent: 'Transparent', singleColor: 'Single', gradientColor: 'Gradient' },
   Select: { placeholder: 'Please select', notFoundContent: 'No data' },
   Empty: { description: 'No data' },
+  QRCode: { expired: 'QR code expired', refresh: 'Refresh', scanned: 'Scanned' },
   Form: {
     optional: '(optional)',
     defaultValidateMessages: {

@@ -40,7 +40,7 @@ group:
 | Select | Select、Selector | Select 从底部弹出列表；Selector 为平铺选择 |
 | Cascader | Cascader | 底部弹层逐级选择 |
 | DatePicker、TimePicker | 同名 | 滚轮选择，值类型一致（dayjs / `valueFormat`） |
-| DatePicker.RangePicker | Calendar | 日历范围选择 |
+| DatePicker.RangePicker | DatePicker.RangePicker、Calendar | 底部弹层内用“开始 / 结束”页签切换滚轮；Calendar 提供日历范围选择 |
 | Upload | Upload | 默认九宫格图片上传 |
 | Avatar、Badge、Card、Collapse、Descriptions、Empty、Image、Tag、Timeline、Statistic | 同名 | API 一致 |
 | List | List / ListItem | 移动端最常用的单元格列表 |
@@ -49,14 +49,23 @@ group:
 | Drawer | Drawer、Popup | Popup 是更底层的弹出层 |
 | Modal | Modal | iOS 风格对话框，静态方法一致 |
 | message | message、Toast | Toast 为居中的轻提示 |
+| notification | notification | 顶部 / 底部通栏卡片，支持滑动关闭 |
+| App | App | `App.useApp()` 额外返回 `toast` |
 | Popover | Popover | 点击触发，支持菜单模式 |
 | FloatButton | FloatButton | 额外支持拖拽与吸边 |
 | Affix | Affix | API 一致 |
-| Table、Tree、Transfer、Mentions、Tour、Splitter 等 | - | 不适合小屏，暂未提供 |
+| QRCode | QRCode | 内置编码器，额外提供 `toDataURL()` |
+| Tour | Tour | 面板自适应窄屏，优先上下方向 |
+| Tree | Tree | 整行可点，不支持拖拽与键盘导航 |
+| ColorPicker | ColorPicker、ColorPickerPanel | 底部弹层选择，暂不支持渐变 |
+| Masonry | Masonry | `columns` 仅支持数字，默认 2 列 |
+| BorderBeam | BorderBeam | 宿主裁剪溢出时光束自动贴合边框内侧 |
+| Listy | Listy | 基于 VirtualList，`virtual` 默认开启 |
+| Table、Transfer、Mentions、Splitter 等 | - | 不适合小屏，暂未提供 |
 
 ## 移动端独有组件 {#mobile-only}
 
-NavBar、TabBar、SideBar、IndexBar、Popup、Mask、ActionSheet、Toast、NoticeBar、Picker、PickerView、Calendar、Selector、NumberKeyboard、PullToRefresh、InfiniteScroll、SwipeAction、FloatingPanel、ImagePreview、SafeArea。
+NavBar、TabBar、SideBar、IndexBar、Popup、Mask、ActionSheet、Toast、NoticeBar、Picker、PickerView、Calendar、Selector、NumberKeyboard、PullToRefresh、InfiniteScroll、SwipeAction、FloatingPanel、ImagePreview、SafeArea、Grid / GridItem、ActionBar、ShareSheet、Signature、Highlight、RollingText、Barrage。
 
 ## 迁移示例 {#example}
 

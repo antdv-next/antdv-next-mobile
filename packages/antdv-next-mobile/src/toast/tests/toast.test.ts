@@ -1,6 +1,8 @@
+import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { h, nextTick } from 'vue'
+import { defineComponent, h, nextTick } from 'vue'
 import Toast from '..'
+import ConfigProvider from '../../config-provider'
 
 const toast = () => document.querySelector<HTMLElement>('.am-toast')
 
@@ -125,5 +127,30 @@ describe('Toast', () => {
     Toast.show('b')
     await nextTick()
     expect(toast()!.textContent).toBe('b')
+  })
+
+  it('useToast renders through the context holder and keeps the provider theme', async () => {
+    let api: any
+    const Comp = defineComponent({
+      setup() {
+        const [toastApi, ContextHolder] = Toast.useToast({ duration: 1000, position: 'top' })
+        api = toastApi
+        return () => h(ConfigProvider, { theme: { algorithm: 'dark' } }, { default: () => h(ContextHolder) })
+      },
+    })
+    mount(Comp)
+    await nextTick()
+    api.success('hook')
+    await nextTick()
+    expect(document.querySelector('.am-static-holder')).toBeNull()
+    expect(document.querySelector('.am-toast-root')!.classList.contains('am-theme-dark')).toBe(true)
+    expect(toast()!.classList.contains('am-toast-top')).toBe(true)
+    // independent from the static toast
+    Toast.clear()
+    await flush()
+    expect(toast()!.textContent).toBe('hook')
+    await vi.advanceTimersByTimeAsync(1000)
+    await flush()
+    expect(toast()).toBeNull()
   })
 })

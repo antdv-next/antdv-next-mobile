@@ -1,0 +1,406 @@
+/* ---------- trigger (a PickerTrigger sized like a swatch) ---------- */
+.am-color-picker,
+.am-color-picker-panel {
+  /* component tokens */
+  --am-color-picker-block-size: calc(var(--am-control-height) - 12px);
+  --am-color-picker-block-border-radius: var(--am-border-radius-sm);
+  --am-color-picker-block-border-color: var(--am-color-split);
+  --am-color-picker-checkerboard-color: var(--am-color-fill-secondary);
+  --am-color-picker-checkerboard-size: 8px;
+  --am-color-picker-text-color: var(--am-color-text);
+  --am-color-picker-text-font-size: var(--am-font-size);
+  --am-color-picker-palette-height: 160px;
+  --am-color-picker-palette-border-radius: var(--am-border-radius);
+  --am-color-picker-slider-height: 12px;
+  --am-color-picker-slider-touch-height: 40px;
+  --am-color-picker-handle-size: 24px;
+  --am-color-picker-handle-border-color: var(--am-color-white);
+  --am-color-picker-swatch-size: 40px;
+  --am-color-picker-preset-size: 28px;
+  --am-color-picker-preset-touch-size: 40px;
+  --am-color-picker-gap: var(--am-margin-sm);
+}
+
+.am-color-picker.am-picker-trigger {
+  display: inline-flex;
+  width: auto;
+  min-width: var(--am-picker-trigger-height);
+  padding: 0 calc((var(--am-picker-trigger-height) - var(--am-color-picker-block-size)) / 2 - var(--am-line-width));
+  vertical-align: middle;
+}
+
+.am-color-picker.am-picker-trigger-sm {
+  --am-color-picker-block-size: calc(var(--am-control-height-sm) - 12px);
+  --am-color-picker-text-font-size: var(--am-font-size-sm);
+}
+
+.am-color-picker.am-picker-trigger-lg {
+  --am-color-picker-block-size: calc(var(--am-control-height-lg) - 12px);
+  --am-color-picker-text-font-size: var(--am-font-size-lg);
+}
+
+.am-color-picker.am-picker-trigger-borderless,
+.am-color-picker.am-picker-trigger-underlined {
+  min-width: 0;
+  padding: 0;
+}
+
+.am-color-picker > .am-picker-trigger-content {
+  display: flex;
+  gap: var(--am-padding-xs);
+  align-items: center;
+}
+
+.am-color-picker-trigger-text {
+  flex: 1;
+  min-width: 0;
+  margin-inline-end: var(--am-padding-xxs);
+  overflow: hidden;
+  color: var(--am-color-picker-text-color);
+  font-size: var(--am-color-picker-text-font-size);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.am-picker-trigger-disabled .am-color-picker-trigger-text {
+  color: var(--am-color-text-disabled);
+}
+
+.am-picker-trigger-disabled .am-color-picker-block {
+  opacity: 0.6;
+}
+
+/* ---------- color block ---------- */
+.am-color-picker-block {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--am-color-picker-block-size);
+  height: var(--am-color-picker-block-size);
+  overflow: hidden;
+  vertical-align: middle;
+  /* checkerboard behind translucent colors */
+  background: conic-gradient(
+      var(--am-color-picker-checkerboard-color) 25%,
+      transparent 25% 50%,
+      var(--am-color-picker-checkerboard-color) 50% 75%,
+      transparent 75% 100%
+    )
+    0 0 / var(--am-color-picker-checkerboard-size) var(--am-color-picker-checkerboard-size);
+  border-radius: var(--am-color-picker-block-border-radius);
+}
+
+.am-color-picker-block-inner {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: var(--am-line-width) var(--am-line-type) var(--am-color-picker-block-border-color);
+  border-radius: inherit;
+}
+
+/* "no color": a red slash on the container colour */
+.am-color-picker-block-cleared {
+  background: var(--am-color-bg-container);
+  border: var(--am-line-width) var(--am-line-type) var(--am-color-picker-block-border-color);
+}
+
+.am-color-picker-block-cleared::after {
+  position: absolute;
+  top: 50%;
+  left: -20%;
+  width: 140%;
+  height: 2px;
+  background: var(--am-color-error);
+  transform: rotate(-45deg);
+  content: '';
+}
+
+/* ---------- panel ---------- */
+.am-color-picker-panel {
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-color-picker-popup-panel {
+  padding: 0 var(--am-padding) var(--am-padding);
+  padding-bottom: calc(var(--am-padding) + constant(safe-area-inset-bottom));
+  padding-bottom: calc(var(--am-padding) + env(safe-area-inset-bottom));
+}
+
+.am-color-picker-panel-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--am-color-picker-gap);
+}
+
+.am-color-picker-operation {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.am-color-picker-clear .am-color-picker-block {
+  --am-color-picker-block-size: 16px;
+}
+
+/* ---------- palette ---------- */
+.am-color-picker-palette {
+  position: relative;
+  box-sizing: border-box;
+  height: var(--am-color-picker-palette-height);
+  /* saturation: white -> hue (x), brightness: transparent -> black (y) */
+  background-image: linear-gradient(0deg, #000, transparent), linear-gradient(90deg, #fff, rgb(255 255 255 / 0%));
+  border-radius: var(--am-color-picker-palette-border-radius);
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
+}
+
+.am-color-picker-handle {
+  position: absolute;
+  box-sizing: border-box;
+  width: var(--am-color-picker-handle-size);
+  height: var(--am-color-picker-handle-size);
+  border: 2px solid var(--am-color-picker-handle-border-color);
+  border-radius: 50%;
+  outline: none;
+  box-shadow:
+    0 0 1px 1px rgb(0 0 0 / 25%),
+    inset 0 0 1px rgb(0 0 0 / 25%);
+  transform: translate(-50%, -50%);
+  transition: scale var(--am-motion-duration-fast);
+  pointer-events: none;
+}
+
+.am-color-picker-palette-dragging .am-color-picker-handle,
+.am-color-picker-slider-dragging .am-color-picker-handle {
+  scale: 1.15;
+}
+
+/* ---------- sliders ---------- */
+.am-color-picker-slider-container {
+  display: flex;
+  gap: var(--am-color-picker-gap);
+  align-items: center;
+}
+
+.am-color-picker-slider-group {
+  flex: 1;
+  min-width: 0;
+  /* the handles overflow the rails by half their size */
+  padding: 0 calc(var(--am-color-picker-handle-size) / 2);
+}
+
+.am-color-picker-slider {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--am-color-picker-slider-touch-height);
+  /* a wider touch target than the rail, without moving it */
+  margin: 0 calc(var(--am-color-picker-handle-size) / -2);
+  padding: 0 calc(var(--am-color-picker-handle-size) / 2);
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+}
+
+.am-color-picker-slider-rail {
+  position: relative;
+  flex: 1;
+  height: var(--am-color-picker-slider-height);
+}
+
+.am-color-picker-slider-rail-inner {
+  position: absolute;
+  inset: 0 calc(var(--am-color-picker-slider-height) / -2);
+  border-radius: calc(var(--am-color-picker-slider-height) / 2);
+}
+
+.am-color-picker-slider-hue .am-color-picker-slider-rail-inner {
+  background: linear-gradient(90deg, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+}
+
+.am-color-picker-slider-alpha .am-color-picker-slider-rail::before {
+  position: absolute;
+  inset: 0 calc(var(--am-color-picker-slider-height) / -2);
+  background: conic-gradient(
+      var(--am-color-picker-checkerboard-color) 25%,
+      transparent 25% 50%,
+      var(--am-color-picker-checkerboard-color) 50% 75%,
+      transparent 75% 100%
+    )
+    0 0 / var(--am-color-picker-checkerboard-size) var(--am-color-picker-checkerboard-size);
+  border-radius: calc(var(--am-color-picker-slider-height) / 2);
+  content: '';
+}
+
+.am-color-picker-slider-handle {
+  top: 50%;
+  pointer-events: auto;
+}
+
+.am-color-picker-slider-handle:focus-visible {
+  box-shadow: 0 0 0 2px var(--am-color-primary);
+}
+
+.am-color-picker-swatch {
+  --am-color-picker-block-size: var(--am-color-picker-swatch-size);
+  --am-color-picker-block-border-radius: var(--am-border-radius);
+}
+
+/* ---------- inputs ---------- */
+.am-color-picker-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--am-color-picker-gap);
+}
+
+.am-color-picker-input-row {
+  display: flex;
+  gap: var(--am-padding-xs);
+  align-items: center;
+}
+
+.am-color-picker-input {
+  display: flex;
+  flex: 1;
+  gap: var(--am-padding-xs);
+  min-width: 0;
+}
+
+.am-color-picker-input > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.am-color-picker-alpha-input.am-input-number {
+  flex: none;
+  width: 84px;
+}
+
+.am-color-picker-input-row .am-input-number-wrapper {
+  padding: 0 var(--am-padding-xs);
+}
+
+/* ---------- presets ---------- */
+.am-color-picker-divider.am-divider {
+  --am-divider-margin: var(--am-color-picker-gap);
+}
+
+.am-color-picker-presets .am-collapse {
+  --am-collapse-header-padding: var(--am-padding-xxs) 0;
+  --am-collapse-content-padding: 0 0 var(--am-padding-xs);
+}
+
+.am-color-picker-presets-label {
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+}
+
+.am-color-picker-presets-items {
+  display: flex;
+  flex-wrap: wrap;
+  /* the swatches keep their visual rhythm, the buttons around them are the 40px touch targets */
+  margin: 0 calc((var(--am-color-picker-preset-touch-size) - var(--am-color-picker-preset-size)) / -2);
+}
+
+.am-color-picker-presets-color {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-color-picker-preset-touch-size);
+  height: var(--am-color-picker-preset-touch-size);
+  margin: 0;
+  padding: 0;
+  color: var(--am-color-white);
+  font: inherit;
+  background: none;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-color-picker-presets-color .am-color-picker-block {
+  --am-color-picker-block-size: var(--am-color-picker-preset-size);
+
+  transition: scale var(--am-motion-duration-fast);
+}
+
+.am-color-picker-presets-color:active .am-color-picker-block {
+  scale: 0.9;
+}
+
+.am-color-picker-presets-color:focus-visible .am-color-picker-block {
+  box-shadow: 0 0 0 2px var(--am-color-primary);
+}
+
+.am-color-picker-presets-color:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* check mark of the selected preset */
+.am-color-picker-presets-color-checked::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-sizing: border-box;
+  width: calc(var(--am-color-picker-preset-size) * 0.5);
+  height: calc(var(--am-color-picker-preset-size) * 0.3);
+  margin-top: calc(var(--am-color-picker-preset-size) * -0.04);
+  border: 2px solid currentcolor;
+  border-top: 0;
+  border-right: 0;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  content: '';
+  pointer-events: none;
+}
+
+.am-color-picker-presets-color-bright {
+  color: rgb(0 0 0 / 88%);
+}
+
+/* mostly transparent: the surface shows through, follow the text colour */
+.am-color-picker-presets-color-translucent {
+  color: var(--am-color-text);
+}
+
+.am-color-picker-presets-empty {
+  padding: var(--am-padding-xs)
+    calc((var(--am-color-picker-preset-touch-size) - var(--am-color-picker-preset-size)) / 2);
+  color: var(--am-color-text-quaternary);
+  font-size: var(--am-font-size-sm);
+}
+
+/* ---------- disabled panel ---------- */
+.am-color-picker-panel-disabled .am-color-picker-palette,
+.am-color-picker-panel-disabled .am-color-picker-slider {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ---------- rtl ---------- */
+/* colour spaces are not mirrored: the palette and the sliders keep their physical direction */
+[dir='rtl'] .am-color-picker-palette,
+[dir='rtl'] .am-color-picker-slider {
+  direction: ltr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-color-picker-handle,
+  .am-color-picker-presets-color .am-color-picker-block {
+    transition: none;
+  }
+}

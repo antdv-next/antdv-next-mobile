@@ -43,6 +43,7 @@ Toast.show({ content: 'Saved', icon: 'success' })
 | Toast.loading | Show a loading toast. By default it does not close automatically (`duration: 0`) and blocks background clicks (`maskClickable: false`) | `(config?: ToastShowConfig \| string) => { close }` |
 | Toast.clear | Close the toast currently shown | `() => void` |
 | Toast.config | Global configuration | `(options: ToastConfigOptions) => void` |
+| Toast.useToast | Returns `[toast, ContextHolder]`: the toast renders where `<ContextHolder />` is placed and follows the `ConfigProvider` around it (also available as `App.useApp().toast`) | `(config?: ToastConfigOptions) => [ToastInstance, Component]` |
 
 The returned `close` method only closes the toast it belongs to: if that toast has already been replaced by a new one, calling `close` has no effect.
 

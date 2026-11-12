@@ -1,0 +1,295 @@
+.am-notification {
+  --am-notification-z-index: 2010;
+  --am-notification-top: 8px;
+  --am-notification-bottom: 8px;
+  --am-notification-margin: var(--am-margin-sm);
+  --am-notification-gap: var(--am-margin-xs);
+  --am-notification-max-width: 480px;
+  --am-notification-bg: var(--am-color-bg-elevated);
+  --am-notification-color: var(--am-color-text);
+  --am-notification-title-color: var(--am-color-text-heading);
+  --am-notification-description-color: var(--am-color-text-secondary);
+  --am-notification-font-size: var(--am-font-size);
+  --am-notification-title-font-size: var(--am-font-size-lg);
+  --am-notification-padding: var(--am-padding-sm) var(--am-padding);
+  --am-notification-border-radius: var(--am-border-radius-lg);
+  --am-notification-shadow: var(--am-box-shadow);
+  --am-notification-icon-size: 22px;
+  --am-notification-close-size: 24px;
+  --am-notification-close-color: var(--am-color-icon);
+  --am-notification-progress-height: 2px;
+  --am-notification-progress-color: var(--am-color-primary);
+  --am-notification-stack-offset: 8px;
+  --am-notification-stack-scale: 0.05;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--am-notification-z-index);
+  box-sizing: border-box;
+  color: var(--am-notification-color);
+  font-size: var(--am-notification-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  pointer-events: none;
+}
+
+.am-notification-list {
+  position: absolute;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--am-notification-gap);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(var(--am-notification-max-width) + var(--am-notification-margin) * 2);
+  margin: 0 auto;
+  padding-right: var(--am-notification-margin);
+  padding-right: max(var(--am-notification-margin), env(safe-area-inset-right));
+  padding-left: var(--am-notification-margin);
+  padding-left: max(var(--am-notification-margin), env(safe-area-inset-left));
+}
+
+.am-notification-list-top {
+  top: var(--am-notification-top);
+  top: calc(var(--am-notification-top) + constant(safe-area-inset-top));
+  top: calc(var(--am-notification-top) + env(safe-area-inset-top));
+}
+
+.am-notification-list-bottom {
+  bottom: var(--am-notification-bottom);
+  bottom: calc(var(--am-notification-bottom) + constant(safe-area-inset-bottom));
+  bottom: calc(var(--am-notification-bottom) + env(safe-area-inset-bottom));
+  flex-direction: column-reverse;
+}
+
+.am-notification-wrapper {
+  position: relative;
+  z-index: calc(100 - var(--am-notification-index, 0));
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ---------- card ---------- */
+.am-notification-notice {
+  position: relative;
+  display: flex;
+  gap: var(--am-padding-sm);
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--am-notification-padding);
+  overflow: hidden;
+  color: var(--am-notification-color);
+  font-size: var(--am-notification-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  text-align: start;
+  word-break: break-word;
+  background: var(--am-notification-bg);
+  border-radius: var(--am-notification-border-radius);
+  box-shadow: var(--am-notification-shadow);
+  transition:
+    transform var(--am-motion-duration-mid) var(--am-motion-ease-out),
+    opacity var(--am-motion-duration-mid) var(--am-motion-ease-out);
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.am-notification-notice-dragging {
+  transition: none;
+}
+
+.am-notification-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: calc(var(--am-notification-title-font-size) * var(--am-line-height));
+  color: var(--am-color-info);
+  font-size: var(--am-notification-icon-size);
+}
+
+.am-notification-notice-success .am-notification-icon {
+  color: var(--am-color-success);
+}
+
+.am-notification-notice-error .am-notification-icon {
+  color: var(--am-color-error);
+}
+
+.am-notification-notice-warning .am-notification-icon {
+  color: var(--am-color-warning);
+}
+
+.am-notification-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.am-notification-title {
+  color: var(--am-notification-title-color);
+  font-weight: var(--am-font-weight-strong);
+  font-size: var(--am-notification-title-font-size);
+}
+
+.am-notification-description {
+  color: var(--am-notification-description-color);
+}
+
+.am-notification-title + .am-notification-description {
+  margin-top: var(--am-margin-xxs);
+}
+
+.am-notification-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--am-padding-xs);
+  justify-content: flex-end;
+  margin-top: var(--am-margin-sm);
+}
+
+.am-notification-close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--am-notification-close-size);
+  height: calc(var(--am-notification-title-font-size) * var(--am-line-height));
+  margin: 0;
+  padding: 0;
+  color: var(--am-notification-close-color);
+  font-size: var(--am-font-size);
+  font-family: inherit;
+  line-height: 1;
+  background: transparent;
+  border: 0;
+  border-radius: var(--am-border-radius-sm);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* enlarge the touch target to 40px without growing the card */
+.am-notification-close::before {
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  content: '';
+  inset-inline-end: 0;
+}
+
+.am-notification-close:active {
+  opacity: var(--am-opacity-active);
+}
+
+.am-notification-close:disabled {
+  cursor: not-allowed;
+  opacity: var(--am-opacity-disabled);
+}
+
+.am-notification-progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--am-notification-progress-height);
+  overflow: hidden;
+}
+
+.am-notification-progress-bar {
+  width: 100%;
+  height: 100%;
+  background: var(--am-notification-progress-color);
+  transform-origin: left center;
+  animation: am-notification-progress linear forwards;
+}
+
+[dir='rtl'] .am-notification-progress-bar {
+  transform-origin: right center;
+}
+
+@keyframes am-notification-progress {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* ---------- stack: only the newest card is laid out, the next two peek out behind it ---------- */
+.am-notification-list-collapsed > .am-notification-wrapper:not(:first-child) {
+  position: absolute;
+  top: 0;
+  right: var(--am-notification-margin);
+  bottom: 0;
+  left: var(--am-notification-margin);
+  width: auto;
+  transform: translate3d(0, calc(var(--am-notification-index) * var(--am-notification-stack-offset)), 0)
+    scale(calc(1 - var(--am-notification-index) * var(--am-notification-stack-scale)));
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+
+.am-notification-list-bottom.am-notification-list-collapsed > .am-notification-wrapper:not(:first-child) {
+  transform: translate3d(0, calc(var(--am-notification-index) * var(--am-notification-stack-offset) * -1), 0)
+    scale(calc(1 - var(--am-notification-index) * var(--am-notification-stack-scale)));
+  transform-origin: center top;
+}
+
+.am-notification-list-collapsed > .am-notification-wrapper:not(:first-child) > .am-notification-notice {
+  height: 100%;
+  pointer-events: none;
+}
+
+.am-notification-list-collapsed > .am-notification-wrapper:not(:first-child) > .am-notification-notice > * {
+  opacity: 0;
+}
+
+.am-notification-list-collapsed > .am-notification-wrapper:nth-child(n + 4) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* ---------- motion ---------- */
+.am-notification-motion-enter-active,
+.am-notification-motion-leave-active,
+.am-notification-motion-move {
+  transition:
+    opacity var(--am-motion-duration-slow) var(--am-motion-ease-out),
+    transform var(--am-motion-duration-slow) var(--am-motion-ease-out);
+}
+
+.am-notification-list > .am-notification-motion-enter-from,
+.am-notification-list > .am-notification-motion-leave-to {
+  transform: translate3d(0, -100%, 0);
+  opacity: 0;
+}
+
+.am-notification-list-bottom > .am-notification-motion-enter-from,
+.am-notification-list-bottom > .am-notification-motion-leave-to {
+  transform: translate3d(0, 100%, 0);
+}
+
+.am-notification-list > .am-notification-motion-leave-active {
+  position: absolute;
+  right: var(--am-notification-margin);
+  left: var(--am-notification-margin);
+  z-index: 0;
+  width: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-notification-motion-enter-active,
+  .am-notification-motion-leave-active,
+  .am-notification-motion-move,
+  .am-notification-notice {
+    transition-duration: 0.01s;
+  }
+}

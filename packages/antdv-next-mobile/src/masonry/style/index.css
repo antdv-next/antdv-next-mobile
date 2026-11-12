@@ -1,0 +1,63 @@
+.am-masonry {
+  /* component tokens */
+  --am-masonry-columns: 2;
+  --am-masonry-gutter: var(--am-margin-xs);
+  --am-masonry-gutter-x: var(--am-masonry-gutter);
+  --am-masonry-gutter-y: var(--am-masonry-gutter-x);
+  --am-masonry-motion-duration: var(--am-motion-duration-slow);
+  --am-masonry-motion-ease: var(--am-motion-ease-out);
+  /* 1 in ltr, -1 in rtl: sign of the horizontal offset */
+  --am-masonry-direction: 1;
+
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  /* never laid out by flex (items are absolute); kept so the resolved px gutters can be read back */
+  gap: var(--am-masonry-gutter-y) var(--am-masonry-gutter-x);
+  box-sizing: border-box;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+}
+
+[dir='rtl'] .am-masonry {
+  --am-masonry-direction: -1;
+}
+
+.am-masonry > .am-masonry-item {
+  --am-masonry-item-column: 0;
+  --am-masonry-item-top: 0px;
+
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  box-sizing: border-box;
+  width: calc((100% - (var(--am-masonry-columns) - 1) * var(--am-masonry-gutter-x)) / var(--am-masonry-columns));
+  /* a percentage inside translate is the item's own width: one step = width + gutter */
+  transform: translate3d(
+    calc(var(--am-masonry-item-column) * (100% + var(--am-masonry-gutter-x)) * var(--am-masonry-direction)),
+    var(--am-masonry-item-top),
+    0
+  );
+  transition: opacity var(--am-masonry-motion-duration) var(--am-masonry-motion-ease);
+}
+
+/* not placed yet (height unknown) */
+.am-masonry > .am-masonry-item-pending {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* placed for at least one frame: later moves are animated */
+.am-masonry > .am-masonry-item-motion {
+  transition:
+    opacity var(--am-masonry-motion-duration) var(--am-masonry-motion-ease),
+    transform var(--am-masonry-motion-duration) var(--am-masonry-motion-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-masonry > .am-masonry-item {
+    transition: none;
+  }
+}
