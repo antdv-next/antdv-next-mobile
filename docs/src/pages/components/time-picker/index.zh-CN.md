@@ -11,7 +11,7 @@ group:
 
 需要用户输入一个时间（闹钟、营业时间、预约时段）时使用。需要同时选择日期请使用 [DatePicker](/components/date-picker) 的 `showTime`。
 
-API 与 antdv-next 的 `TimePicker` 对齐：`value` 默认收发 dayjs 对象，设置 `valueFormat` 后收发字符串；`format` 同时决定展示格式与滚轮的列。
+API 与 Antdv Next 的 `TimePicker` 对齐：`value` 默认收发 dayjs 对象，设置 `valueFormat` 后收发字符串；`format` 同时决定展示格式与滚轮的列。
 
 ## 代码演示 {#examples}
 

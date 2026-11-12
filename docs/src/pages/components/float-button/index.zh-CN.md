@@ -13,7 +13,7 @@ group:
 - 无论浏览到何处都可以看见的按钮。
 - 页面较长时，使用 `BackTop` 提供回到顶部的快捷入口。
 
-API 与 antdv-next 的 `FloatButton` 对齐，并新增了移动端常见的拖拽与磁吸贴边能力。
+API 与 Antdv Next 的 `FloatButton` 对齐，并新增了移动端常见的拖拽与磁吸贴边能力。
 
 ## 代码演示 {#examples}
 

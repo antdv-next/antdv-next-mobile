@@ -12,7 +12,7 @@ group:
 - 当某个页面需要向用户显示警告的信息时。
 - 非浮层的静态展现形式，始终展现，不会自动消失，用户可以点击关闭。
 
-API 与 antdv-next 的 `Alert` 对齐：`title`（兼容已废弃的 `message`）、`description`、`showIcon`、`closable`、`action`、`banner`、`variant`。需要单行滚动公告时请使用 [NoticeBar](/components/notice-bar)。
+API 与 Antdv Next 的 `Alert` 对齐：`title`（兼容已废弃的 `message`）、`description`、`showIcon`、`closable`、`action`、`banner`、`variant`。需要单行滚动公告时请使用 [NoticeBar](/components/notice-bar)。
 
 ## 代码演示 {#examples}
 

@@ -21,7 +21,7 @@ export function entryLinks(locale: DocsLocale) {
   }
 }
 
-// English lives at `/components/button`, Chinese at `/components/button-cn` (same scheme as antdv-next).
+// English lives at `/components/button`, Chinese at `/components/button-cn` (same scheme as Antdv Next).
 const docRoutes: RouteRecordRaw[] = locales.flatMap((locale) => {
   const { components, guides } = docs[locale]
   return [

@@ -114,7 +114,7 @@ ShareSheet 是移动端特有的组件。组件库不内置任何社交平台的
 
 ## 与 PC 端的差异 {#diff}
 
-- antdv-next（PC）没有对应组件，ShareSheet 为移动端独有。
+- Antdv Next（PC）没有对应组件，ShareSheet 为移动端独有。
 - 属性命名沿用 PC 端约定：`open` / `v-model:open`、`defaultOpen`、`options`、`maskClosable`、`keyboard`、`destroyOnHidden`、`forceRender`、`getContainer`、`zIndex`、`rootClass`、`classes`、`styles`、`openChange`、`afterOpenChange`。
 - 弹层基于 [Popup](/components/popup) 从底部弹出，头部、取消按钮与关闭行为和 [ActionSheet](/components/action-sheet) 保持一致，取消按钮文字复用 `ActionSheet.cancelText` 语言包。
 - 不内置社交平台图标与品牌色，请使用 `@antdv-next/icons` 或自有图片。

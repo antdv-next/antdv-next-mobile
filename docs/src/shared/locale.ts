@@ -59,7 +59,7 @@ export function useDocs() {
 }
 
 /**
- * Site paths follow antdv-next: English has no suffix, Chinese ends with `-cn`
+ * Site paths follow Antdv Next: English has no suffix, Chinese ends with `-cn`
  * (`/components/button` <-> `/components/button-cn`, `/` <-> `/index-cn`).
  */
 export function localizePath(path: string, locale: DocsLocale) {
@@ -104,11 +104,11 @@ const messages = {
     toc: '本页目录',
     home: {
       badge: 'Vue 3 · 移动端组件库',
-      desc: '与 antdv-next 同源的移动端 UI 组件库。API 对齐 PC 端，体验专为触屏打造，基于 CSS 变量的主题系统让全局换肤只需一行配置。',
+      desc: '与 Antdv Next 同源的移动端 UI 组件库。API 对齐 PC 端，体验专为触屏打造，基于 CSS 变量的主题系统让全局换肤只需一行配置。',
       start: '开始使用',
       browse: (count: number) => `浏览 ${count} 个组件`,
       features: [
-        { title: '与 PC 端 API 对齐', desc: '属性、事件、插槽、静态方法与 antdv-next 保持一致，一套心智同时覆盖桌面端与移动端。' },
+        { title: '与 PC 端 API 对齐', desc: '属性、事件、插槽、静态方法与 Antdv Next 保持一致，一套心智同时覆盖桌面端与移动端。' },
         { title: '为触屏而生', desc: '手势、惯性滚动、安全区、按压反馈，弹层统一从底部滑出，每个组件都按移动端体验重新设计。' },
         { title: '纯 CSS 变量主题', desc: '零运行时样式。覆盖一个变量即可换肤，亮色 / 暗色 / 紧凑算法可自由组合、可嵌套。' },
         { title: 'Vue 3 script setup', desc: '全部组件采用 <script setup> + TypeScript 编写，类型完备，支持按需引入与 Tree Shaking。' },
@@ -117,7 +117,7 @@ const messages = {
       ],
     },
     mobile: {
-      desc: (count: number) => `与 antdv-next API 对齐的 Vue 3 移动端组件库，共 ${count} 个组件。`,
+      desc: (count: number) => `与 Antdv Next API 对齐的 Vue 3 移动端组件库，共 ${count} 个组件。`,
       back: '返回',
       notFound: (name: string) => `未找到组件 ${name}`,
       loading: '加载中...',
@@ -157,11 +157,11 @@ const messages = {
     toc: 'On this page',
     home: {
       badge: 'Vue 3 · Mobile component library',
-      desc: 'The mobile UI library of the antdv-next family. Its API mirrors the PC library, every interaction is designed for touch, and a theme system built on CSS variables restyles the whole app with one line.',
+      desc: 'The mobile UI library of the Antdv Next family. Its API mirrors the PC library, every interaction is designed for touch, and a theme system built on CSS variables restyles the whole app with one line.',
       start: 'Get started',
       browse: (count: number) => `Browse ${count} components`,
       features: [
-        { title: 'Same API as PC', desc: 'Props, events, slots and static methods match antdv-next, so one mental model covers desktop and mobile.' },
+        { title: 'Same API as PC', desc: 'Props, events, slots and static methods match Antdv Next, so one mental model covers desktop and mobile.' },
         { title: 'Made for touch', desc: 'Gestures, momentum scrolling, safe areas and press feedback. Popups slide up from the bottom, and every component is redesigned for mobile.' },
         { title: 'Pure CSS variable theme', desc: 'Zero runtime styles. Override one variable to restyle; light, dark and compact algorithms combine and nest freely.' },
         { title: 'Vue 3 script setup', desc: 'Every component is written with <script setup> and TypeScript: fully typed, tree-shakable, imported on demand.' },
@@ -170,7 +170,7 @@ const messages = {
       ],
     },
     mobile: {
-      desc: (count: number) => `Mobile UI components for Vue 3, API-aligned with antdv-next. ${count} components.`,
+      desc: (count: number) => `Mobile UI components for Vue 3, API-aligned with Antdv Next. ${count} components.`,
       back: 'Back',
       notFound: (name: string) => `Component ${name} not found`,
       loading: 'Loading...',

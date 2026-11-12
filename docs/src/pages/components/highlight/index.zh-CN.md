@@ -70,4 +70,4 @@ Highlight 是行内文本，根节点有意不设置 `font-size`、`font-family`
 
 ## 与 PC 端的差异 {#diff}
 
-- 移动端新增组件，antdv-next（PC 端）没有对应组件。
+- 移动端新增组件，Antdv Next（PC 端）没有对应组件。

@@ -11,7 +11,7 @@ group:
 
 常见于详情页的信息展示，例如订单详情、个人资料、账单明细。
 
-API 与 antdv-next 的 `Descriptions` 对齐：通过 `items` 配置字段，支持 `title`、`extra`、`column`、`layout`、`bordered`、`size`、`colon`。移动端默认一行一列。
+API 与 Antdv Next 的 `Descriptions` 对齐：通过 `items` 配置字段，支持 `title`、`extra`、`column`、`layout`、`bordered`、`size`、`colon`。移动端默认一行一列。
 
 ## 代码演示 {#examples}
 

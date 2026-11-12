@@ -12,7 +12,7 @@ group:
 - 需要用户输入表单域内容时。
 - 提供多行输入 `TextArea`、搜索栏 `InputSearch`、密码框 `InputPassword` 与验证码 `InputOTP`。
 
-API 与 antdv-next 的 `Input` 对齐，移动端字号不小于 16px（避免 iOS 聚焦缩放），清除按钮默认只在聚焦时显示，并处理了输入法组合输入。
+API 与 Antdv Next 的 `Input` 对齐，移动端字号不小于 16px（避免 iOS 聚焦缩放），清除按钮默认只在聚焦时显示，并处理了输入法组合输入。
 
 ## 代码演示 {#examples}
 

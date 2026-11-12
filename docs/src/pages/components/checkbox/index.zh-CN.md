@@ -12,7 +12,7 @@ group:
 - 在一组可选项中进行多项选择时。
 - 单独使用可以表示两种状态之间的切换（如「同意协议」），和 `Switch` 类似；区别在于切换 `Switch` 会直接触发状态改变，而 `Checkbox` 一般用于状态标记，需要和提交操作配合。
 
-API 与 antdv-next 的 `Checkbox` 对齐：`v-model:checked`、`Checkbox.Group` 的 `v-model:value` / `options`，`change` 事件的参数结构也保持一致，PC 端的处理函数可以直接复用。移动端额外提供了列表形态（`block`）、圆形（`shape`）与自定义图标。
+API 与 Antdv Next 的 `Checkbox` 对齐：`v-model:checked`、`Checkbox.Group` 的 `v-model:value` / `options`，`change` 事件的参数结构也保持一致，PC 端的处理函数可以直接复用。移动端额外提供了列表形态（`block`）、圆形（`shape`）与自定义图标。
 
 ## 代码演示 {#examples}
 

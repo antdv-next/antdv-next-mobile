@@ -75,4 +75,4 @@ router.onError(() => LoadingBar.error())
 
 ## 与 PC 端的差异 {#diff}
 
-- 移动端特有组件，antdv-next 没有对应组件。
+- 移动端特有组件，Antdv Next 没有对应组件。

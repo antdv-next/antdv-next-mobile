@@ -14,7 +14,7 @@ group:
 - 只在第一次加载数据的时候使用。
 - 可以被 Spin 完全代替，但是在可用的场景下可以比 Spin 提供更好的视觉效果和用户体验。
 
-API 与 antdv-next 的 `Skeleton` 对齐：`loading` 为 `false` 时渲染默认插槽，`avatar` / `title` / `paragraph` 既可以是布尔值也可以是配置对象。
+API 与 Antdv Next 的 `Skeleton` 对齐：`loading` 为 `false` 时渲染默认插槽，`avatar` / `title` / `paragraph` 既可以是布尔值也可以是配置对象。
 
 ## 代码演示 {#examples}
 

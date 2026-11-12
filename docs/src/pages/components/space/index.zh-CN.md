@@ -38,7 +38,7 @@ group:
 | size | 间距大小，预设值 `small`(8px) / `middle`(16px) / `large`(24px)，数字单位为 px；数组形式为 `[水平间距, 垂直间距]` | `Size \| [Size, Size]`（`Size = 'small' \| 'middle' \| 'large' \| number \| string`） | `'small'` |
 | orientation | 间距方向 | `'horizontal' \| 'vertical'` | `'horizontal'` |
 | vertical | 是否垂直，等价于 `orientation="vertical"` | `boolean` | `false` |
-| direction | `orientation` 的别名，为兼容 antdv-next 保留 | `'horizontal' \| 'vertical'` | - |
+| direction | `orientation` 的别名，为兼容 Antdv Next 保留 | `'horizontal' \| 'vertical'` | - |
 | align | 交叉轴对齐方式，水平方向默认 `center` | `'start' \| 'end' \| 'center' \| 'baseline' \| 'stretch'` | - |
 | wrap | 是否自动换行，仅在水平方向有效 | `boolean` | `false` |
 | separator | 子元素之间的分隔符，同名插槽优先 | `VueNode` | - |
@@ -56,7 +56,7 @@ group:
 | size | 组内成员的尺寸，成员自身的 `size` 优先 | `'small' \| 'middle' \| 'large'` | `'middle'` |
 | orientation | 排列方向 | `'horizontal' \| 'vertical'` | `'horizontal'` |
 | vertical | 纵向排列，等价于 `orientation="vertical"` | `boolean` | `false` |
-| direction | `orientation` 的别名，兼容 antdv-next | `'horizontal' \| 'vertical'` | - |
+| direction | `orientation` 的别名，兼容 Antdv Next | `'horizontal' \| 'vertical'` | - |
 | block | 撑满父元素宽度，输入框与选择字段平分剩余空间 | `boolean` | `false` |
 | rootClass | 根节点类名 | `string` | - |
 

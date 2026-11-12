@@ -1,14 +1,14 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/antdv-next/antdv-next-mobile/main/docs/public/logo.svg" width="72" alt="logo" />
   <h1>Antdv Mobile</h1>
-  <p>Vue 3 移动端组件库，API 与 <a href="https://github.com/antdv-next/antdv-next">antdv-next</a> 对齐。</p>
+  <p>Vue 3 移动端组件库，API 与 <a href="https://github.com/antdv-next/antdv-next">Antdv Next</a> 对齐。</p>
   <p><a href="https://m.antdv-next.com">文档 · m.antdv-next.com</a></p>
   <p><a href="https://github.com/antdv-next/antdv-next-mobile/blob/main/packages/antdv-mobile/README.md">English</a> · 中文</p>
 </div>
 
 ## 特性
 
-- **与 PC 端 API 对齐**：`v-model:open`、`v-model:value`、`items`、`options`、`rootClass`、`classes`、`Modal.confirm`、`message.success`…… 会用 antdv-next 就会用它。
+- **与 PC 端 API 对齐**：`v-model:open`、`v-model:value`、`items`、`options`、`rootClass`、`classes`、`Modal.confirm`、`message.success`…… 会用 Antdv Next 就会用它。
 - **为触屏设计**：底部弹层、滚轮选择器、手势滑动、下拉刷新、安全区适配。
 - **纯 CSS 变量主题**：零运行时样式，亮色 / 暗色 / 紧凑算法可组合、可嵌套，改一个变量即可全局换肤。
 - **`<script setup>` + TypeScript**：全部组件使用组合式 API 编写，类型完备。

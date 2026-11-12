@@ -12,7 +12,7 @@ group:
 - 需要表示开关状态 / 两种状态之间的切换时。
 - 和 `Checkbox` 的区别是，切换 `Switch` 会直接触发状态改变，而 `Checkbox` 一般用于状态标记，需要和提交操作配合。
 
-API 与 antdv-next 的 `Switch` 对齐：`v-model:checked`、`checkedChildren` / `unCheckedChildren`、`checkedValue` / `unCheckedValue`、`loading`。移动端额外提供了 `beforeChange` 异步拦截。
+API 与 Antdv Next 的 `Switch` 对齐：`v-model:checked`、`checkedChildren` / `unCheckedChildren`、`checkedValue` / `unCheckedValue`、`loading`。移动端额外提供了 `beforeChange` 异步拦截。
 
 ## 代码演示 {#examples}
 

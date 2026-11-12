@@ -13,7 +13,7 @@ group:
 - 标签数量较多时标签栏可横向滚动，激活项自动居中。
 - 需要通过左右滑动内容区域来切换分组。
 
-API 与 antdv-next 的 `Tabs` 对齐（`items`、`activeKey`、`type`、`size`、`centered`、`destroyOnHidden` 等），并补充了滑动切换、吸顶等移动端能力。
+API 与 Antdv Next 的 `Tabs` 对齐（`items`、`activeKey`、`type`、`size`、`centered`、`destroyOnHidden` 等），并补充了滑动切换、吸顶等移动端能力。
 
 ## 代码演示 {#examples}
 

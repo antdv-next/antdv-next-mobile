@@ -12,7 +12,7 @@ group:
 - 可提供成功、警告和错误等反馈信息。
 - 顶部居中显示并自动消失，是一种不打断用户操作的轻量级提示方式。
 
-API 与 antdv-next 的 `message` 对齐。移动端样式为顶部的紧凑胶囊，自动避开顶部安全区。如果需要在屏幕中央展示、或需要在加载时阻止页面操作，请使用 [Toast](/components/toast)。
+API 与 Antdv Next 的 `message` 对齐。移动端样式为顶部的紧凑胶囊，自动避开顶部安全区。如果需要在屏幕中央展示、或需要在加载时阻止页面操作，请使用 [Toast](/components/toast)。
 
 ## 代码演示 {#examples}
 

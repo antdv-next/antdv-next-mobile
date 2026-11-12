@@ -12,7 +12,7 @@ group:
 - 当需要一个附加的面板来承载表单、详情、筛选等内容，并且希望用户完成后回到原页面时。
 - 移动端默认从底部滑出（底部面板 / Bottom Sheet），也可以从左、右、上滑出。
 
-API 与 antdv-next 的 `Drawer` 对齐，基于 [Popup](/components/popup) 实现。
+API 与 Antdv Next 的 `Drawer` 对齐，基于 [Popup](/components/popup) 实现。
 
 ## 代码演示 {#examples}
 

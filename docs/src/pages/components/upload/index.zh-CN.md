@@ -15,7 +15,7 @@ group:
 - 当需要展现上传的进度、失败后重试时。
 - 当需要直接调起相机拍照上传时（`capture`）。
 
-API 与 antdv-next 的 `Upload` 对齐：`fileList`（`v-model:fileList`）、`action`、`customRequest`、`beforeUpload`、`maxCount`、`listType`、`showUploadList`、`Upload.LIST_IGNORE` 等语义一致。移动端默认使用图片宫格（`picture-card`）：方形缩略图、角标删除、上传中遮罩、失败后点击重试、点击图片全屏预览。
+API 与 Antdv Next 的 `Upload` 对齐：`fileList`（`v-model:fileList`）、`action`、`customRequest`、`beforeUpload`、`maxCount`、`listType`、`showUploadList`、`Upload.LIST_IGNORE` 等语义一致。移动端默认使用图片宫格（`picture-card`）：方形缩略图、角标删除、上传中遮罩、失败后点击重试、点击图片全屏预览。
 
 ## 代码演示 {#examples}
 

@@ -89,5 +89,5 @@ group:
 ## 与 PC 端的差异 {#diff}
 
 - PC 端没有对应组件，功能上接近 `Checkbox.Group` / `Radio.Group` / `Tag.CheckableTagGroup` 的平铺选择形态。
-- 属性命名沿用 antdv-next 的约定：`options`、`value` / `v-model:value`、`defaultValue`、`fieldNames`、`disabled`。
+- 属性命名沿用 Antdv Next 的约定：`options`、`value` / `v-model:value`、`defaultValue`、`fieldNames`、`disabled`。
 - 无论单选还是多选，`value` 都是数组；单选模式下再次点击已选项会取消选中（得到 `[]`），需要必选时请配合 `Form.Item` 的 `required` 规则。

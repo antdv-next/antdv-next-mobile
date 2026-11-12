@@ -6,7 +6,7 @@ group:
   order: 1
 ---
 
-主题完全基于 CSS 变量实现，没有任何运行时样式生成。变量名与 antdv-next 的 Design Token 一一对应：`colorPrimary` 对应 `--am-color-primary`，`fontSizeLG` 对应 `--am-font-size-lg`。
+主题完全基于 CSS 变量实现，没有任何运行时样式生成。变量名与 Antdv Next 的 Design Token 一一对应：`colorPrimary` 对应 `--am-color-primary`，`fontSizeLG` 对应 `--am-font-size-lg`。
 
 点击页面右上角的调色板可以实时切换主色、圆角与算法，右侧模拟器会同步更新。
 
@@ -35,7 +35,7 @@ import { theme } from '@antdv-next/mobile'
 | 字段 | 说明 | 类型 |
 | --- | --- | --- |
 | algorithm | 主题算法，可传数组组合 | `theme.defaultAlgorithm \| theme.darkAlgorithm \| theme.compactAlgorithm` 或 `'default' \| 'dark' \| 'compact'` |
-| token | 全局变量，键名同 antdv-next | `AliasToken` |
+| token | 全局变量，键名同 Antdv Next | `AliasToken` |
 | components | 组件变量，`{ Button: { height: 44 } }` 会写成 `--am-button-height: 44px` | `Record<string, ComponentToken>` |
 | inherit | 是否继承上层 ConfigProvider 的主题 | `boolean`，默认 `true` |
 

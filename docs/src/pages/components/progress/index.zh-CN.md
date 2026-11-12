@@ -14,7 +14,7 @@ group:
 - 当一个操作会打断当前界面，或者需要在后台运行，且耗时可能超过 2 秒时。
 - 当需要显示一个操作完成的百分比时。
 
-API 与 antdv-next 的 `Progress` 对齐：`type`（`line` / `circle` / `dashboard`）、`percent`、`status`、`strokeColor`（纯色 / 渐变）、`success`、`steps`、`size`、`percentPosition`。
+API 与 Antdv Next 的 `Progress` 对齐：`type`（`line` / `circle` / `dashboard`）、`percent`、`status`、`strokeColor`（纯色 / 渐变）、`success`、`steps`、`size`、`percentPosition`。
 
 ## 代码演示 {#examples}
 

@@ -12,7 +12,7 @@ group:
 - 任务较复杂或存在先后关系时，将其分解成一系列步骤，降低用户的认知负担。
 - 展示订单、物流、审批等流程的当前进度。
 
-API 与 antdv-next 的 `Steps` 对齐（`items`、`current`、`status`、`orientation`、`titlePlacement`、`type` 等）。
+API 与 Antdv Next 的 `Steps` 对齐（`items`、`current`、`status`、`orientation`、`titlePlacement`、`type` 等）。
 
 ## 代码演示 {#examples}
 

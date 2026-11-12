@@ -13,7 +13,7 @@ group:
 - 当需要展示带描述的统计类数据时使用。
 - 秒杀、验证码、活动开始等需要倒计时的场景使用 `Statistic.Timer`。
 
-API 与 antdv-next 的 `Statistic` / `Statistic.Timer` 对齐。
+API 与 Antdv Next 的 `Statistic` / `Statistic.Timer` 对齐。
 
 ## 代码演示 {#examples}
 

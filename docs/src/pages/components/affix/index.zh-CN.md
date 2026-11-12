@@ -12,7 +12,7 @@ group:
 - 当内容区域比较长，需要滚动页面时，把筛选栏、分类标题、操作按钮等固定在屏幕顶部或底部。
 - 需要在元素固定 / 取消固定时得到通知（`change` 事件），例如切换吸顶后的样式。
 
-API 与 antdv-next 的 `Affix` 一致：`offsetTop`、`offsetBottom`、`target`、`change`。固定时会在原位置保留等尺寸的占位，页面布局不会跳动；容器尺寸变化或屏幕旋转后自动重新计算。
+API 与 Antdv Next 的 `Affix` 一致：`offsetTop`、`offsetBottom`、`target`、`change`。固定时会在原位置保留等尺寸的占位，页面布局不会跳动；容器尺寸变化或屏幕旋转后自动重新计算。
 
 ## 代码演示 {#examples}
 

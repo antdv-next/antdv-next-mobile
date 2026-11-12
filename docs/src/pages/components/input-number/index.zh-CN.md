@@ -11,7 +11,7 @@ group:
 
 当需要获取标准数值时，例如商品数量、人数、金额。
 
-API 与 antdv-next 的 `InputNumber` 对齐，移动端默认使用 `mode="spinner"`（− / + 按钮位于两侧的步进器），支持长按连续增减，并唤起数字键盘。
+API 与 Antdv Next 的 `InputNumber` 对齐，移动端默认使用 `mode="spinner"`（− / + 按钮位于两侧的步进器），支持长按连续增减，并唤起数字键盘。
 
 ## 代码演示 {#examples}
 

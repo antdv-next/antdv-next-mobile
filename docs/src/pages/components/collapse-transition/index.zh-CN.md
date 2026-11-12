@@ -57,5 +57,5 @@ group:
 
 ## 与 PC 端的差异 {#diff}
 
-- antdv-next 没有对外导出折叠动效，本组件为移动端新增。
+- Antdv Next 没有对外导出折叠动效，本组件为移动端新增。
 - 属性命名沿用 PC 端弹层类组件的约定：`open`、`forceRender`、`destroyOnHidden`、`afterOpenChange`。

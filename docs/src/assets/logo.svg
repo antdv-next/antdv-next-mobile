@@ -34,6 +34,6 @@
     <!-- left leg, wrapping over the left peak -->
     <path d="M21.4 62.6 33 33.4" stroke="url(#am-leg-l)"/>
   </g>
-  <!-- the red "v" of the antdv-next family -->
+  <!-- the red "v" of the Antdv Next family -->
   <path d="M41.8 61.4 50 69.6l8.2-8.2" stroke="url(#am-heart)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

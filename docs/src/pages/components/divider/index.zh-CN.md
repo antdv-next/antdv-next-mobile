@@ -12,7 +12,7 @@ group:
 - 对不同章节的文本段落进行分割。
 - 对行内文字 / 链接进行分割，例如列表的操作列。
 
-API 与 antdv-next 的 `Divider` 对齐：`orientation` 控制方向，`titlePlacement` 控制标题位置，`variant` 控制线型。
+API 与 Antdv Next 的 `Divider` 对齐：`orientation` 控制方向，`titlePlacement` 控制标题位置，`variant` 控制线型。
 
 ## 代码演示 {#examples}
 
@@ -31,7 +31,7 @@ API 与 antdv-next 的 `Divider` 对齐：`orientation` 控制方向，`titlePla
 | --- | --- | --- | --- |
 | orientation | 分割线方向 | `'horizontal' \| 'vertical'` | `'horizontal'` |
 | vertical | 是否垂直，等价于 `orientation="vertical"` | `boolean` | `false` |
-| type | `orientation` 的别名，为兼容 antdv-next 保留 | `'horizontal' \| 'vertical'` | - |
+| type | `orientation` 的别名，为兼容 Antdv Next 保留 | `'horizontal' \| 'vertical'` | - |
 | titlePlacement | 标题的位置（`left` / `right` 等价于 `start` / `end`） | `'start' \| 'center' \| 'end'` | `'center'` |
 | variant | 线型 | `'solid' \| 'dashed' \| 'dotted'` | `'solid'` |
 | dashed | 是否虚线，等价于 `variant="dashed"` | `boolean` | `false` |

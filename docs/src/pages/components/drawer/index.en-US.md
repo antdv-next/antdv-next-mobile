@@ -11,7 +11,7 @@ group:
 - When an additional panel is needed to hold a form, details, filters and so on, and users should return to the original page once they are done.
 - On mobile it slides in from the bottom by default (Bottom Sheet), and can also slide in from the left, right or top.
 
-The API is aligned with `Drawer` of antdv-next, and it is built on [Popup](/components/popup).
+The API is aligned with `Drawer` of Antdv Next, and it is built on [Popup](/components/popup).
 
 ## Examples {#examples}
 

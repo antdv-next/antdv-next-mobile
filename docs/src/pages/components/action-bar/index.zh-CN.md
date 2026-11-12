@@ -132,5 +132,5 @@ group:
 
 ## 与 PC 端的差异 {#diff}
 
-- antdv-next 没有对应组件，`ActionBar` 是移动端专属组件。
+- Antdv Next 没有对应组件，`ActionBar` 是移动端专属组件。
 - `ActionBarButton` 复用 [Button](/components/button)，`type` / `color` / `variant` / `danger` / `loading` 等属性与 PC 端 Button 保持一致；`size`、`shape`、`block` 由动作栏接管，不再开放。

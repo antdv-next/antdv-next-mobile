@@ -13,7 +13,7 @@ group:
 - 需要在层级结构中选中节点，或用复选框勾选一批节点（父子联动）。
 - 只需要逐级选择一个值时，请使用 [Cascader](/components/cascader)。
 
-API 与 antdv-next 的 `Tree` 对齐：`treeData`、`fieldNames`、`expandedKeys` / `selectedKeys` / `checkedKeys`（均支持 `v-model`）、`checkable`、`checkStrictly`、`loadData`、`showLine`、`titleRender`、`scrollTo` 等名称、类型和语义保持一致。移动端整行都是点击区域，行高不小于 40px，数据量大时通过虚拟滚动渲染。
+API 与 Antdv Next 的 `Tree` 对齐：`treeData`、`fieldNames`、`expandedKeys` / `selectedKeys` / `checkedKeys`（均支持 `v-model`）、`checkable`、`checkStrictly`、`loadData`、`showLine`、`titleRender`、`scrollTo` 等名称、类型和语义保持一致。移动端整行都是点击区域，行高不小于 40px，数据量大时通过虚拟滚动渲染。
 
 ## 代码演示 {#examples}
 

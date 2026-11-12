@@ -131,5 +131,5 @@ Customize through `theme.components.ActionBar` of `ConfigProvider`, or override 
 
 ## Differences from PC {#diff}
 
-- antdv-next has no such component; `ActionBar` is mobile-only.
+- Antdv Next has no such component; `ActionBar` is mobile-only.
 - `ActionBarButton` reuses [Button](/components/button), so `type` / `color` / `variant` / `danger` / `loading` and friends match the PC Button; `size`, `shape` and `block` are owned by the bar and not exposed.

@@ -12,7 +12,7 @@ group:
 - 在 2 ~ 5 个互斥的选项或视图之间切换，例如「日 / 周 / 月」。
 - 选项数量少、标签短，希望所有选项始终可见。
 
-API 与 antdv-next 的 `Segmented` 对齐，选中滑块带有平滑的滑动动画。
+API 与 Antdv Next 的 `Segmented` 对齐，选中滑块带有平滑的滑动动画。
 
 ## 代码演示 {#examples}
 

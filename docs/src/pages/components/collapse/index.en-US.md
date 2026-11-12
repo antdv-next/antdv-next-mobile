@@ -11,7 +11,7 @@ group:
 - Can be used to group or hide complex regions to keep the page clean.
 - `Accordion` is a special kind of `Collapse`, which allows only one panel to be expanded at a time. It is often used for frequently asked questions (FAQ).
 
-The API is aligned with `Collapse` of antdv-next (`items`, `activeKey`, `accordion`, `collapsible`, `expandIcon`, etc.), and expanding / collapsing comes with a smooth height animation.
+The API is aligned with `Collapse` of Antdv Next (`items`, `activeKey`, `accordion`, `collapsible`, `expandIcon`, etc.), and expanding / collapsing comes with a smooth height animation.
 
 ## Examples {#examples}
 

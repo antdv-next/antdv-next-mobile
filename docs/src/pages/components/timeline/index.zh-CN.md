@@ -12,7 +12,7 @@ group:
 - 当有一系列信息需按时间排列时，可正序和倒序。
 - 需要有一条时间轴进行视觉上的串联时，例如物流轨迹、审批流程、操作记录。
 
-API 与 antdv-next 的 `Timeline` 对齐：通过 `items` 配置节点，`title` 显示在时间轴的另一侧，`content` 为节点内容。
+API 与 Antdv Next 的 `Timeline` 对齐：通过 `items` 配置节点，`title` 显示在时间轴的另一侧，`content` 为节点内容。
 
 ## 代码演示 {#examples}
 

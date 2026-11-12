@@ -11,7 +11,7 @@ group:
 - Use when the page needs to be watermarked to identify the copyright.
 - Suitable for preventing information theft, such as internal documents, sensitive personal information and screenshot tracing.
 
-The API is aligned with `Watermark` of antdv-next: it is drawn with Canvas, supports text / multi-line text / image watermarks, and the watermark node is restored automatically after being removed or tampered with.
+The API is aligned with `Watermark` of Antdv Next: it is drawn with Canvas, supports text / multi-line text / image watermarks, and the watermark node is restored automatically after being removed or tampered with.
 
 ## Examples {#examples}
 

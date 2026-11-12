@@ -6,11 +6,11 @@ group:
   order: 1
 ---
 
-If you are familiar with antdv-next, treat this page as a cheat sheet.
+If you are familiar with Antdv Next, treat this page as a cheat sheet.
 
 ## Common conventions {#conventions}
 
-| Convention | PC (antdv-next) | Mobile (@antdv-next/mobile) |
+| Convention | PC (Antdv Next) | Mobile (@antdv-next/mobile) |
 | --- | --- | --- |
 | Component tag | `<a-button>` | `<am-button>` |
 | Class name prefix | `ant-btn` | `am-button` |

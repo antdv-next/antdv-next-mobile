@@ -11,7 +11,7 @@ group:
 - When the user needs to customize a color (theme color, tag color, brush color ...).
 - Use `ColorPickerPanel` to embed the color panel directly in a page.
 
-The API is aligned with `ColorPicker` of antdv-next: `value` is a color string or a `Color` object, `valueFormat` decides what `v-model:value` receives, and `format` decides how the inputs and the text display the color. On mobile a bottom popup replaces the dropdown panel, and the color is committed after tapping "OK".
+The API is aligned with `ColorPicker` of Antdv Next: `value` is a color string or a `Color` object, `valueFormat` decides what `v-model:value` receives, and `format` decides how the inputs and the text display the color. On mobile a bottom popup replaces the dropdown panel, and the color is committed after tapping "OK".
 
 ## Examples {#examples}
 
@@ -121,7 +121,7 @@ Slot: `panelRender`, same as ColorPicker.
 
 ### Color {#color}
 
-The color object handed to the events, `showText` and `v-model:value` (without `valueFormat`), same as antdv-next.
+The color object handed to the events, `showText` and `v-model:value` (without `valueFormat`), same as Antdv Next.
 
 | Member | Description | Type |
 | --- | --- | --- |

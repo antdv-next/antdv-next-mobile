@@ -12,7 +12,7 @@ group:
 - 用于在多个备选项中选中单个状态。
 - 和 `Select` / `Picker` 的区别是，`Radio` 的所有选项默认可见，方便用户在比较中选择，因此选项不宜过多。
 
-API 与 antdv-next 的 `Radio` 对齐：`Radio.Group` 的 `v-model:value`、`options`、`optionType`、`buttonStyle`，`change` 事件参数结构保持一致。移动端额外提供了列表形态（`block`）与自定义图标。
+API 与 Antdv Next 的 `Radio` 对齐：`Radio.Group` 的 `v-model:value`、`options`、`optionType`、`buttonStyle`，`change` 事件参数结构保持一致。移动端额外提供了列表形态（`block`）与自定义图标。
 
 ## 代码演示 {#examples}
 

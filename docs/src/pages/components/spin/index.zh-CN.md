@@ -11,7 +11,7 @@ group:
 
 页面局部处于等待异步数据或正在渲染过程时，合适的加载动效会有效缓解用户的焦虑。
 
-API 与 antdv-next 的 `Spin` 对齐：`spinning`、`size`、`description`、`delay`、`indicator`、`fullscreen`、`percent`，包裹内容时自动添加半透明遮罩。
+API 与 Antdv Next 的 `Spin` 对齐：`spinning`、`size`、`description`、`delay`、`indicator`、`fullscreen`、`percent`，包裹内容时自动添加半透明遮罩。
 
 ## 代码演示 {#examples}
 

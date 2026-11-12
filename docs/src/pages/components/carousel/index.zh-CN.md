@@ -12,7 +12,7 @@ group:
 - 当有一组平级的内容需要在有限空间内轮流展示，如首页 Banner、商品图集、引导页。
 - 当内容空间不足时，可以用走马灯的形式进行收纳，循环播放。
 
-API 与 antdv-next 的 `Carousel` 对齐（`autoplay`、`dots`、`dotPlacement`、`infinite`、`effect`、`beforeChange`、`afterChange`、`goTo` / `next` / `prev`），并针对移动端重新实现了手势：跟手滑动、速度判定、方向锁定（横向轮播不会阻止页面纵向滚动）、无缝循环。默认插槽的每个直接子节点即为一页，`v-for` 与 `<template>` 片段会被自动展开。
+API 与 Antdv Next 的 `Carousel` 对齐（`autoplay`、`dots`、`dotPlacement`、`infinite`、`effect`、`beforeChange`、`afterChange`、`goTo` / `next` / `prev`），并针对移动端重新实现了手势：跟手滑动、速度判定、方向锁定（横向轮播不会阻止页面纵向滚动）、无缝循环。默认插槽的每个直接子节点即为一页，`v-for` 与 `<template>` 片段会被自动展开。
 
 ## 代码演示 {#examples}
 

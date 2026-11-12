@@ -15,7 +15,7 @@ group:
 - 带有交互的通知，给出用户下一步的行动点。
 - 系统主动推送。
 
-API 与 antdv-next 的 `notification` 对齐。移动端样式为通栏的卡片横幅，自动避开安全区，支持滑动关闭。只需要一句简短的反馈时，请使用 [Message](/components/message) 或 [Toast](/components/toast)。
+API 与 Antdv Next 的 `notification` 对齐。移动端样式为通栏的卡片横幅，自动避开安全区，支持滑动关闭。只需要一句简短的反馈时，请使用 [Message](/components/message) 或 [Toast](/components/toast)。
 
 ## 代码演示 {#examples}
 

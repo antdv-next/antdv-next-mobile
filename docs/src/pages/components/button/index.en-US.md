@@ -10,7 +10,7 @@ group:
 
 A button means an operation (or a series of operations). Clicking a button will trigger the corresponding business logic.
 
-The API is aligned with `Button` of antdv-next: `type` is syntactic sugar for `color` + `variant`. On mobile the default height is larger and the pressed state uses `:active` feedback.
+The API is aligned with `Button` of Antdv Next: `type` is syntactic sugar for `color` + `variant`. On mobile the default height is larger and the pressed state uses `:active` feedback.
 
 ## Examples {#examples}
 

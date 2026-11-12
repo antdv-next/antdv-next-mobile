@@ -6,11 +6,11 @@ group:
   order: 1
 ---
 
-如果你熟悉 antdv-next，可以把这里当成一份速查表。
+如果你熟悉 Antdv Next，可以把这里当成一份速查表。
 
 ## 通用约定 {#conventions}
 
-| 约定 | PC（antdv-next） | 移动端（@antdv-next/mobile） |
+| 约定 | PC（Antdv Next） | 移动端（@antdv-next/mobile） |
 | --- | --- | --- |
 | 组件标签 | `<a-button>` | `<am-button>` |
 | 类名前缀 | `ant-btn` | `am-button` |

@@ -13,7 +13,7 @@ group:
 - 当需要对长文本做省略并支持「展开 / 收起」时。
 - 当需要一键复制文本（订单号、邀请码）时。
 
-API 与 antdv-next 的 `Typography` 对齐：`Typography.Text`、`Typography.Title`、`Typography.Paragraph` 共用 `type`、文本装饰、`ellipsis`、`copyable` 等属性。
+API 与 Antdv Next 的 `Typography` 对齐：`Typography.Text`、`Typography.Title`、`Typography.Paragraph` 共用 `type`、文本装饰、`ellipsis`、`copyable` 等属性。
 
 ## 代码演示 {#examples}
 

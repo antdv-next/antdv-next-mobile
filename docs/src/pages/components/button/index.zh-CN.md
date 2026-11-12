@@ -11,7 +11,7 @@ group:
 
 标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。
 
-API 与 antdv-next 的 `Button` 对齐：`type` 是 `color` + `variant` 的语法糖，移动端默认高度更高、点击态使用 `:active` 反馈。
+API 与 Antdv Next 的 `Button` 对齐：`type` 是 `color` + `variant` 的语法糖，移动端默认高度更高、点击态使用 `:active` 反馈。
 
 ## 代码演示 {#examples}
 

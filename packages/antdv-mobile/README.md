@@ -1,14 +1,14 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/antdv-next/antdv-next-mobile/main/docs/public/logo.svg" width="72" alt="logo" />
   <h1>Antdv Mobile</h1>
-  <p>Mobile UI component library for Vue 3, API-aligned with <a href="https://github.com/antdv-next/antdv-next">antdv-next</a>.</p>
+  <p>Mobile UI component library for Vue 3, API-aligned with <a href="https://github.com/antdv-next/antdv-next">Antdv Next</a>.</p>
   <p><a href="https://m.antdv-next.com">Documentation · m.antdv-next.com</a></p>
   <p>English · <a href="https://github.com/antdv-next/antdv-next-mobile/blob/main/packages/antdv-mobile/README.zh-CN.md">中文</a></p>
 </div>
 
 ## Features
 
-- **Same API as PC**: `v-model:open`, `v-model:value`, `items`, `options`, `rootClass`, `classes`, `Modal.confirm`, `message.success` ... if you know antdv-next, you already know this library.
+- **Same API as PC**: `v-model:open`, `v-model:value`, `items`, `options`, `rootClass`, `classes`, `Modal.confirm`, `message.success` ... if you know Antdv Next, you already know this library.
 - **Designed for touch**: bottom popups, wheel pickers, swipe gestures, pull-to-refresh, safe-area support.
 - **Pure CSS variable theme**: zero runtime styles. Light / dark / compact algorithms combine and nest, and one variable restyles the whole app.
 - **`<script setup>` + TypeScript**: every component is written with the Composition API and fully typed.

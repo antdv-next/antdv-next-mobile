@@ -12,7 +12,7 @@ group:
 - 对复杂区域进行分组和隐藏，保持页面的整洁。
 - 「手风琴」是一种特殊的折叠面板，同一时间只允许展开一个面板，常用于常见问题（FAQ）。
 
-API 与 antdv-next 的 `Collapse` 对齐（`items`、`activeKey`、`accordion`、`collapsible`、`expandIcon` 等），展开 / 收起带有平滑的高度动画。
+API 与 Antdv Next 的 `Collapse` 对齐（`items`、`activeKey`、`accordion`、`collapsible`、`expandIcon` 等），展开 / 收起带有平滑的高度动画。
 
 ## 代码演示 {#examples}
 

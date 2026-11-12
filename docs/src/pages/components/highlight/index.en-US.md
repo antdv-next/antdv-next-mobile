@@ -69,4 +69,4 @@ Highlight is inline text: the root element deliberately does not set `font-size`
 
 ## Differences from PC {#diff}
 
-- A mobile-only addition; antdv-next (PC) has no counterpart.
+- A mobile-only addition; Antdv Next (PC) has no counterpart.

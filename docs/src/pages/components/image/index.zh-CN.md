@@ -13,7 +13,7 @@ group:
 - 需要控制图片的填充模式（`cover` / `contain` ...）、圆角或懒加载时。
 - 点击图片需要全屏预览、手势缩放时（预览能力由 [ImagePreview](/components/image-preview) 提供）。
 
-API 与 antdv-next 的 `Image` 对齐：`src`、`alt`、`width`、`height`、`fallback`、`placeholder`、`preview`、`Image.PreviewGroup`。
+API 与 Antdv Next 的 `Image` 对齐：`src`、`alt`、`width`、`height`、`fallback`、`placeholder`、`preview`、`Image.PreviewGroup`。
 
 ## 代码演示 {#examples}
 

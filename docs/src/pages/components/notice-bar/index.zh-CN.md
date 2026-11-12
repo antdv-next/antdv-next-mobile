@@ -12,7 +12,7 @@ group:
 - 适用于当前页面内信息的通知，是一种较醒目的页面内通知方式。
 - 内容超出一行时自动以跑马灯的形式滚动，也可以通过 `wrap` 换行完整展示。
 
-`NoticeBar` 是移动端专属组件，antdv-next（PC）中没有对应组件；带标题、描述的静态提示请使用 [Alert](/components/alert)。
+`NoticeBar` 是移动端专属组件，Antdv Next（PC）中没有对应组件；带标题、描述的静态提示请使用 [Alert](/components/alert)。
 
 ## 代码演示 {#examples}
 

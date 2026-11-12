@@ -12,7 +12,7 @@ group:
 - 需要用户自定义颜色（主题色、标签色、画笔颜色等）时。
 - 希望把颜色面板直接嵌入页面时，使用 `ColorPickerPanel`。
 
-API 与 antdv-next 的 `ColorPicker` 对齐：`value` 可以是颜色字符串或 `Color` 对象，`valueFormat` 决定 `v-model:value` 得到的格式，`format` 决定输入框与文本的显示格式。移动端使用底部弹层代替下拉面板，点击「确定」后才会提交。
+API 与 Antdv Next 的 `ColorPicker` 对齐：`value` 可以是颜色字符串或 `Color` 对象，`valueFormat` 决定 `v-model:value` 得到的格式，`format` 决定输入框与文本的显示格式。移动端使用底部弹层代替下拉面板，点击「确定」后才会提交。
 
 ## 代码演示 {#examples}
 
@@ -122,7 +122,7 @@ API 与 antdv-next 的 `ColorPicker` 对齐：`value` 可以是颜色字符串�
 
 ### Color {#color}
 
-事件、`showText`、`v-model:value`（未设置 `valueFormat` 时）得到的颜色对象，与 antdv-next 一致。
+事件、`showText`、`v-model:value`（未设置 `valueFormat` 时）得到的颜色对象，与 Antdv Next 一致。
 
 | 成员 | 说明 | 类型 |
 | --- | --- | --- |

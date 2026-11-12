@@ -10,7 +10,7 @@ group:
 
 When part of the page is waiting for asynchronous data or during a rendering process, an appropriate loading animation can effectively alleviate users' inquietude.
 
-The API is aligned with `Spin` of antdv-next: `spinning`, `size`, `description`, `delay`, `indicator`, `fullscreen` and `percent`, and a translucent mask is added automatically when it wraps content.
+The API is aligned with `Spin` of Antdv Next: `spinning`, `size`, `description`, `delay`, `indicator`, `fullscreen` and `percent`, and a translucent mask is added automatically when it wraps content.
 
 ## Examples {#examples}
 

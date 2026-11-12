@@ -47,5 +47,5 @@ group:
 
 ## 与 PC 端的差异 {#diff}
 
-- 移动端特有组件，antdv-next 中没有对应组件。
+- 移动端特有组件，Antdv Next 中没有对应组件。
 - 只需要给已有元素添加安全区内边距时，也可以直接使用工具类 `am-safe-area-top` / `am-safe-area-bottom`。

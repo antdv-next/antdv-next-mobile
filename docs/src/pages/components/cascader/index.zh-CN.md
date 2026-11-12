@@ -12,7 +12,7 @@ group:
 - 需要从一组相关联的数据集合中选择，例如省市区、公司层级、商品分类等。
 - 层级固定且每级选项不多（两三列）时，也可以使用 [Picker](/components/picker) 的级联列。
 
-API 与 antdv-next 的 `Cascader` 对齐：`options`、`fieldNames`、`value`（值路径数组）、`changeOnSelect`、`loadData`、`displayRender`。移动端在底部弹层中以「页签 + 选项列表」逐级选择，选中叶子节点后自动提交并关闭。
+API 与 Antdv Next 的 `Cascader` 对齐：`options`、`fieldNames`、`value`（值路径数组）、`changeOnSelect`、`loadData`、`displayRender`。移动端在底部弹层中以「页签 + 选项列表」逐级选择，选中叶子节点后自动提交并关闭。
 
 ## 代码演示 {#examples}
 

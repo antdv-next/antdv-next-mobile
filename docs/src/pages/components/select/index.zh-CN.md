@@ -12,7 +12,7 @@ group:
 - 从一组平铺的选项中选择，选项较多、文字较长，或需要搜索、描述信息时。
 - 选项很少（2 ~ 6 个）且希望直接展示时使用 [Selector](/components/selector) 或 [Radio](/components/radio)；需要滚轮体验时使用 [Picker](/components/picker)。
 
-API 与 antdv-next 的 `Select` 对齐：`options`、`fieldNames`、`value`、`mode="multiple"`、`labelInValue`、`showSearch`、`filterOption`、`optionRender`、`labelRender`、`maxCount`、`maxTagCount`。移动端以底部弹层的列表代替下拉菜单：单选点击即提交并关闭，多选为勾选列表，点击「确定」提交。
+API 与 Antdv Next 的 `Select` 对齐：`options`、`fieldNames`、`value`、`mode="multiple"`、`labelInValue`、`showSearch`、`filterOption`、`optionRender`、`labelRender`、`maxCount`、`maxTagCount`。移动端以底部弹层的列表代替下拉菜单：单选点击即提交并关闭，多选为勾选列表，点击「确定」提交。
 
 ## 代码演示 {#examples}
 

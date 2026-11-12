@@ -104,4 +104,4 @@ Toast 没有 PC 端的对应组件，它与 [Message](/components/message) 的�
 | 数量 | 同一时间只有一个 | 多条堆叠 |
 | 时长单位 | 毫秒 | 秒（与 PC 端一致） |
 | 阻止页面操作 | 支持（`maskClickable: false`） | 不支持 |
-| API | 移动端特有 | 与 antdv-next 的 `message` 对齐 |
+| API | 移动端特有 | 与 Antdv Next 的 `message` 对齐 |

@@ -13,7 +13,7 @@ group:
 - 需要选择一段日期范围时，使用 `DatePicker.RangePicker`。
 - 希望直观地看到整月日历时，请使用 [Calendar](/components/calendar)。
 
-API 与 antdv-next 的 `DatePicker` 对齐：`value` 默认收发 [dayjs](https://day.js.org/) 对象，设置 `valueFormat` 后收发格式化字符串；`picker` 切换选择粒度，`showTime` 增加时间列。移动端使用底部滚轮代替日历面板，点击「确定」后才会提交。
+API 与 Antdv Next 的 `DatePicker` 对齐：`value` 默认收发 [dayjs](https://day.js.org/) 对象，设置 `valueFormat` 后收发格式化字符串；`picker` 切换选择粒度，`showTime` 增加时间列。移动端使用底部滚轮代替日历面板，点击「确定」后才会提交。
 
 ## 代码演示 {#examples}
 

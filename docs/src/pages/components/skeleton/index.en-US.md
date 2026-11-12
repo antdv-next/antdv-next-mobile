@@ -13,7 +13,7 @@ group:
 - Only when loading data for the first time.
 - It can be fully replaced by Spin, but where applicable it provides a better visual effect and user experience than Spin.
 
-The API is aligned with `Skeleton` of antdv-next: the default slot is rendered when `loading` is `false`, and `avatar` / `title` / `paragraph` can be either a boolean or a config object.
+The API is aligned with `Skeleton` of Antdv Next: the default slot is rendered when `loading` is `false`, and `avatar` / `title` / `paragraph` can be either a boolean or a config object.
 
 ## Examples {#examples}
 

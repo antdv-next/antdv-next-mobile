@@ -12,7 +12,7 @@ group:
 - 观看视频、直播时，实时展示其他用户的评论。
 - 需要在一块内容上方营造热闹氛围的互动文字，如活动页、抽奖页。
 
-`Barrage` 是移动端专属组件，antdv-next（PC）中没有对应组件。默认插槽放置被弹幕覆盖的内容（视频、图片等），弹幕层不响应点击，下方内容保持可交互。
+`Barrage` 是移动端专属组件，Antdv Next（PC）中没有对应组件。默认插槽放置被弹幕覆盖的内容（视频、图片等），弹幕层不响应点击，下方内容保持可交互。
 
 ## 代码演示 {#examples}
 
@@ -90,7 +90,7 @@ group:
 
 ## 与 PC 端的差异 {#diff}
 
-- 移动端专属组件，PC 端没有对应实现；`value` / `defaultValue` / `rootClass` / `classes` / `styles` 等命名沿用 antdv-next 的约定。
+- 移动端专属组件，PC 端没有对应实现；`value` / `defaultValue` / `rootClass` / `classes` / `styles` 等命名沿用 Antdv Next 的约定。
 - 弹幕由纯 CSS 动画驱动，根节点 `overflow: hidden`，容器高度由默认插槽的内容或自定义样式决定。
 - 支持 RTL：`direction="rtl"` 时弹幕从左向右飞。
 - 页面切到后台时自动暂停，回到前台后继续。

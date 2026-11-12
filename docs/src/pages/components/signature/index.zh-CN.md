@@ -90,7 +90,7 @@ group:
 
 ## 与 PC 端的差异 {#diff}
 
-- antdv-next（PC）没有对应组件，`Signature` 为移动端独有组件，能力对标 Vant 的 `Signature`。
-- 属性命名遵循 antdv-next 的习惯：`footer`（同 `Modal`，`false` 隐藏）、`rootClass`、`classes`、`styles`，渲染类属性均有同名插槽。
+- Antdv Next（PC）没有对应组件，`Signature` 为移动端独有组件，能力对标 Vant 的 `Signature`。
+- 属性命名遵循 Antdv Next 的习惯：`footer`（同 `Modal`，`false` 隐藏）、`rootClass`、`classes`、`styles`，渲染类属性均有同名插槽。
 - 画布按 `devicePixelRatio` 放大以保证高清屏下的清晰度，尺寸变化时自动适配并保留已有笔画。
 - 除触摸外同时支持鼠标书写，方便在桌面浏览器中调试。

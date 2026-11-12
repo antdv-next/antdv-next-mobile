@@ -11,7 +11,7 @@ group:
 - To provide feedback such as success, warning and error.
 - A message is displayed at the top center and dismissed automatically, a lightweight way to give feedback without interrupting the user.
 
-The API is aligned with `message` of antdv-next. On mobile it is styled as a compact capsule at the top that avoids the top safe area automatically. To display in the center of the screen, or to block page interaction while loading, use [Toast](/components/toast).
+The API is aligned with `message` of Antdv Next. On mobile it is styled as a compact capsule at the top that avoids the top safe area automatically. To display in the center of the screen, or to block page interaction while loading, use [Toast](/components/toast).
 
 ## Examples {#examples}
 

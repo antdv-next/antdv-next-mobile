@@ -103,4 +103,4 @@ Toast has no PC counterpart. It differs from [Message](/components/message) as f
 | Count | Only one at a time | Multiple, stacked |
 | Duration unit | Milliseconds | Seconds (same as PC) |
 | Blocking page operations | Supported (`maskClickable: false`) | Not supported |
-| API | Mobile-only | Aligned with the `message` of antdv-next |
+| API | Mobile-only | Aligned with the `message` of Antdv Next |

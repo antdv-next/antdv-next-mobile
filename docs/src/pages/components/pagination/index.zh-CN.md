@@ -12,7 +12,7 @@ group:
 - 当加载或渲染所有数据将花费很多时间时。
 - 需要让用户明确知道当前位置并跳转到指定页，而不是无限滚动加载。
 
-API 与 antdv-next 的 `Pagination` 对齐（`current`、`total`、`pageSize`、`simple`、`showTotal`、`itemRender` 等），界面针对窄屏做了精简。
+API 与 Antdv Next 的 `Pagination` 对齐（`current`、`total`、`pageSize`、`simple`、`showTotal`、`itemRender` 等），界面针对窄屏做了精简。
 
 ## 代码演示 {#examples}
 

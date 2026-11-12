@@ -12,7 +12,7 @@ group:
 - 列表页顶部需要一排筛选项（排序、分类、更多筛选……），点击后在菜单栏下方展开面板进行选择。
 - 面板内容可以是单选列表，也可以是任意自定义内容（多选、表单等）。
 
-> 注意：移动端的 `Dropdown` 是「筛选菜单栏」，与 PC 端 antdv-next 中悬停 / 点击弹出的「下拉操作菜单」不是同一种交互。在移动端，操作菜单请使用 [ActionSheet](/components/action-sheet) 或 [Popover](/components/popover) 的菜单模式。
+> 注意：移动端的 `Dropdown` 是「筛选菜单栏」，与 PC 端 Antdv Next 中悬停 / 点击弹出的「下拉操作菜单」不是同一种交互。在移动端，操作菜单请使用 [ActionSheet](/components/action-sheet) 或 [Popover](/components/popover) 的菜单模式。
 
 ## 代码演示 {#examples}
 

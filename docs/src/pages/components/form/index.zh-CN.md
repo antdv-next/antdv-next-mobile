@@ -12,7 +12,7 @@ group:
 - 用于创建一个实体或收集信息。
 - 需要对输入的数据类型进行校验时。
 
-API 与 antdv-next 的 `Form` 对齐：`model` + `rules` 驱动校验，`FormItem` 通过 `name` 关联字段，实例方法 `validate` / `resetFields` / `setFieldsValue` 等保持同名。移动端的 `FormItem` 渲染为一行单元格（细线分隔、错误信息显示在控件下方），表单内的输入类组件默认使用 `borderless` 形态。
+API 与 Antdv Next 的 `Form` 对齐：`model` + `rules` 驱动校验，`FormItem` 通过 `name` 关联字段，实例方法 `validate` / `resetFields` / `setFieldsValue` 等保持同名。移动端的 `FormItem` 渲染为一行单元格（细线分隔、错误信息显示在控件下方），表单内的输入类组件默认使用 `borderless` 形态。
 
 ## 代码演示 {#examples}
 

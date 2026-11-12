@@ -14,7 +14,7 @@ group:
 
 - 需要等分的图标入口（首页金刚区、功能面板）时，使用 `Grid` / `GridItem`：自带图标、标题、徽标、分割线和按压反馈。
 
-`Row` / `Col` 基于 Flex 实现，API 与 antdv-next 对齐；`Grid` / `GridItem` 是移动端新增的宫格组件，基于 CSS Grid 实现。
+`Row` / `Col` 基于 Flex 实现，API 与 Antdv Next 对齐；`Grid` / `GridItem` 是移动端新增的宫格组件，基于 CSS Grid 实现。
 
 ## 代码演示 {#examples}
 
