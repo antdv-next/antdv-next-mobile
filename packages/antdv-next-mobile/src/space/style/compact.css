@@ -64,6 +64,13 @@
   height: var(--am-compact-height);
 }
 
+/* a `block` button shares the row instead of taking 100% of it each */
+.am-space-compact .am-button-block.am-compact-item {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+}
+
 /* text fields share the free space; buttons and addons keep their own width */
 .am-space-compact .am-input.am-compact-item,
 .am-space-compact .am-picker-trigger.am-compact-item,
