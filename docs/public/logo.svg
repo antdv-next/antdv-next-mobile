@@ -1,24 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
   <defs>
-    <linearGradient id="am-red" x1=".7" y1="-.13" x2=".48" y2="1.22">
-      <stop offset="0" stop-color="#FA816E"/>
-      <stop offset=".41" stop-color="#F74A5C"/>
-      <stop offset="1" stop-color="#F51D2C"/>
+    <linearGradient id="am-leg-l" x1="21" y1="63" x2="33" y2="33" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A5CFF"/>
+      <stop offset=".55" stop-color="#0E9BFF"/>
+      <stop offset="1" stop-color="#22D0FF"/>
     </linearGradient>
-    <linearGradient id="am-blue" x1=".55" y1=".3" x2="-.01" y2=".68">
-      <stop offset="0" stop-color="#29CDFF"/>
-      <stop offset=".36" stop-color="#148EFF"/>
-      <stop offset="1" stop-color="#0A60FF"/>
+    <linearGradient id="am-fold-l" x1="34" y1="36" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A6EEB"/>
+      <stop offset=".5" stop-color="#1281FA"/>
+      <stop offset="1" stop-color="#2BA9FF"/>
     </linearGradient>
-    <linearGradient id="am-fold" x1=".5" y1="0" x2=".4" y2="1.17">
-      <stop offset="0" stop-color="#4285EB"/>
-      <stop offset="1" stop-color="#2EC7FF"/>
+    <linearGradient id="am-fold-r" x1="50" y1="52" x2="68" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#16B2FF"/>
+      <stop offset="1" stop-color="#2CE6FF"/>
+    </linearGradient>
+    <linearGradient id="am-leg-r" x1="67" y1="34" x2="80" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1C8FF2"/>
+      <stop offset=".5" stop-color="#19BDFF"/>
+      <stop offset="1" stop-color="#1BE2FF"/>
+    </linearGradient>
+    <linearGradient id="am-heart" x1="50" y1="60" x2="50" y2="71" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF5F57"/>
+      <stop offset="1" stop-color="#F8404B"/>
     </linearGradient>
   </defs>
-  <!-- the antdv-next "A" -->
-  <path fill="url(#am-blue)" fill-rule="evenodd" d="M45.07,20.46C50.32,17.44,57.02,19.25,60.04,24.49L87.18,71.67C88.86,74.59,87.87,78.33,84.96,80.03C84.95,80.04,84.94,80.04,84.93,80.05C82.03,81.72,78.32,80.73,76.65,77.83L52.22,35.55C52.04,35.23,51.78,34.98,51.46,34.8C50.48,34.23,49.23,34.56,48.66,35.55L24.2,77.93C24.19,77.95,24.18,77.97,24.17,77.98C22.5,80.82,18.84,81.77,16,80.09C13.12,78.4,12.15,74.71,13.81,71.81L41.04,24.5C42,22.82,43.39,21.43,45.07,20.46Z"/>
-  <path fill="url(#am-fold)" fill-rule="evenodd" d="M56.65,29.79C60.05,29.79,62.59,31.11,64.28,33.75L86.62,72.63C88.3,75.56,87.3,79.3,84.38,81C84.37,81,84.36,81.01,84.36,81.01C81.45,82.68,77.73,81.68,76.06,78.77L55.22,42.55L51.64,36.51C51.46,36.2,51.2,35.94,50.88,35.77C49.89,35.21,48.64,35.56,48.08,36.55L48.06,36.6C50.39,32.06,53.26,29.79,56.65,29.79Z"/>
-  <!-- mobile: a phone standing inside the A, in the family red -->
-  <rect x="41.2" y="51" width="17.6" height="29" rx="5.2" stroke="url(#am-red)" stroke-width="4.4"/>
-  <path d="M47.6 73.2h4.8" stroke="#F63A49" stroke-width="2.6" stroke-linecap="round"/>
+  <g stroke-width="13.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- right leg, tucked under the right peak -->
+    <path d="M67 33.4 78.6 62.6" stroke="url(#am-leg-r)"/>
+    <!-- right fold: valley up to the right peak -->
+    <path d="M50 50.6 67 33.4" stroke="url(#am-fold-r)"/>
+    <!-- left fold: left peak down to the valley, over the right fold -->
+    <path d="M33 33.4 50 50.6" stroke="url(#am-fold-l)"/>
+    <!-- left leg, wrapping over the left peak -->
+    <path d="M21.4 62.6 33 33.4" stroke="url(#am-leg-l)"/>
+  </g>
+  <!-- the red "v" of the antdv-next family -->
+  <path d="M41.8 61.4 50 69.6l8.2-8.2" stroke="url(#am-heart)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
