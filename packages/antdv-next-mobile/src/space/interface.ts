@@ -41,3 +41,32 @@ export interface SpaceSlots {
   default?: () => any
   separator?: () => any
 }
+
+export interface SpaceCompactProps {
+  /** Size of every item in the group. Items without their own `size` follow it. */
+  size?: SizeType
+  orientation?: SpaceOrientation
+  /** Alias of `orientation` (kept for antdv-next compatibility) */
+  direction?: SpaceOrientation
+  /** Shortcut of `orientation="vertical"` */
+  vertical?: boolean
+  /** Take the full width of the parent; inputs and picker fields share the remaining space */
+  block?: boolean
+  rootClass?: string
+}
+
+export interface SpaceCompactSlots {
+  default?: () => any
+}
+
+export interface SpaceAddonProps {
+  /** `outlined` (default, bordered with a tinted background), `filled` or `borderless` */
+  variant?: 'outlined' | 'filled' | 'borderless'
+  size?: SizeType
+  disabled?: boolean
+  rootClass?: string
+}
+
+export interface SpaceAddonSlots {
+  default?: () => any
+}

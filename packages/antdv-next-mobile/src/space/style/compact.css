@@ -1,0 +1,235 @@
+/**
+ * Space.Compact: stitches bordered components (Button, Input, InputNumber, picker fields,
+ * Space.Addon) into one seamless control. Items mark themselves with `am-compact-*` classes
+ * (see `_base/compact.ts`); every seam rule lives here.
+ */
+.am-space-compact {
+  --am-compact-height: var(--am-control-height);
+  --am-compact-radius: var(--am-border-radius);
+  --am-compact-font-size: var(--am-font-size-lg);
+
+  display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.am-space-compact-sm {
+  --am-compact-height: var(--am-control-height-sm);
+  --am-compact-radius: var(--am-border-radius-sm);
+  --am-compact-font-size: var(--am-font-size);
+}
+
+.am-space-compact-lg {
+  --am-compact-height: var(--am-control-height-lg);
+  --am-compact-radius: var(--am-border-radius-lg);
+  --am-compact-font-size: var(--am-font-size-xl);
+}
+
+.am-space-compact-block {
+  display: flex;
+  width: 100%;
+}
+
+.am-space-compact-vertical {
+  flex-direction: column;
+}
+
+/* a nested group continues its parent */
+.am-space-compact > .am-space-compact {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ---------- every item: one height, one radius, collapsed borders ---------- */
+.am-space-compact .am-compact-item,
+.am-space-compact .am-compact-vertical-item {
+  --am-button-height: var(--am-compact-height);
+  --am-button-border-radius: var(--am-compact-radius);
+  --am-input-height: var(--am-compact-height);
+  --am-input-border-radius: var(--am-compact-radius);
+  --am-input-number-height: var(--am-compact-height);
+  --am-input-number-border-radius: var(--am-compact-radius);
+  --am-picker-trigger-height: var(--am-compact-height);
+  --am-picker-trigger-border-radius: var(--am-compact-radius);
+
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  min-height: var(--am-compact-height);
+}
+
+.am-space-compact .am-compact-item {
+  height: var(--am-compact-height);
+}
+
+/* text fields share the free space; buttons and addons keep their own width */
+.am-space-compact .am-input.am-compact-item,
+.am-space-compact .am-picker-trigger.am-compact-item,
+.am-space-compact .am-input-number-mode-input.am-compact-item {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+}
+
+.am-space-compact .am-compact-vertical-item {
+  width: 100%;
+}
+
+/* collapse the touching borders */
+.am-space-compact .am-compact-item:not(.am-compact-first-item) {
+  margin-inline-start: calc(-1 * var(--am-line-width));
+}
+
+.am-space-compact .am-compact-vertical-item:not(.am-compact-vertical-first-item) {
+  margin-block-start: calc(-1 * var(--am-line-width));
+}
+
+/* the item being used paints its border above its neighbours */
+.am-space-compact .am-compact-item:active,
+.am-space-compact .am-compact-item:focus-within,
+.am-space-compact .am-compact-item[class*='-focused'],
+.am-space-compact .am-compact-item[class*='-open'],
+.am-space-compact .am-compact-item[class*='-status-'],
+.am-space-compact .am-compact-item.am-button-color-primary,
+.am-space-compact .am-compact-item.am-button-color-danger,
+.am-space-compact .am-compact-vertical-item:active,
+.am-space-compact .am-compact-vertical-item:focus-within,
+.am-space-compact .am-compact-vertical-item[class*='-focused'],
+.am-space-compact .am-compact-vertical-item[class*='-open'],
+.am-space-compact .am-compact-vertical-item[class*='-status-'] {
+  z-index: 1;
+}
+
+/* ---------- radius: only the outer corners of the group stay round ---------- */
+.am-space-compact .am-compact-item:not(.am-compact-last-item) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.am-space-compact .am-compact-item:not(.am-compact-first-item) {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.am-space-compact .am-compact-vertical-item:not(.am-compact-vertical-last-item) {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.am-space-compact .am-compact-vertical-item:not(.am-compact-vertical-first-item) {
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+}
+
+/* round / circle buttons become plain segments inside a group */
+.am-space-compact .am-button.am-compact-item.am-button-round,
+.am-space-compact .am-button.am-compact-item.am-button-circle {
+  --am-button-border-radius: var(--am-compact-radius);
+}
+
+/* two solid buttons side by side need a hairline between them */
+.am-space-compact .am-button-variant-solid.am-compact-item:not(.am-compact-first-item)::before,
+.am-space-compact .am-button-variant-filled.am-compact-item:not(.am-compact-first-item)::before {
+  position: absolute;
+  inset-block: calc(-1 * var(--am-line-width));
+  inset-inline-start: calc(-1 * var(--am-line-width));
+  width: var(--am-line-width);
+  background: var(--am-color-bg-container);
+  opacity: 0.4;
+  content: '';
+  pointer-events: none;
+}
+
+.am-space-compact .am-button-variant-solid.am-compact-vertical-item:not(.am-compact-vertical-first-item)::before,
+.am-space-compact .am-button-variant-filled.am-compact-vertical-item:not(.am-compact-vertical-first-item)::before {
+  position: absolute;
+  inset-inline: calc(-1 * var(--am-line-width));
+  inset-block-start: calc(-1 * var(--am-line-width));
+  height: var(--am-line-width);
+  background: var(--am-color-bg-container);
+  opacity: 0.4;
+  content: '';
+  pointer-events: none;
+}
+
+/* ---------- InputNumber: its border lives on inner parts ---------- */
+.am-space-compact .am-input-number.am-compact-item {
+  --am-input-number-gap: 0px;
+}
+
+.am-space-compact .am-input-number.am-compact-item > * {
+  border-radius: 0;
+}
+
+.am-space-compact .am-input-number.am-compact-item > :not(:first-child) {
+  margin-inline-start: calc(-1 * var(--am-line-width));
+}
+
+.am-space-compact .am-input-number.am-compact-first-item > :first-child {
+  border-start-start-radius: var(--am-compact-radius);
+  border-end-start-radius: var(--am-compact-radius);
+}
+
+.am-space-compact .am-input-number.am-compact-last-item > :last-child {
+  border-start-end-radius: var(--am-compact-radius);
+  border-end-end-radius: var(--am-compact-radius);
+}
+
+.am-space-compact .am-input-number-mode-spinner.am-compact-item .am-input-number-action {
+  border: var(--am-line-width) var(--am-line-type) var(--am-color-border);
+}
+
+/* ---------- Space.Addon ---------- */
+.am-space-addon {
+  --am-space-addon-height: var(--am-compact-height, var(--am-control-height));
+  --am-space-addon-padding-inline: var(--am-padding-sm);
+  --am-space-addon-color: var(--am-color-text);
+  --am-space-addon-bg: var(--am-color-fill-tertiary);
+  --am-space-addon-border-color: var(--am-color-border);
+  --am-space-addon-border-radius: var(--am-compact-radius, var(--am-border-radius));
+  --am-space-addon-font-size: var(--am-compact-font-size, var(--am-font-size-lg));
+
+  display: inline-flex;
+  gap: var(--am-margin-xxs);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--am-space-addon-height);
+  padding: 0 var(--am-space-addon-padding-inline);
+  color: var(--am-space-addon-color);
+  font-size: var(--am-space-addon-font-size);
+  font-family: var(--am-font-family);
+  line-height: 1.2;
+  white-space: nowrap;
+  background: var(--am-space-addon-bg);
+  border: var(--am-line-width) var(--am-line-type) var(--am-space-addon-border-color);
+  border-radius: var(--am-space-addon-border-radius);
+}
+
+.am-space-addon-sm {
+  --am-space-addon-height: var(--am-compact-height, var(--am-control-height-sm));
+  --am-space-addon-padding-inline: var(--am-padding-xs);
+  --am-space-addon-font-size: var(--am-compact-font-size, var(--am-font-size));
+}
+
+.am-space-addon-lg {
+  --am-space-addon-height: var(--am-compact-height, var(--am-control-height-lg));
+  --am-space-addon-padding-inline: var(--am-padding);
+  --am-space-addon-font-size: var(--am-compact-font-size, var(--am-font-size-xl));
+}
+
+.am-space-addon-filled {
+  border-color: transparent;
+}
+
+.am-space-addon-borderless {
+  background: transparent;
+  border-color: transparent;
+}
+
+.am-space-addon-disabled {
+  color: var(--am-color-text-disabled);
+  cursor: not-allowed;
+}

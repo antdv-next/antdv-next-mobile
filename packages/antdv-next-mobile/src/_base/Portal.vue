@@ -4,6 +4,7 @@ import type { GetContainer } from '../_util/type'
 import { computed, defineComponent, h, Teleport } from 'vue'
 import { resolveContainer } from '../_util'
 import { useConfig, usePopupTheme } from '../config-provider/context'
+import { provideNoCompact } from './compact'
 
 export interface PortalSlotContext {
   /** class / style / dir of the theme scope; empty when rendered in place (it inherits naturally) */
@@ -43,6 +44,8 @@ export default defineComponent({
   setup(props, { slots }) {
     const config = useConfig()
     const popupTheme = usePopupTheme()
+    // a popup opened from a field inside Space.Compact is not part of that group
+    provideNoCompact()
 
     const container = computed(() => {
       if (props.getContainer === false)

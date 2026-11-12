@@ -3,6 +3,7 @@ import type { SizeType } from '../_util/type'
 import type { Variant } from '../form/context'
 import type { InputFocusOptions, InputStatus } from './interface'
 import { computed, nextTick, ref } from 'vue'
+import { useCompactItemContext } from '../_base/compact'
 import { useControlled } from '../_util/hooks'
 import { useDisabled, useSize } from '../config-provider/context'
 import { useFormItemInputContext, useMergedStatus, useVariant } from '../form/context'
@@ -38,7 +39,8 @@ export function resolveEvent<E extends Event>(event: E, target: InputElement): E
 export function useInput(props: UseInputProps, emit: (event: any, ...args: any[]) => void, elRef: Ref<InputElement | undefined>) {
   const formItem = useFormItemInputContext()
   const disabled = useDisabled(() => props.disabled)
-  const size = useSize(() => props.size)
+  const compact = useCompactItemContext()
+  const size = useSize(() => props.size ?? compact.size.value)
   const status = useMergedStatus(() => props.status)
   const variant = useVariant(() => props.variant)
   const readOnly = computed(() => !!(props.readOnly || props.readonly))
@@ -156,6 +158,8 @@ export function useInput(props: UseInputProps, emit: (event: any, ...args: any[]
     focused,
     disabled,
     size,
+    /** classes that make the field part of a Space.Compact group */
+    compactClasses: compact.classes,
     status,
     variant,
     readOnly,

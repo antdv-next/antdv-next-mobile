@@ -33,6 +33,7 @@ const {
   focused,
   disabled,
   size,
+  compactClasses,
   status,
   variant,
   readOnly,
@@ -75,6 +76,7 @@ const classNames = computed(() => [
     [`am-input-status-${status.value}`]: !!status.value,
     [`am-input-align-${props.align}`]: !!props.align,
   },
+  compactClasses.value,
   props.rootClass,
   props.classes?.root,
 ])

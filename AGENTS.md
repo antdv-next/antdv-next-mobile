@@ -64,6 +64,7 @@ already owns is a review blocker.
 | Buttons inside components (footer actions ...) | `button/Button.vue` | styled `<button>` look-alikes |
 | Loading indicator | `_base/Spinner.vue` | `LoadingOutlined` + `am-spin-icon` by hand |
 | Count / dot bubble | `_base/BaseBadge.vue` | local `*-badge` markup + css |
+| Take part in a `Space.Compact` group (bordered controls) | `useCompactItemContext()` from `_base/compact.ts`: put `classes` on the bordered root, merge `size` | per-component seam css (seams live in `space/style/compact.css`) |
 | Long lists (options, data lists, months) | `virtual-list/VirtualList.vue`, or `useVirtualRange()` when the component owns scrolling (wheel, calendar) | rendering every item |
 | Gestures | `useTouch()` (+ `useEventListener`) | ad-hoc `touchstart` bookkeeping |
 | Outside tap | `useClickAway()` | a document listener per component |

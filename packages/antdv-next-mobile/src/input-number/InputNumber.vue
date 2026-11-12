@@ -2,6 +2,7 @@
 import type { InputNumberEmits, InputNumberInstance, InputNumberProps, InputNumberSlots, InputNumberValueType } from './interface'
 import { MinusOutlined, PlusOutlined } from '@antdv-next/icons'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useCompactItemContext } from '../_base/compact'
 import { clamp, isRenderable, preventDefault } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
@@ -33,7 +34,8 @@ const LONG_PRESS_INTERVAL = 120
 
 const formItem = useFormItemInputContext()
 const disabled = useDisabled(() => props.disabled)
-const size = useSize(() => props.size)
+const compact = useCompactItemContext()
+const size = useSize(() => props.size ?? compact.size.value)
 const status = useMergedStatus(() => props.status)
 const variant = useVariant(() => props.variant)
 const readOnly = computed(() => !!(props.readOnly || props.readonly))
@@ -289,6 +291,7 @@ const classNames = computed(() => [
     'am-input-number-focused': focused.value,
     [`am-input-number-status-${status.value}`]: !!status.value,
   },
+  compact.classes.value,
   props.rootClass,
   props.classes?.root,
 ])

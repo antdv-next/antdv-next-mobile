@@ -1,6 +1,7 @@
 import type { ComputedRef, InjectionKey } from 'vue'
 import type { ValidateStatus } from '../_util/type'
 import { computed, inject } from 'vue'
+import { compactItemContextKey } from '../_base/compact'
 
 /**
  * Contract between FormItem and any data-entry component rendered inside it.
@@ -46,8 +47,12 @@ export type Variant = 'outlined' | 'filled' | 'borderless' | 'underlined'
  */
 export const variantContextKey: InjectionKey<ComputedRef<Variant | undefined>> = Symbol('AmVariantContext')
 
-/** `props.variant` > Form `variant` > `'outlined'`. */
+/**
+ * `props.variant` > `'outlined'` inside a Space.Compact (a seamless group needs borders,
+ * even in a Form whose default is borderless) > Form `variant` > `'outlined'`.
+ */
 export function useVariant(variant: () => Variant | undefined) {
   const formVariant = inject(variantContextKey, undefined)
-  return computed<Variant>(() => variant() ?? formVariant?.value ?? 'outlined')
+  const compact = inject(compactItemContextKey, null)
+  return computed<Variant>(() => variant() ?? (compact ? 'outlined' : formVariant?.value) ?? 'outlined')
 }

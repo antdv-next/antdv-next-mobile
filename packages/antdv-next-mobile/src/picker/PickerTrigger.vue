@@ -4,6 +4,7 @@ import type { Variant } from '../form/context'
 import type { PickerFieldSemanticClassNames, PickerFieldSemanticStyles } from './interface'
 import { CloseCircleFilled, DownOutlined, RightOutlined } from '@antdv-next/icons'
 import { computed } from 'vue'
+import { useCompactItemContext } from '../_base/compact'
 import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
@@ -39,7 +40,8 @@ defineSlots<{ default?: () => any, suffixIcon?: () => any }>()
 
 const formItem = useFormItemInputContext()
 const inputLocale = useLocale('Input')
-const size = useSize(() => props.size)
+const compact = useCompactItemContext()
+const size = useSize(() => props.size ?? compact.size.value)
 const disabled = useDisabled(() => props.disabled)
 const status = useMergedStatus(() => props.status)
 const variant = useVariant(() => props.variant)
@@ -57,6 +59,7 @@ const classNames = computed(() => [
     'am-picker-trigger-disabled': disabled.value,
     [`am-picker-trigger-status-${status.value}`]: status.value === 'error' || status.value === 'warning',
   },
+  compact.classes.value,
   props.rootClass,
   props.classes?.root,
 ])

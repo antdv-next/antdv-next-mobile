@@ -4,5 +4,6 @@
  * re-implementing teleporting, theming, spinners, badges or windowing.
  */
 export { default as BaseBadge } from './BaseBadge.vue'
+export * from './compact'
 export { default as Portal } from './Portal.vue'
 export { default as Spinner } from './Spinner.vue'

@@ -73,6 +73,8 @@ declare module 'vue' {
     AmSkeleton: typeof import('antdv-next-mobile')['Skeleton']
     AmSlider: typeof import('antdv-next-mobile')['Slider']
     AmSpace: typeof import('antdv-next-mobile')['Space']
+    AmSpaceAddon: typeof import('antdv-next-mobile')['SpaceAddon']
+    AmSpaceCompact: typeof import('antdv-next-mobile')['SpaceCompact']
     AmSpin: typeof import('antdv-next-mobile')['Spin']
     AmStatistic: typeof import('antdv-next-mobile')['Statistic']
     AmStatisticTimer: typeof import('antdv-next-mobile')['StatisticTimer']

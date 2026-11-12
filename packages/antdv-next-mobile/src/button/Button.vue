@@ -2,6 +2,7 @@
 import type { ButtonColorType, ButtonEmits, ButtonProps, ButtonSlots, ButtonType, ButtonVariantType } from './interface'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { Spinner } from '../_base'
+import { useCompactItemContext } from '../_base/compact'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled, useSize } from '../config-provider/context'
 import '../style'
@@ -27,7 +28,8 @@ const typeMap: Record<ButtonType, [ButtonColorType, ButtonVariantType]> = {
   text: ['default', 'text'],
 }
 
-const size = useSize(() => props.size)
+const compact = useCompactItemContext()
+const size = useSize(() => props.size ?? compact.size.value)
 const disabled = useDisabled(() => props.disabled)
 
 const colorVariant = computed<[ButtonColorType, ButtonVariantType]>(() => {
@@ -86,6 +88,7 @@ const classNames = computed(() => {
       'am-button-icon-only': hasIcon.value && !slots.default,
       'am-button-icon-end': props.iconPlacement === 'end',
     },
+    compact.classes.value,
     props.rootClass,
     props.classes?.root,
   ]
