@@ -52,7 +52,8 @@ defineExpose({
       :style="[theme.style, rootStyle]"
       :dir="theme.dir"
     >
-      <TransitionGroup name="am-message-motion">
+      <!-- `appear`: the static holder is mounted by the first call, with its notice already in the list -->
+      <TransitionGroup name="am-message-motion" appear>
         <div
           v-for="notice in notices"
           :key="notice.id"

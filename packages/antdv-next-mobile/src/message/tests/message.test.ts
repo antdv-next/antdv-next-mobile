@@ -158,4 +158,18 @@ describe('message', () => {
     await flush()
     expect(notices()).toHaveLength(0)
   })
+
+  it('animates the very first message (the holder is mounted with it)', async () => {
+    message.destroy()
+    await flush()
+    // a fresh static holder: drop the current one
+    document.querySelector('.am-message')?.remove()
+    message.info('first')
+    await nextTick()
+    await nextTick()
+    expect(notices()).toHaveLength(1)
+    expect(notices()[0].classList.contains('am-message-motion-enter-active')).toBe(true)
+    message.destroy()
+    await flush()
+  })
 })
