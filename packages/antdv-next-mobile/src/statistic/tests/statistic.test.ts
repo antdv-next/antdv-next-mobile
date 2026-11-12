@@ -100,6 +100,88 @@ describe('Statistic', () => {
   })
 })
 
+describe('Statistic animation', () => {
+  const value = (wrapper: ReturnType<typeof mount>) => wrapper.find('.am-statistic-content-value').text()
+
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'requestAnimationFrame', 'cancelAnimationFrame', 'Date'] })
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('counts up from 0 on mount and emits animationEnd', async () => {
+    const wrapper = mount(Statistic, { props: { value: 1000, animation: true } })
+    await nextTick()
+    expect(value(wrapper)).toBe('0')
+    vi.advanceTimersByTime(500)
+    await nextTick()
+    const mid = Number(value(wrapper))
+    expect(mid).toBeGreaterThan(500)
+    expect(mid).toBeLessThan(1000)
+    expect(wrapper.emitted('animationEnd')).toBeUndefined()
+    vi.advanceTimersByTime(600)
+    await nextTick()
+    expect(value(wrapper)).toBe('1,000')
+    expect(wrapper.emitted('animationEnd')).toHaveLength(1)
+  })
+
+  it('rolls from the current number to a new value and keeps the decimals', async () => {
+    const wrapper = mount(Statistic, { props: { value: 100, precision: 2, animation: { duration: 400, from: 100, easing: (p: number) => p } } })
+    await nextTick()
+    // from === value: nothing to animate
+    expect(value(wrapper)).toBe('100.00')
+    expect(wrapper.emitted('animationEnd')).toBeUndefined()
+    await wrapper.setProps({ value: 200 })
+    vi.advanceTimersByTime(200)
+    await nextTick()
+    const mid = Number(value(wrapper))
+    expect(mid).toBeGreaterThan(130)
+    expect(mid).toBeLessThan(170)
+    expect(value(wrapper)).toMatch(/^\d+\.\d{2}$/)
+    vi.advanceTimersByTime(300)
+    await nextTick()
+    expect(value(wrapper)).toBe('200.00')
+    expect(wrapper.emitted('animationEnd')).toHaveLength(1)
+  })
+
+  it('hands the running number to formatter', async () => {
+    const formatter = vi.fn((val: number | string) => `#${val}`)
+    const wrapper = mount(Statistic, { props: { value: 50, animation: true, formatter } })
+    await nextTick()
+    expect(value(wrapper)).toBe('#0')
+    vi.advanceTimersByTime(1100)
+    await nextTick()
+    expect(value(wrapper)).toBe('#50')
+    expect(formatter.mock.calls.every(([val]) => typeof val === 'number')).toBe(true)
+  })
+
+  it('does not animate non-numeric values or without the prop', async () => {
+    const text = mount(Statistic, { props: { value: 'N/A', animation: true } })
+    await nextTick()
+    expect(value(text)).toBe('N/A')
+    const plain = mount(Statistic, { props: { value: 10 } })
+    await nextTick()
+    expect(value(plain)).toBe('10')
+    await plain.setProps({ value: 20 })
+    expect(value(plain)).toBe('20')
+    vi.advanceTimersByTime(2000)
+    expect(text.emitted('animationEnd')).toBeUndefined()
+    expect(plain.emitted('animationEnd')).toBeUndefined()
+  })
+
+  it('respects prefers-reduced-motion', async () => {
+    const matchMedia = window.matchMedia
+    window.matchMedia = ((query: string) => ({ matches: query.includes('reduced-motion'), media: query, addEventListener() {}, removeEventListener() {} })) as any
+    const wrapper = mount(Statistic, { props: { value: 1000, animation: true } })
+    await nextTick()
+    expect(value(wrapper)).toBe('1,000')
+    expect(wrapper.emitted('animationEnd')).toHaveLength(1)
+    window.matchMedia = matchMedia
+  })
+})
+
 describe('Statistic utils', () => {
   it('formatNumber', () => {
     expect(formatNumber(1234.5, {})).toEqual({ isNumber: true, int: '1,234', decimal: '.5' })

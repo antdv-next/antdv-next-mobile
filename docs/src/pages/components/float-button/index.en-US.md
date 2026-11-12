@@ -149,7 +149,7 @@ Customize through `theme.components.FloatButton` of `ConfigProvider`, or by over
 
 ## Differences from PC {#diff}
 
-- Dragging is added: `draggable`, `axis`, `magnetic`, `offset` (`v-model:offset`), `gap`, and the `offsetChange` event.
+- Dragging is added: `draggable`, `axis`, `magnetic`, `offset` (`v-model:offset`), `gap`, and the `offsetChange` event. To drag arbitrary content, use [Draggable](/components/draggable).
 - The position is controlled by the `--am-float-button-inset-inline-end` / `--am-float-button-inset-block-end` variables and avoids the safe area automatically.
 - `tooltip` is not supported (there is no hover on mobile); `trigger` of `FloatButton.Group` only supports `'click'`, not `'hover'`.
 - `badge` is a built-in lightweight implementation that only supports `count`, `dot`, `overflowCount`, `showZero` and `color`.

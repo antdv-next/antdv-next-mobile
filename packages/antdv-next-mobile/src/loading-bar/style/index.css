@@ -1,0 +1,54 @@
+.am-loading-bar {
+  /* component tokens */
+  --am-loading-bar-height: 3px;
+  --am-loading-bar-top: 0px;
+  --am-loading-bar-color: var(--am-color-primary);
+  --am-loading-bar-error-color: var(--am-color-error);
+  --am-loading-bar-z-index: 2000;
+
+  position: fixed;
+  top: var(--am-loading-bar-top);
+  right: 0;
+  left: 0;
+  z-index: var(--am-loading-bar-z-index);
+  display: none;
+  box-sizing: border-box;
+  height: var(--am-loading-bar-height);
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.am-loading-bar-open {
+  display: block;
+}
+
+.am-loading-bar-leaving {
+  opacity: 0;
+  transition: opacity var(--am-motion-duration-slow) linear;
+}
+
+.am-loading-bar-inner {
+  box-sizing: border-box;
+  width: 0;
+  height: 100%;
+  background: var(--am-loading-bar-color);
+  border-start-end-radius: var(--am-loading-bar-height);
+  border-end-end-radius: var(--am-loading-bar-height);
+}
+
+.am-loading-bar-animated > .am-loading-bar-inner {
+  transition:
+    width var(--am-motion-duration-mid) var(--am-motion-ease-out),
+    background-color var(--am-motion-duration-mid);
+}
+
+.am-loading-bar-error > .am-loading-bar-inner {
+  background: var(--am-loading-bar-error-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-loading-bar-animated > .am-loading-bar-inner {
+    transition: none;
+  }
+}

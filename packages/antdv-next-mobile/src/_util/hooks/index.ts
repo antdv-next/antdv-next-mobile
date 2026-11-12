@@ -1,5 +1,6 @@
 export * from './useClickAway'
 export * from './useControlled'
+export * from './useDraggable'
 export * from './useEventListener'
 export * from './useLockScroll'
 export * from './useTouch'

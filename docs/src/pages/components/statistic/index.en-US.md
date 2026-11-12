@@ -21,6 +21,7 @@ The API is aligned with `Statistic` / `Statistic.Timer` of antdv-next.
 <demo src="./demo/card.vue">In a card</demo>
 <demo src="./demo/formatter.vue">Custom format</demo>
 <demo src="./demo/loading.vue">Loading</demo>
+<demo src="./demo/animation.vue">Number animation</demo>
 <demo src="./demo/timer.vue">Timer</demo>
 <demo src="./demo/timer-custom.vue">Custom countdown style</demo>
 
@@ -39,10 +40,19 @@ The API is aligned with `Statistic` / `Statistic.Timer` of antdv-next.
 | groupSeparator | Thousands separator | `string` | `,` |
 | decimalSeparator | Decimal separator | `string` | `.` |
 | loading | Whether the value is loading | `boolean` | `false` |
+| animation | Number animation: counts from the start value to `value` on mount, then rolls from the current number to every new value. Numeric values only | `boolean \| { duration?: number, from?: number, easing?: (progress: number) => number }` | `false` |
 | valueStyle | Style of the value area | `CSSProperties` | - |
 | rootClass | Class name of the root element | `string` | - |
 | classes | Semantic class names | `Record<'root' \| 'header' \| 'title' \| 'content' \| 'prefix' \| 'value' \| 'suffix', string>` | - |
 | styles | Semantic styles | `Record<'root' \| 'header' \| 'title' \| 'content' \| 'prefix' \| 'value' \| 'suffix', CSSProperties>` | - |
+
+When `animation` is an object: `duration` is the animation time (ms, `1000` by default), `from` the start value of the first animation (`0` by default) and `easing` the easing function (ease-out by default).
+
+### Statistic Events {#events}
+
+| Event | Description | Type |
+| --- | --- | --- |
+| animationEnd | Triggered when the number animation reached the value | `() => void` |
 
 ### Statistic Slots {#slots}
 
@@ -51,7 +61,7 @@ The API is aligned with `Statistic` / `Statistic.Timer` of antdv-next.
 | title | Title of the value | - |
 | prefix | Prefix of the value | - |
 | suffix | Suffix of the value | - |
-| formatter | Customize how the value is displayed | `{ value: number \| string }` |
+| formatter | Customize how the value is displayed. It receives the running number during an animation | `{ value: number \| string }` |
 
 ### Statistic.Timer Props {#timer-props}
 
@@ -101,6 +111,7 @@ Customize through `theme.components.Statistic` of `ConfigProvider`, or by overri
 
 ## Differences from PC {#diff}
 
+- Adds the `animation` prop and the `animationEnd` event for a rolling number animation. With "reduce motion" enabled in the system the final value is shown right away. The same behaviour is available on its own through the `useCountTo` composable.
 - `type` of `Statistic.Timer` defaults to `'countdown'` (required on PC).
 - `Statistic.Timer` adds a `formatter` slot that provides the split `time` (days / hours / minutes / seconds / milliseconds), making it easy to build the digit block countdown common on mobile.
 - The `formatter` prop only supports functions, not the `'number'` / `'countdown'` literals used internally on PC.

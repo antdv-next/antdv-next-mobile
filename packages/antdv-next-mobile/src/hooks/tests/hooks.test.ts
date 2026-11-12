@@ -7,6 +7,7 @@ import {
   useBoolean,
   useClipboard,
   useCountDown,
+  useCountTo,
   useDebounceFn,
   useElementSize,
   useIntervalFn,
@@ -179,6 +180,60 @@ describe('fn & timers', () => {
     expect(current.value.seconds).toBe(3)
     reset(60000)
     expect(current.value.minutes).toBe(1)
+  })
+
+  it('useCountTo animates to the source, follows changes, replays and stops', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'requestAnimationFrame', 'cancelAnimationFrame', 'Date'] })
+    const source = ref(100)
+    const onFinish = vi.fn()
+    const { current, isActive, start, stop } = useCountTo(source, { duration: 1000, easing: p => p, onFinish })
+    expect(isActive.value).toBe(true)
+    expect(current.value).toBe(0)
+    vi.advanceTimersByTime(500)
+    expect(current.value).toBeGreaterThan(40)
+    expect(current.value).toBeLessThan(60)
+    vi.advanceTimersByTime(600)
+    expect(current.value).toBe(100)
+    expect(isActive.value).toBe(false)
+    expect(onFinish).toHaveBeenCalledTimes(1)
+
+    source.value = 300
+    await nextTick()
+    expect(isActive.value).toBe(true)
+    vi.advanceTimersByTime(500)
+    expect(current.value).toBeGreaterThan(180)
+    expect(current.value).toBeLessThan(220)
+    stop()
+    expect(current.value).toBe(300)
+    expect(isActive.value).toBe(false)
+    vi.advanceTimersByTime(1000)
+    expect(onFinish).toHaveBeenCalledTimes(1)
+
+    start(200)
+    expect(current.value).toBe(200)
+    vi.advanceTimersByTime(1100)
+    expect(current.value).toBe(300)
+    expect(onFinish).toHaveBeenCalledTimes(2)
+    vi.useRealTimers()
+  })
+
+  it('useCountTo: disabled, immediate: false and zero duration skip the animation', async () => {
+    const source = ref(5)
+    const disabled = useCountTo(source, { disabled: true })
+    expect(disabled.current.value).toBe(5)
+    expect(disabled.isActive.value).toBe(false)
+    source.value = 8
+    await nextTick()
+    expect(disabled.current.value).toBe(8)
+
+    const lazy = useCountTo(source, { immediate: false })
+    expect(lazy.current.value).toBe(8)
+    expect(lazy.isActive.value).toBe(false)
+
+    const onFinish = vi.fn()
+    const instant = useCountTo(source, { duration: 0, onFinish })
+    expect(instant.current.value).toBe(8)
+    expect(onFinish).toHaveBeenCalledTimes(1)
   })
 })
 

@@ -18,10 +18,10 @@ import { useCountDown, useLoadMore, useRequest } from 'antdv-next-mobile'
 | --- | --- |
 | State | `useBoolean`, `useToggle`, `useControlled` |
 | Functions | `useDebounceFn`, `useThrottleFn` |
-| Timers | `useCountDown`, `useTimeoutFn`, `useIntervalFn`, `useRafFn` |
+| Timers | `useCountDown`, `useCountTo`, `useTimeoutFn`, `useIntervalFn`, `useRafFn` |
 | Requests | `useRequest`, `useLoadMore` |
 | Elements & viewport | `useRect`, `useElementSize`, `useWindowSize`, `useScrollParent`, `useInViewport`, `useVirtualRange` |
-| Gestures & events | `useTouch`, `useSwipe`, `useLongPress`, `useClickAway`, `useEventListener`, `useLockScroll` |
+| Gestures & events | `useTouch`, `useSwipe`, `useLongPress`, `useDraggable`, `useClickAway`, `useEventListener`, `useLockScroll` |
 | Device & environment | `useSafeArea`, `useKeyboard`, `usePageVisibility`, `useOnline`, `useMediaQuery`, `usePreferredDark` |
 | Browser capabilities | `useClipboard`, `useStorage` |
 | Library context | `useConfig`, `useLocale`, `useToken`, `useSize`, `useDisabled`, `useFormItemInputContext` |
@@ -114,6 +114,35 @@ const { current, isActive, start, reset } = useCountDown({
 | onFinish | Triggered when the countdown ends | `() => void` | - |
 
 Returns `current` (with `total`, `days`, `hours`, `minutes`, `seconds`, `milliseconds`), `isActive`, `start()`, `pause()`, `reset(time?)`.
+
+### useCountTo
+
+Rolling number animation: goes from `from` to the target on mount, and from the current number to the new one whenever the target changes. `animation` of [Statistic](/components/statistic) is built on it.
+
+```vue
+<script setup lang="ts">
+import { useCountTo } from 'antdv-next-mobile'
+import { ref } from 'vue'
+
+const score = ref(98)
+const { current } = useCountTo(score, { duration: 800 })
+</script>
+
+<template>
+  <span>{{ Math.round(current) }}</span>
+</template>
+```
+
+| Option | Description | Type | Default |
+| --- | --- | --- | --- |
+| duration | Animation time in ms | `MaybeRefOrGetter<number>` | `1000` |
+| from | Start value of the first animation | `number` | `0` |
+| easing | Easing function, receives the progress from 0 to 1 | `(progress: number) => number` | ease-out |
+| immediate | Whether to play on mount | `boolean` | `true` |
+| disabled | Turn the animation off and follow the target | `MaybeRefOrGetter<boolean>` | `false` |
+| onFinish | Triggered when the target was reached | `() => void` | - |
+
+Returns `current`, `isActive`, `start(from?)` (replay) and `stop()` (jump to the target). With "reduce motion" enabled in the system the animation does not play.
 
 ### useTimeoutFn / useIntervalFn / useRafFn
 
@@ -247,6 +276,39 @@ const { direction, deltaX, isSwiping } = useSwipe(el, {
 ```ts
 useLongPress(el, () => showMenu(), { delay: 500 })
 ```
+
+### useDraggable
+
+Lets an element be dragged inside the viewport (`position: fixed`) or its offset parent (`position: absolute`). The drag of [Draggable](/components/draggable) and [FloatButton](/components/float-button) is built on it.
+
+```vue
+<script setup lang="ts">
+import { useDraggable } from 'antdv-next-mobile'
+import { ref } from 'vue'
+
+const el = ref<HTMLElement>()
+const { style, dragging, onTouchStart, onTouchMove, onTouchEnd, onMouseDown } = useDraggable(el, {
+  magnetic: 'x',
+  gap: 12,
+  onEnd: offset => console.log(offset),
+})
+</script>
+
+<template>
+  <div
+    ref="el"
+    class="widget"
+    :style="style"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
+    @touchcancel="onTouchEnd"
+    @mousedown="onMouseDown"
+  />
+</template>
+```
+
+The options `disabled`, `axis`, `magnetic`, `gap` and `offset` accept a ref or a getter, next to the `onStart` and `onEnd` callbacks. Returns `position`, `dragging`, `style`, the four event handlers, `consumeClick()` (`true` for the click that follows a drag, to ignore it), `reset()` and `resize()`.
 
 ### useClickAway
 

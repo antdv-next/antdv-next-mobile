@@ -2,9 +2,10 @@
 import type { Key } from '../_util/type'
 import type { CollapsePanelInfo, CollapsePanelProps, CollapsePanelSlots } from './interface'
 import { RightOutlined } from '@antdv-next/icons'
-import { computed, getCurrentInstance, inject, ref, watch } from 'vue'
+import { computed, getCurrentInstance, inject, ref } from 'vue'
 import { genId, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
+import CollapseTransition from '../collapse-transition/CollapseTransition.vue'
 import { collapseContextKey } from './context'
 import '../style'
 import './style/index.css'
@@ -33,13 +34,6 @@ const collapsible = computed(() => props.collapsible ?? context?.collapsible.val
 const disabled = computed(() => collapsible.value === 'disabled')
 const showArrow = computed(() => props.showArrow ?? true)
 
-const visited = ref(active.value)
-watch(active, (val) => {
-  if (val)
-    visited.value = true
-})
-const shouldRender = computed(() => active.value || props.forceRender || (visited.value && !context?.destroyOnHidden.value))
-
 const hasExtra = computed(() => !!slots.extra || isRenderable(props.extra))
 
 const panelInfo = computed<CollapsePanelInfo>(() => ({
@@ -65,28 +59,6 @@ function handleClick(area: 'header' | 'title' | 'icon') {
   const trigger = collapsible.value === 'header' ? 'title' : collapsible.value === 'icon' ? 'icon' : 'header'
   if (area === trigger)
     toggle()
-}
-
-// ---------- height motion ----------
-function onBeforeEnter(el: Element) {
-  (el as HTMLElement).style.height = '0px'
-}
-function onEnter(el: Element) {
-  const node = el as HTMLElement
-  void node.offsetHeight
-  node.style.height = `${node.scrollHeight}px`
-}
-function onBeforeLeave(el: Element) {
-  const node = el as HTMLElement
-  node.style.height = `${node.offsetHeight}px`
-}
-function onLeave(el: Element) {
-  const node = el as HTMLElement
-  void node.offsetHeight
-  node.style.height = '0px'
-}
-function onAfter(el: Element) {
-  (el as HTMLElement).style.height = ''
 }
 </script>
 
@@ -138,26 +110,21 @@ function onAfter(el: Element) {
         </slot>
       </span>
     </div>
-    <Transition
-      name="am-collapse-motion"
-      @before-enter="onBeforeEnter"
-      @enter="onEnter"
-      @after-enter="onAfter"
-      @enter-cancelled="onAfter"
-      @before-leave="onBeforeLeave"
-      @leave="onLeave"
-      @after-leave="onAfter"
-      @leave-cancelled="onAfter"
+    <CollapseTransition
+      :id="contentId"
+      :open="active"
+      :force-render="forceRender"
+      :destroy-on-hidden="!!context?.destroyOnHidden.value"
+      class="am-collapse-panel"
+      role="region"
     >
-      <div v-if="shouldRender" v-show="active" :id="contentId" class="am-collapse-panel" role="region">
-        <div
-          class="am-collapse-body"
-          :class="[context?.classes.value?.body, classes?.body]"
-          :style="[context?.styles.value?.body, styles?.body]"
-        >
-          <slot />
-        </div>
+      <div
+        class="am-collapse-body"
+        :class="[context?.classes.value?.body, classes?.body]"
+        :style="[context?.styles.value?.body, styles?.body]"
+      >
+        <slot />
       </div>
-    </Transition>
+    </CollapseTransition>
   </div>
 </template>

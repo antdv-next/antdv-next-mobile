@@ -18,10 +18,10 @@ import { useCountDown, useLoadMore, useRequest } from 'antdv-next-mobile'
 | --- | --- |
 | 状态 | `useBoolean`、`useToggle`、`useControlled` |
 | 函数 | `useDebounceFn`、`useThrottleFn` |
-| 定时 | `useCountDown`、`useTimeoutFn`、`useIntervalFn`、`useRafFn` |
+| 定时 | `useCountDown`、`useCountTo`、`useTimeoutFn`、`useIntervalFn`、`useRafFn` |
 | 请求 | `useRequest`、`useLoadMore` |
 | 元素与视口 | `useRect`、`useElementSize`、`useWindowSize`、`useScrollParent`、`useInViewport`、`useVirtualRange` |
-| 手势与事件 | `useTouch`、`useSwipe`、`useLongPress`、`useClickAway`、`useEventListener`、`useLockScroll` |
+| 手势与事件 | `useTouch`、`useSwipe`、`useLongPress`、`useDraggable`、`useClickAway`、`useEventListener`、`useLockScroll` |
 | 设备与环境 | `useSafeArea`、`useKeyboard`、`usePageVisibility`、`useOnline`、`useMediaQuery`、`usePreferredDark` |
 | 浏览器能力 | `useClipboard`、`useStorage` |
 | 组件库上下文 | `useConfig`、`useLocale`、`useToken`、`useSize`、`useDisabled`、`useFormItemInputContext` |
@@ -114,6 +114,35 @@ const { current, isActive, start, reset } = useCountDown({
 | onFinish | 倒计时结束时触发 | `() => void` | - |
 
 返回 `current`（含 `total`、`days`、`hours`、`minutes`、`seconds`、`milliseconds`）、`isActive`、`start()`、`pause()`、`reset(time?)`。
+
+### useCountTo
+
+数字滚动动画：挂载时从 `from` 过渡到目标值，目标值变化时从当前数字过渡到新值。[Statistic](/components/statistic) 的 `animation` 基于它实现。
+
+```vue
+<script setup lang="ts">
+import { useCountTo } from 'antdv-next-mobile'
+import { ref } from 'vue'
+
+const score = ref(98)
+const { current } = useCountTo(score, { duration: 800 })
+</script>
+
+<template>
+  <span>{{ Math.round(current) }}</span>
+</template>
+```
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| duration | 动画时长（毫秒） | `MaybeRefOrGetter<number>` | `1000` |
+| from | 首次动画的起始值 | `number` | `0` |
+| easing | 缓动函数，入参为 0 - 1 的进度 | `(progress: number) => number` | ease-out |
+| immediate | 是否在挂载时播放 | `boolean` | `true` |
+| disabled | 禁用动画，直接跟随目标值 | `MaybeRefOrGetter<boolean>` | `false` |
+| onFinish | 到达目标值时触发 | `() => void` | - |
+
+返回 `current`、`isActive`、`start(from?)`（重新播放）、`stop()`（直接跳到目标值）。系统开启「减弱动态效果」时不播放动画。
 
 ### useTimeoutFn / useIntervalFn / useRafFn
 
@@ -247,6 +276,39 @@ const { direction, deltaX, isSwiping } = useSwipe(el, {
 ```ts
 useLongPress(el, () => showMenu(), { delay: 500 })
 ```
+
+### useDraggable
+
+让元素可以在视口（`position: fixed`）或定位父元素（`position: absolute`）内拖动，[Draggable](/components/draggable) 与 [FloatButton](/components/float-button) 的拖拽都基于它。
+
+```vue
+<script setup lang="ts">
+import { useDraggable } from 'antdv-next-mobile'
+import { ref } from 'vue'
+
+const el = ref<HTMLElement>()
+const { style, dragging, onTouchStart, onTouchMove, onTouchEnd, onMouseDown } = useDraggable(el, {
+  magnetic: 'x',
+  gap: 12,
+  onEnd: offset => console.log(offset),
+})
+</script>
+
+<template>
+  <div
+    ref="el"
+    class="widget"
+    :style="style"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
+    @touchcancel="onTouchEnd"
+    @mousedown="onMouseDown"
+  />
+</template>
+```
+
+选项 `disabled`、`axis`、`magnetic`、`gap`、`offset` 均支持 ref 或 getter，另有 `onStart`、`onEnd` 回调。返回 `position`、`dragging`、`style`、四个事件处理函数、`consumeClick()`（拖拽结束后的那次点击返回 `true`，用于忽略它）、`reset()` 与 `resize()`。
 
 ### useClickAway
 

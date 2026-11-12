@@ -1,0 +1,37 @@
+.am-draggable {
+  /* component tokens */
+  --am-draggable-z-index: 90;
+  --am-draggable-transition-duration: var(--am-motion-duration-mid);
+
+  position: fixed;
+  z-index: var(--am-draggable-z-index);
+  box-sizing: border-box;
+  width: fit-content;
+  color: var(--am-color-text);
+  font-size: var(--am-font-size);
+  font-family: var(--am-font-family);
+  line-height: var(--am-line-height);
+  cursor: grab;
+  /* eases the snap to the edge after release */
+  transition: transform var(--am-draggable-transition-duration) var(--am-motion-ease-out);
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+.am-draggable-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.am-draggable-disabled {
+  cursor: default;
+  touch-action: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-draggable {
+    transition: none;
+  }
+}

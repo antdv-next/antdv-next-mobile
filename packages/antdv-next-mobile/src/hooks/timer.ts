@@ -1,5 +1,5 @@
 import type { ComputedRef, MaybeRefOrGetter, Ref } from 'vue'
-import { computed, ref, toValue } from 'vue'
+import { computed, getCurrentInstance, onMounted, ref, toValue, watch } from 'vue'
 import { cancelRaf, inBrowser, raf } from '../_util'
 import { tryOnScopeDispose } from './shared'
 
@@ -203,4 +203,99 @@ export function useCountDown(options: UseCountDownOptions): UseCountDownReturn {
     start()
   tryOnScopeDispose(pause)
   return { current, isActive, start, pause, reset }
+}
+
+export interface UseCountToOptions {
+  /** animation time in ms. Default `1000`. */
+  duration?: MaybeRefOrGetter<number | undefined>
+  /** value the first run starts from. Default `0`. */
+  from?: number
+  /** maps the progress (0 - 1) to the eased progress. Default: ease-out. */
+  easing?: (progress: number) => number
+  /** animate towards the initial value on mount. Default `true`. */
+  immediate?: boolean
+  /** follow the source without animating */
+  disabled?: MaybeRefOrGetter<boolean | undefined>
+  onFinish?: () => void
+}
+
+export interface UseCountToReturn {
+  /** the animated number */
+  current: Ref<number>
+  isActive: Ref<boolean>
+  /** replay from `from` (default: the `from` option) to the source value */
+  start: (from?: number) => void
+  /** jump to the source value */
+  stop: () => void
+}
+
+const easeOutCubic = (progress: number) => 1 - (1 - progress) ** 3
+
+function prefersReducedMotion() {
+  return inBrowser && typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+/**
+ * Animates a number towards `source` whenever it changes (statistics, prices, scores ...).
+ * Server-side and before mount `current` is the source value, so SSR output needs no hydration fix.
+ */
+export function useCountTo(source: MaybeRefOrGetter<number>, options: UseCountToOptions = {}): UseCountToReturn {
+  const { from: initialFrom = 0, easing = easeOutCubic, immediate = true } = options
+  const current = ref(toValue(source))
+  const isActive = ref(false)
+  let rafId = -1
+
+  const cancel = () => {
+    isActive.value = false
+    cancelRaf(rafId)
+  }
+
+  const run = (from: number, to: number) => {
+    cancel()
+    if (toValue(options.disabled) || !inBrowser) {
+      current.value = to
+      return
+    }
+    const duration = toValue(options.duration) ?? 1000
+    if (from === to || duration <= 0 || prefersReducedMotion()) {
+      current.value = to
+      if (from !== to)
+        options.onFinish?.()
+      return
+    }
+    const startTime = Date.now()
+    current.value = from
+    isActive.value = true
+    const step = () => {
+      if (!isActive.value)
+        return
+      const progress = Math.min((Date.now() - startTime) / duration, 1)
+      if (progress < 1) {
+        current.value = from + (to - from) * easing(progress)
+        rafId = raf(step)
+        return
+      }
+      current.value = to
+      isActive.value = false
+      options.onFinish?.()
+    }
+    rafId = raf(step)
+  }
+
+  watch(() => toValue(source), to => run(current.value, to))
+
+  const start = (from: number = initialFrom) => run(from, toValue(source))
+  const stop = () => {
+    cancel()
+    current.value = toValue(source)
+  }
+
+  if (immediate) {
+    if (getCurrentInstance())
+      onMounted(() => start())
+    else
+      start()
+  }
+  tryOnScopeDispose(cancel)
+  return { current, isActive, start, stop }
 }

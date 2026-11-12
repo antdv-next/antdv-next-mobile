@@ -150,7 +150,7 @@ API 与 antdv-next 的 `FloatButton` 对齐，并新增了移动端常见的拖�
 
 ## 与 PC 端的差异 {#diff}
 
-- 新增拖拽能力：`draggable`、`axis`、`magnetic`、`offset`（`v-model:offset`）、`gap`，以及 `offsetChange` 事件。
+- 新增拖拽能力：`draggable`、`axis`、`magnetic`、`offset`（`v-model:offset`）、`gap`，以及 `offsetChange` 事件。需要拖拽任意内容时使用 [Draggable](/components/draggable)。
 - 位置通过 `--am-float-button-inset-inline-end` / `--am-float-button-inset-block-end` 变量控制，并自动避开安全区。
 - 不支持 `tooltip`（移动端没有悬停）；`FloatButton.Group` 的 `trigger` 仅支持 `'click'`，不支持 `'hover'`。
 - `badge` 是内置的精简实现，仅支持 `count`、`dot`、`overflowCount`、`showZero`、`color`。

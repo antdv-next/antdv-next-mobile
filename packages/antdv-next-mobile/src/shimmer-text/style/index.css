@@ -1,0 +1,56 @@
+/*
+ * ShimmerText is inline text: the root deliberately inherits font from its context
+ * instead of setting its own (the exception to the "root sets its own font" rule).
+ */
+.am-shimmer-text {
+  /* component tokens */
+  --am-shimmer-text-color: var(--am-color-text-tertiary);
+  --am-shimmer-text-shimmer-color: var(--am-color-text);
+  --am-shimmer-text-duration: 2s;
+  --am-shimmer-text-spread: 20%;
+
+  box-sizing: border-box;
+  color: var(--am-shimmer-text-color);
+}
+
+.am-shimmer-text-active {
+  /* the gradient is 3x the text wide; sliding it by 2/3 sweeps the highlight across once */
+  background-image: linear-gradient(
+    90deg,
+    var(--am-shimmer-text-color) calc(50% - var(--am-shimmer-text-spread)),
+    var(--am-shimmer-text-shimmer-color) 50%,
+    var(--am-shimmer-text-color) calc(50% + var(--am-shimmer-text-spread))
+  );
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation: am-shimmer-text var(--am-shimmer-text-duration) linear infinite;
+  -webkit-text-fill-color: transparent;
+}
+
+[dir='rtl'] .am-shimmer-text-active,
+.am-shimmer-text-active[dir='rtl'] {
+  animation-direction: reverse;
+}
+
+@keyframes am-shimmer-text {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-shimmer-text-active {
+    background-image: none;
+    animation: none;
+    -webkit-text-fill-color: currentcolor;
+  }
+}

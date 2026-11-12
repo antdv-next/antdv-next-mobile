@@ -1,0 +1,25 @@
+/*
+ * A pure motion wrapper: it inherits font and color from its context. The height is animated on the
+ * root, so paddings belong to the content inside (a padded root could not collapse to 0).
+ */
+.am-collapse-transition {
+  /* component tokens */
+  --am-collapse-transition-duration: var(--am-motion-duration-slow);
+  --am-collapse-transition-timing-function: var(--am-motion-ease-in-out);
+
+  box-sizing: border-box;
+}
+
+.am-collapse-transition-enter-active,
+.am-collapse-transition-leave-active {
+  overflow: hidden;
+  transition: height var(--am-collapse-transition-duration) var(--am-collapse-transition-timing-function);
+  will-change: height;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-collapse-transition-enter-active,
+  .am-collapse-transition-leave-active {
+    transition-duration: 0.01s;
+  }
+}

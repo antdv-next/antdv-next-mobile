@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { StatisticProps, StatisticSlots } from './interface'
+import type { StatisticEmits, StatisticProps, StatisticSlots } from './interface'
 import { computed } from 'vue'
-import { isRenderable } from '../_util'
+import { isNumeric, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
+import { useCountTo } from '../hooks/timer'
 import Skeleton from '../skeleton'
 import { formatNumber } from './utils'
 import '../style'
@@ -15,7 +16,9 @@ const props = withDefaults(defineProps<StatisticProps>(), {
   groupSeparator: ',',
   decimalSeparator: '.',
   loading: false,
+  animation: false,
 })
+const emit = defineEmits<StatisticEmits>()
 const slots = defineSlots<StatisticSlots>()
 
 const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
@@ -27,7 +30,25 @@ const formatConfig = computed(() => ({
   decimalSeparator: props.decimalSeparator,
   precision: props.precision,
 }))
-const formatted = computed(() => formatNumber(props.value, formatConfig.value))
+
+// ---------- number animation ----------
+const animatable = computed(() => !!props.animation && isNumeric(props.value))
+const animationConfig = computed(() => (typeof props.animation === 'object' ? props.animation : {}))
+const counter = useCountTo(() => (isNumeric(props.value) ? Number(props.value) : 0), {
+  duration: () => animationConfig.value.duration,
+  from: animationConfig.value.from,
+  easing: progress => (animationConfig.value.easing ? animationConfig.value.easing(progress) : 1 - (1 - progress) ** 3),
+  disabled: () => !animatable.value,
+  onFinish: () => emit('animationEnd'),
+})
+/** the running number keeps the decimals of the target so the width does not jump */
+const decimals = computed(() => props.precision ?? (String(props.value).split('.')[1]?.length ?? 0))
+const animating = computed(() => animatable.value && counter.isActive.value)
+/** what is formatted: the exact `value` unless an animation is running */
+const displayText = computed(() => (animating.value ? counter.current.value.toFixed(Math.max(decimals.value, 0)) : props.value))
+/** what `formatter` receives: stays a number when `value` is one */
+const displayValue = computed(() => (animating.value && typeof props.value === 'number' ? Number(displayText.value) : displayText.value))
+const formatted = computed(() => formatNumber(displayText.value, formatConfig.value))
 </script>
 
 <template>
@@ -47,8 +68,8 @@ const formatted = computed(() => formatNumber(props.value, formatConfig.value))
           </slot>
         </span>
         <span class="am-statistic-content-value" :class="classes?.value" :style="styles?.value">
-          <slot name="formatter" :value="value">
-            <RenderNode v-if="formatter" :node="formatter(value, formatConfig)" />
+          <slot name="formatter" :value="displayValue">
+            <RenderNode v-if="formatter" :node="formatter(displayValue, formatConfig)" />
             <template v-else>
               <span class="am-statistic-content-value-int">{{ formatted.int }}</span><span
                 v-if="formatted.decimal"

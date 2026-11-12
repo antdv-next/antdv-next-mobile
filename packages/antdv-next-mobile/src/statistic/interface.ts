@@ -11,6 +11,15 @@ export interface StatisticFormatConfig {
 
 export type StatisticFormatter = (value: StatisticValueType, config?: StatisticFormatConfig) => VNodeChild
 
+export interface StatisticAnimationConfig {
+  /** Animation time in ms, `1000` by default */
+  duration?: number
+  /** Number the first animation starts from, `0` by default */
+  from?: number
+  /** Maps the progress (0 - 1) to the eased progress, ease-out by default */
+  easing?: (progress: number) => number
+}
+
 export interface StatisticSemanticClassNames {
   root?: string
   header?: string
@@ -46,10 +55,17 @@ export interface StatisticProps {
   decimalSeparator?: string
   /** Show a skeleton instead of the value */
   loading?: boolean
+  /** Count up to the value on mount and roll to every new value. Only for numeric values. */
+  animation?: boolean | StatisticAnimationConfig
   valueStyle?: CSSProperties
   rootClass?: string
   classes?: StatisticSemanticClassNames
   styles?: StatisticSemanticStyles
+}
+
+export interface StatisticEmits {
+  /** The number animation reached the value */
+  animationEnd: []
 }
 
 export interface StatisticSlots {
