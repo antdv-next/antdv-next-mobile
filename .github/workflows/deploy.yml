@@ -1,28 +1,30 @@
 name: deploy-site
 
-# Deploys the documentation site (with the phone simulator) to GitHub Pages
-# after the Test workflow passed on `main`.
+# Deploys the documentation site (https://m.antdv-next.com, with the phone simulator)
+# to our servers after the Test workflow passed on `main`. Same flow as antdv-next:
+# build once, upload the artifact, then scp it to each server and swap it into place
+# (the previous version is kept in `index.bak`).
 #
-# Setup: Settings -> Pages -> Source: "GitHub Actions".
-# The site is served from the custom domain https://m.antdv-next.com
-# (docs/public/CNAME), so it is built for the root path. Set the repository
-# variable `DOCS_BASE` (e.g. `/antdv-next-mobile/`) to serve it from a sub path.
+# Required secrets:
+#   DEPLOY_HOST, DEPLOY_USERNAME, DEPLOY_PASSWORD, DEPLOY_PORT, DEPLOY_TARGET_PATH
+#   DEPLOY_HOST_CN, DEPLOY_USERNAME_CN, DEPLOY_PASSWORD_CN, DEPLOY_PORT_CN, DEPLOY_TARGET_PATH_CN
+#
+# The server must fall back to `index.html` for unknown paths (history-mode routes).
 
 on:
   workflow_run:
     workflows: [Test]
     types: [completed]
+  # manual re-deploy of the current `main`
   workflow_dispatch: {}
 
 concurrency:
   group: deploy-site-main
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
   build:
+    # Test 绿 + main 分支才部署
     if: >
       ${{
         github.repository == 'antdv-next/antdv-next-mobile' &&
@@ -31,12 +33,16 @@ jobs:
           (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
         )
       }}
+
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v7
         with:
-          # deploy exactly the commit that passed the tests
+          # 确保部署的是“通过测试的那次提交”
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup pnpm
@@ -56,25 +62,119 @@ jobs:
       - name: Build site
         run: |
           pnpm build:site
-          # history-mode routes need a fallback on static hosting
-          cp docs/dist/index.html docs/dist/404.html
-        env:
-          DOCS_BASE: ${{ vars.DOCS_BASE || '/' }}
+          rm -rf dist
+          cp -r docs/dist dist
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v7
         with:
-          path: docs/dist
+          name: site-dist
+          path: dist
 
   deploy:
     needs: build
+
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Download site artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: site-dist
+          path: dist
+
+      - name: Inspect downloaded site artifact
+        run: ls -R dist
+
+      - name: Scp dir to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          source: dist
+          target: ${{ secrets.DEPLOY_TARGET_PATH }}
+
+      - name: ssh command
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            set -e
+            TARGET="${{ secrets.DEPLOY_TARGET_PATH }}"
+
+            mkdir -p "$TARGET/index" "$TARGET/index.bak"
+
+            if [ "$(ls -A "$TARGET/index" 2>/dev/null)" ]; then
+              rm -rf "$TARGET/index.bak"/*
+              mv "$TARGET/index"/* "$TARGET/index.bak"/
+            fi
+
+            if [ ! -d "$TARGET/dist" ] || [ -z "$(ls -A "$TARGET/dist" 2>/dev/null)" ]; then
+              echo "No dist files uploaded; abort."
+              exit 1
+            fi
+
+            rm -rf "$TARGET/index"/*
+            mv "$TARGET/dist"/* "$TARGET/index"/
+
+      - name: Deployment completed
+        run: echo "Deployment to server completed successfully."
+
+  deploy-cn:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download site artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: site-dist
+          path: dist
+
+      - name: Inspect downloaded site artifact
+        run: ls -R dist
+
+      - name: Scp dir to CN server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST_CN }}
+          username: ${{ secrets.DEPLOY_USERNAME_CN }}
+          password: ${{ secrets.DEPLOY_PASSWORD_CN }}
+          port: ${{ secrets.DEPLOY_PORT_CN }}
+          source: dist
+          target: ${{ secrets.DEPLOY_TARGET_PATH_CN }}
+
+      - name: ssh command on CN server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST_CN }}
+          username: ${{ secrets.DEPLOY_USERNAME_CN }}
+          password: ${{ secrets.DEPLOY_PASSWORD_CN }}
+          port: ${{ secrets.DEPLOY_PORT_CN }}
+          script: |
+            set -e
+            TARGET="${{ secrets.DEPLOY_TARGET_PATH_CN }}"
+
+            mkdir -p "$TARGET/index" "$TARGET/index.bak"
+
+            if [ "$(ls -A "$TARGET/index" 2>/dev/null)" ]; then
+              rm -rf "$TARGET/index.bak"/*
+              mv "$TARGET/index"/* "$TARGET/index.bak"/
+            fi
+
+            if [ ! -d "$TARGET/dist" ] || [ -z "$(ls -A "$TARGET/dist" 2>/dev/null)" ]; then
+              echo "No dist files uploaded; abort."
+              exit 1
+            fi
+
+            rm -rf "$TARGET/index"/*
+            mv "$TARGET/dist"/* "$TARGET/index"/
+
+      - name: Deployment completed on CN server
+        run: echo "Deployment to CN server completed successfully."

@@ -216,7 +216,7 @@ Workflows live in `.github/workflows` and mirror antdv-next:
 | `ci.yml` | PR | preview packages through `pkg-pr-new` |
 | `semantic-pull-requests.yml` | PR | validates the PR title (`type(scope): subject`, lowercase subject) |
 | `release.yml` | tag `antdv-next-mobile@*` / package.json change on `main` | `scripts/release.mjs`: publishes tagged, unpublished versions with npm trusted publishing |
-| `deploy.yml` | after `Test` passed on `main` | docs site -> GitHub Pages at https://m.antdv-next.com (`docs/public/CNAME`; `DOCS_BASE` repository variable for a sub path) |
+| `deploy.yml` | after `Test` passed on `main` | docs site -> our servers by scp / ssh, served at https://m.antdv-next.com (`DEPLOY_*` and `DEPLOY_*_CN` secrets, same as antdv-next) |
 | `claude.yml`, `claude-code-review.yml` | `@claude` mention by a member / manual | Claude Code (`CLAUDE_CODE_OAUTH_TOKEN`) |
 
 Release: `pnpm bump` (bumpp: picks the version, commits `chore(release): antdv-next-mobile x.y.z`, tags
