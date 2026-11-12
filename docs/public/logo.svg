@@ -24,7 +24,7 @@
       <stop offset="1" stop-color="#F8404B"/>
     </linearGradient>
   </defs>
-  <g stroke-width="13.2" stroke-linecap="round" stroke-linejoin="round">
+  <g stroke-width="10.8" stroke-linecap="round" stroke-linejoin="round">
     <!-- right leg, tucked under the right peak -->
     <path d="M67 33.4 78.6 62.6" stroke="url(#am-leg-r)"/>
     <!-- right fold: valley up to the right peak -->
