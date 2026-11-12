@@ -46,6 +46,7 @@
   ],
   "scripts": {
     "build": "vite build && vue-tsc -p tsconfig.build.json",
+    "bump": "bumpp --commit \"chore(release): antdv-next-mobile %s\" --push --tag \"antdv-next-mobile@%s\"",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json",
     "test": "vitest run --root ../.. packages/antdv-next-mobile"
   },

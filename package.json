@@ -21,22 +21,39 @@
     "check:base": "node scripts/check-base-layer.mjs",
     "check": "pnpm ci:lint && pnpm check:base && pnpm typecheck && pnpm test",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "bump": "pnpm -F antdv-next-mobile bump",
+    "release:plan": "node scripts/release.mjs plan",
+    "prepare": "simple-git-hooks"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
     "@types/node": "catalog:dev",
     "@vitejs/plugin-vue": "catalog:dev",
+    "@vitest/coverage-v8": "catalog:dev",
     "@vue/test-utils": "catalog:dev",
     "@vue/tsconfig": "catalog:dev",
+    "bumpp": "catalog:dev",
     "eslint": "catalog:dev",
     "eslint-plugin-format": "catalog:dev",
     "jiti": "catalog:dev",
     "jsdom": "catalog:dev",
+    "lint-staged": "catalog:dev",
+    "picocolors": "catalog:dev",
+    "simple-git-hooks": "catalog:dev",
     "typescript": "catalog:dev",
     "vite": "catalog:dev",
     "vitest": "catalog:dev",
     "vue": "catalog:prod",
     "vue-tsc": "catalog:dev"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged",
+    "commit-msg": "node scripts/verify-commit.js"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts,vue,json,css}": [
+      "eslint --fix"
+    ]
   }
 }

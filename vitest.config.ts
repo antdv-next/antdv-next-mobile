@@ -15,5 +15,11 @@ export default defineConfig({
     include: ['packages/**/tests/**/*.test.ts'],
     css: false,
     setupFiles: ['./tests/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      include: ['packages/antdv-next-mobile/src/**/*.{ts,vue}'],
+      exclude: ['**/tests/**', '**/interface.ts', '**/*.d.ts', '**/locale/*.ts'],
+      reporter: ['text-summary', 'lcov', 'html'],
+    },
   },
 })

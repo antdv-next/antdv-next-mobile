@@ -6,3 +6,4 @@ coverage
 .turbo
 .vite
 *.tsbuildinfo
+.vitest-reports

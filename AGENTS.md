@@ -204,6 +204,28 @@ pnpm check               # lint + check:base + typecheck + test (what CI runs)
 pnpm build               # library -> packages/antdv-next-mobile/dist
 ```
 
+## CI & Release
+
+Workflows live in `.github/workflows` and mirror antdv-next:
+
+| Workflow | Trigger | What it does |
+| --- | --- | --- |
+| `test.yml` | push / PR | vitest (2 shards, merged report) + `check:base`, `typecheck`, library and site build |
+| `lint.yml` | push / PR | `pnpm ci:lint` (changed files only on PRs) |
+| `coverage.yml` | push | `pnpm test:coverage` -> Codecov (`CODECOV_TOKEN`) |
+| `ci.yml` | PR | preview packages through `pkg-pr-new` |
+| `semantic-pull-requests.yml` | PR | validates the PR title (`type(scope): subject`, lowercase subject) |
+| `release.yml` | tag `antdv-next-mobile@*` / package.json change on `main` | `scripts/release.mjs`: publishes tagged, unpublished versions with npm trusted publishing |
+| `deploy.yml` | after `Test` passed on `main` | docs site -> GitHub Pages (`DOCS_BASE` repository variable for a custom domain) |
+| `claude.yml`, `claude-code-review.yml` | `@claude` mention by a member / manual | Claude Code (`CLAUDE_CODE_OAUTH_TOKEN`) |
+
+Release: `pnpm bump` (bumpp: picks the version, commits `chore(release): antdv-next-mobile x.y.z`, tags
+`antdv-next-mobile@x.y.z`, pushes). The Release workflow does the rest; `pnpm release:plan` shows what it would publish.
+A prerelease such as `1.0.0-rc.1` is published under the `rc` dist-tag.
+
+Pull requests: use the `create-pr` skill (`.agents/skills/create-pr`) and the templates in `.github/`.
+
 ## Commit
 
+Checked by `scripts/verify-commit.js` (commit-msg hook); staged files are linted by lint-staged.
 Conventional commits: `feat(button): ...`, `fix(popup): ...`, `docs: ...`, `test: ...`, `chore: ...`.

@@ -1,0 +1,79 @@
+name: deploy-site
+
+# Deploys the documentation site (with the phone simulator) to GitHub Pages
+# after the Test workflow passed on `main`.
+#
+# Setup: Settings -> Pages -> Source: "GitHub Actions".
+# The site is built for `https://<owner>.github.io/<repo>/` by default; set the
+# repository variable `DOCS_BASE` to `/` when a custom domain is used.
+
+on:
+  workflow_run:
+    workflows: [Test]
+    types: [completed]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-site-main
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: >
+      ${{
+        github.repository == 'antdv-next/antdv-next-mobile' &&
+        (
+          github.event_name == 'workflow_dispatch' ||
+          (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+        )
+      }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # deploy exactly the commit that passed the tests
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build site
+        run: |
+          pnpm build:site
+          # history-mode routes need a fallback on static hosting
+          cp docs/dist/index.html docs/dist/404.html
+        env:
+          DOCS_BASE: ${{ vars.DOCS_BASE || format('/{0}/', github.event.repository.name) }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
