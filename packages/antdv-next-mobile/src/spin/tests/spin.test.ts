@@ -108,7 +108,16 @@ describe('Spin', () => {
     expect(wrapper.find('.am-spin-icon-progress').exists()).toBe(true)
     expect(wrapper.find('.am-spin-icon-rail').exists()).toBe(true)
     const track = wrapper.find('.am-spin-icon-track')
+    expect(Number(track.attributes('stroke-dasharray'))).toBeCloseTo(Math.PI * 40, 3)
     expect(Number(track.attributes('stroke-dashoffset'))).toBeCloseTo(Math.PI * 20, 3)
+  })
+
+  it('renders a complete progress ring at 100%', () => {
+    const wrapper = mount(Spin, { props: { percent: 100 } })
+    const track = wrapper.find('.am-spin-icon-track')
+    expect(Number(track.attributes('stroke-dasharray'))).toBeCloseTo(Math.PI * 40, 3)
+    expect(Number(track.attributes('stroke-dashoffset'))).toBe(0)
+    expect(mount(Spin).find('.am-spin-icon-track').attributes('stroke-dasharray')).toBe('90 150')
   })
 
   it('uses locale for the indicator label', () => {

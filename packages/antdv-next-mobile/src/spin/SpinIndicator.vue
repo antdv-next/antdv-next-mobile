@@ -10,8 +10,15 @@ const props = defineProps<{ percent?: number, label?: string }>()
 const RADIUS = 20
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 
+/**
+ * Default `stroke-dasharray` for the spinning loader.
+ * Progress mode uses `CIRCUMFERENCE` instead.
+ */
+const LOADER_DASHARRAY = '90 150'
+
 const hasPercent = computed(() => typeof props.percent === 'number' && !Number.isNaN(props.percent))
 const dashOffset = computed(() => CIRCUMFERENCE * (1 - clamp(props.percent ?? 0, 0, 100) / 100))
+const trackDasharray = computed(() => hasPercent.value ? CIRCUMFERENCE : LOADER_DASHARRAY)
 </script>
 
 <template>
@@ -29,7 +36,7 @@ const dashOffset = computed(() => CIRCUMFERENCE * (1 - clamp(props.percent ?? 0,
       cy="24"
       :r="RADIUS"
       fill="none"
-      :stroke-dasharray="hasPercent ? CIRCUMFERENCE : undefined"
+      :stroke-dasharray="trackDasharray"
       :stroke-dashoffset="hasPercent ? dashOffset : undefined"
     />
   </svg>

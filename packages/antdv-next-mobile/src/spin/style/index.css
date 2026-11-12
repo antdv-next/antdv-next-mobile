@@ -51,7 +51,6 @@
 
 .am-spin-icon-track {
   transition: stroke-dashoffset var(--am-motion-duration-slow);
-  stroke-dasharray: 90 150;
 }
 
 .am-spin-icon-rail {
