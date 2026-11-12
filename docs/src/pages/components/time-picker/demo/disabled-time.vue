@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { PickerOption, TimePickerColumnType } from 'antdv-next-mobile'
+import type { PickerOption, TimePickerColumnType } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const range = (start: number, end: number) => Array.from({ length: end - start }, (_, index) => start + index)

@@ -7,7 +7,7 @@ The most basic usage: pass the nodes through `treeData`, tap the arrow to expand
 </docs>
 
 <script setup lang="ts">
-import type { TreeDataNode } from 'antdv-next-mobile'
+import type { TreeDataNode } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const treeData: TreeDataNode[] = [

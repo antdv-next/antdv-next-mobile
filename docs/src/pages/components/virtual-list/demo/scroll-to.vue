@@ -7,7 +7,7 @@ Call `scrollTo` through a ref: pass a number to scroll to a position, pass `{ in
 </docs>
 
 <script setup lang="ts">
-import type { VirtualListExpose } from 'antdv-next-mobile'
+import type { VirtualListExpose } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const data = Array.from({ length: 10000 }, (_, index) => ({ id: `user-${index}`, name: `User ${index + 1}` }))

@@ -9,7 +9,7 @@ group:
 Every composable used inside the library (the equivalent of Hooks in React) is exported and can be used directly in your application code. They can all be imported on demand, are safe to call during server-side rendering, and clean up automatically when the owning component is unmounted or the `effectScope` is stopped.
 
 ```ts
-import { useCountDown, useLoadMore, useRequest } from 'antdv-next-mobile'
+import { useCountDown, useLoadMore, useRequest } from '@antdv-next/mobile'
 ```
 
 ## Overview {#overview}
@@ -90,7 +90,7 @@ A countdown computed from real time, so it does not fall behind when the page go
 
 ```vue
 <script setup lang="ts">
-import { useCountDown } from 'antdv-next-mobile'
+import { useCountDown } from '@antdv-next/mobile'
 
 const { current, isActive, start, reset } = useCountDown({
   time: 60 * 1000,
@@ -121,7 +121,7 @@ Rolling number animation: goes from `from` to the target on mount, and from the 
 
 ```vue
 <script setup lang="ts">
-import { useCountTo } from 'antdv-next-mobile'
+import { useCountTo } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const score = ref(98)
@@ -182,7 +182,7 @@ Paginated list state, designed to work with `InfiniteScroll` and `PullToRefresh`
 
 ```vue
 <script setup lang="ts">
-import { useLoadMore } from 'antdv-next-mobile'
+import { useLoadMore } from '@antdv-next/mobile'
 
 const { list, loading, refreshing, error, finished, loadMore, refresh } = useLoadMore(
   ({ page, pageSize }) => fetchOrders({ page, pageSize }), // returns { list, total }
@@ -283,7 +283,7 @@ Lets an element be dragged inside the viewport (`position: fixed`) or its offset
 
 ```vue
 <script setup lang="ts">
-import { useDraggable } from 'antdv-next-mobile'
+import { useDraggable } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const el = ref<HTMLElement>()
@@ -373,7 +373,7 @@ Switch the theme to follow the system dark mode:
 
 ```vue
 <script setup lang="ts">
-import { theme, usePreferredDark } from 'antdv-next-mobile'
+import { theme, usePreferredDark } from '@antdv-next/mobile'
 import { computed } from 'vue'
 
 const isDark = usePreferredDark()
@@ -424,7 +424,7 @@ A custom control that can be placed inside a `FormItem`:
 
 ```vue
 <script setup lang="ts">
-import { useControlled, useDisabled, useFormItemInputContext } from 'antdv-next-mobile'
+import { useControlled, useDisabled, useFormItemInputContext } from '@antdv-next/mobile'
 
 const props = withDefaults(defineProps<{ value?: number, disabled?: boolean }>(), { disabled: undefined })
 const emit = defineEmits<{ 'update:value': [value: number] }>()

@@ -7,7 +7,7 @@ Configure the steps with `items`; `current` specifies the current step (starting
 </docs>
 
 <script setup lang="ts">
-import type { StepsItem } from 'antdv-next-mobile'
+import type { StepsItem } from '@antdv-next/mobile'
 
 const items: StepsItem[] = [
   { title: 'Ordered', content: '10:30' },

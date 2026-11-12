@@ -7,7 +7,7 @@ When the tabs exceed the width, the tab bar can scroll horizontally. After switc
 </docs>
 
 <script setup lang="ts">
-import type { TabsItem } from 'antdv-next-mobile'
+import type { TabsItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const items: TabsItem[] = ['For you', 'Trending', 'Tech', 'Finance', 'Sports', 'Fun', 'Autos', 'Military', 'World', 'Games'].map((label, index) => ({

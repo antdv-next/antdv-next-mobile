@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { SelectLabeledValue } from 'antdv-next-mobile'
+import type { SelectLabeledValue } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const options = ['Reading', 'Music', 'Movies', 'Travel', 'Photography', 'Fitness', 'Food', 'Games'].map(label => ({ label, value: label }))

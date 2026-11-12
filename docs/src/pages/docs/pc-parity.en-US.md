@@ -10,7 +10,7 @@ If you are familiar with antdv-next, treat this page as a cheat sheet.
 
 ## Common conventions {#conventions}
 
-| Convention | PC (antdv-next) | Mobile (antdv-next-mobile) |
+| Convention | PC (antdv-next) | Mobile (@antdv-next/mobile) |
 | --- | --- | --- |
 | Component tag | `<a-button>` | `<am-button>` |
 | Class name prefix | `ant-btn` | `am-button` |

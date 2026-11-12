@@ -164,7 +164,7 @@ modal.destroy()
 
 ```vue
 <script setup lang="ts">
-import { Modal } from 'antdv-next-mobile'
+import { Modal } from '@antdv-next/mobile'
 
 const [modal, ContextHolder] = Modal.useModal()
 

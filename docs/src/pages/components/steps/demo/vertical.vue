@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { StepsItem } from 'antdv-next-mobile'
+import type { StepsItem } from '@antdv-next/mobile'
 
 const items: StepsItem[] = [
   { title: 'Delivered', subTitle: '06-12 14:20', content: 'Signed for by the recipient. Thank you.' },

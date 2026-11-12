@@ -7,7 +7,7 @@ Customize the semantic parts `root` / `item` / `groupHeader` with `classes` and 
 </docs>
 
 <script setup lang="ts">
-import type { ListyGroup, ListyProps } from 'antdv-next-mobile'
+import type { ListyGroup, ListyProps } from '@antdv-next/mobile'
 
 interface User {
   id: number

@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { DatePickerColumnType, PickerOption } from 'antdv-next-mobile'
+import type { DatePickerColumnType, PickerOption } from '@antdv-next/mobile'
 import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
 import { ref } from 'vue'

@@ -7,7 +7,7 @@ The `status` of each item in `fileList` shows states such as uploading, failed a
 </docs>
 
 <script setup lang="ts">
-import type { UploadFile } from 'antdv-next-mobile'
+import type { UploadFile } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 function createImage(text: string, color: string) {

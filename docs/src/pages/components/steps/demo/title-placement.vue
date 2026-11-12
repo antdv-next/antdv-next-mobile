@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { StepsItem } from 'antdv-next-mobile'
+import type { StepsItem } from '@antdv-next/mobile'
 
 const items: StepsItem[] = [{ title: 'Login' }, { title: 'Verify' }, { title: 'Done' }]
 </script>

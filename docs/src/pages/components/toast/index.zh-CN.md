@@ -28,7 +28,7 @@ Toast 是移动端特有的组件，同一时间只会显示一个，新的提�
 `Toast` 只支持指令式调用：
 
 ```ts
-import { Toast } from 'antdv-next-mobile'
+import { Toast } from '@antdv-next/mobile'
 
 Toast.show('Hello')
 Toast.show({ content: '保存成功', icon: 'success' })

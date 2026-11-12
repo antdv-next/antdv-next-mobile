@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { SignatureConfirmResult } from 'antdv-next-mobile'
+import type { SignatureConfirmResult } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const image = ref('')

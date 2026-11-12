@@ -7,7 +7,7 @@ Actions support a `description`, an `icon`, and the `danger`, `bold` and `disabl
 </docs>
 
 <script setup lang="ts">
-import type { ActionSheetAction } from 'antdv-next-mobile'
+import type { ActionSheetAction } from '@antdv-next/mobile'
 import { DeleteOutlined, EditOutlined, ShareAltOutlined } from '@antdv-next/icons'
 import { h, ref } from 'vue'
 

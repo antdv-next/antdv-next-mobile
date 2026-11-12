@@ -7,8 +7,8 @@ The default description follows the `locale` of `ConfigProvider`.
 </docs>
 
 <script setup lang="ts">
-import enUS from 'antdv-next-mobile/locale/en_US'
-import zhCN from 'antdv-next-mobile/locale/zh_CN'
+import enUS from '@antdv-next/mobile/locale/en_US'
+import zhCN from '@antdv-next/mobile/locale/zh_CN'
 import { ref } from 'vue'
 
 const english = ref(true)

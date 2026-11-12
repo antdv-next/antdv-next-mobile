@@ -7,7 +7,7 @@ With `maskClickable` set to `false`, the page cannot be clicked or scrolled whil
 </docs>
 
 <script setup lang="ts">
-import { Toast } from 'antdv-next-mobile'
+import { Toast } from '@antdv-next/mobile'
 
 function show() {
   Toast.show({ content: 'Page is blocked for 3s', duration: 3000, maskClickable: false })

@@ -21,7 +21,7 @@ function collectCss(dir: string, list: string[] = []) {
 /** Concatenate every per-component css chunk into a single `dist/style.css` for full import. */
 function fullCss() {
   return {
-    name: 'antdv-next-mobile:full-css',
+    name: 'antdv-mobile:full-css',
     closeBundle() {
       const dist = join(root, 'dist')
       const files = collectCss(dist).sort((a, b) => {

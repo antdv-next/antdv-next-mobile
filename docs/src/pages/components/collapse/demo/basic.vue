@@ -7,7 +7,7 @@ Configure the panels through `items`; more than one panel can be expanded at the
 </docs>
 
 <script setup lang="ts">
-import type { CollapseItemType } from 'antdv-next-mobile'
+import type { CollapseItemType } from '@antdv-next/mobile'
 
 const text = 'A collapse groups and hides complex areas to keep the page clean. Tap a header to expand or collapse its content.'
 

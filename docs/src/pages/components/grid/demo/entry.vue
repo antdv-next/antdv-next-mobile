@@ -7,7 +7,7 @@ The most common usage on mobile: build the entries of a home page with `Grid`. P
 </docs>
 
 <script setup lang="ts">
-import type { GridItemType } from 'antdv-next-mobile'
+import type { GridItemType } from '@antdv-next/mobile'
 import {
   AppstoreOutlined,
   CreditCardOutlined,
@@ -18,7 +18,7 @@ import {
   StarOutlined,
   WalletOutlined,
 } from '@antdv-next/icons'
-import { Toast } from 'antdv-next-mobile'
+import { Toast } from '@antdv-next/mobile'
 import { h } from 'vue'
 
 const items: GridItemType[] = [

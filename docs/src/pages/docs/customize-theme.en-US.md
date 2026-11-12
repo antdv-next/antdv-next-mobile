@@ -16,7 +16,7 @@ The usage is the same as on PC:
 
 ```vue
 <script setup lang="ts">
-import { theme } from 'antdv-next-mobile'
+import { theme } from '@antdv-next/mobile'
 </script>
 
 <template>
@@ -46,7 +46,7 @@ import { theme } from 'antdv-next-mobile'
 If you want the page background, `body` and all content to switch together, use `applyTheme` to write the theme onto `<html>`:
 
 ```ts
-import { applyTheme, theme } from 'antdv-next-mobile'
+import { applyTheme, theme } from '@antdv-next/mobile'
 
 // Switch to dark + a green primary color; the return value reverts it
 const revert = applyTheme({
@@ -111,7 +111,7 @@ See `style/tokens.css` in the source for the full list. The variables of each co
 ## Read in JS {#use-token}
 
 ```ts
-import { theme } from 'antdv-next-mobile'
+import { theme } from '@antdv-next/mobile'
 
 const { token, isDark, cssVar } = theme.useToken()
 

@@ -7,7 +7,7 @@ Use `scrollTo` on the ref to jump to a pixel position, an item (`key`, the value
 </docs>
 
 <script setup lang="ts">
-import type { ListyGroup, ListyRef, ListyScrollAlign } from 'antdv-next-mobile'
+import type { ListyGroup, ListyRef, ListyScrollAlign } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 interface Item {

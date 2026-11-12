@@ -7,7 +7,7 @@ With `v-model:current` (or a `change` listener), tapping a step switches to it; 
 </docs>
 
 <script setup lang="ts">
-import type { StepsItem } from 'antdv-next-mobile'
+import type { StepsItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const items: StepsItem[] = [

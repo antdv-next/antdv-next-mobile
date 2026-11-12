@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { SegmentedOption } from 'antdv-next-mobile'
+import type { SegmentedOption } from '@antdv-next/mobile'
 import { AppstoreOutlined, BarsOutlined, UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 

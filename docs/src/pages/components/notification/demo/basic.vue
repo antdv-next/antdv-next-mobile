@@ -7,7 +7,7 @@ The most basic notification: it slides in from the top and closes after 4.5 seco
 </docs>
 
 <script setup lang="ts">
-import { message, notification } from 'antdv-next-mobile'
+import { message, notification } from '@antdv-next/mobile'
 
 function open() {
   notification.open({

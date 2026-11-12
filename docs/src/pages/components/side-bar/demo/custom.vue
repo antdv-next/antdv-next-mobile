@@ -7,7 +7,7 @@ Override the `--am-side-bar-*` component tokens to adjust the width and colors, 
 </docs>
 
 <script setup lang="ts">
-import type { SideBarItem } from 'antdv-next-mobile'
+import type { SideBarItem } from '@antdv-next/mobile'
 import { FireOutlined } from '@antdv-next/icons'
 
 const items: SideBarItem[] = [

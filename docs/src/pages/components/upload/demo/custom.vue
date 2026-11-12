@@ -7,7 +7,7 @@ The default slot customizes the content of the upload button, `columns` sets the
 </docs>
 
 <script setup lang="ts">
-import type { UploadFile } from 'antdv-next-mobile'
+import type { UploadFile } from '@antdv-next/mobile'
 import { CameraOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
 

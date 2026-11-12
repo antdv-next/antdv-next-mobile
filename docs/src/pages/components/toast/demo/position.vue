@@ -7,8 +7,8 @@ Set the vertical position with `position`.
 </docs>
 
 <script setup lang="ts">
-import type { ToastPosition } from 'antdv-next-mobile'
-import { Toast } from 'antdv-next-mobile'
+import type { ToastPosition } from '@antdv-next/mobile'
+import { Toast } from '@antdv-next/mobile'
 
 function show(position: ToastPosition) {
   Toast.show({ content: `Position: ${position}`, position })

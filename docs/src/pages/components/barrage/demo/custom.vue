@@ -7,7 +7,7 @@ Customize a bullet with the `item` slot; `rows`, `top` and `duration` control th
 </docs>
 
 <script setup lang="ts">
-import type { BarrageItem } from 'antdv-next-mobile'
+import type { BarrageItem } from '@antdv-next/mobile'
 import { LikeFilled } from '@antdv-next/icons'
 import { shallowRef } from 'vue'
 

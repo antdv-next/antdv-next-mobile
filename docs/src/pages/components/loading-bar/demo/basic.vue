@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import { LoadingBar } from 'antdv-next-mobile'
+import { LoadingBar } from '@antdv-next/mobile'
 
 function request() {
   LoadingBar.start()

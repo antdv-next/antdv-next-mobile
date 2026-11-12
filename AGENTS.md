@@ -1,6 +1,6 @@
 # Repository Guidelines
 
-`antdv-next-mobile` is the mobile UI component library of the antdv-next family (Vue 3).
+`@antdv-next/mobile` is the mobile UI component library of the antdv-next family (Vue 3).
 
 ## Core Objectives
 
@@ -22,7 +22,7 @@
 ## Layout
 
 ```
-packages/antdv-next-mobile/src/
+packages/antdv-mobile/src/
   components.ts          # public export list (do not reorder / rename without updating docs)
   index.ts               # install + re-exports
   style/                 # tokens.css (design tokens), base.css (motions, helpers)
@@ -151,7 +151,7 @@ defineSlots<FooSlots>()
 
 ## Tests (Vitest + @vue/test-utils, jsdom)
 
-`src/<component>/tests/<component>.test.ts`, run with `pnpm vitest run packages/antdv-next-mobile/src/<component>`.
+`src/<component>/tests/<component>.test.ts`, run with `pnpm vitest run packages/antdv-mobile/src/<component>`.
 Cover: default render + classes, every prop branch that changes structure, emits, controlled & uncontrolled state,
 attrs / `rootClass` / `classes` passthrough, slot-over-prop priority, ConfigProvider size / disabled / locale,
 gestures through `trigger('touchstart' | 'touchmove' | 'touchend', { touches: [{ clientX, clientY }] })`.
@@ -205,7 +205,7 @@ group:
   page is `/mobile.html#/<name>` (it follows the language of the site).
 - Site / simulator UI texts live in `docs/src/shared/locale.ts`; never hard-code Chinese or English in
   `docs/src/site` or `docs/src/mobile`.
-- `README.md` is English, `README.zh-CN.md` Chinese (root and `packages/antdv-next-mobile`); keep them in sync.
+- `README.md` is English, `README.zh-CN.md` Chinese (root and `packages/antdv-mobile`); keep them in sync.
 
 ## Commands
 
@@ -217,7 +217,7 @@ pnpm typecheck           # vue-tsc for the library and the docs
 pnpm lint                # eslint --fix (@antfu/eslint-config)
 pnpm check:base          # architecture guard: components must be built on the base layer
 pnpm check               # lint + check:base + typecheck + test (what CI runs)
-pnpm build               # library -> packages/antdv-next-mobile/dist
+pnpm build               # library -> packages/antdv-mobile/dist
 ```
 
 ## CI & Release
@@ -231,12 +231,12 @@ Workflows live in `.github/workflows` and mirror antdv-next:
 | `coverage.yml` | push | `pnpm test:coverage` -> Codecov (`CODECOV_TOKEN`) |
 | `ci.yml` | PR | preview packages through `pkg-pr-new` |
 | `semantic-pull-requests.yml` | PR | validates the PR title (`type(scope): subject`, lowercase subject) |
-| `release.yml` | tag `antdv-next-mobile@*` / package.json change on `main` | `scripts/release.mjs`: publishes tagged, unpublished versions with npm trusted publishing |
+| `release.yml` | tag `@antdv-next/mobile@*` / package.json change on `main` | `scripts/release.mjs`: publishes tagged, unpublished versions with npm trusted publishing |
 | `deploy.yml` | after `Test` passed on `main` | docs site -> our servers by scp / ssh, served at https://m.antdv-next.com (`DEPLOY_*` and `DEPLOY_*_CN` secrets, same as antdv-next) |
 | `claude.yml`, `claude-code-review.yml` | `@claude` mention by a member / manual | Claude Code (`CLAUDE_CODE_OAUTH_TOKEN`) |
 
-Release: `pnpm bump` (bumpp: picks the version, commits `chore(release): antdv-next-mobile x.y.z`, tags
-`antdv-next-mobile@x.y.z`, pushes). The Release workflow does the rest; `pnpm release:plan` shows what it would publish.
+Release: `pnpm bump` (bumpp: picks the version, commits `chore(release): @antdv-next/mobile x.y.z`, tags
+`@antdv-next/mobile@x.y.z`, pushes). The Release workflow does the rest; `pnpm release:plan` shows what it would publish.
 A prerelease such as `1.0.0-rc.1` is published under the `rc` dist-tag.
 
 Pull requests: use the `create-pr` skill (`.agents/skills/create-pr`) and the templates in `.github/`.

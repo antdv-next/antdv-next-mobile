@@ -7,7 +7,7 @@ Update the content with a unique `key`: a notification with the same `key` is up
 </docs>
 
 <script setup lang="ts">
-import { notification } from 'antdv-next-mobile'
+import { notification } from '@antdv-next/mobile'
 
 const key = 'updatable'
 

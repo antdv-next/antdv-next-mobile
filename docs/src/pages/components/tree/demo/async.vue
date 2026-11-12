@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { TreeDataNode, TreeEventDataNode } from 'antdv-next-mobile'
+import type { TreeDataNode, TreeEventDataNode } from '@antdv-next/mobile'
 import { shallowRef } from 'vue'
 
 const treeData = shallowRef<TreeDataNode[]>([

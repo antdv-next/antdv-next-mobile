@@ -7,7 +7,7 @@ Multiple columns are independent of each other. The second argument of the `chan
 </docs>
 
 <script setup lang="ts">
-import type { PickerChangeInfo, PickerValue } from 'antdv-next-mobile'
+import type { PickerChangeInfo, PickerValue } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const columns = [

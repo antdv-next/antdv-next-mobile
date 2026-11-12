@@ -7,7 +7,7 @@ With `scrollWidth` the list scrolls horizontally when the content is wider than 
 </docs>
 
 <script setup lang="ts">
-import type { ListyGroup } from 'antdv-next-mobile'
+import type { ListyGroup } from '@antdv-next/mobile'
 
 interface Item {
   id: number

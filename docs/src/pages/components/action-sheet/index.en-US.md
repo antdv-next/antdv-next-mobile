@@ -84,7 +84,7 @@ ActionSheet is a mobile-only component. On mobile it replaces the dropdown actio
 ### Static Methods {#static-methods}
 
 ```ts
-import { ActionSheet } from 'antdv-next-mobile'
+import { ActionSheet } from '@antdv-next/mobile'
 
 const handler = ActionSheet.show({
   actions: [{ key: 'copy', text: 'Copy' }],

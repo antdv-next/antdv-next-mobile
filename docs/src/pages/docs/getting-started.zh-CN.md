@@ -9,17 +9,17 @@ group:
 ## 安装 {#install}
 
 ```bash
-pnpm add antdv-next-mobile
+pnpm add @antdv-next/mobile
 ```
 
 ## 完整引入 {#full-import}
 
 ```ts
-import AntdvNextMobile from 'antdv-next-mobile'
+import AntdvMobile from '@antdv-next/mobile'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).use(AntdvNextMobile).mount('#app')
+createApp(App).use(AntdvMobile).mount('#app')
 ```
 
 组件以 `am-` 为前缀全局注册，样式会随组件自动引入，不需要额外导入 CSS 文件。
@@ -30,7 +30,7 @@ createApp(App).use(AntdvNextMobile).mount('#app')
     打开弹层
   </am-button>
   <am-popup v-model:open="open" round closable>
-    <div style="padding: 24px">Hello Antdv Next Mobile</div>
+    <div style="padding: 24px">Hello Antdv Mobile</div>
   </am-popup>
 </template>
 
@@ -47,7 +47,7 @@ const open = ref(false)
 
 ```vue
 <script setup lang="ts">
-import { Button, message } from 'antdv-next-mobile'
+import { Button, message } from '@antdv-next/mobile'
 </script>
 
 <template>
@@ -60,7 +60,7 @@ import { Button, message } from 'antdv-next-mobile'
 如果你的构建链路不处理包内的 CSS 引入（例如部分 SSR 场景），可以改为手动引入完整样式：
 
 ```ts
-import 'antdv-next-mobile/style.css'
+import '@antdv-next/mobile/style.css'
 ```
 
 ## 视口与安全区 {#viewport}
@@ -81,8 +81,8 @@ import 'antdv-next-mobile/style.css'
 `message`、`Toast`、`Modal.confirm`、`ActionSheet.show`、`ImagePreview.show` 等方法可以在任意位置调用。它们渲染在独立的节点中，通过 `ConfigProvider.config` 读取全局主题与语言：
 
 ```ts
-import { ConfigProvider, theme } from 'antdv-next-mobile'
-import enUS from 'antdv-next-mobile/locale/en_US'
+import { ConfigProvider, theme } from '@antdv-next/mobile'
+import enUS from '@antdv-next/mobile/locale/en_US'
 
 ConfigProvider.config({
   theme: { algorithm: theme.darkAlgorithm, token: { colorPrimary: '#00b96b' } },
@@ -95,5 +95,5 @@ ConfigProvider.config({
 所有组件的 `Props`、`Emits`、`Slots` 类型均可直接导入：
 
 ```ts
-import type { ButtonProps, PopupProps, ThemeConfig } from 'antdv-next-mobile'
+import type { ButtonProps, PopupProps, ThemeConfig } from '@antdv-next/mobile'
 ```

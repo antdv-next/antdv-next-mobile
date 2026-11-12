@@ -7,8 +7,8 @@ Static methods cannot read the `ConfigProvider` context of the call site. The `C
 </docs>
 
 <script setup lang="ts">
-import { Modal } from 'antdv-next-mobile'
-import enUS from 'antdv-next-mobile/locale/en_US'
+import { Modal } from '@antdv-next/mobile'
+import enUS from '@antdv-next/mobile/locale/en_US'
 
 const [modal, ContextHolder] = Modal.useModal()
 

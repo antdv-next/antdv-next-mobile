@@ -7,7 +7,7 @@ Put any content inside `Draggable` to make it draggable. It is `position: fixed`
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 </script>
 
 <template>

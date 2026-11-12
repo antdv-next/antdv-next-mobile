@@ -1,4 +1,4 @@
-// Publish every package under `packages/` (antdv-next-mobile)
+// Publish every package under `packages/` (@antdv-next/mobile)
 // whose version is tagged but not yet on npm.
 //
 //   node scripts/release.mjs plan              list what would be published

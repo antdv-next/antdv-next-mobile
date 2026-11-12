@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import { Modal } from 'antdv-next-mobile'
+import { Modal } from '@antdv-next/mobile'
 
 function info() {
   Modal.info({ title: 'Notice', content: 'The system will be under maintenance at 23:00 tonight.' })

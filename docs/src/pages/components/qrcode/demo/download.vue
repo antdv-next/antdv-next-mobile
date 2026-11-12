@@ -7,7 +7,7 @@ Get the image through `toDataURL()` of the component instance to save or share i
 </docs>
 
 <script setup lang="ts">
-import type { QRCodeRef } from 'antdv-next-mobile'
+import type { QRCodeRef } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const type = ref<'canvas' | 'svg'>('canvas')

@@ -7,7 +7,7 @@ In the component form, `confirmLoading` puts the OK button into the loading stat
 </docs>
 
 <script setup lang="ts">
-import { message, Modal } from 'antdv-next-mobile'
+import { message, Modal } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)

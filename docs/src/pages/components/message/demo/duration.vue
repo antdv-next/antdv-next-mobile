@@ -7,7 +7,7 @@ Customize the duration (in seconds) with the second argument; the default is 3 s
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 </script>
 
 <template>

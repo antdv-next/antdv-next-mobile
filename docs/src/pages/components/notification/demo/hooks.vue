@@ -7,7 +7,7 @@ The `ContextHolder` created by `notification.useNotification()` is rendered in t
 </docs>
 
 <script setup lang="ts">
-import { notification } from 'antdv-next-mobile'
+import { notification } from '@antdv-next/mobile'
 
 const [api, ContextHolder] = notification.useNotification({ placement: 'bottom', maxCount: 2 })
 let count = 0

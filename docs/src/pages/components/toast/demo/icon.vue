@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { HeartFilled } from '@antdv-next/icons'
-import { Toast } from 'antdv-next-mobile'
+import { Toast } from '@antdv-next/mobile'
 import { h } from 'vue'
 
 function custom() {

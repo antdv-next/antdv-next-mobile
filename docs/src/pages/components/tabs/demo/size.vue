@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { TabsItem } from 'antdv-next-mobile'
+import type { TabsItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const items: TabsItem[] = [

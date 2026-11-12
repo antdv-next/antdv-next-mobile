@@ -7,7 +7,7 @@ Controlled with `v-model:value` and `v-model:open`. `select` fires while draggin
 </docs>
 
 <script setup lang="ts">
-import type { Color } from 'antdv-next-mobile'
+import type { Color } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const color = ref('#1677ff')

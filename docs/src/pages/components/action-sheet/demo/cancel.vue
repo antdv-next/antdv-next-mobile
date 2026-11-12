@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { ActionSheetAction } from 'antdv-next-mobile'
+import type { ActionSheetAction } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const withTitle = ref(false)

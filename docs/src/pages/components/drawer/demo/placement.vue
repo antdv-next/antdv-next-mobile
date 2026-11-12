@@ -7,7 +7,7 @@ Set the direction the drawer slides in from with `placement`.
 </docs>
 
 <script setup lang="ts">
-import type { DrawerPlacement } from 'antdv-next-mobile'
+import type { DrawerPlacement } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)

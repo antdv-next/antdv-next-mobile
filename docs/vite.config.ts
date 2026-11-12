@@ -13,8 +13,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: [
-      { find: /^antdv-next-mobile\/locale\/(.*)$/, replacement: `${r('../packages/antdv-next-mobile/src/locale')}/$1` },
-      { find: /^antdv-next-mobile$/, replacement: r('../packages/antdv-next-mobile/src/index.ts') },
+      { find: /^@antdv-next\/mobile\/locale\/(.*)$/, replacement: `${r('../packages/antdv-mobile/src/locale')}/$1` },
+      { find: /^@antdv-next\/mobile$/, replacement: r('../packages/antdv-mobile/src/index.ts') },
       { find: '@site', replacement: r('./src/site') },
       { find: '@mobile', replacement: r('./src/mobile') },
     ],

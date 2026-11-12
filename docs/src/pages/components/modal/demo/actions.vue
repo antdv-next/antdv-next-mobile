@@ -7,8 +7,8 @@ Customize the action buttons with `actions`: up to 2 are laid out horizontally, 
 </docs>
 
 <script setup lang="ts">
-import type { ModalAction } from 'antdv-next-mobile'
-import { message, Modal } from 'antdv-next-mobile'
+import type { ModalAction } from '@antdv-next/mobile'
+import { message, Modal } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)

@@ -9,7 +9,7 @@ import { join, relative, sep } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
-const src = fileURLToPath(new URL('../packages/antdv-next-mobile/src', import.meta.url))
+const src = fileURLToPath(new URL('../packages/antdv-mobile/src', import.meta.url))
 
 /** `allow` lists the files that ARE the base implementation of that concern. */
 const rules = [

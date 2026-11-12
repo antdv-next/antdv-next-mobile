@@ -7,7 +7,7 @@ With `action` set, the built-in XHR request is used to upload and the progress i
 </docs>
 
 <script setup lang="ts">
-import type { UploadFile, UploadRequestOption } from 'antdv-next-mobile'
+import type { UploadFile, UploadRequestOption } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFile[]>([])

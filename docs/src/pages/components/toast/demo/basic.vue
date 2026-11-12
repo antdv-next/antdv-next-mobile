@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import { Toast } from 'antdv-next-mobile'
+import { Toast } from '@antdv-next/mobile'
 </script>
 
 <template>

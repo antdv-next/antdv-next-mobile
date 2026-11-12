@@ -7,7 +7,7 @@ Only one Toast is shown at a time: calling it again replaces the content in plac
 </docs>
 
 <script setup lang="ts">
-import { Toast } from 'antdv-next-mobile'
+import { Toast } from '@antdv-next/mobile'
 
 function countdown() {
   let seconds = 3

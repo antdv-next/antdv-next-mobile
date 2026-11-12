@@ -1,5 +1,5 @@
 {
-  "name": "antdv-next-mobile",
+  "name": "@antdv-next/mobile",
   "type": "module",
   "version": "0.1.0",
   "description": "Mobile UI component library for Vue 3, API-aligned with antdv-next",
@@ -9,10 +9,13 @@
   },
   "license": "MIT",
   "homepage": "https://m.antdv-next.com",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/antdv-next/antdv-next-mobile.git",
-    "directory": "packages/antdv-next-mobile"
+    "directory": "packages/antdv-mobile"
   },
   "keywords": ["vue", "vue3", "mobile", "ui", "components", "antd", "antdv-next"],
   "sideEffects": [
@@ -47,9 +50,9 @@
   ],
   "scripts": {
     "build": "vite build && vue-tsc -p tsconfig.build.json",
-    "bump": "bumpp --commit \"chore(release): antdv-next-mobile %s\" --push --tag \"antdv-next-mobile@%s\"",
+    "bump": "bumpp --commit \"chore(release): @antdv-next/mobile %s\" --push --tag \"@antdv-next/mobile@%s\"",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --root ../.. packages/antdv-next-mobile"
+    "test": "vitest run --root ../.. packages/antdv-mobile"
   },
   "peerDependencies": {
     "vue": ">=3.5.0"

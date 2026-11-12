@@ -7,7 +7,7 @@ The `ContextHolder` created by `message.useMessage()` is rendered in the compone
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 
 const [messageApi, ContextHolder] = message.useMessage({ top: 56, maxCount: 2 })
 let count = 0

@@ -7,7 +7,7 @@ Change the delay (in seconds) with `duration`. `0` keeps the notification open u
 </docs>
 
 <script setup lang="ts">
-import { notification } from 'antdv-next-mobile'
+import { notification } from '@antdv-next/mobile'
 
 function sticky() {
   notification.warning({

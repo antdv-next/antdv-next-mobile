@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { CollapseItemType } from 'antdv-next-mobile'
+import type { CollapseItemType } from '@antdv-next/mobile'
 
 const items: CollapseItemType[] = [
   { key: '1', label: 'Order', extra: '3 items', content: 'Order No. 2024061200001' },

@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { TreeDataNode } from 'antdv-next-mobile'
+import type { TreeDataNode } from '@antdv-next/mobile'
 import { DownOutlined, FileTextOutlined, FolderOpenOutlined, FolderOutlined, StarFilled } from '@antdv-next/icons'
 import { h, ref } from 'vue'
 

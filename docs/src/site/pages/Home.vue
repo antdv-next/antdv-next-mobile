@@ -38,7 +38,7 @@ onMounted(() => {
             {{ t.home.browse(docs.components.length) }}
           </RouterLink>
         </div>
-        <pre class="home-install"><code>pnpm add antdv-next-mobile</code></pre>
+        <pre class="home-install"><code>pnpm add @antdv-next/mobile</code></pre>
         <ul class="home-features">
           <li v-for="feature in features" :key="feature.title">
             <component :is="feature.icon" class="home-feature-icon" />

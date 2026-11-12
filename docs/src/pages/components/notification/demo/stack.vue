@@ -7,7 +7,7 @@ More than 3 notifications (`stack.threshold`) on one edge collapse into a stack:
 </docs>
 
 <script setup lang="ts">
-import { notification } from 'antdv-next-mobile'
+import { notification } from '@antdv-next/mobile'
 
 let count = 0
 

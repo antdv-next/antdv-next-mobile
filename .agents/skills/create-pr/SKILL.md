@@ -1,15 +1,15 @@
 ---
-name: antdv-next-mobile-create-pr
-description: Create or prepare pull requests for antdv-next-mobile using this repository's official PR templates. Use this skill when the user says “PR” or “提交 PR”, asks to create/open/submit a PR, requests a PR title or body, or wants branch changes summarized for a PR. Trigger by PR-creation intent, including short colloquial requests; do not trigger for purely conceptual discussions about pull requests.
+name: antdv-mobile-create-pr
+description: Create or prepare pull requests for antdv-mobile using this repository's official PR templates. Use this skill when the user says “PR” or “提交 PR”, asks to create/open/submit a PR, requests a PR title or body, or wants branch changes summarized for a PR. Trigger by PR-creation intent, including short colloquial requests; do not trigger for purely conceptual discussions about pull requests.
 ---
 
-# antdv-next-mobile PR 创建规范
+# antdv-mobile PR 创建规范
 
 ## 目标
 
 一、基于当前分支相对基线分支的全部已提交改动生成 PR，不只看最后一个 commit。
 
-二、严格使用 `antdv-next-mobile` 仓库自带的中英文模板，不自行发明 PR 结构。
+二、严格使用 `antdv-mobile` 仓库自带的中英文模板，不自行发明 PR 结构。
 
 三、PR 正文跟随用户语言习惯，PR 标题始终使用英文并符合仓库的 semantic title 校验。
 
@@ -185,7 +185,7 @@ git diff <base>...HEAD
 pnpm ci:lint
 pnpm check:base
 pnpm typecheck
-pnpm vitest run packages/antdv-next-mobile/src/<component>
+pnpm vitest run packages/antdv-mobile/src/<component>
 pnpm test
 pnpm build
 pnpm build:site

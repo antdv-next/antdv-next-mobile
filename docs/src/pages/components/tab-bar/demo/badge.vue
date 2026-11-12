@@ -7,7 +7,7 @@ A badge is shown when `badge` is a number or text, and a red dot when it is `tru
 </docs>
 
 <script setup lang="ts">
-import type { TabBarItem } from 'antdv-next-mobile'
+import type { TabBarItem } from '@antdv-next/mobile'
 import { AppstoreOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 

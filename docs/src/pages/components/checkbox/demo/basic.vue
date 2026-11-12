@@ -7,7 +7,7 @@ The simplest usage. Bind the checked state with `v-model:checked`; the params of
 </docs>
 
 <script setup lang="ts">
-import type { CheckboxChangeEvent } from 'antdv-next-mobile'
+import type { CheckboxChangeEvent } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const checked = ref(true)

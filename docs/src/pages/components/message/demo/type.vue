@@ -8,7 +8,7 @@ Success, error and warning messages come with semantic icons; the icon can also 
 
 <script setup lang="ts">
 import { SmileOutlined } from '@antdv-next/icons'
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 import { h } from 'vue'
 
 function custom() {

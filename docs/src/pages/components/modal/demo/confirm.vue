@@ -7,7 +7,7 @@ Use `Modal.confirm()` to pop up a confirmation dialog quickly. `Modal.confirmAsy
 </docs>
 
 <script setup lang="ts">
-import { message, Modal } from 'antdv-next-mobile'
+import { message, Modal } from '@antdv-next/mobile'
 
 function showConfirm() {
   Modal.confirm({

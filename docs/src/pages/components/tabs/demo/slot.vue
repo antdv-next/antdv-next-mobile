@@ -7,7 +7,7 @@ Customize the tab titles and content with the `labelRender` and `contentRender` 
 </docs>
 
 <script setup lang="ts">
-import type { TabsItem } from 'antdv-next-mobile'
+import type { TabsItem } from '@antdv-next/mobile'
 
 interface Channel extends TabsItem {
   count: number

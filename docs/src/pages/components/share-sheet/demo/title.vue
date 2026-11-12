@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { ShareSheetOption } from 'antdv-next-mobile'
+import type { ShareSheetOption } from '@antdv-next/mobile'
 import { LinkOutlined, PictureOutlined, QrcodeOutlined, WechatOutlined } from '@antdv-next/icons'
 import { h, ref } from 'vue'
 

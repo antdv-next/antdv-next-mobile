@@ -1,9 +1,9 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/antdv-next/antdv-next-mobile/main/docs/public/logo.svg" width="72" alt="logo" />
-  <h1>Antdv Next Mobile</h1>
+  <h1>Antdv Mobile</h1>
   <p>Vue 3 移动端组件库，API 与 <a href="https://github.com/antdv-next/antdv-next">antdv-next</a> 对齐。</p>
   <p><a href="https://m.antdv-next.com">文档 · m.antdv-next.com</a></p>
-  <p><a href="https://github.com/antdv-next/antdv-next-mobile/blob/main/packages/antdv-next-mobile/README.md">English</a> · 中文</p>
+  <p><a href="https://github.com/antdv-next/antdv-next-mobile/blob/main/packages/antdv-mobile/README.md">English</a> · 中文</p>
 </div>
 
 ## 特性
@@ -19,22 +19,22 @@
 ## 安装
 
 ```bash
-pnpm add antdv-next-mobile
+pnpm add @antdv-next/mobile
 ```
 
 ## 使用
 
 ```ts
-import AntdvNextMobile from 'antdv-next-mobile'
+import AntdvMobile from '@antdv-next/mobile'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).use(AntdvNextMobile).mount('#app')
+createApp(App).use(AntdvMobile).mount('#app')
 ```
 
 ```vue
 <script setup lang="ts">
-import { theme } from 'antdv-next-mobile'
+import { theme } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)
@@ -62,7 +62,7 @@ const open = ref(false)
 ```
 
 ```ts
-import { applyTheme, theme } from 'antdv-next-mobile'
+import { applyTheme, theme } from '@antdv-next/mobile'
 
 applyTheme({ algorithm: [theme.darkAlgorithm, theme.compactAlgorithm] })
 ```

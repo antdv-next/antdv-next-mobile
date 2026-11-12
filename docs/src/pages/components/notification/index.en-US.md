@@ -113,7 +113,7 @@ Static methods render in a separate app whose theme and locale follow the global
 
 ```vue
 <script setup lang="ts">
-import { notification } from 'antdv-next-mobile'
+import { notification } from '@antdv-next/mobile'
 
 const [api, ContextHolder] = notification.useNotification()
 </script>

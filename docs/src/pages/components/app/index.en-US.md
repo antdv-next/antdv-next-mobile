@@ -20,7 +20,7 @@ group:
 
 ```vue
 <script setup lang="ts">
-import { App } from 'antdv-next-mobile'
+import { App } from '@antdv-next/mobile'
 
 const { message, notification, modal, toast } = App.useApp()
 

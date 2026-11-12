@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { PaginationProps } from 'antdv-next-mobile'
+import type { PaginationProps } from '@antdv-next/mobile'
 import { CaretRightOutlined } from '@antdv-next/icons'
 
 const itemRender: PaginationProps['itemRender'] = (_page, type, element) => {

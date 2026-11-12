@@ -81,7 +81,7 @@ group:
 自己的带边框组件也可以参与组合：把 `classes` 加到绘制边框的根元素上，并合并 `size`。
 
 ```ts
-import { useCompactItemContext } from 'antdv-next-mobile'
+import { useCompactItemContext } from '@antdv-next/mobile'
 
 const compact = useCompactItemContext()
 // compact.classes.value -> ['am-compact-item', 'am-compact-first-item']

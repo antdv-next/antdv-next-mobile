@@ -164,7 +164,7 @@ The API is aligned with `Form` of antdv-next: validation is driven by `model` + 
 A custom control only needs to support `v-model:value`; `FormItem` watches the corresponding field in `model` and triggers `change` validation. Use `useFormItemInputContext` when you need `blur` validation, the validation status or the `id`:
 
 ```ts
-import { useFormItemInputContext, useMergedStatus } from 'antdv-next-mobile'
+import { useFormItemInputContext, useMergedStatus } from '@antdv-next/mobile'
 
 const formItem = useFormItemInputContext()
 const status = useMergedStatus(() => props.status) // 'error' | 'warning' | ...

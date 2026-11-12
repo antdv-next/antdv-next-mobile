@@ -7,7 +7,7 @@ Set `multiple` to enable multiple selection. The second argument of the `change`
 </docs>
 
 <script setup lang="ts">
-import type { SelectorOption, SelectorValue } from 'antdv-next-mobile'
+import type { SelectorOption, SelectorValue } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const options = [

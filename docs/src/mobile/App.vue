@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ThemeConfig } from 'antdv-next-mobile'
-import { applyTheme, ConfigProvider } from 'antdv-next-mobile'
-import enUS from 'antdv-next-mobile/locale/en_US'
-import zhCN from 'antdv-next-mobile/locale/zh_CN'
+import type { ThemeConfig } from '@antdv-next/mobile'
+import { applyTheme, ConfigProvider } from '@antdv-next/mobile'
+import enUS from '@antdv-next/mobile/locale/en_US'
+import zhCN from '@antdv-next/mobile/locale/zh_CN'
 import { computed, watchEffect } from 'vue'
 import { useDocsLocale } from '../shared/locale'
 import { useDocsTheme } from '../shared/theme'

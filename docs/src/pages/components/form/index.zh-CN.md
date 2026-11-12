@@ -165,7 +165,7 @@ API 与 antdv-next 的 `Form` 对齐：`model` + `rules` 驱动校验，`FormIte
 自定义控件只需支持 `v-model:value`，`FormItem` 会监听 `model` 中对应字段的变化并触发 `change` 校验。需要 `blur` 校验、校验状态或 `id` 时使用 `useFormItemInputContext`：
 
 ```ts
-import { useFormItemInputContext, useMergedStatus } from 'antdv-next-mobile'
+import { useFormItemInputContext, useMergedStatus } from '@antdv-next/mobile'
 
 const formItem = useFormItemInputContext()
 const status = useMergedStatus(() => props.status) // 'error' | 'warning' | ...

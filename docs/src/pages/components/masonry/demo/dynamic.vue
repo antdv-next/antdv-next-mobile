@@ -7,7 +7,7 @@ Add and remove items dynamically; the other items move to their new position wit
 </docs>
 
 <script setup lang="ts">
-import type { MasonryLayoutInfo } from 'antdv-next-mobile'
+import type { MasonryLayoutInfo } from '@antdv-next/mobile'
 import { CloseOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
 

@@ -7,7 +7,7 @@ Set the placement with `placement`: `top`, `bottom`, `left`, `right` or `center`
 </docs>
 
 <script setup lang="ts">
-import type { PopupPlacement } from 'antdv-next-mobile'
+import type { PopupPlacement } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)

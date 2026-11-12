@@ -39,6 +39,6 @@ export const treeContextKey: InjectionKey<TreeContext> = Symbol('AmTreeContext')
 export function useTreeContext(): TreeContext {
   const context = inject(treeContextKey, null)
   if (!context)
-    throw new Error('[antdv-next-mobile] TreeNode must be rendered by Tree')
+    throw new Error('[@antdv-next/mobile] TreeNode must be rendered by Tree')
   return context
 }

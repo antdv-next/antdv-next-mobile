@@ -7,7 +7,7 @@ Customize the icon of each step with `icon` in `items`, or render them all with 
 </docs>
 
 <script setup lang="ts">
-import type { StepsItem } from 'antdv-next-mobile'
+import type { StepsItem } from '@antdv-next/mobile'
 import { CarOutlined, CreditCardOutlined, ShoppingCartOutlined, SmileOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      'antdv-next-mobile': fileURLToPath(new URL('./packages/antdv-next-mobile/src/index.ts', import.meta.url)),
+      '@antdv-next/mobile': fileURLToPath(new URL('./packages/antdv-mobile/src/index.ts', import.meta.url)),
     },
   },
   test: {
@@ -17,7 +17,7 @@ export default defineConfig({
     setupFiles: ['./tests/setup.ts'],
     coverage: {
       provider: 'v8',
-      include: ['packages/antdv-next-mobile/src/**/*.{ts,vue}'],
+      include: ['packages/antdv-mobile/src/**/*.{ts,vue}'],
       exclude: ['**/tests/**', '**/interface.ts', '**/*.d.ts', '**/locale/*.ts'],
       reporter: ['text-summary', 'lcov', 'html'],
     },

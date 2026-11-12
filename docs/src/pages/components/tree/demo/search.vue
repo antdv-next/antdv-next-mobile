@@ -7,7 +7,7 @@ A searchable tree: compute the parents to expand from the keyword and control `e
 </docs>
 
 <script setup lang="ts">
-import type { TreeDataNode, TreeEventDataNode } from 'antdv-next-mobile'
+import type { TreeDataNode, TreeEventDataNode } from '@antdv-next/mobile'
 import { ref, watch } from 'vue'
 
 type Key = string | number

@@ -10,7 +10,7 @@ group:
 
 ## 通用约定 {#conventions}
 
-| 约定 | PC（antdv-next） | 移动端（antdv-next-mobile） |
+| 约定 | PC（antdv-next） | 移动端（@antdv-next/mobile） |
 | --- | --- | --- |
 | 组件标签 | `<a-button>` | `<am-button>` |
 | 类名前缀 | `ant-btn` | `am-button` |

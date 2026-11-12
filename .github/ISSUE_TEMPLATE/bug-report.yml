@@ -1,5 +1,5 @@
 name: 🐞 Bug report
-description: Report a bug in antdv-next-mobile
+description: Report a bug in @antdv-next/mobile
 labels: [unconfirmed]
 body:
   - type: markdown
@@ -20,7 +20,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: antdv-next-mobile version
+      label: '@antdv-next/mobile version'
       placeholder: e.g. 0.1.0
     validations:
       required: true

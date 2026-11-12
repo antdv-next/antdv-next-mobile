@@ -7,7 +7,7 @@ Call the form instance methods through a `ref`: `validate` / `validateFields(nam
 </docs>
 
 <script setup lang="ts">
-import type { FormInstance } from 'antdv-next-mobile'
+import type { FormInstance } from '@antdv-next/mobile'
 import { reactive, ref } from 'vue'
 
 const formRef = ref<FormInstance>()
@@ -25,7 +25,7 @@ async function validateName() {
 }
 
 function fill() {
-  formRef.value?.setFieldsValue({ name: 'Jim', age: 28, bio: 'Hello antdv-next-mobile' })
+  formRef.value?.setFieldsValue({ name: 'Jim', age: 28, bio: 'Hello @antdv-next/mobile' })
 }
 
 function read() {

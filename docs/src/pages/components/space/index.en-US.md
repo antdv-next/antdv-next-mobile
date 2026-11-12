@@ -80,7 +80,7 @@ A prefix / suffix block in a group, used to hold text or an icon.
 Your own bordered components can take part in a group too: put `classes` on the root element that draws the border, and merge `size`.
 
 ```ts
-import { useCompactItemContext } from 'antdv-next-mobile'
+import { useCompactItemContext } from '@antdv-next/mobile'
 
 const compact = useCompactItemContext()
 // compact.classes.value -> ['am-compact-item', 'am-compact-first-item']

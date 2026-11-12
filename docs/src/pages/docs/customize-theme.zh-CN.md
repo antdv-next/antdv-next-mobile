@@ -16,7 +16,7 @@ group:
 
 ```vue
 <script setup lang="ts">
-import { theme } from 'antdv-next-mobile'
+import { theme } from '@antdv-next/mobile'
 </script>
 
 <template>
@@ -46,7 +46,7 @@ import { theme } from 'antdv-next-mobile'
 如果希望页面背景、`body` 以及所有内容一起切换，使用 `applyTheme` 把主题写到 `<html>` 上：
 
 ```ts
-import { applyTheme, theme } from 'antdv-next-mobile'
+import { applyTheme, theme } from '@antdv-next/mobile'
 
 // 切换到暗色 + 绿色主色，返回值用于撤销
 const revert = applyTheme({
@@ -111,7 +111,7 @@ const revert = applyTheme({
 ## 在 JS 中读取 {#use-token}
 
 ```ts
-import { theme } from 'antdv-next-mobile'
+import { theme } from '@antdv-next/mobile'
 
 const { token, isDark, cssVar } = theme.useToken()
 

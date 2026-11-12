@@ -7,7 +7,7 @@ When `action` is not set, the selected files are only collected and can be submi
 </docs>
 
 <script setup lang="ts">
-import type { UploadFile } from 'antdv-next-mobile'
+import type { UploadFile } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFile[]>([])

@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { ListyGroup } from 'antdv-next-mobile'
+import type { ListyGroup } from '@antdv-next/mobile'
 
 interface Contact {
   id: number

@@ -9,7 +9,7 @@ group:
 组件库内部用到的组合式函数（相当于 React 中的 Hooks）全部对外导出，可以直接在业务代码里使用。它们都支持按需引入、可在服务端渲染环境下安全调用，并且会在所属组件卸载或 `effectScope` 停止时自动清理。
 
 ```ts
-import { useCountDown, useLoadMore, useRequest } from 'antdv-next-mobile'
+import { useCountDown, useLoadMore, useRequest } from '@antdv-next/mobile'
 ```
 
 ## 一览 {#overview}
@@ -90,7 +90,7 @@ const onScroll = useThrottleFn(() => report(), 200)
 
 ```vue
 <script setup lang="ts">
-import { useCountDown } from 'antdv-next-mobile'
+import { useCountDown } from '@antdv-next/mobile'
 
 const { current, isActive, start, reset } = useCountDown({
   time: 60 * 1000,
@@ -121,7 +121,7 @@ const { current, isActive, start, reset } = useCountDown({
 
 ```vue
 <script setup lang="ts">
-import { useCountTo } from 'antdv-next-mobile'
+import { useCountTo } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const score = ref(98)
@@ -182,7 +182,7 @@ const { data, loading, error, run, refresh } = useRequest(
 
 ```vue
 <script setup lang="ts">
-import { useLoadMore } from 'antdv-next-mobile'
+import { useLoadMore } from '@antdv-next/mobile'
 
 const { list, loading, refreshing, error, finished, loadMore, refresh } = useLoadMore(
   ({ page, pageSize }) => fetchOrders({ page, pageSize }), // 返回 { list, total }
@@ -283,7 +283,7 @@ useLongPress(el, () => showMenu(), { delay: 500 })
 
 ```vue
 <script setup lang="ts">
-import { useDraggable } from 'antdv-next-mobile'
+import { useDraggable } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const el = ref<HTMLElement>()
@@ -373,7 +373,7 @@ const online = useOnline()
 
 ```vue
 <script setup lang="ts">
-import { theme, usePreferredDark } from 'antdv-next-mobile'
+import { theme, usePreferredDark } from '@antdv-next/mobile'
 import { computed } from 'vue'
 
 const isDark = usePreferredDark()
@@ -424,7 +424,7 @@ settings.value.dark = true
 
 ```vue
 <script setup lang="ts">
-import { useControlled, useDisabled, useFormItemInputContext } from 'antdv-next-mobile'
+import { useControlled, useDisabled, useFormItemInputContext } from '@antdv-next/mobile'
 
 const props = withDefaults(defineProps<{ value?: number, disabled?: boolean }>(), { disabled: undefined })
 const emit = defineEmits<{ 'update:value': [value: number] }>()

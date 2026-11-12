@@ -2,8 +2,8 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "paths": {
-      "antdv-next-mobile": ["../packages/antdv-next-mobile/src/index.ts"],
-      "antdv-next-mobile/locale/*": ["../packages/antdv-next-mobile/src/locale/*"],
+      "@antdv-next/mobile": ["../packages/antdv-mobile/src/index.ts"],
+      "@antdv-next/mobile/locale/*": ["../packages/antdv-mobile/src/locale/*"],
       "@site/*": ["./src/site/*"],
       "@mobile/*": ["./src/mobile/*"]
     },

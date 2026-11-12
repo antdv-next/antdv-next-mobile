@@ -1,9 +1,9 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/antdv-next/antdv-next-mobile/main/docs/public/logo.svg" width="72" alt="logo" />
-  <h1>Antdv Next Mobile</h1>
+  <h1>Antdv Mobile</h1>
   <p>Mobile UI component library for Vue 3, API-aligned with <a href="https://github.com/antdv-next/antdv-next">antdv-next</a>.</p>
   <p><a href="https://m.antdv-next.com">Documentation · m.antdv-next.com</a></p>
-  <p>English · <a href="https://github.com/antdv-next/antdv-next-mobile/blob/main/packages/antdv-next-mobile/README.zh-CN.md">中文</a></p>
+  <p>English · <a href="https://github.com/antdv-next/antdv-next-mobile/blob/main/packages/antdv-mobile/README.zh-CN.md">中文</a></p>
 </div>
 
 ## Features
@@ -19,22 +19,22 @@
 ## Install
 
 ```bash
-pnpm add antdv-next-mobile
+pnpm add @antdv-next/mobile
 ```
 
 ## Usage
 
 ```ts
-import AntdvNextMobile from 'antdv-next-mobile'
+import AntdvMobile from '@antdv-next/mobile'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).use(AntdvNextMobile).mount('#app')
+createApp(App).use(AntdvMobile).mount('#app')
 ```
 
 ```vue
 <script setup lang="ts">
-import { theme } from 'antdv-next-mobile'
+import { theme } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)
@@ -56,7 +56,7 @@ The built-in texts are Chinese by default. Switch to English with a language pac
 
 ```vue
 <script setup lang="ts">
-import enUS from 'antdv-next-mobile/locale/en_US'
+import enUS from '@antdv-next/mobile/locale/en_US'
 </script>
 
 <template>
@@ -76,7 +76,7 @@ import enUS from 'antdv-next-mobile/locale/en_US'
 ```
 
 ```ts
-import { applyTheme, theme } from 'antdv-next-mobile'
+import { applyTheme, theme } from '@antdv-next/mobile'
 
 applyTheme({ algorithm: [theme.darkAlgorithm, theme.compactAlgorithm] })
 ```

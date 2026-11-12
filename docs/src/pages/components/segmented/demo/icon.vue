@@ -7,7 +7,7 @@ Set an icon with the `icon` of an option; an option can show the icon only.
 </docs>
 
 <script setup lang="ts">
-import type { SegmentedOption } from 'antdv-next-mobile'
+import type { SegmentedOption } from '@antdv-next/mobile'
 import { AppstoreOutlined, BarsOutlined, MoonOutlined, SunOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 

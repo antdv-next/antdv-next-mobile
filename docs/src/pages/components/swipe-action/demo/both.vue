@@ -7,7 +7,7 @@ Set both `leftActions` and `rightActions`. `color` supports presets as well as a
 </docs>
 
 <script setup lang="ts">
-import type { SwipeActionItem } from 'antdv-next-mobile'
+import type { SwipeActionItem } from '@antdv-next/mobile'
 
 const leftActions: SwipeActionItem[] = [
   { key: 'pin', text: 'Pin', color: 'primary' },

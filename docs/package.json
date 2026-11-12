@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@antdv-next/icons": "catalog:prod",
-    "antdv-next-mobile": "workspace:*",
+    "@antdv-next/mobile": "workspace:*",
     "dayjs": "catalog:prod",
     "vue": "catalog:prod",
     "vue-router": "catalog:docs"

@@ -529,7 +529,7 @@ export function encodeQRCode(value: string | string[], options: QRCodeEncodeOpti
     if (usedBits <= getNumDataCodewords(version, level) * 8)
       break
     if (version >= maxVersion)
-      throw new RangeError('[antdv-next-mobile: QRCode] Data too long')
+      throw new RangeError('[@antdv-next/mobile: QRCode] Data too long')
   }
 
   // Use the spare capacity for a higher error correction level

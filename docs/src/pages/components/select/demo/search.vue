@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { SelectOption } from 'antdv-next-mobile'
+import type { SelectOption } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const cities = ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen', 'Hangzhou', 'Nanjing', 'Suzhou', 'Chengdu', 'Chongqing', 'Wuhan', 'Xian', 'Changsha', 'Qingdao', 'Xiamen']

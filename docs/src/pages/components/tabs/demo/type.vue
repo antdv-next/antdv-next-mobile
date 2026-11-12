@@ -7,7 +7,7 @@ Besides the default `line`, there are also the `card` style and the `capsule` st
 </docs>
 
 <script setup lang="ts">
-import type { TabsItem } from 'antdv-next-mobile'
+import type { TabsItem } from '@antdv-next/mobile'
 
 const items: TabsItem[] = [
   { key: '1', label: 'All', content: 'All orders' },

@@ -7,7 +7,7 @@ The `indeterminate` property can be used to represent a "partially checked" stat
 </docs>
 
 <script setup lang="ts">
-import type { CheckboxChangeEvent } from 'antdv-next-mobile'
+import type { CheckboxChangeEvent } from '@antdv-next/mobile'
 import { computed, ref } from 'vue'
 
 const options = ['Apple', 'Pear', 'Orange']

@@ -7,8 +7,8 @@
 </docs>
 
 <script setup lang="ts">
-import type { SignatureExpose } from 'antdv-next-mobile'
-import { message } from 'antdv-next-mobile'
+import type { SignatureExpose } from '@antdv-next/mobile'
+import { message } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const signatureRef = ref<SignatureExpose>()

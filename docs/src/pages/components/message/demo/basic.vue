@@ -7,7 +7,7 @@ The most basic global message, dismissed automatically after 3 seconds.
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 
 function info() {
   message.info('This is a normal message')

@@ -7,7 +7,7 @@ Swipe left to reveal the buttons in `rightActions`. Clicking a button triggers t
 </docs>
 
 <script setup lang="ts">
-import type { SwipeActionItem } from 'antdv-next-mobile'
+import type { SwipeActionItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const rightActions: SwipeActionItem[] = [

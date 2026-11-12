@@ -7,7 +7,7 @@ With `swipeable` enabled, tabs can be switched by swiping the content area left 
 </docs>
 
 <script setup lang="ts">
-import type { TabsItem } from 'antdv-next-mobile'
+import type { TabsItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const items: TabsItem[] = [

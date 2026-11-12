@@ -27,7 +27,7 @@ Toast is a mobile-only component. Only one is shown at a time, and a new toast r
 `Toast` only supports imperative calls:
 
 ```ts
-import { Toast } from 'antdv-next-mobile'
+import { Toast } from '@antdv-next/mobile'
 
 Toast.show('Hello')
 Toast.show({ content: 'Saved', icon: 'success' })

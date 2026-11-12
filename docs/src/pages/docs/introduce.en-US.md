@@ -6,7 +6,7 @@ group:
   order: 1
 ---
 
-`antdv-next-mobile` is the mobile component library of the [antdv-next](https://www.antdv-next.com) family, built on Vue 3.
+`@antdv-next/mobile` is the mobile component library of the [antdv-next](https://www.antdv-next.com) family, built on Vue 3.
 
 Its goal is clear: **write mobile the way you write PC**. Whenever a concept exists in antdv-next, the exact same prop names, event names and semantics are used here; at the same time every component is redesigned for touch instead of being a shrunken desktop component.
 

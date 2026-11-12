@@ -23,7 +23,7 @@ LoadingBar is a mobile-only component with a single global instance.
 `LoadingBar` only supports imperative calls:
 
 ```ts
-import { LoadingBar } from 'antdv-next-mobile'
+import { LoadingBar } from '@antdv-next/mobile'
 
 LoadingBar.start()
 LoadingBar.finish()

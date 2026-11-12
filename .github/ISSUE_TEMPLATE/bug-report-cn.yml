@@ -1,5 +1,5 @@
 name: 🐞 Bug 反馈
-description: 提交一个 antdv-next-mobile 的 Bug
+description: 提交一个 @antdv-next/mobile 的 Bug
 labels: [unconfirmed]
 body:
   - type: markdown
@@ -20,7 +20,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: antdv-next-mobile 版本
+      label: '@antdv-next/mobile 版本'
       placeholder: 例如：0.1.0
     validations:
       required: true

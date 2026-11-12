@@ -7,7 +7,7 @@ Control it manually by calling `show(side)` and `close()` through a ref. With `c
 </docs>
 
 <script setup lang="ts">
-import type { SwipeActionItem } from 'antdv-next-mobile'
+import type { SwipeActionItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const swipeRef = ref()

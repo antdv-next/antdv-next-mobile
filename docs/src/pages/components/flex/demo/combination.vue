@@ -12,7 +12,7 @@ Nest `Flex` to quickly build a common mobile card layout: an image on the left, 
     <am-flex vertical justify="space-between" flex="1" :style="{ minWidth: 0 }">
       <div>
         <div class="title">
-          antdv-next-mobile custom T-shirt
+          @antdv-next/mobile custom T-shirt
         </div>
         <div class="desc">
           Cotton · Black · L

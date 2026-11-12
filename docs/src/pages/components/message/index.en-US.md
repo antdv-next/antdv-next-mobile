@@ -104,7 +104,7 @@ The static methods render in a separate app. Their theme and locale follow the g
 
 ```vue
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 
 const [messageApi, ContextHolder] = message.useMessage()
 </script>

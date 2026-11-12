@@ -85,7 +85,7 @@ ActionSheet 是移动端特有的组件，在移动端它替代了 PC 端的下�
 ### 指令式调用 {#static-methods}
 
 ```ts
-import { ActionSheet } from 'antdv-next-mobile'
+import { ActionSheet } from '@antdv-next/mobile'
 
 const handler = ActionSheet.show({
   actions: [{ key: 'copy', text: '复制' }],

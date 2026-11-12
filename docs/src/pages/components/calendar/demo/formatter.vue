@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { CalendarDay } from 'antdv-next-mobile'
+import type { CalendarDay } from '@antdv-next/mobile'
 import type { Dayjs } from 'dayjs'
 import { ref } from 'vue'
 

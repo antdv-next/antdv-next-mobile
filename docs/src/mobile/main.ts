@@ -1,4 +1,4 @@
-import AntdvNextMobile from 'antdv-next-mobile'
+import AntdvMobile from '@antdv-next/mobile'
 import { createApp } from 'vue'
 import App from './App.vue'
 import { router } from './router'
@@ -7,4 +7,4 @@ import './style.css'
 
 setupTouchEmulator()
 
-createApp(App).use(router).use(AntdvNextMobile).mount('#app')
+createApp(App).use(router).use(AntdvMobile).mount('#app')

@@ -7,7 +7,7 @@ Use the `icon` / `title` slots for custom rendering; the slot params contain the
 </docs>
 
 <script setup lang="ts">
-import type { TabBarItem } from 'antdv-next-mobile'
+import type { TabBarItem } from '@antdv-next/mobile'
 
 const items: TabBarItem[] = [
   { key: 'home', title: 'Home' },

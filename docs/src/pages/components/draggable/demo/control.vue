@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { DraggableOffset } from 'antdv-next-mobile'
+import type { DraggableOffset } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const offset = ref<DraggableOffset>()

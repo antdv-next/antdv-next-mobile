@@ -105,7 +105,7 @@ message.config({
 
 ```vue
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 
 const [messageApi, ContextHolder] = message.useMessage()
 </script>

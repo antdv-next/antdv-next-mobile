@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { TabBarItem } from 'antdv-next-mobile'
+import type { TabBarItem } from '@antdv-next/mobile'
 import { AppstoreOutlined, HomeOutlined, UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 

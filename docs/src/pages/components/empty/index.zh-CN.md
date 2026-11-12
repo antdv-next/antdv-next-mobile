@@ -52,7 +52,7 @@ group:
 
 ```vue
 <script setup lang="ts">
-import { Empty } from 'antdv-next-mobile'
+import { Empty } from '@antdv-next/mobile'
 </script>
 
 <template>

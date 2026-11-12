@@ -7,7 +7,7 @@ Set `image` to `Empty.PRESENTED_IMAGE_SIMPLE` to use the simple illustration, wh
 </docs>
 
 <script setup lang="ts">
-import { Empty } from 'antdv-next-mobile'
+import { Empty } from '@antdv-next/mobile'
 </script>
 
 <template>

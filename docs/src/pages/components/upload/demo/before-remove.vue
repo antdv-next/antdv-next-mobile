@@ -7,7 +7,7 @@ Removal is prevented when `beforeRemove` returns `false` or a Promise that resol
 </docs>
 
 <script setup lang="ts">
-import type { UploadFile } from 'antdv-next-mobile'
+import type { UploadFile } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 function createImage(text: string, color: string) {

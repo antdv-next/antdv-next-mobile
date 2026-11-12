@@ -7,9 +7,9 @@ A notification comes in four types with an icon: `success`, `info`, `warning` an
 </docs>
 
 <script setup lang="ts">
-import type { NotificationIconType } from 'antdv-next-mobile'
+import type { NotificationIconType } from '@antdv-next/mobile'
 import { SmileOutlined } from '@antdv-next/icons'
-import { notification } from 'antdv-next-mobile'
+import { notification } from '@antdv-next/mobile'
 import { h } from 'vue'
 
 function open(type: NotificationIconType) {

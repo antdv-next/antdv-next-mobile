@@ -9,17 +9,17 @@ group:
 ## Installation {#install}
 
 ```bash
-pnpm add antdv-next-mobile
+pnpm add @antdv-next/mobile
 ```
 
 ## Full import {#full-import}
 
 ```ts
-import AntdvNextMobile from 'antdv-next-mobile'
+import AntdvMobile from '@antdv-next/mobile'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).use(AntdvNextMobile).mount('#app')
+createApp(App).use(AntdvMobile).mount('#app')
 ```
 
 Components are registered globally with the `am-` prefix. Styles are imported together with the components, so there is no CSS file to import separately.
@@ -30,7 +30,7 @@ Components are registered globally with the `am-` prefix. Styles are imported to
     Open popup
   </am-button>
   <am-popup v-model:open="open" round closable>
-    <div style="padding: 24px">Hello Antdv Next Mobile</div>
+    <div style="padding: 24px">Hello Antdv Mobile</div>
   </am-popup>
 </template>
 
@@ -47,7 +47,7 @@ Just import the components you need; the build tool tree-shakes unused code and 
 
 ```vue
 <script setup lang="ts">
-import { Button, message } from 'antdv-next-mobile'
+import { Button, message } from '@antdv-next/mobile'
 </script>
 
 <template>
@@ -60,7 +60,7 @@ import { Button, message } from 'antdv-next-mobile'
 If your build pipeline does not handle CSS imports inside packages (some SSR setups, for example), import the full stylesheet manually instead:
 
 ```ts
-import 'antdv-next-mobile/style.css'
+import '@antdv-next/mobile/style.css'
 ```
 
 ## Viewport and safe area {#viewport}
@@ -81,8 +81,8 @@ Components use `px` units by default and are drawn for a 375px design draft. Whe
 Methods such as `message`, `Toast`, `Modal.confirm`, `ActionSheet.show` and `ImagePreview.show` can be called anywhere. They render into separate nodes and read the global theme and locale through `ConfigProvider.config`:
 
 ```ts
-import { ConfigProvider, theme } from 'antdv-next-mobile'
-import enUS from 'antdv-next-mobile/locale/en_US'
+import { ConfigProvider, theme } from '@antdv-next/mobile'
+import enUS from '@antdv-next/mobile/locale/en_US'
 
 ConfigProvider.config({
   theme: { algorithm: theme.darkAlgorithm, token: { colorPrimary: '#00b96b' } },
@@ -95,5 +95,5 @@ ConfigProvider.config({
 The `Props`, `Emits` and `Slots` types of every component can be imported directly:
 
 ```ts
-import type { ButtonProps, PopupProps, ThemeConfig } from 'antdv-next-mobile'
+import type { ButtonProps, PopupProps, ThemeConfig } from '@antdv-next/mobile'
 ```

@@ -114,7 +114,7 @@ notification.config({
 
 ```vue
 <script setup lang="ts">
-import { notification } from 'antdv-next-mobile'
+import { notification } from '@antdv-next/mobile'
 
 const [api, ContextHolder] = notification.useNotification()
 </script>

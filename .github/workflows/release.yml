@@ -1,6 +1,6 @@
 name: Release
 
-# Publishes antdv-next-mobile when its version is tagged (by `pnpm bump`, which
+# Publishes @antdv-next/mobile when its version is tagged (by `pnpm bump`, which
 # pushes the release commit and tag) but not on npm yet.
 # See scripts/release.mjs for the rules.
 #
@@ -10,12 +10,12 @@ name: Release
 #
 # Publishing uses npm trusted publishing (OIDC), so there is no npm token secret.
 # The package needs a trusted publisher pointing at this workflow file:
-#   npm trust github antdv-next-mobile --file release.yml --repo antdv-next/antdv-next-mobile --allow-publish -y
+#   npm trust github @antdv-next/mobile --file release.yml --repo antdv-next/antdv-next-mobile --allow-publish -y
 
 on:
   push:
     branches: [main]
-    tags: ['antdv-next-mobile@*']
+    tags: ['@antdv-next/mobile@*']
     paths: ['packages/*/package.json']
   workflow_dispatch:
     inputs:

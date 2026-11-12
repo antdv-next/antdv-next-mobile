@@ -7,8 +7,8 @@
 </docs>
 
 <script setup lang="ts">
-import type { UploadFile, UploadRawFile } from 'antdv-next-mobile'
-import { Upload } from 'antdv-next-mobile'
+import type { UploadFile, UploadRawFile } from '@antdv-next/mobile'
+import { Upload } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFile[]>([])

@@ -7,7 +7,7 @@ With multiple columns the trigger joins the text of each column with ` / ` by de
 </docs>
 
 <script setup lang="ts">
-import type { PickerOption, PickerValue } from 'antdv-next-mobile'
+import type { PickerOption, PickerValue } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const columns = [

@@ -7,7 +7,7 @@ A badge is shown when `badge` is a number or text, and a red dot when it is `tru
 </docs>
 
 <script setup lang="ts">
-import type { SideBarItem } from 'antdv-next-mobile'
+import type { SideBarItem } from '@antdv-next/mobile'
 
 const items: SideBarItem[] = [
   { key: 'all', title: 'All' },

@@ -7,7 +7,7 @@ The most basic usage: configure `target`, `title` and `description` of every ste
 </docs>
 
 <script setup lang="ts">
-import type { TourStepItem } from 'antdv-next-mobile'
+import type { TourStepItem } from '@antdv-next/mobile'
 import { EllipsisOutlined } from '@antdv-next/icons'
 import { shallowRef } from 'vue'
 

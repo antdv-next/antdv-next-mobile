@@ -9,7 +9,7 @@ import { resolveTheme } from '../theme/util'
 export interface ConfigProviderProps {
   /** Theme config, aligned with antdv-next: `{ algorithm, token, components }`. */
   theme?: ThemeConfig
-  /** Language package, e.g. `import enUS from 'antdv-next-mobile/locale/en_US'`. */
+  /** Language package, e.g. `import enUS from '@antdv-next/mobile/locale/en_US'`. */
   locale?: Locale
   /** Default size of all components. */
   componentSize?: SizeType

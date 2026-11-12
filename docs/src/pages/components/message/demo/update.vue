@@ -7,7 +7,7 @@ Update the content with a unique `key`: a message with the same `key` is updated
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 
 const key = 'updatable'
 

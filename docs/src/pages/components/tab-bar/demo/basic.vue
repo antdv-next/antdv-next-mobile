@@ -7,7 +7,7 @@ Configure the tab items with `items`; the first item is active by default. `icon
 </docs>
 
 <script setup lang="ts">
-import type { TabBarItem } from 'antdv-next-mobile'
+import type { TabBarItem } from '@antdv-next/mobile'
 import { AppstoreFilled, AppstoreOutlined, HomeFilled, HomeOutlined, MessageFilled, MessageOutlined, UserOutlined } from '@antdv-next/icons'
 import { h } from 'vue'
 

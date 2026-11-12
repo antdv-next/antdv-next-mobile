@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import { ImagePreview } from 'antdv-next-mobile'
+import { ImagePreview } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 function createImage(text: string, color: string, width = 900, height = 1200) {

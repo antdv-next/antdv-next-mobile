@@ -7,9 +7,9 @@ Pass `actions` to enter menu mode; clicking an action triggers the `action` even
 </docs>
 
 <script setup lang="ts">
-import type { PopoverAction } from 'antdv-next-mobile'
+import type { PopoverAction } from '@antdv-next/mobile'
 import { DeleteOutlined, EllipsisOutlined, MessageOutlined, QrcodeOutlined, ScanOutlined } from '@antdv-next/icons'
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 import { h } from 'vue'
 
 const actions: PopoverAction[] = [

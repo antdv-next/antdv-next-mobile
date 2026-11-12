@@ -7,7 +7,7 @@ Put buttons at the bottom of the notification with `actions` to offer the next s
 </docs>
 
 <script setup lang="ts">
-import { Button, message, notification } from 'antdv-next-mobile'
+import { Button, message, notification } from '@antdv-next/mobile'
 import { h } from 'vue'
 
 function open() {

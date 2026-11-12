@@ -21,7 +21,7 @@ import { EditOutlined, LikeOutlined, ShareAltOutlined } from '@antdv-next/icons'
       </template>
     </am-card>
     <am-card title="Order 2024080800001" extra="Unpaid">
-      antdv-next-mobile custom T-shirt × 1
+      @antdv-next/mobile custom T-shirt × 1
       <template #footer>
         <am-flex justify="flex-end" gap="small">
           <am-button size="small" shape="round">

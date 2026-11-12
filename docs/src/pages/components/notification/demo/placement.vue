@@ -7,8 +7,8 @@ A notification pops up from the top or the bottom and avoids the safe area. The 
 </docs>
 
 <script setup lang="ts">
-import type { NotificationPlacement } from 'antdv-next-mobile'
-import { notification } from 'antdv-next-mobile'
+import type { NotificationPlacement } from '@antdv-next/mobile'
+import { notification } from '@antdv-next/mobile'
 
 function open(placement: NotificationPlacement) {
   notification.info({

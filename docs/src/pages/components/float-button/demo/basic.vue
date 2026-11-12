@@ -7,7 +7,7 @@ The simplest usage. The float button is fixed at the bottom right corner of the 
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 </script>
 
 <template>

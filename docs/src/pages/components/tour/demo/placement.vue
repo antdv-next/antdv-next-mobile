@@ -7,7 +7,7 @@ Use `placement` to set where the panel sits relative to the target: twelve direc
 </docs>
 
 <script setup lang="ts">
-import type { TourPlacement, TourStepItem } from 'antdv-next-mobile'
+import type { TourPlacement, TourStepItem } from '@antdv-next/mobile'
 import { computed, ref, shallowRef } from 'vue'
 
 const placements: TourPlacement[] = ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', 'bottomRight', 'left', 'right', 'center']

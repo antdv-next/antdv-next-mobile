@@ -7,7 +7,7 @@ Display a global loading indicator; the returned function is used to dismiss it 
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 
 function load() {
   const hide = message.loading('Loading...', 0)

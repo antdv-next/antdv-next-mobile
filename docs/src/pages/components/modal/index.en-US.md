@@ -163,7 +163,7 @@ Modals created by static methods are rendered in a separate app. Their theme and
 
 ```vue
 <script setup lang="ts">
-import { Modal } from 'antdv-next-mobile'
+import { Modal } from '@antdv-next/mobile'
 
 const [modal, ContextHolder] = Modal.useModal()
 

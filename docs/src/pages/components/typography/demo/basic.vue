@@ -32,7 +32,7 @@ A document sample: `Typography` as the container, composed of titles, paragraphs
       Press <am-typography-text keyboard>
         Esc
       </am-typography-text> to exit reading, and install with <am-typography-text code>
-        pnpm add antdv-next-mobile
+        pnpm add @antdv-next/mobile
       </am-typography-text>.
     </am-typography-paragraph>
   </am-typography>

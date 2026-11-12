@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import { LoadingBar } from 'antdv-next-mobile'
+import { LoadingBar } from '@antdv-next/mobile'
 import { onBeforeUnmount } from 'vue'
 
 function run(options: Parameters<typeof LoadingBar.config>[0]) {

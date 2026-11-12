@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { TourStepItem } from 'antdv-next-mobile'
+import type { TourStepItem } from '@antdv-next/mobile'
 import { ref, shallowRef } from 'vue'
 
 const ref1 = shallowRef()

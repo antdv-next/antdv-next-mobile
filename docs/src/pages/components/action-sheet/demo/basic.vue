@@ -7,8 +7,8 @@ Set the list of actions with `actions` and control visibility with `v-model:open
 </docs>
 
 <script setup lang="ts">
-import type { ActionSheetAction } from 'antdv-next-mobile'
-import { message } from 'antdv-next-mobile'
+import type { ActionSheetAction } from '@antdv-next/mobile'
+import { message } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)

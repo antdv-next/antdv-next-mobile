@@ -1,4 +1,4 @@
-import type { CascaderOption } from 'antdv-next-mobile'
+import type { CascaderOption } from '@antdv-next/mobile'
 
 export const regions: CascaderOption[] = [
   {

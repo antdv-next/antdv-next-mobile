@@ -7,7 +7,7 @@ Disable an item with `disabled`; the `change` event is triggered on switching.
 </docs>
 
 <script setup lang="ts">
-import type { SideBarItem } from 'antdv-next-mobile'
+import type { SideBarItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const items: SideBarItem[] = [

@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { CollapseItemType } from 'antdv-next-mobile'
+import type { CollapseItemType } from '@antdv-next/mobile'
 
 const items: CollapseItemType[] = [
   { key: 'header', label: 'Only this text expands it', collapsible: 'header', content: 'The blank area on the right of the title does not expand it.' },

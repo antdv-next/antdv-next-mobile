@@ -7,7 +7,7 @@ The classic category layout with navigation on the left and content on the right
 </docs>
 
 <script setup lang="ts">
-import type { SideBarItem } from 'antdv-next-mobile'
+import type { SideBarItem } from '@antdv-next/mobile'
 import { computed, ref } from 'vue'
 
 const items: SideBarItem[] = [

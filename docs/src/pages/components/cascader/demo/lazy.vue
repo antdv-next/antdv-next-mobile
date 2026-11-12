@@ -7,7 +7,7 @@ Set `isLeaf: false` on an option and provide `loadData` to load the next level l
 </docs>
 
 <script setup lang="ts">
-import type { CascaderOption } from 'antdv-next-mobile'
+import type { CascaderOption } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const options = ref<CascaderOption[]>([

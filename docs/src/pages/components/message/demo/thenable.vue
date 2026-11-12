@@ -7,7 +7,7 @@ The return value is thenable, so follow-up logic can run after the message is cl
 </docs>
 
 <script setup lang="ts">
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 
 async function run() {
   await message.loading('Verifying...', 1.5)

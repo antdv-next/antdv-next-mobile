@@ -7,9 +7,9 @@ Set the share options with `options` and control visibility with `v-model:open`.
 </docs>
 
 <script setup lang="ts">
-import type { ShareSheetOption } from 'antdv-next-mobile'
+import type { ShareSheetOption } from '@antdv-next/mobile'
 import { LinkOutlined, PictureOutlined, QqOutlined, QrcodeOutlined, WechatOutlined, WeiboOutlined } from '@antdv-next/icons'
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 import { h, ref } from 'vue'
 
 const open = ref(false)

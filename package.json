@@ -1,5 +1,5 @@
 {
-  "name": "antdv-next-mobile-workspace",
+  "name": "antdv-mobile-workspace",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "dev": "pnpm -F docs dev",
-    "build": "pnpm -F antdv-next-mobile build",
+    "build": "pnpm -F @antdv-next/mobile build",
     "build:site": "pnpm -F docs build",
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint . --fix",
@@ -22,7 +22,7 @@
     "check": "pnpm ci:lint && pnpm check:base && pnpm typecheck && pnpm test",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "bump": "pnpm -F antdv-next-mobile bump",
+    "bump": "pnpm -F @antdv-next/mobile bump",
     "release:plan": "node scripts/release.mjs plan",
     "prepare": "simple-git-hooks"
   },

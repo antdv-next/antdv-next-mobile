@@ -7,8 +7,8 @@ import { browserLocale, localizePath, setDocsLocale, storedLocale } from '../sha
 const locales = Object.keys(docs) as DocsLocale[]
 
 const defaultTitle: Record<DocsLocale, string> = {
-  'zh-CN': 'Antdv Next Mobile - Vue 3 移动端组件库',
-  'en-US': 'Antdv Next Mobile - Mobile UI components for Vue 3',
+  'zh-CN': 'Antdv Mobile - Vue 3 移动端组件库',
+  'en-US': 'Antdv Mobile - Mobile UI components for Vue 3',
 }
 
 /** First guide / component page of a locale, used by the nav links and the section redirects. */
@@ -74,6 +74,6 @@ router.beforeEach((to, from) => {
 router.afterEach((to) => {
   const locale = (to.meta.locale as DocsLocale | undefined) ?? 'en-US'
   const title = to.meta.title as string | undefined
-  document.title = title ? `${title} - Antdv Next Mobile` : defaultTitle[locale]
+  document.title = title ? `${title} - Antdv Mobile` : defaultTitle[locale]
   document.documentElement.lang = locale
 })

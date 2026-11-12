@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { CollapseItemType } from 'antdv-next-mobile'
+import type { CollapseItemType } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const items: CollapseItemType[] = [

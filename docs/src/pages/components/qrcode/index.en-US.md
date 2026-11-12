@@ -81,7 +81,7 @@ Called on the component instance obtained through `ref`.
 The built-in encoder can be used on its own, e.g. to draw the code yourself.
 
 ```ts
-import { encodeQRCode } from 'antdv-next-mobile'
+import { encodeQRCode } from '@antdv-next/mobile'
 
 const { version, size, errorLevel, mask, modules } = encodeQRCode('https://www.antdv-next.com', {
   errorLevel: 'M', // minimum error correction level

@@ -82,7 +82,7 @@ interface QRCodeStatusRenderInfo {
 内置的编码器也可以单独使用，例如在 `<canvas>` 之外自行绘制。
 
 ```ts
-import { encodeQRCode } from 'antdv-next-mobile'
+import { encodeQRCode } from '@antdv-next/mobile'
 
 const { version, size, errorLevel, mask, modules } = encodeQRCode('https://www.antdv-next.com', {
   errorLevel: 'M', // 最低纠错等级

@@ -7,7 +7,7 @@ Bind the list with `v-model:value` and append an item to send a bullet; once a b
 </docs>
 
 <script setup lang="ts">
-import type { BarrageItem } from 'antdv-next-mobile'
+import type { BarrageItem } from '@antdv-next/mobile'
 import { shallowRef } from 'vue'
 
 const texts = ['Nice!', 'Hello there', 'So smooth', 'Awesome', '666', 'Love it']

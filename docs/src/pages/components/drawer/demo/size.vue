@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { DrawerSize } from 'antdv-next-mobile'
+import type { DrawerSize } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const open = ref(false)

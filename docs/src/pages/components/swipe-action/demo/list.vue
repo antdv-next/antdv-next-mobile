@@ -7,7 +7,7 @@ Wrap each item of a list. After one item is opened, touching anywhere else close
 </docs>
 
 <script setup lang="ts">
-import type { SwipeActionItem } from 'antdv-next-mobile'
+import type { SwipeActionItem } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const list = ref([

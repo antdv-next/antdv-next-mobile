@@ -7,7 +7,7 @@ Customize the expand icon through the `expandIcon` slot (or the same-named prop)
 </docs>
 
 <script setup lang="ts">
-import type { CollapseItemType } from 'antdv-next-mobile'
+import type { CollapseItemType } from '@antdv-next/mobile'
 import { MinusCircleOutlined, PlusCircleOutlined } from '@antdv-next/icons'
 
 const items: CollapseItemType[] = [

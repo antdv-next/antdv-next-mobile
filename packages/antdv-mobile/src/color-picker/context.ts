@@ -41,6 +41,6 @@ export function provideColorPickerPanelContext(context: ColorPickerPanelContext)
 export function useColorPickerPanelContext() {
   const context = inject(panelContextKey, null)
   if (!context)
-    throw new Error('[antdv-next-mobile] ColorPicker panel parts must be rendered inside a ColorPicker panel.')
+    throw new Error('[@antdv-next/mobile] ColorPicker panel parts must be rendered inside a ColorPicker panel.')
   return context
 }

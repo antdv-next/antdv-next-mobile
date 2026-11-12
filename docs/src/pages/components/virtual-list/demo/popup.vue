@@ -7,7 +7,7 @@ When used inside [Popup](/components/popup), just limit the list height with `he
 </docs>
 
 <script setup lang="ts">
-import type { VirtualListExpose } from 'antdv-next-mobile'
+import type { VirtualListExpose } from '@antdv-next/mobile'
 import { nextTick, ref } from 'vue'
 
 const cities = Array.from({ length: 5000 }, (_, index) => ({ code: `C${String(index + 1).padStart(4, '0')}`, name: `City ${index + 1}` }))

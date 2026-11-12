@@ -7,7 +7,7 @@ Pass a function to `columns` to link multiple columns: the column data is recalc
 </docs>
 
 <script setup lang="ts">
-import type { PickerValue } from 'antdv-next-mobile'
+import type { PickerValue } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const data: Record<string, string[]> = {

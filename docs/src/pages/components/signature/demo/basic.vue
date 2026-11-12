@@ -7,8 +7,8 @@ Write on the canvas with a finger (or the mouse). Tap "Confirm" to get the data 
 </docs>
 
 <script setup lang="ts">
-import type { SignatureConfirmResult } from 'antdv-next-mobile'
-import { message } from 'antdv-next-mobile'
+import type { SignatureConfirmResult } from '@antdv-next/mobile'
+import { message } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const image = ref('')

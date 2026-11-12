@@ -7,7 +7,7 @@ Use `ActionSheet.show()` to open an action sheet imperatively, without declaring
 </docs>
 
 <script setup lang="ts">
-import { ActionSheet, message } from 'antdv-next-mobile'
+import { ActionSheet, message } from '@antdv-next/mobile'
 
 function show() {
   ActionSheet.show({

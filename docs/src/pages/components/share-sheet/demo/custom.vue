@@ -7,7 +7,7 @@ The `image` of an option is an image url that fills the round icon holder (`icon
 </docs>
 
 <script setup lang="ts">
-import type { ShareSheetOption } from 'antdv-next-mobile'
+import type { ShareSheetOption } from '@antdv-next/mobile'
 import { CheckOutlined, LinkOutlined, QqOutlined, WechatOutlined, WeiboOutlined } from '@antdv-next/icons'
 import { h, ref } from 'vue'
 

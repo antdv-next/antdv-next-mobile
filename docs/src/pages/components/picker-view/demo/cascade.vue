@@ -7,7 +7,7 @@ When `columns` is a function, the column data is recomputed with the latest valu
 </docs>
 
 <script setup lang="ts">
-import type { PickerValue } from 'antdv-next-mobile'
+import type { PickerValue } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const data: Record<string, Record<string, string[]>> = {

@@ -7,7 +7,7 @@ With `height` the tree scrolls inside its own container and virtual scrolling (`
 </docs>
 
 <script setup lang="ts">
-import type { TreeDataNode } from 'antdv-next-mobile'
+import type { TreeDataNode } from '@antdv-next/mobile'
 import { nextTick, ref } from 'vue'
 
 const treeData: TreeDataNode[] = Array.from({ length: 100 }, (_, i) => ({

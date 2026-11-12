@@ -7,9 +7,9 @@ With `draggable` enabled, the button can be pressed and dragged. `axis` restrict
 </docs>
 
 <script setup lang="ts">
-import type { FloatButtonOffset } from 'antdv-next-mobile'
+import type { FloatButtonOffset } from '@antdv-next/mobile'
 import { CustomerServiceOutlined, DragOutlined } from '@antdv-next/icons'
-import { message } from 'antdv-next-mobile'
+import { message } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const offset = ref<FloatButtonOffset>()

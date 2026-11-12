@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { TreeDataNode } from 'antdv-next-mobile'
+import type { TreeDataNode } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 type Key = string | number

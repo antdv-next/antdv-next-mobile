@@ -7,7 +7,7 @@ With `autoPlay` set to `false` the bullets wait until `play()` is called; use th
 </docs>
 
 <script setup lang="ts">
-import type { BarrageExpose, BarrageItem } from 'antdv-next-mobile'
+import type { BarrageExpose, BarrageItem } from '@antdv-next/mobile'
 import { ref, shallowRef } from 'vue'
 
 const barrageRef = ref<BarrageExpose>()

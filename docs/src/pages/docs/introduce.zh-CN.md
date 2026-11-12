@@ -6,7 +6,7 @@ group:
   order: 1
 ---
 
-`antdv-next-mobile` 是 [antdv-next](https://www.antdv-next.com) 家族的移动端组件库，基于 Vue 3 构建。
+`@antdv-next/mobile` 是 [antdv-next](https://www.antdv-next.com) 家族的移动端组件库，基于 Vue 3 构建。
 
 它的目标很明确：**让你用写 PC 端的方式写移动端**。只要某个概念在 antdv-next 里存在，这里就使用完全相同的属性名、事件名和语义；同时每个组件都按触屏体验重新设计，而不是把桌面组件缩小。
 

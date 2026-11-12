@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { BorderBeamGradient } from 'antdv-next-mobile'
+import type { BorderBeamGradient } from '@antdv-next/mobile'
 import { computed, ref } from 'vue'
 
 interface Preset {

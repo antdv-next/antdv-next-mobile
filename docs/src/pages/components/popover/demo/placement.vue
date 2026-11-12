@@ -7,7 +7,7 @@ There are twelve placements, the same as on PC. When there is not enough space i
 </docs>
 
 <script setup lang="ts">
-import type { PopoverPlacement } from 'antdv-next-mobile'
+import type { PopoverPlacement } from '@antdv-next/mobile'
 
 const top: PopoverPlacement[] = ['topLeft', 'top', 'topRight']
 const bottom: PopoverPlacement[] = ['bottomLeft', 'bottom', 'bottomRight']

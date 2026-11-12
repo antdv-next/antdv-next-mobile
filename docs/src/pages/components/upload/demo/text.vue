@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import type { UploadFile } from 'antdv-next-mobile'
+import type { UploadFile } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFile[]>([

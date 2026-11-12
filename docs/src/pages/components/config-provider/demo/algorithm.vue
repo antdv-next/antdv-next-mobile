@@ -7,7 +7,7 @@
 </docs>
 
 <script setup lang="ts">
-import { theme } from 'antdv-next-mobile'
+import { theme } from '@antdv-next/mobile'
 import { computed, ref } from 'vue'
 
 const dark = ref(true)

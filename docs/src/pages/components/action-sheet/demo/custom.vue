@@ -7,7 +7,7 @@ The default slot places any content above the action list, and the `action` slot
 </docs>
 
 <script setup lang="ts">
-import type { ActionSheetAction } from 'antdv-next-mobile'
+import type { ActionSheetAction } from '@antdv-next/mobile'
 import { CheckOutlined } from '@antdv-next/icons'
 import { ref } from 'vue'
 

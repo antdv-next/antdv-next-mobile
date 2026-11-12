@@ -7,7 +7,7 @@ Scroll to a given anchor with the `scrollTo(index)` method of the component inst
 </docs>
 
 <script setup lang="ts">
-import type { IndexBarExpose } from 'antdv-next-mobile'
+import type { IndexBarExpose } from '@antdv-next/mobile'
 import { ref } from 'vue'
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G']

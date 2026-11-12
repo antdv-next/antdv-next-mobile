@@ -24,7 +24,7 @@ LoadingBar 是移动端特有的组件，全局只有一个实例。
 `LoadingBar` 只支持指令式调用：
 
 ```ts
-import { LoadingBar } from 'antdv-next-mobile'
+import { LoadingBar } from '@antdv-next/mobile'
 
 LoadingBar.start()
 LoadingBar.finish()
