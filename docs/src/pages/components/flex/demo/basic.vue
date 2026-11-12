@@ -26,7 +26,7 @@ const vertical = ref(false)
 
 <style scoped>
 .block {
-  flex: 1;
+  width: 25%;
   height: 48px;
   background: var(--am-color-primary);
 }
