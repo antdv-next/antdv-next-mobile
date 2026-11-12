@@ -2,6 +2,7 @@
   <img src="./docs/public/logo.svg" width="72" alt="logo" />
   <h1>Antdv Next Mobile</h1>
   <p>Vue 3 移动端组件库，API 与 <a href="https://github.com/antdv-next/antdv-next">antdv-next</a> 对齐。</p>
+  <p><a href="https://m.antdv-next.com">文档 · m.antdv-next.com</a></p>
 </div>
 
 ## 特性

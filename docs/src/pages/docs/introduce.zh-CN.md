@@ -31,7 +31,7 @@ group:
 
 ## 组件一览 {#components}
 
-组件按使用场景分为七类：通用、布局、导航、数据录入、数据展示、反馈、手势与其他。右侧的手机模拟器可以直接体验所有组件，也可以用手机扫码或直接访问 `/mobile.html`。
+组件按使用场景分为七类：通用、布局、导航、数据录入、数据展示、反馈、手势与其他。右侧的手机模拟器可以直接体验所有组件，也可以用手机直接访问 [m.antdv-next.com/mobile.html](https://m.antdv-next.com/mobile.html)。
 
 ## 谁在维护 {#maintainers}
 
