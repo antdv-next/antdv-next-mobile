@@ -267,6 +267,7 @@
 .am-ribbon-corner {
   position: absolute;
   top: 100%;
+  box-sizing: border-box;
   width: var(--am-ribbon-offset);
   height: var(--am-ribbon-offset);
   color: var(--am-ribbon-color, var(--am-color-primary));
