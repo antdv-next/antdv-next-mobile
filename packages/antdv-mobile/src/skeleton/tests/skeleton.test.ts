@@ -37,12 +37,12 @@ describe('Skeleton', () => {
         paragraph: { rows: 4, width: ['100%', 80, '50%'] },
       },
     })
-    expect(wrapper.find('.am-skeleton-avatar').attributes('style')).toContain('width: 32px')
+    expect(wrapper.find('.am-skeleton-avatar').attributes('style')).toContain('width: calc(32 * var(--am-design-unit))')
     expect(wrapper.find('.am-skeleton-avatar').classes()).toContain('am-skeleton-avatar-square')
-    expect(wrapper.find('.am-skeleton-title').attributes('style')).toContain('width: 120px')
+    expect(wrapper.find('.am-skeleton-title').attributes('style')).toContain('width: calc(120 * var(--am-design-unit))')
     const rows = wrapper.findAll('.am-skeleton-paragraph > li')
     expect(rows).toHaveLength(4)
-    expect(rows[1]!.attributes('style')).toContain('width: 80px')
+    expect(rows[1]!.attributes('style')).toContain('width: calc(80 * var(--am-design-unit))')
     expect(rows[3]!.attributes('style')).toBeUndefined()
   })
 
@@ -118,7 +118,7 @@ describe('Skeleton elements', () => {
     const wrapper = mount(SkeletonAvatar, { props: { size: 20, shape: 'square' } })
     const avatar = wrapper.find('.am-skeleton-avatar')
     expect(avatar.classes()).toContain('am-skeleton-avatar-square')
-    expect(avatar.attributes('style')).toContain('height: 20px')
+    expect(avatar.attributes('style')).toContain('height: calc(20 * var(--am-design-unit))')
   })
 
   it('image: size and semantic classes', () => {
@@ -129,7 +129,7 @@ describe('Skeleton elements', () => {
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['custom', 'r']))
     const image = wrapper.find('.am-skeleton-image')
     expect(image.classes()).toContain('img')
-    expect(image.attributes('style')).toContain('width: 120px')
-    expect(image.attributes('style')).toContain('height: 80px')
+    expect(image.attributes('style')).toContain('width: calc(120 * var(--am-design-unit))')
+    expect(image.attributes('style')).toContain('height: calc(80 * var(--am-design-unit))')
   })
 })

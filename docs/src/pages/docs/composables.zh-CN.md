@@ -24,7 +24,7 @@ import { useCountDown, useLoadMore, useRequest } from '@antdv-next/mobile'
 | 手势与事件 | `useTouch`、`useSwipe`、`useLongPress`、`useDraggable`、`useClickAway`、`useEventListener`、`useLockScroll` |
 | 设备与环境 | `useSafeArea`、`useKeyboard`、`usePageVisibility`、`useOnline`、`useMediaQuery`、`usePreferredDark` |
 | 浏览器能力 | `useClipboard`、`useStorage` |
-| 组件库上下文 | `useConfig`、`useLocale`、`useToken`、`useSize`、`useDisabled`、`useFormItemInputContext` |
+| 组件库上下文 | `useConfig`、`useLocale`、`useToken`、`useUnit`、`useSize`、`useDisabled`、`useFormItemInputContext` |
 
 ## 状态 {#state}
 

@@ -28,7 +28,7 @@ describe('Flex', () => {
   it('supports preset, number and string gap', () => {
     expect(mount(Flex, { props: { gap: 'small' } }).classes()).toContain('am-flex-gap-small')
     expect(mount(Flex, { props: { gap: 'large' } }).classes()).toContain('am-flex-gap-large')
-    expect((mount(Flex, { props: { gap: 12 } }).element as HTMLElement).style.gap).toBe('12px')
+    expect((mount(Flex, { props: { gap: 12 } }).element as HTMLElement).style.gap).toBe('calc(12 * var(--am-design-unit))')
     expect((mount(Flex, { props: { gap: '1rem' } }).element as HTMLElement).style.gap).toBe('1rem')
   })
 

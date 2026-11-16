@@ -7,6 +7,7 @@ import { Spinner } from '../_base'
 import { isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useSize } from '../config-provider/context'
+import { useUnit } from '../config-provider/unit'
 import { useLocale } from '../locale'
 import VirtualList from '../virtual-list/VirtualList.vue'
 import '../style'
@@ -48,7 +49,9 @@ const ITEM_HEIGHTS = { small: 40, middle: 48, large: 56 }
 
 const listRef = ref<VirtualListExpose>()
 const isVirtual = computed(() => props.virtual && !!props.dataSource)
-const rowHeight = computed(() => props.itemHeight ?? ITEM_HEIGHTS[size.value ?? 'middle'])
+// the presets are units, `itemHeight` is a number on the design of the user
+const { unitsToDesign } = useUnit()
+const rowHeight = computed(() => props.itemHeight ?? unitsToDesign(ITEM_HEIGHTS[size.value ?? 'middle']))
 
 /** virtual mode only: scroll to an offset (px), or to a row by `index` / `key` */
 function scrollTo(target: number | VirtualListScrollToConfig) {

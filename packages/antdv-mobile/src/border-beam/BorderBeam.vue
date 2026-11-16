@@ -36,7 +36,7 @@ const hasDuration = computed(() => typeof props.duration === 'number' && props.d
 const mergedDuration = computed(() => (hasDuration.value ? props.duration! : DEFAULT_BORDER_BEAM_DURATION))
 
 const beamGradient = computed(() => getBorderBeamGradient(props.color))
-const insetOffset = computed(() => (isValid(props.outset) ? getInset(props.outset) : borderWidth.value.map(getInset).join(' ')))
+const insetOffset = computed(() => (isValid(props.outset) ? getInset(props.outset) : borderWidth.value.map(width => getInset(width, true)).join(' ')))
 
 const beams = computed(() => {
   const count = mergedCount.value

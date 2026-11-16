@@ -166,7 +166,7 @@ describe('Masonry', () => {
     const wrapper = mount(Masonry, { props: { items: makeItems([100, 50, 30, 20]), itemRender, columns: 3, gutter: 10 } })
     await flushFrames()
     expect(style(wrapper).getPropertyValue('--am-masonry-columns')).toBe('3')
-    expect(style(wrapper).getPropertyValue('--am-masonry-gutter-x')).toBe('10px')
+    expect(style(wrapper).getPropertyValue('--am-masonry-gutter-x')).toBe('calc(10 * var(--am-design-unit))')
     expect(style(wrapper).getPropertyValue('--am-masonry-gutter-y')).toBe('')
     const nodes = wrapper.findAll('.am-masonry-item')
     expect(vars(nodes[3].element)).toEqual({ column: '2', top: '40px' })
@@ -174,8 +174,8 @@ describe('Masonry', () => {
 
     await wrapper.setProps({ columns: 2, gutter: [4, 20] })
     await flushFrames()
-    expect(style(wrapper).getPropertyValue('--am-masonry-gutter-x')).toBe('4px')
-    expect(style(wrapper).getPropertyValue('--am-masonry-gutter-y')).toBe('20px')
+    expect(style(wrapper).getPropertyValue('--am-masonry-gutter-x')).toBe('calc(4 * var(--am-design-unit))')
+    expect(style(wrapper).getPropertyValue('--am-masonry-gutter-y')).toBe('calc(20 * var(--am-design-unit))')
     expect(wrapper.findAll('.am-masonry-item').map(node => vars(node.element))).toEqual([
       { column: '0', top: '0px' },
       { column: '1', top: '0px' },

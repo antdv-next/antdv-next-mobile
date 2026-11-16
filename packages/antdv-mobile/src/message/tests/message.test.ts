@@ -129,7 +129,7 @@ describe('message', () => {
     await nextTick()
     const root = container.querySelector<HTMLElement>('.am-message')!
     expect(root).not.toBeNull()
-    expect(root.style.getPropertyValue('--am-message-top')).toBe('40px')
+    expect(root.style.getPropertyValue('--am-message-top')).toBe('calc(40 * var(--am-design-unit))')
     expect(onClose).toHaveBeenCalledTimes(1)
     await flush()
     expect(notices().map(n => n.textContent)).toEqual(['2', '3'])

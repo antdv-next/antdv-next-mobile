@@ -14,7 +14,7 @@ describe('theme util', () => {
   })
 
   it('adds px to numeric tokens except unitless ones', () => {
-    expect(tokenValue('borderRadius', 8)).toBe('8px')
+    expect(tokenValue('borderRadius', 8)).toBe('calc(8 * var(--am-design-unit))')
     expect(tokenValue('lineHeight', 1.5)).toBe('1.5')
     expect(tokenValue('zIndexPopupBase', 2000)).toBe('2000')
     expect(tokenValue('opacityDisabled', 0.4)).toBe('0.4')
@@ -38,16 +38,40 @@ describe('theme util', () => {
     const resolved = resolveTheme(config, 'am-scope-x')
     expect(resolved.style).toEqual({
       '--am-color-primary': '#00b96b',
-      '--am-border-radius': '12px',
+      '--am-border-radius': 'calc(12 * var(--am-design-unit))',
       '--am-line-height': '1.4',
     })
     expect(resolved.className).toContain('am-scope-x')
     expect(resolved.css).toContain(':where(.am-scope-x) .am-button,.am-button:where(.am-scope-x)')
-    expect(resolved.css).toContain('{--am-button-height:44px;}')
+    expect(resolved.css).toContain('{--am-button-height:calc(44 * var(--am-design-unit));}')
     expect(resolved.css).toContain(':where(.am-scope-x) .am-nav-bar-root')
-    expect(resolved.css).toContain('{--am-nav-bar-height:50px;}')
+    expect(resolved.css).toContain('{--am-nav-bar-height:calc(50 * var(--am-design-unit));}')
     // without a scope there is nowhere to put component tokens
     expect(resolveTheme(config).css).toBe('')
+  })
+
+  it('keeps hairlines in px and treats the unit token as a real length', () => {
+    const resolved = resolveTheme({ token: { lineWidth: 1, borderRadiusLG: 999, unit: 2 } })
+    expect(resolved.style).toEqual({
+      '--am-line-width': '1px',
+      '--am-border-radius-lg': '999px',
+      '--am-unit': '2px',
+    })
+    // size tokens are derived from the unit: the scope re-declares them
+    expect(resolved.className).toContain('am-theme-unit')
+    expect(resolveTheme({ token: { unit: 'calc(100vw / 375)' } }).style['--am-unit']).toBe('calc(100vw / 375)')
+    expect(resolveTheme({ token: { borderRadius: 4 } }).className).not.toContain('am-theme-unit')
+  })
+
+  it('designWidth defines the length of the numbers given by the user', () => {
+    const resolved = resolveTheme({ token: { designWidth: 750, borderRadius: 16 } })
+    expect(resolved.style).toEqual({
+      '--am-design-unit': 'calc(var(--am-unit) * 375 / 750)',
+      '--am-border-radius': 'calc(16 * var(--am-design-unit))',
+    })
+    // the library design itself needs nothing
+    expect(resolveTheme({ token: { designWidth: 375 } }).style).toEqual({})
+    expect(resolveTheme({ token: { designWidth: 0 } }).style).toEqual({})
   })
 
   it('merges with the parent theme unless inherit is false', () => {
@@ -67,7 +91,7 @@ describe('theme util', () => {
     expect(root.style.getPropertyValue('--am-color-primary')).toBe('#f00')
 
     applyTheme({ algorithm: 'compact', components: { Button: { height: 50 } } })
-    expect(document.getElementById('am-theme-global')!.textContent).toContain('--am-button-height:50px')
+    expect(document.getElementById('am-theme-global')!.textContent).toContain('--am-button-height:calc(50 * var(--am-design-unit))')
     expect(root.classList.contains('am-theme-dark')).toBe(false)
     expect(root.classList.contains('am-theme-compact')).toBe(true)
     expect(root.style.getPropertyValue('--am-color-primary')).toBe('')

@@ -3,8 +3,9 @@ import type { Key } from '../_util/type'
 import type { IndexBarAnchorRecord } from './context'
 import type { IndexBarEmits, IndexBarExpose, IndexBarProps, IndexBarSlots } from './interface'
 import { computed, nextTick, onMounted, provide, ref, shallowRef, watch } from 'vue'
-import { clamp, getScrollParent, getScrollTop, preventDefault, setScrollTop } from '../_util'
+import { addUnit, clamp, getScrollParent, getScrollTop, preventDefault, setScrollTop } from '../_util'
 import { useEventListener, useTouch } from '../_util/hooks'
+import { useUnit } from '../config-provider/unit'
 import { indexBarContextKey } from './context'
 import '../style'
 import './style/index.css'
@@ -23,6 +24,9 @@ const sidebarRef = ref<HTMLElement>()
 const anchors = shallowRef<IndexBarAnchorRecord[]>([])
 const activeIndex = ref<Key>()
 const viewportHeight = ref<number>()
+// `stickyOffsetTop` is a number on the design of the user, scroll positions are real pixels
+const { designToPx } = useUnit()
+const stickyOffset = computed(() => designToPx(props.stickyOffsetTop))
 
 /** nearest scroll container (an element or the window), resolved on mount */
 const scroller = shallowRef<HTMLElement | Window>()
@@ -61,7 +65,7 @@ function getScrollerTop() {
 function updateActive() {
   if (!scroller.value)
     return
-  const top = getScrollerTop() + props.stickyOffsetTop
+  const top = getScrollerTop() + stickyOffset.value
   let active: Key | undefined
   for (const anchor of anchors.value) {
     const el = anchor.el()
@@ -85,7 +89,7 @@ function updateViewport() {
   if (!el)
     return
   const height = el instanceof Element ? el.clientHeight : el.innerHeight
-  viewportHeight.value = height ? Math.max(height - props.stickyOffsetTop, 0) : undefined
+  viewportHeight.value = height ? Math.max(height - stickyOffset.value, 0) : undefined
 }
 
 function handleResize() {
@@ -101,13 +105,13 @@ onMounted(() => {
   handleResize()
 })
 
-watch(() => props.stickyOffsetTop, handleResize)
+watch(stickyOffset, handleResize)
 
 function scrollTo(index: Key) {
   const el = anchors.value.find(anchor => String(anchor.index()) === String(index))?.el()
   if (!el || !scroller.value)
     return
-  const offset = el.getBoundingClientRect().top - getScrollerTop() - props.stickyOffsetTop
+  const offset = el.getBoundingClientRect().top - getScrollerTop() - stickyOffset.value
   setScrollTop(scroller.value, Math.max(getScrollTop(scroller.value) + offset, 0))
   updateActive()
 }
@@ -170,7 +174,7 @@ function handleClick(event: MouseEvent) {
 
 const rootStyle = computed(() => [
   {
-    '--am-index-bar-sticky-offset-top': `${props.stickyOffsetTop}px`,
+    '--am-index-bar-sticky-offset-top': addUnit(props.stickyOffsetTop),
     '--am-index-bar-viewport-height': viewportHeight.value !== undefined ? `${viewportHeight.value}px` : undefined,
     '--am-index-bar-z-index': props.zIndex,
   },

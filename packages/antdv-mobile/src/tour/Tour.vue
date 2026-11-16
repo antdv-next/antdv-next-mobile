@@ -19,6 +19,7 @@ import { genId, isRenderable } from '../_util'
 import { nextZIndex, useControlled, useEventListener, useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { flattenChildren } from '../_util/vnode'
+import { useUnit } from '../config-provider/unit'
 import { useLocale } from '../locale'
 import { computeTourPosition, isInViewport } from './position'
 import TourActions from './TourActions.vue'
@@ -48,6 +49,8 @@ const emit = defineEmits<TourEmits>()
 const slots = defineSlots<TourSlots>()
 
 /** distance between the highlighted area and the panel, with / without arrow */
+// gaps are units (the arrow and the panel are sized by css), positions are real pixels
+const { toPx, designToPx } = useUnit()
 const ARROW_GAP = 12
 const PLAIN_GAP = 8
 /** minimal distance of the panel to the screen edges */
@@ -175,8 +178,11 @@ function measure() {
 
   let rect: { left: number, top: number, width: number, height: number } | null = null
   if (el) {
-    const offset = props.gap?.offset ?? 6
-    const [offsetX, offsetY] = Array.isArray(offset) ? offset : [offset, offset]
+    const offset = props.gap?.offset
+    // the default is a unit, a given offset a number on the design of the user
+    const [offsetX, offsetY] = offset === undefined
+      ? [toPx(6), toPx(6)]
+      : (Array.isArray(offset) ? offset : [offset, offset]).map(designToPx)
     const targetRect = el.getBoundingClientRect()
     rect = {
       left: targetRect.left - rootRect.left - offsetX,
@@ -186,14 +192,14 @@ function measure() {
     }
   }
   const radius = props.gap?.radius
-  hole.value = rect && { ...rect, radius: typeof radius === 'number' && !Number.isNaN(radius) ? radius : 2 }
+  hole.value = rect && { ...rect, radius: typeof radius === 'number' && !Number.isNaN(radius) ? designToPx(radius) : toPx(2) }
   position.value = computeTourPosition(
     rect,
     { width: panel.offsetWidth, height: panel.offsetHeight },
     {
       placement: step.value.placement ?? props.placement,
-      gap: wantArrow.value ? ARROW_GAP : PLAIN_GAP,
-      padding: SCREEN_PADDING,
+      gap: toPx(wantArrow.value ? ARROW_GAP : PLAIN_GAP),
+      padding: toPx(SCREEN_PADDING),
       viewport,
       // the layer reserves the safe areas as padding so they can be read here
       safeTop: Number.parseFloat(rootStyle.paddingTop) || 0,

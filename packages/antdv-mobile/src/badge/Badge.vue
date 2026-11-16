@@ -3,7 +3,7 @@ import type { CSSProperties } from 'vue'
 import type { BadgeProps, BadgeSlots } from './interface'
 import { computed } from 'vue'
 import { BaseBadge } from '../_base'
-import { addUnit, isNumeric, isRenderable } from '../_util'
+import { addUnit, isNumeric, isRenderable, toDesignUnit } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { isPresetColor } from './util'
 import '../style'
@@ -49,7 +49,7 @@ const colorStyle = computed<CSSProperties | undefined>(() => {
 })
 
 function toNegative(value: number | string) {
-  return isNumeric(value) ? `${-Number(value)}px` : `calc(${value} * -1)`
+  return isNumeric(value) ? toDesignUnit(-Number(value)) : `calc(${value} * -1)`
 }
 
 const offsetStyle = computed<CSSProperties | undefined>(() => {

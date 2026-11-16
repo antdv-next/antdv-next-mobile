@@ -18,9 +18,9 @@ describe('Image', () => {
       props: { src: 'a.png', alt: 'alt text', width: 100, height: '5rem', fit: 'cover', position: 'top', radius: 8 },
     })
     expect(wrapper.classes()).toContain('am-image')
-    expect(wrapper.attributes('style')).toContain('width: 100px')
+    expect(wrapper.attributes('style')).toContain('width: calc(100 * var(--am-design-unit))')
     expect(wrapper.attributes('style')).toContain('height: 5rem')
-    expect(wrapper.attributes('style')).toContain('border-radius: 8px')
+    expect(wrapper.attributes('style')).toContain('border-radius: calc(8 * var(--am-design-unit))')
     const img = wrapper.find('img')
     expect(img.attributes('src')).toBe('a.png')
     expect(img.attributes('alt')).toBe('alt text')

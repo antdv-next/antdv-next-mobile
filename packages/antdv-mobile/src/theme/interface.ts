@@ -15,6 +15,17 @@ export interface SeedToken {
   borderRadius?: number | string
   controlHeight?: number | string
   zIndexPopupBase?: number
+  /**
+   * Length of one unit (`--am-unit`). The library is drawn on a 375 wide design and every length
+   * is a multiple of it. A number is `px`. Default `1px`; `'calc(100vw / 375)'` scales with the viewport.
+   */
+  unit?: number | string
+  /**
+   * Width of *your* design. Every number you pass (props such as `itemHeight` / `size` / `gap`,
+   * `theme.token` and `theme.components`) is read as a length on that design: with `750`,
+   * `borderRadius: 16` is the default `8`. Default `375`.
+   */
+  designWidth?: number
 }
 
 export interface MapToken {

@@ -2,10 +2,11 @@
 import type { PullToRefreshEmits, PullToRefreshProps, PullToRefreshSlots, PullToRefreshStatus } from './interface'
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { Spinner } from '../_base'
-import { addUnit, getScrollParent, getScrollTop, preventDefault } from '../_util'
+import { addUnit, getScrollParent, getScrollTop, isNumeric, preventDefault, toUnit } from '../_util'
 import { useControlled, useEventListener, useTouch } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useDisabled } from '../config-provider/context'
+import { useUnit } from '../config-provider/unit'
 import { useLocale } from '../locale'
 import '../style'
 import './style/index.css'
@@ -19,7 +20,6 @@ const props = withDefaults(defineProps<PullToRefreshProps>(), {
   refreshingText: undefined,
   completeText: undefined,
   completeDelay: 500,
-  headHeight: 50,
   duration: 300,
   disabled: undefined,
 })
@@ -42,11 +42,17 @@ const status = ref<PullToRefreshStatus>(refreshing.value ? 'refreshing' : 'norma
 const distance = ref(0)
 const dragging = ref(false)
 
+/** default `headHeight`, in units (same as the css height of the head) */
+const DEFAULT_HEAD_HEIGHT = 50
+// numbers are lengths on the design of the user; gestures are tracked in real pixels
+const unit = useUnit()
 function toPx(value: unknown, fallback: number) {
   const num = typeof value === 'number' ? value : Number.parseFloat(String(value))
-  return Number.isNaN(num) ? fallback : num
+  if (Number.isNaN(num))
+    return fallback
+  return typeof value === 'string' && !isNumeric(value) ? num : unit.designToPx(num)
 }
-const headHeightPx = computed(() => toPx(props.headHeight, 50))
+const headHeightPx = computed(() => (props.headHeight === undefined ? unit.toPx(DEFAULT_HEAD_HEIGHT) : toPx(props.headHeight, unit.toPx(DEFAULT_HEAD_HEIGHT))))
 const thresholdPx = computed(() => toPx(props.threshold ?? props.headHeight, headHeightPx.value))
 
 if (refreshing.value)
@@ -183,7 +189,7 @@ const classNames = computed(() => [
       @touchend="onTouchEnd"
       @touchcancel="onTouchEnd"
     >
-      <div class="am-pull-to-refresh-head" :class="classes?.head" :style="[{ height: addUnit(headHeight) }, styles?.head]">
+      <div class="am-pull-to-refresh-head" :class="classes?.head" :style="[{ height: headHeight === undefined ? toUnit(DEFAULT_HEAD_HEIGHT) : addUnit(headHeight) }, styles?.head]">
         <slot v-if="status === 'pulling'" name="pulling" v-bind="info">
           <RenderNode v-if="pullingText !== undefined" :node="pullingText" :params="info" />
           <template v-else>

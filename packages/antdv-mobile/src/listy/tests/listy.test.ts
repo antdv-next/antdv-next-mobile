@@ -94,7 +94,7 @@ describe('Listy', () => {
   it('treats height as a max height', async () => {
     const wrapper = mountListy()
     expect((wrapper.element as HTMLElement).style.height).toBe('auto')
-    expect((wrapper.element as HTMLElement).style.maxHeight).toBe('200px')
+    expect((wrapper.element as HTMLElement).style.maxHeight).toBe('calc(200 * var(--am-design-unit))')
 
     await wrapper.setProps({ height: '60vh' })
     expect((wrapper.element as HTMLElement).style.maxHeight).toBe('60vh')
@@ -314,7 +314,7 @@ describe('Listy', () => {
       const header = stickyTitle(wrapper)
       expect(header.classes()).toEqual(expect.arrayContaining(['am-listy-group-header', 'custom-header']))
       expect((header.element as HTMLElement).style.color).toBe('rgb(0, 0, 255)')
-      expect((header.element as HTMLElement).style.width).toBe('800px')
+      expect((header.element as HTMLElement).style.width).toBe('calc(800 * var(--am-design-unit))')
     })
   })
 
@@ -479,7 +479,7 @@ describe('Listy', () => {
     expect(root.dataset.testid).toBe('listy')
     expect(root.style.margin).toBe('4px')
     expect(root.style.backgroundColor).toBe('rgb(255, 0, 0)')
-    expect(root.style.maxHeight).toBe('200px')
+    expect(root.style.maxHeight).toBe('calc(200 * var(--am-design-unit))')
 
     const rows = wrapper.findAll('.am-listy-item')
     expect(rows.length).toBeGreaterThan(0)

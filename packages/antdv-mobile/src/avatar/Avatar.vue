@@ -2,10 +2,11 @@
 import type { CSSProperties } from 'vue'
 import type { AvatarEmits, AvatarProps, AvatarSlots } from './interface'
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, watch } from 'vue'
-import { isRenderable } from '../_util'
+import { isRenderable, toDesignUnit } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { mergeAttrsStyle } from '../_util/vnode'
 import { useConfig } from '../config-provider/context'
+import { useUnit } from '../config-provider/unit'
 import { avatarGroupContextKey } from './context'
 import '../style'
 import './style/index.css'
@@ -13,11 +14,12 @@ import './style/index.css'
 defineOptions({ name: 'AmAvatar', inheritAttrs: false })
 
 const props = withDefaults(defineProps<AvatarProps>(), {
-  gap: 4,
   draggable: undefined,
 })
 const emit = defineEmits<AvatarEmits>()
 const slots = defineSlots<AvatarSlots>()
+
+const { toPx, designToPx } = useUnit()
 
 const config = useConfig()
 const group = inject(avatarGroupContextKey, undefined)
@@ -57,7 +59,9 @@ function updateScale() {
   const rootWidth = root.offsetWidth
   if (!textWidth || !rootWidth)
     return
-  const available = rootWidth - props.gap * 2
+  // the default gap is a unit, a given one a number on the design of the user
+  const gap = props.gap === undefined ? toPx(4) : designToPx(props.gap)
+  const available = rootWidth - gap * 2
   scale.value = available > 0 && available < textWidth ? available / textWidth : 1
 }
 
@@ -89,9 +93,9 @@ const classNames = computed(() => [
 const mergedStyle = computed<CSSProperties>(() => {
   const style: Record<string, string> = {}
   if (typeof size.value === 'number') {
-    style['--am-avatar-size'] = `${size.value}px`
-    style['--am-avatar-font-size'] = `${Math.round(size.value * 0.45)}px`
-    style['--am-avatar-icon-size'] = `${Math.round(size.value / 2)}px`
+    style['--am-avatar-size'] = toDesignUnit(size.value)
+    style['--am-avatar-font-size'] = toDesignUnit(Math.round(size.value * 0.45))
+    style['--am-avatar-icon-size'] = toDesignUnit(Math.round(size.value / 2))
   }
   return { ...style, ...props.styles?.root }
 })

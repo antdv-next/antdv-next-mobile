@@ -163,7 +163,7 @@ describe('notification', () => {
     await flush()
     expect(list('bottom').querySelectorAll('.am-notification-notice')).toHaveLength(1)
     const root = document.querySelector<HTMLElement>('.am-notification')!
-    expect(root.style.getPropertyValue('--am-notification-top')).toBe('20px')
+    expect(root.style.getPropertyValue('--am-notification-top')).toBe('calc(20 * var(--am-design-unit))')
     expect(root.style.getPropertyValue('--am-notification-bottom')).toBe('2rem')
   })
 

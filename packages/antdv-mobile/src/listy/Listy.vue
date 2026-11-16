@@ -7,6 +7,7 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { addUnit } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useConfig } from '../config-provider/context'
+import { useUnit } from '../config-provider/unit'
 import VirtualList from '../virtual-list/VirtualList.vue'
 import ListyStickyHeader from './ListyStickyHeader.vue'
 import { flattenRows, getRenderedRows, getRowElement, toTaggedKey } from './util'
@@ -21,10 +22,13 @@ const props = withDefaults(defineProps<ListyProps>(), {
   virtual: true,
   rowHoverable: true,
   // font height (22) + `--am-listy-item-padding-block` (12) * 2
-  itemHeight: 46,
 })
 const emit = defineEmits<ListyEmits>()
 const slots = defineSlots<ListySlots>()
+
+/** default `itemHeight`, in units; the prop is a number on the design of the user */
+const DEFAULT_ITEM_HEIGHT = 46
+const { unitsToDesign } = useUnit()
 
 const config = useConfig()
 
@@ -149,7 +153,7 @@ const listStyles = computed(() => {
   const root: CSSProperties | undefined = props.height !== undefined && props.height !== ''
     ? { height: 'auto', maxHeight: addUnit(props.height), ...props.styles?.root }
     : props.styles?.root
-  return { root, holder: props.scrollWidth ? { width: `${props.scrollWidth}px` } : undefined }
+  return { root, holder: props.scrollWidth ? { width: addUnit(props.scrollWidth) } : undefined }
 })
 </script>
 
@@ -162,7 +166,7 @@ const listStyles = computed(() => {
     :dir="config.direction.value"
     :data="flat.rows"
     :height="typeof height === 'number' ? height : undefined"
-    :item-height="itemHeight"
+    :item-height="itemHeight ?? unitsToDesign(DEFAULT_ITEM_HEIGHT)"
     item-key="taggedKey"
     :virtual="virtual"
     :styles="listStyles"

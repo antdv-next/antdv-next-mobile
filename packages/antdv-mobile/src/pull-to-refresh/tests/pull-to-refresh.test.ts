@@ -41,7 +41,7 @@ describe('PullToRefresh', () => {
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['am-pull-to-refresh', 'am-pull-to-refresh-normal']))
     expect(wrapper.find('.am-pull-to-refresh-content').text()).toBe('content')
     expect(wrapper.find('.am-pull-to-refresh-head').text()).toBe('')
-    expect(wrapper.find('.am-pull-to-refresh-head').attributes('style')).toContain('height: 50px')
+    expect(wrapper.find('.am-pull-to-refresh-head').attributes('style')).toContain('height: calc(50 * var(--am-unit))')
   })
 
   it('follows the finger with damping and shows pulling / canRelease texts', async () => {

@@ -5,7 +5,7 @@ import type { QRCodeEmits, QRCodeProps, QRCodeSlots, QRCodeStatusRenderInfo } fr
 import { ReloadOutlined } from '@antdv-next/icons'
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { Spinner } from '../_base'
-import { addUnit, isNumeric } from '../_util'
+import { addUnit, isNumeric, toUnit } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { mergeAttrsStyle } from '../_util/vnode'
 import Button from '../button'
@@ -19,7 +19,6 @@ defineOptions({ name: 'AmQrcode', inheritAttrs: false })
 
 const props = withDefaults(defineProps<QRCodeProps>(), {
   type: 'canvas',
-  size: 160,
   iconSize: 40,
   marginSize: 0,
   bordered: true,
@@ -274,7 +273,8 @@ const classNames = computed(() => [
 const rootStyle = computed<CSSProperties>(() => {
   return {
     // the square comes from `aspect-ratio`, so css lengths such as `100%` work too
-    width: addUnit(props.size),
+    // the default is a unit, a given size a number on the design of the user
+    width: props.size === undefined ? toUnit(DEFAULT_SIZE) : addUnit(props.size),
     backgroundColor: props.bgColor,
     color: props.color,
     ...props.styles?.root,

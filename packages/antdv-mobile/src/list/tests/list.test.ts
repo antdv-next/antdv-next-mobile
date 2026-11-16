@@ -203,7 +203,7 @@ describe('List virtual', () => {
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['am-list-virtual', 'am-list-card']))
     const list = wrapper.find('.am-list-body > .am-virtual-list')
     expect(list.classes()).toContain('am-list-virtual-list')
-    expect(list.attributes('style')).toContain('height: 400px')
+    expect(list.attributes('style')).toContain('height: calc(400 * var(--am-design-unit))')
     expect(wrapper.findAll('.am-list-item').length).toBeGreaterThan(5)
     expect(wrapper.findAll('.am-list-item').length).toBeLessThan(30)
     expect(titles(wrapper)[0]).toBe('Row 0')

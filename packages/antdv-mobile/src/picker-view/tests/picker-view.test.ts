@@ -37,7 +37,7 @@ describe('PickerView', () => {
   it('sets item height / visible count through css variables', () => {
     const wrapper = mount(PickerView, { props: { columns, itemHeight: 50, visibleItemCount: 3, value: ['tue', 'am'] } })
     const style = wrapper.attributes('style')
-    expect(style).toContain('--am-picker-view-item-height: 50px')
+    expect(style).toContain('--am-picker-view-item-height: calc(50 * var(--am-design-unit))')
     expect(style).toContain('--am-picker-view-visible-count: 3')
     // (3 - 1) / 2 * 50 - 1 * 50 = 0
     expect(wrapper.find('.am-picker-view-column-wrapper').attributes('style')).toContain('translate3d(0, 0px, 0)')

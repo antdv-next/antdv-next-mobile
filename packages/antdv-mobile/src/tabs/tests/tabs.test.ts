@@ -94,7 +94,7 @@ describe('Tabs', () => {
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['am-tabs-capsule', 'am-tabs-sm', 'am-tabs-centered', 'am-tabs-bottom', 'am-tabs-sticky']))
     expect(wrapper.classes()).not.toContain('am-tabs-stretch')
     expect(wrapper.find('.am-tabs-ink-bar').exists()).toBe(false)
-    expect(wrapper.find('.am-tabs-header').attributes('style')).toContain('top: 46px')
+    expect(wrapper.find('.am-tabs-header').attributes('style')).toContain('top: calc(46 * var(--am-design-unit))')
     await wrapper.setProps({ tabPlacement: 'top', stretch: true, type: 'card' })
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['am-tabs-top', 'am-tabs-stretch', 'am-tabs-card']))
     const many = mount(Tabs, { props: { items: Array.from({ length: 6 }, (_, i) => ({ key: i, label: `T${i}` })) } })

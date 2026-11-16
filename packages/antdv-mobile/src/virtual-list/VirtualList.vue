@@ -5,6 +5,7 @@ import type { VirtualListEmits, VirtualListProps, VirtualListScrollToConfig, Vir
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { addUnit } from '../_util'
 import { useVirtualRange } from '../_util/hooks'
+import { useUnit } from '../config-provider/unit'
 import '../style'
 import './style/index.css'
 
@@ -12,7 +13,6 @@ defineOptions({ name: 'AmVirtualList', inheritAttrs: false })
 
 const props = withDefaults(defineProps<VirtualListProps>(), {
   data: () => [],
-  itemHeight: 44,
   virtual: true,
   fixed: false,
   overscan: 4,
@@ -24,6 +24,12 @@ defineSlots<VirtualListSlots>()
 /** viewport used before the container is measured (SSR, jsdom, display: none) */
 const FALLBACK_VIEWPORT_ITEMS = 12
 const REACH_END_THRESHOLD = 40
+
+/** default `itemHeight`, in units */
+const DEFAULT_ITEM_HEIGHT = 44
+// `itemHeight` / `height` are numbers on the design of the user; the windowing math runs in real pixels
+const { toPx, designToPx } = useUnit()
+const itemSize = computed(() => (props.itemHeight !== undefined ? designToPx(props.itemHeight) : toPx(DEFAULT_ITEM_HEIGHT)))
 
 const rootRef = ref<HTMLElement>()
 const headerRef = ref<HTMLElement>()
@@ -50,18 +56,18 @@ const range = useVirtualRange({
   count: () => props.data.length,
   size: () => {
     if (props.fixed)
-      return props.itemHeight
+      return itemSize.value
     // eslint-disable-next-line ts/no-unused-expressions
     measureVersion.value
     const list = keys.value
-    const estimate = props.itemHeight
+    const estimate = itemSize.value
     return (index: number) => measured.get(list[index]) ?? estimate
   },
   scrollOffset: () => scrollTop.value - headerHeight.value,
   viewportSize: () => {
     if (viewportHeight.value > 0)
       return viewportHeight.value
-    return typeof props.height === 'number' ? props.height : props.itemHeight * FALLBACK_VIEWPORT_ITEMS
+    return typeof props.height === 'number' ? designToPx(props.height) : itemSize.value * FALLBACK_VIEWPORT_ITEMS
   },
   overscan: () => props.overscan,
   enabled: () => props.virtual,
@@ -293,7 +299,7 @@ defineExpose({
             { 'am-virtual-list-item-first': entry.index === 0, 'am-virtual-list-item-last': entry.index === data.length - 1 },
             classes?.item,
           ]"
-          :style="[fixed ? { height: `${itemHeight}px` } : undefined, styles?.item]"
+          :style="[fixed ? { height: `${itemSize}px` } : undefined, styles?.item]"
           :data-index="entry.index"
         >
           <slot :item="entry.item" :index="entry.index" />

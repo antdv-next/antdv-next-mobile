@@ -27,10 +27,10 @@ describe('Grid', () => {
 
   it('row: horizontal gutter is exposed as a css variable, vertical gutter as row-gap', () => {
     const single = mount(Row, { props: { gutter: 16 } })
-    expect(style(single).getPropertyValue('--am-row-gutter-x')).toBe('16px')
+    expect(style(single).getPropertyValue('--am-row-gutter-x')).toBe('calc(16 * var(--am-design-unit))')
     expect(style(single).rowGap).toBe('')
     const both = mount(Row, { props: { gutter: [8, '1rem'] } })
-    expect(style(both).getPropertyValue('--am-row-gutter-x')).toBe('8px')
+    expect(style(both).getPropertyValue('--am-row-gutter-x')).toBe('calc(8 * var(--am-design-unit))')
     expect(style(both).rowGap).toBe('1rem')
     const none = mount(Row)
     expect(style(none).getPropertyValue('--am-row-gutter-x')).toBe('')

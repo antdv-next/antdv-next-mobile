@@ -67,13 +67,13 @@ describe('BorderBeam', () => {
   it('outset wins over the measured border width', async () => {
     const wrapper = renderWith({ outset: 4 })
     await nextTick()
-    expect(cssVar(getBeams()[0], 'inset-offset')).toBe('-4px')
+    expect(cssVar(getBeams()[0], 'inset-offset')).toBe('calc(-4 * var(--am-design-unit))')
 
     await wrapper.setProps({ outset: '0.5rem' })
     expect(cssVar(getBeams()[0], 'inset-offset')).toBe('calc(-1 * 0.5rem)')
 
     await wrapper.setProps({ outset: 0 })
-    expect(cssVar(getBeams()[0], 'inset-offset')).toBe('-0px')
+    expect(cssVar(getBeams()[0], 'inset-offset')).toBe('0px')
   })
 
   it('writes color, duration, lineWidth and size as css variables', async () => {
@@ -82,7 +82,7 @@ describe('BorderBeam', () => {
     const [beam] = getBeams()
     expect(cssVar(beam, 'beam-gradient')).toBe('linear-gradient(to left, #ff0000 0%, #ff0000 70%, transparent)')
     expect(cssVar(beam, 'duration')).toBe('3s')
-    expect(cssVar(beam, 'line-width')).toBe('2px')
+    expect(cssVar(beam, 'line-width')).toBe('calc(2 * var(--am-design-unit))')
     expect(cssVar(beam, 'size')).toBe('5rem')
   })
 
@@ -143,16 +143,16 @@ describe('BorderBeam', () => {
     }))).toEqual([
       {
         color: 'linear-gradient(to left, #36cfc9 0%, #36cfc9 70%, transparent)',
-        lineWidth: '3px',
-        outset: '-4px',
-        size: '60px',
+        lineWidth: 'calc(3 * var(--am-design-unit))',
+        outset: 'calc(-4 * var(--am-design-unit))',
+        size: 'calc(60 * var(--am-design-unit))',
         delay: '',
       },
       {
         color: 'linear-gradient(to left, #1677ff 0%, #1677ff 70%, transparent)',
-        lineWidth: '2px',
+        lineWidth: 'calc(2 * var(--am-design-unit))',
         outset: '-1px',
-        size: '80px',
+        size: 'calc(80 * var(--am-design-unit))',
         delay: '-6s',
       },
     ])
@@ -265,7 +265,7 @@ describe('BorderBeam', () => {
     expect(beam.closest('[dir="rtl"]')).not.toBeNull()
     // the component token is delivered by the scoped stylesheet, not inline
     expect(cssVar(beam, 'line-width')).toBe('')
-    expect(document.querySelector('.am-config-provider style')!.textContent).toContain('--am-border-beam-line-width:3px')
+    expect(document.querySelector('.am-config-provider style')!.textContent).toContain('--am-border-beam-line-width:calc(3 * var(--am-design-unit))')
   })
 })
 
@@ -299,7 +299,7 @@ describe('getBorderBeamGradient', () => {
 
 describe('getInset', () => {
   it('negates numbers and css lengths', () => {
-    expect(getInset(2)).toBe('-2px')
+    expect(getInset(2)).toBe('calc(-2 * var(--am-design-unit))')
     expect(getInset('1em')).toBe('calc(-1 * 1em)')
   })
 })

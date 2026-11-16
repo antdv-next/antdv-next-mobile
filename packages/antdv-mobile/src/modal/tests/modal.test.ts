@@ -163,7 +163,7 @@ describe('Modal', () => {
     expect(wrapper.find('.am-popup-root').classes()).toEqual(expect.arrayContaining(['custom', 'root-cls']))
     expect(wrapper.find('.am-popup-root').attributes('data-id')).toBe('x')
     expect(wrapper.find('.am-modal').classes()).toContain('c')
-    expect(wrapper.find('.am-modal').attributes('style')).toContain('width: 280px')
+    expect(wrapper.find('.am-modal').attributes('style')).toContain('width: calc(280 * var(--am-design-unit))')
     expect(wrapper.find('.am-modal-header').classes()).toContain('hd')
     expect(wrapper.find('.am-modal-title').attributes('style')).toContain('color: red')
     expect(wrapper.find('.am-modal-body').classes()).toContain('b')

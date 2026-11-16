@@ -2,6 +2,7 @@
 import type { CSSProperties, VNodeChild } from 'vue'
 import type { ListyGroupEntry } from './util'
 import { computed, ref } from 'vue'
+import { addUnit } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { getRenderedRows, getRowElement } from './util'
 
@@ -79,7 +80,7 @@ defineExpose({
     :class="headerClass"
     :style="[
       headerStyle,
-      scrollWidth ? { width: `${scrollWidth}px` } : undefined,
+      scrollWidth ? { width: addUnit(scrollWidth) } : undefined,
       offset ? { transform: `translate3d(0, ${offset}px, 0)` } : undefined,
     ]"
   >

@@ -79,7 +79,7 @@ describe('ConfigProvider', () => {
     const inner = wrapper.findAll('.am-config-provider')[1]
     expect(inner.classes()).toContain('am-theme-dark')
     expect((inner.element as HTMLElement).style.getPropertyValue('--am-color-primary')).toBe('blue')
-    expect((inner.element as HTMLElement).style.getPropertyValue('--am-border-radius')).toBe('4px')
+    expect((inner.element as HTMLElement).style.getPropertyValue('--am-border-radius')).toBe('calc(4 * var(--am-design-unit))')
     expect(result.token.isDark.value).toBe(true)
     expect(result.token.token.value.colorPrimary).toBe('blue')
     expect(result.modal.value.okText).toBe('OK')
