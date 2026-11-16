@@ -173,9 +173,17 @@ const trackStyle = computed<CSSProperties>(() => ({
   transitionDuration: dragging.value ? '0s' : undefined,
 }))
 
-/** stretch the buttons instead of showing a gap while overshooting */
-const leftStyle = computed<CSSProperties | undefined>(() => (leftWidth.value && offset.value > leftWidth.value ? { width: `${offset.value}px` } : undefined))
-const rightStyle = computed<CSSProperties | undefined>(() => (rightWidth.value && -offset.value > rightWidth.value ? { width: `${-offset.value}px` } : undefined))
+/** Keep the action width in sync with the track while dragging and settling. */
+const leftStyle = computed<CSSProperties | undefined>(() => (
+  leftWidth.value && offset.value > 0
+    ? { width: `${Math.max(leftWidth.value, offset.value)}px` }
+    : undefined
+))
+const rightStyle = computed<CSSProperties | undefined>(() => (
+  rightWidth.value && offset.value < 0
+    ? { width: `${Math.max(rightWidth.value, -offset.value)}px` }
+    : undefined
+))
 
 const isPreset = (color?: string) => !color || PRESET_COLORS.includes(color)
 

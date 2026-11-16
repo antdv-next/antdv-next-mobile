@@ -91,6 +91,18 @@ describe('SwipeAction', () => {
     expect(track(wrapper).attributes('style') ?? '').not.toContain('translate3d')
   })
 
+  it('keeps the actions width in sync while the track settles after release', async () => {
+    const wrapper = mount(SwipeAction, { props: { rightActions } })
+    await drag(wrapper, -200, 1000, false)
+    expect(wrapper.find('.am-swipe-action-right').attributes('style')).toContain('width: 144px')
+
+    fire(wrapper.element, 'touchend')
+    await nextTick()
+
+    expect(track(wrapper).attributes('style')).toContain(`translate3d(-${ACTIONS_WIDTH}px, 0, 0)`)
+    expect(wrapper.find('.am-swipe-action-right').attributes('style')).toContain(`width: ${ACTIONS_WIDTH}px`)
+  })
+
   it('opens past the threshold and emits actionsReveal, closes when dragged back', async () => {
     const wrapper = mount(SwipeAction, { props: { leftActions, rightActions } })
     await drag(wrapper, -40)
