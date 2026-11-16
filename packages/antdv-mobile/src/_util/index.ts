@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'vue'
 import type { GetContainer, Numeric } from './type'
+import { toDesignUnit } from './unit'
 
 export const inBrowser = typeof window !== 'undefined' && typeof document !== 'undefined'
 
@@ -23,11 +24,16 @@ export function clamp(num: number, min: number, max: number) {
   return Math.min(Math.max(num, min), max)
 }
 
-/** `12` -> `12px`, `'1rem'` -> `'1rem'`, `undefined` -> `undefined` */
+/**
+ * For values given by the user (props). Numbers are lengths on the design of the user
+ * (`--am-design-unit`, `1px` by default): `12` -> `calc(12 * var(--am-design-unit))`, `1` -> `1px`.
+ * Strings are kept: `'1rem'` -> `'1rem'`, `undefined` -> `undefined`.
+ * Library constants are units: use `toUnit()` for those.
+ */
 export function addUnit(value?: Numeric | null): string | undefined {
   if (!isDef(value) || value === '')
     return undefined
-  return isNumeric(value) ? `${value}px` : String(value)
+  return isNumeric(value) ? toDesignUnit(value) : String(value)
 }
 
 export function getSizeStyle(size?: Numeric | [Numeric, Numeric]): CSSProperties | undefined {
@@ -154,3 +160,5 @@ export function cls(...args: any[]): string {
   })
   return out.join(' ')
 }
+
+export * from './unit'

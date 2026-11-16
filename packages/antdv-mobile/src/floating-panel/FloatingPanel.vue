@@ -4,6 +4,7 @@ import type { FloatingPanelEmits, FloatingPanelProps, FloatingPanelSlots } from 
 import { computed, onMounted, ref, watch } from 'vue'
 import { clamp, doubleRaf, preventDefault } from '../_util'
 import { useControlled, useEventListener, useLockScroll, useTouch } from '../_util/hooks'
+import { useUnit } from '../config-provider/unit'
 import '../style'
 import './style/index.css'
 
@@ -23,7 +24,9 @@ defineSlots<FloatingPanelSlots>()
 const DAMP = 0.2
 /** px / ms, a faster flick moves to the next anchor in that direction */
 const VELOCITY = 0.5
+/** default collapsed height, in units */
 const DEFAULT_MIN = 100
+const { toPx } = useUnit()
 
 const touch = useTouch()
 const rootRef = ref<HTMLElement>()
@@ -37,7 +40,8 @@ const immediate = ref(false)
 const anchors = computed(() => {
   if (props.anchors?.length)
     return [...props.anchors].sort((a, b) => a - b)
-  return [DEFAULT_MIN, Math.max(Math.round(availableHeight.value * 0.6), DEFAULT_MIN)]
+  const min = Math.round(toPx(DEFAULT_MIN))
+  return [min, Math.max(Math.round(availableHeight.value * 0.6), min)]
 })
 const boundary = computed(() => ({ min: anchors.value[0], max: anchors.value[anchors.value.length - 1] }))
 

@@ -3,6 +3,17 @@
   display: contents;
 }
 
+/* measures `--am-unit` (width) and `--am-design-unit` (height) for JS (`useUnit()`), never painted */
+.am-unit-probe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100 * var(--am-unit));
+  height: calc(100 * var(--am-design-unit));
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .anticon {
   display: inline-flex;
   align-items: center;

@@ -3,6 +3,8 @@
  * after itself when the owning component / effect scope is disposed.
  */
 export * from '../_util/hooks'
+export type { UseUnitResult } from '../config-provider/unit'
+export { useUnit } from '../config-provider/unit'
 export * from './browser'
 export * from './dom'
 export * from './fn'

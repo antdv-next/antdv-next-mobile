@@ -307,7 +307,7 @@ describe('Calendar', () => {
     })
     const root = wrapper.find('.am-calendar')
     expect(root.classes()).toEqual(expect.arrayContaining(['root-cls', 'custom']))
-    expect(root.attributes('style')).toContain('--am-calendar-row-height: 50px')
+    expect(root.attributes('style')).toContain('--am-calendar-row-height: calc(50 * var(--am-design-unit))')
     expect(wrapper.find('.am-calendar-body').classes()).toContain('body-cls')
     expect(wrapper.find('.am-calendar-day').classes()).toContain('day-cls')
     expect(wrapper.find('.am-calendar-title').text()).toBe('Calendar')

@@ -113,7 +113,7 @@ describe('LoadingBar', () => {
     expect(el.parentElement).toBe(container)
     expect(el.style.getPropertyValue('--am-loading-bar-color')).toBe('red')
     expect(el.style.getPropertyValue('--am-loading-bar-error-color')).toBe('blue')
-    expect(el.style.getPropertyValue('--am-loading-bar-height')).toBe('5px')
+    expect(el.style.getPropertyValue('--am-loading-bar-height')).toBe('calc(5 * var(--am-design-unit))')
     expect(el.style.getPropertyValue('--am-loading-bar-top')).toBe('44px')
     expect(el.style.zIndex).toBe('77')
   })

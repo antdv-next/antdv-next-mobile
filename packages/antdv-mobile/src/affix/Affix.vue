@@ -3,6 +3,7 @@ import type { CSSProperties } from 'vue'
 import type { AffixEmits, AffixProps, AffixSlots } from './interface'
 import { computed, nextTick, onActivated, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { cancelRaf, raf } from '../_util'
+import { useUnit } from '../config-provider/unit'
 import '../style'
 import './style/index.css'
 
@@ -20,6 +21,9 @@ const placeholderStyle = shallowRef<CSSProperties>()
 const affixed = computed(() => !!affixStyle.value)
 
 const getTarget = () => (props.target ? props.target() : window)
+
+const { designToPx } = useUnit()
+const px = (value?: number) => (value === undefined ? undefined : designToPx(value))
 
 function getTargetRect(target: Window | HTMLElement) {
   return target === window
@@ -49,8 +53,9 @@ function measure() {
     return
 
   const targetRect = getTargetRect(target)
-  const offsetTop = props.offsetBottom === undefined && props.offsetTop === undefined ? 0 : props.offsetTop
-  const { offsetBottom } = props
+  // offsets are numbers on the design of the user, the rects below are real pixels
+  const offsetTop = props.offsetBottom === undefined && props.offsetTop === undefined ? 0 : px(props.offsetTop)
+  const offsetBottom = px(props.offsetBottom)
 
   let nextStyle: CSSProperties | undefined
   if (offsetTop !== undefined && targetRect.top > rect.top - offsetTop) {

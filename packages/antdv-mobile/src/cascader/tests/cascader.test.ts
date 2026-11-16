@@ -373,9 +373,9 @@ describe('Cascader virtual', () => {
     const wrapper = mount(CascaderView, { props: { options: big, defaultValue: ['p'], virtual: false, listHeight: 240, listItemHeight: 40 } })
     await nextTick()
     expect(optionsOf(wrapper.element)).toHaveLength(3000)
-    expect(wrapper.attributes('style')).toContain('--am-cascader-view-option-height: 40px')
+    expect(wrapper.attributes('style')).toContain('--am-cascader-view-option-height: calc(40 * var(--am-design-unit))')
     expect(wrapper.attributes('style')).toContain('height: auto')
-    expect(listOf(wrapper.element).style.height).toBe('240px')
+    expect(listOf(wrapper.element).style.height).toBe('calc(240 * var(--am-design-unit))')
     expect(wrapper.find('.am-virtual-list-item').attributes('style')).toContain('height: 40px')
   })
 

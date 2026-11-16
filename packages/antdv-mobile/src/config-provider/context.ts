@@ -1,10 +1,11 @@
-import type { ComputedRef, InjectionKey } from 'vue'
+import type { ComputedRef, InjectionKey, Ref } from 'vue'
 import type { DirectionType, SizeType } from '../_util/type'
 import type { Locale } from '../locale/interface'
 import type { ResolvedTheme, ThemeConfig } from '../theme/interface'
 import { computed, inject, shallowReactive } from 'vue'
 import zhCN from '../locale/zh_CN'
 import { resolveTheme } from '../theme/util'
+import { globalDesignUnit, globalUnit } from './unit-state'
 
 export interface ConfigProviderProps {
   /** Theme config, aligned with antdv-next: `{ algorithm, token, components }`. */
@@ -34,6 +35,10 @@ export interface ConfigContext {
   themeConfig: ComputedRef<ThemeConfig | undefined>
   /** Class names + css variables to put on a theme scope element (e.g. teleported popup root). */
   theme: ComputedRef<ResolvedTheme>
+  /** Real pixels of one unit (`--am-unit`) in this scope. Read it through `useUnit()`. */
+  unit: Readonly<Ref<number>>
+  /** Real pixels of one design unit (`--am-design-unit`) in this scope. Read it through `useUnit()`. */
+  designUnit: Readonly<Ref<number>>
 }
 
 export const configContextKey: InjectionKey<ConfigContext> = Symbol('AmConfigContext')
@@ -64,6 +69,8 @@ const defaultContext: ConfigContext = {
     // Without any provider the tokens of `:root` apply; only add a scope when a global theme exists.
     return globalConfig.theme ? resolved : { ...resolved, className: [] }
   }),
+  unit: globalUnit,
+  designUnit: globalDesignUnit,
 }
 
 export function useConfig(): ConfigContext {

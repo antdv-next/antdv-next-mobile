@@ -105,6 +105,7 @@ const revert = applyTheme({
 | `--am-control-height` | controlHeight | `40px` |
 | `--am-border-radius` | borderRadius | `8px` |
 | `--am-padding` | padding | `16px` |
+| `--am-unit` | unit | `1px`，见[设计稿适配](/docs/adaptation) |
 
 完整列表见源码 `style/tokens.css`。每个组件自己的变量列在对应文档的「主题变量」一节。
 

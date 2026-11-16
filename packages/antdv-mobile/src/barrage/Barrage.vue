@@ -2,6 +2,7 @@
 import type { Key } from '../_util/type'
 import type { BarrageEmits, BarrageExpose, BarrageItem, BarrageProps, BarrageSlots } from './interface'
 import { computed, reactive, ref, watch } from 'vue'
+import { addUnit, toUnit } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { usePageVisibility } from '../hooks/dom'
@@ -19,13 +20,15 @@ defineOptions({ name: 'AmBarrage', inheritAttrs: false })
 
 const props = withDefaults(defineProps<BarrageProps>(), {
   rows: 4,
-  top: 10,
   duration: 4000,
   delay: 300,
   autoPlay: true,
 })
 const emit = defineEmits<BarrageEmits>()
 defineSlots<BarrageSlots>()
+
+/** default `top`, in units */
+const DEFAULT_TOP = 10
 
 const [list, setList] = useControlled(props, 'value', {
   defaultValue: () => props.defaultValue ?? [],
@@ -103,7 +106,7 @@ defineExpose<BarrageExpose>({ play, pause })
     :style="styles?.root"
   >
     <slot />
-    <div class="am-barrage-wrapper" :style="{ '--am-barrage-offset': `${top}px` }">
+    <div class="am-barrage-wrapper" :style="{ '--am-barrage-offset': top === undefined ? toUnit(DEFAULT_TOP) : addUnit(top) }">
       <div
         v-for="{ item, track } in bullets"
         :key="item.id"

@@ -89,7 +89,7 @@ describe('RollingText', () => {
     const wrapper = mount(RollingText, { props: { value: 1, duration: 0.5, height: 54 } })
     const style = (wrapper.element as HTMLElement).style
     expect(style.getPropertyValue('--am-rolling-text-duration')).toBe('0.5s')
-    expect(style.getPropertyValue('--am-rolling-text-item-height')).toBe('54px')
+    expect(style.getPropertyValue('--am-rolling-text-item-height')).toBe('calc(54 * var(--am-design-unit))')
     const rem = mount(RollingText, { props: { value: 1, height: '2rem' } })
     expect((rem.element as HTMLElement).style.getPropertyValue('--am-rolling-text-item-height')).toBe('2rem')
     const auto = mount(RollingText, { props: { value: 1 } })

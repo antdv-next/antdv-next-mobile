@@ -17,6 +17,7 @@ import { addUnit, isObject, toArray } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useConfig } from '../config-provider/context'
+import { useUnit } from '../config-provider/unit'
 import { useLocale } from '../locale'
 import PickerPopup from '../picker/PickerPopup.vue'
 import PickerTrigger from '../picker/PickerTrigger.vue'
@@ -193,7 +194,9 @@ const isEmpty = computed(() => !visibleItems.value.some(item => !item.group))
 
 // ---------- list (virtualized) ----------
 /** fallback of `--am-select-option-height`, the estimate used before a row is measured */
+/** in units; `listItemHeight` is a number on the design of the user */
 const DEFAULT_ITEM_HEIGHT = 48
+const { unitsToDesign } = useUnit()
 
 const listRef = ref<VirtualListExpose>()
 const listData = computed(() => (props.loading ? [] : visibleItems.value))
@@ -380,7 +383,7 @@ defineExpose({ toggle })
         :data="listData"
         item-key="key"
         :virtual="virtual"
-        :item-height="listItemHeight ?? DEFAULT_ITEM_HEIGHT"
+        :item-height="listItemHeight ?? unitsToDesign(DEFAULT_ITEM_HEIGHT)"
         :fixed="fixedHeight"
       >
         <template #default="{ item, index }">

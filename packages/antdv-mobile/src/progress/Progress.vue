@@ -3,7 +3,7 @@ import type { CSSProperties } from 'vue'
 import type { ProgressGradient, ProgressProps, ProgressSlots } from './interface'
 import { CheckCircleFilled, CheckOutlined, CloseCircleFilled, CloseOutlined } from '@antdv-next/icons'
 import { computed, useId } from 'vue'
-import { addUnit, clamp } from '../_util'
+import { addUnit, clamp, toDesignUnit, toUnit } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import { useConfig } from '../config-provider/context'
 import '../style'
@@ -186,11 +186,17 @@ const circle = computed(() => {
   }
 })
 
-const circleStyle = computed<CSSProperties>(() => ({
-  width: `${circleSize.value}px`,
-  height: `${circleSize.value}px`,
-  fontSize: `${circleSize.value * 0.15 + 6}px`,
-}))
+const circleStyle = computed<CSSProperties>(() => {
+  // a given size is a number on the design of the user, the presets (60 / 120) are units
+  const given = (sizeConfig.value[0] ?? sizeConfig.value[1]) !== undefined
+  const size = given ? toDesignUnit(circleSize.value) : toUnit(circleSize.value)
+  return {
+    width: size,
+    height: size,
+    // 15% of the circle + 6 units
+    fontSize: `calc(${size} * 0.15 + ${toUnit(6)})`,
+  }
+})
 
 const trackStroke = computed(() => (gradientStops.value ? `url(#${gradientId})` : solidColor.value))
 

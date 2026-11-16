@@ -1,5 +1,6 @@
 import type { AliasToken, ResolvedTheme, ThemeAlgorithm, ThemeAlgorithmName, ThemeConfig } from './interface'
 import { inBrowser } from '../_util'
+import { BASE_DESIGN_WIDTH, DESIGN_UNIT_VAR, toDesignUnit, UNIT_VAR } from '../_util/unit'
 
 export const CSS_VAR_PREFIX = 'am'
 
@@ -24,8 +25,11 @@ export function cssVar(token: string, component?: string) {
 }
 
 export function tokenValue(key: string, value: string | number) {
+  // the unit itself is a real length, every other number is a length on the design of the user
+  if (key === 'unit')
+    return typeof value === 'number' ? `${value}px` : value
   if (typeof value === 'number' && !unitlessReg.test(key))
-    return `${value}px`
+    return toDesignUnit(value)
   return String(value)
 }
 
@@ -81,13 +85,24 @@ export function resolveTheme(theme?: ThemeConfig, scope?: string): ResolvedTheme
     className.push('am-theme-light')
   if (algorithms.includes('compact'))
     className.push('am-theme-compact')
+  // size tokens are derived from the unit, so a scope that changes it re-declares them
+  if (theme?.token?.unit !== undefined && theme.token.unit !== null)
+    className.unshift('am-theme-unit')
 
   const style: Record<string, string> = {}
   const token: AliasToken = theme?.token ?? {}
   Object.keys(token).forEach((key) => {
     const value = token[key]
-    if (value !== undefined && value !== null)
-      style[tokenToCssVarName(key)] = tokenValue(key, value)
+    if (value === undefined || value === null)
+      return
+    // not a css variable of its own: it defines the length of the numbers given by the user
+    if (key === 'designWidth') {
+      const width = Number(value)
+      if (width > 0 && width !== BASE_DESIGN_WIDTH)
+        style[DESIGN_UNIT_VAR] = `calc(var(${UNIT_VAR}) * ${BASE_DESIGN_WIDTH} / ${width})`
+      return
+    }
+    style[tokenToCssVarName(key)] = tokenValue(key, value)
   })
 
   let css = ''

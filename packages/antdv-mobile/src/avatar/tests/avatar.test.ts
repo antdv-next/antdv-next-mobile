@@ -63,8 +63,8 @@ describe('Avatar', () => {
     expect(mount(Avatar, { props: { size: 'large' } }).classes()).toContain('am-avatar-lg')
     const custom = mount(Avatar, { props: { size: 64 } })
     const style = (custom.element as HTMLElement).style
-    expect(style.getPropertyValue('--am-avatar-size')).toBe('64px')
-    expect(style.getPropertyValue('--am-avatar-icon-size')).toBe('32px')
+    expect(style.getPropertyValue('--am-avatar-size')).toBe('calc(64 * var(--am-design-unit))')
+    expect(style.getPropertyValue('--am-avatar-icon-size')).toBe('calc(32 * var(--am-design-unit))')
   })
 
   it('scales long text to fit using gap', async () => {

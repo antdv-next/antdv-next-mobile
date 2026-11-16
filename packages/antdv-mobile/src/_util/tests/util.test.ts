@@ -9,11 +9,11 @@ import { withInstall } from '../withInstall'
 
 describe('_util', () => {
   it('helpers', () => {
-    expect(addUnit(12)).toBe('12px')
-    expect(addUnit('12')).toBe('12px')
+    expect(addUnit(12)).toBe('calc(12 * var(--am-design-unit))')
+    expect(addUnit('12')).toBe('calc(12 * var(--am-design-unit))')
     expect(addUnit('1rem')).toBe('1rem')
     expect(addUnit(undefined)).toBeUndefined()
-    expect(getSizeStyle([10, '2em'])).toEqual({ width: '10px', height: '2em' })
+    expect(getSizeStyle([10, '2em'])).toEqual({ width: 'calc(10 * var(--am-design-unit))', height: '2em' })
     expect(clamp(5, 0, 3)).toBe(3)
     expect(isNumeric('-1.5')).toBe(true)
     expect(isNumeric('1px')).toBe(false)

@@ -281,7 +281,7 @@ describe('Form', () => {
     expect(wrapper.find('form').classes()).toEqual(expect.arrayContaining(['am-form-vertical', 'am-form-card']))
     const [name, agree] = wrapper.findAll('.am-form-item')
     expect(name.classes()).toContain('am-form-item-horizontal')
-    expect(name.find('.am-form-item-label').attributes('style')).toContain('width: 80px')
+    expect(name.find('.am-form-item-label').attributes('style')).toContain('width: calc(80 * var(--am-design-unit))')
     expect(name.find('.am-form-item-label').classes()).toContain('am-form-item-label-end')
     expect(name.find('label').classes()).toContain('am-form-item-colon')
     expect(name.find('.am-form-item-required-mark').exists()).toBe(false)

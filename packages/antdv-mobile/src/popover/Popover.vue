@@ -5,6 +5,7 @@ import { Portal } from '../_base'
 import { isRenderable } from '../_util'
 import { nextZIndex, useClickAway, useControlled, useEventListener } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
+import { useUnit } from '../config-provider/unit'
 import { computePosition, parsePlacement } from './position'
 import '../style'
 import './style/index.css'
@@ -27,6 +28,9 @@ const props = withDefaults(defineProps<PopoverProps>(), {
 })
 const emit = defineEmits<PopoverEmits>()
 const slots = defineSlots<PopoverSlots>()
+
+// the arrow is sized by css (units), positions are real pixels
+const { toPx } = useUnit()
 
 const triggerRef = ref<HTMLElement>()
 const popupRef = ref<HTMLElement>()
@@ -86,7 +90,7 @@ function updatePosition() {
     { width: inner.offsetWidth, height: inner.offsetHeight },
     {
       placement: props.placement,
-      gap: props.arrow ? 10 : 6,
+      gap: toPx(props.arrow ? 10 : 6),
       autoAdjust: props.autoAdjustOverflow,
       viewport: {
         width: document.documentElement.clientWidth || window.innerWidth,

@@ -62,18 +62,18 @@ describe('Progress', () => {
     const wrapper = mount(Progress, {
       props: { percent: 50, strokeColor: 'red', railColor: 'blue', strokeLinecap: 'butt', size: [200, 12] },
     })
-    expect(wrapper.attributes('style')).toContain('width: 200px')
+    expect(wrapper.attributes('style')).toContain('width: calc(200 * var(--am-design-unit))')
     const rail = wrapper.find('.am-progress-rail')
-    expect(rail.attributes('style')).toContain('height: 12px')
+    expect(rail.attributes('style')).toContain('height: calc(12 * var(--am-design-unit))')
     expect(rail.attributes('style')).toContain('background: blue')
     expect(rail.attributes('style')).toContain('border-radius: 0')
     expect(wrapper.find('.am-progress-track').attributes('style')).toContain('background: red')
 
     const thick = mount(Progress, { props: { size: 16, trailColor: 'gray' } })
-    expect(thick.find('.am-progress-rail').attributes('style')).toContain('height: 16px')
+    expect(thick.find('.am-progress-rail').attributes('style')).toContain('height: calc(16 * var(--am-design-unit))')
     expect(thick.find('.am-progress-rail').attributes('style')).toContain('background: gray')
     expect(mount(Progress, { props: { size: 'small' } }).classes()).toContain('am-progress-small')
-    expect(mount(Progress, { props: { strokeWidth: 4 } }).find('.am-progress-rail').attributes('style')).toContain('height: 4px')
+    expect(mount(Progress, { props: { strokeWidth: 4 } }).find('.am-progress-rail').attributes('style')).toContain('height: calc(4 * var(--am-design-unit))')
   })
 
   it('renders gradients on line', () => {
@@ -114,18 +114,18 @@ describe('Progress', () => {
     expect(items.filter(item => item.classes().includes('am-progress-steps-item-active'))).toHaveLength(2)
     expect(items[0]!.attributes('style')).toContain('background: red')
     expect(items[1]!.attributes('style')).toContain('background: green')
-    expect(items[0]!.attributes('style')).toContain('width: 20px')
-    expect(items[0]!.attributes('style')).toContain('height: 10px')
+    expect(items[0]!.attributes('style')).toContain('width: calc(20 * var(--am-design-unit))')
+    expect(items[0]!.attributes('style')).toContain('height: calc(10 * var(--am-design-unit))')
 
     const custom = mount(Progress, { props: { percent: 49, steps: { count: 5, gap: 6 }, rounding: Math.ceil } })
     expect(custom.findAll('.am-progress-steps-item-active')).toHaveLength(3)
-    expect(custom.find('.am-progress-steps-body').attributes('style')).toContain('gap: 6px')
+    expect(custom.find('.am-progress-steps-body').attributes('style')).toContain('gap: calc(6 * var(--am-design-unit))')
   })
 
   it('renders circle', () => {
     const wrapper = mount(Progress, { props: { type: 'circle', percent: 25, size: 80 } })
     expect(wrapper.classes()).toContain('am-progress-circle')
-    expect(wrapper.find('.am-progress-body').attributes('style')).toContain('width: 80px')
+    expect(wrapper.find('.am-progress-body').attributes('style')).toContain('width: calc(80 * var(--am-design-unit))')
     const rail = wrapper.find('circle.am-progress-rail')
     const track = wrapper.find('circle.am-progress-track')
     const radius = Number(rail.attributes('r'))

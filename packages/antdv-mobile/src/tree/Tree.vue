@@ -16,6 +16,7 @@ import { computed, nextTick, onBeforeUpdate, onMounted, provide, reactive, ref, 
 import { addUnit, noop } from '../_util'
 import { useControlled } from '../_util/hooks'
 import { useDisabled } from '../config-provider/context'
+import { useUnit } from '../config-provider/unit'
 import { formItemInputContextKey, useFormItemInputContext } from '../form/context'
 import VirtualList from '../virtual-list/VirtualList.vue'
 import { treeContextKey } from './context'
@@ -72,7 +73,9 @@ const hasSlot = reactive(readSlotFlags())
 onBeforeUpdate(() => Object.assign(hasSlot, readSlotFlags()))
 
 /** fallback of `--am-tree-item-height`, the estimate used before a row is measured */
+/** in units; `itemHeight` is a number on the design of the user */
 const DEFAULT_ITEM_HEIGHT = 44
+const { unitsToDesign } = useUnit()
 const MAX_RETRY_TIMES = 10
 
 const disabled = useDisabled(() => props.disabled)
@@ -403,7 +406,7 @@ defineExpose({
     item-key="key"
     :virtual="mergedVirtual"
     :height="mergedHeight"
-    :item-height="mergedItemHeight ?? DEFAULT_ITEM_HEIGHT"
+    :item-height="mergedItemHeight ?? unitsToDesign(DEFAULT_ITEM_HEIGHT)"
     @scroll="emit('scroll', $event)"
   >
     <template #default="{ item }">

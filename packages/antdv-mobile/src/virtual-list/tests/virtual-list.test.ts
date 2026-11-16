@@ -20,7 +20,7 @@ describe('VirtualList', () => {
     expect(rows.length).toBe(10)
     expect(rows[0].text()).toBe('Item 0')
     expect(wrapper.find('.am-virtual-list-holder').attributes('style')).toContain('height: 40000px')
-    expect(wrapper.attributes('style')).toContain('height: 200px')
+    expect(wrapper.attributes('style')).toContain('height: calc(200 * var(--am-design-unit))')
   })
 
   it('moves the window on scroll and emits visibleChange / scroll', async () => {

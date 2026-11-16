@@ -90,7 +90,7 @@ describe('IndexBar', () => {
   it('respects stickyOffsetTop', async () => {
     const wrapper = mountBar({ stickyOffsetTop: 50 })
     await nextTick()
-    expect(wrapper.attributes('style')).toContain('--am-index-bar-sticky-offset-top: 50px')
+    expect(wrapper.attributes('style')).toContain('--am-index-bar-sticky-offset-top: calc(50 * var(--am-design-unit))')
     scrollY.value = 60
     window.dispatchEvent(new Event('scroll'))
     await nextTick()

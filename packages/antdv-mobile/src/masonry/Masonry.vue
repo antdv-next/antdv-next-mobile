@@ -8,6 +8,7 @@ import { addUnit, cancelRaf, isDef, isNumeric, isRenderable, raf } from '../_uti
 import { useEventListener } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { mergeAttrsStyle } from '../_util/vnode'
+import { useUnit } from '../config-provider/unit'
 import { computeMasonryLayout, normalizeColumns } from './layout'
 import '../style'
 import './style/index.css'
@@ -52,10 +53,12 @@ const gutters = computed(() => {
   return [horizontal, vertical] as const
 })
 
+const { designToPx } = useUnit()
+
 /** Vertical gutter in px when it can be told without the DOM (numbers), `undefined` for CSS lengths / the token. */
 const staticGutterY = computed(() => {
   const value = gutters.value[1] ?? gutters.value[0]
-  return isNumeric(value) ? Number(value) : undefined
+  return isNumeric(value) ? designToPx(Number(value)) : undefined
 })
 /** Vertical gutter in px read back from the DOM (CSS lengths, the default token). */
 const computedGutterY = ref(0)

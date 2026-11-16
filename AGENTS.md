@@ -73,6 +73,7 @@ already owns is a review blocker.
 | Scroll helpers / page scroll lock / stacking | `getScrollParent`, `getScrollTop`, `setScrollTop`, `useLockScroll`, `nextZIndex` | local copies |
 | Render props, slot children, attrs style | `RenderNode`, `isRenderable`, `flattenChildren`, `mergeAttrsStyle` (`_util`) | local copies |
 | Static APIs | `_util/mount.ts` | `createApp` by hand |
+| Numeric sizes (props, constants) in styles or layout math | `addUnit` / `toDesignUnit` / `toUnit` (`_util`), `useUnit()` (`config-provider/unit`) | `` `${n}px` `` for anything that is not a measured value |
 | Controlled state, size, disabled, locale, status, variant | `useControlled`, `useSize`, `useDisabled`, `useLocale`, `useMergedStatus`, `useVariant` | re-deriving them |
 
 If a second component needs the same helper, move it into `_util` / `_base` instead of copying it.
@@ -144,6 +145,17 @@ defineSlots<FooSlots>()
 - Declare component tokens on the root class and consume them below:
   `.am-foo { --am-foo-height: var(--am-control-height); height: var(--am-foo-height); }`.
   They are overridable with CSS or `theme.components.Foo.height`. Document them under `## 主题变量`.
+- **Units.** The library is drawn on a 375 wide design and every length scales with `--am-unit` (default `1px`).
+  Write plain `px` in css: `build/unit.ts` (a Vite plugin shared by the library build and the docs) compiles
+  `40px` to `calc(40 * var(--am-unit))`; `<= 1px` and `>= 999px` are kept, `/* am-unit: off */ ... /* am-unit: on */`
+  opts out. In JS there are three kinds of numbers, never mix them:
+  - **library constants** (defaults, gaps) are units: `toUnit()` in styles, `useUnit().toPx()` in layout math;
+  - **numbers given by the user** (numeric props, theme tokens) are lengths on *their* design
+    (`theme.token.designWidth`, css `--am-design-unit`): `addUnit()` / `toDesignUnit()` in styles,
+    `useUnit().designToPx()` in math. A numeric size prop therefore has **no `withDefaults` default**: fall back to
+    a unit constant (`props.itemHeight !== undefined ? designToPx(props.itemHeight) : toPx(DEFAULT)`), and use
+    `unitsToDesign(DEFAULT)` when handing a constant to the numeric prop of a child component;
+  - **values read from the DOM** (`getBoundingClientRect`, `offsetHeight`, touch deltas) are real pixels: `` `${n}px` ``.
 - Root elements set their own `box-sizing`, `font-size`, `font-family`, `line-height` and `color` (no global reset exists).
 - `-webkit-tap-highlight-color: transparent`, `touch-action` where gestures are handled, `:active` for press feedback,
   `[dir='rtl']` overrides for directional rules, `prefers-reduced-motion` respected for long animations.

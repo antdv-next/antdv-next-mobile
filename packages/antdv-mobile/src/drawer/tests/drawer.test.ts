@@ -51,12 +51,12 @@ describe('Drawer', () => {
     const wrapper = mount(Drawer, { props: { open: true, getContainer: false, placement: 'right', size: 'large' } })
     expect(wrapper.find('.am-drawer').classes()).toEqual(expect.arrayContaining(['am-drawer-right', 'am-drawer-large']))
     await wrapper.setProps({ size: 300 })
-    expect(wrapper.find('.am-drawer').attributes('style')).toContain('width: 300px')
+    expect(wrapper.find('.am-drawer').attributes('style')).toContain('width: calc(300 * var(--am-design-unit))')
     expect(wrapper.find('.am-drawer').classes()).toContain('am-drawer-sized')
     await wrapper.setProps({ width: '70%' })
     expect(wrapper.find('.am-drawer').attributes('style')).toContain('width: 70%')
     await wrapper.setProps({ placement: 'top', height: 200 })
-    expect(wrapper.find('.am-drawer').attributes('style')).toContain('height: 200px')
+    expect(wrapper.find('.am-drawer').attributes('style')).toContain('height: calc(200 * var(--am-design-unit))')
   })
 
   it('renders title / extra / footer / closeIcon with slot priority', () => {

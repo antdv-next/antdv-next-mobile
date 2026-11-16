@@ -39,9 +39,9 @@ describe('Grid (entries)', () => {
   it('columns / gap / iconSize are written as css', () => {
     const wrapper = mount(Grid, { props: { columns: 3, gap: 8, iconSize: 32 } })
     expect(style(wrapper).getPropertyValue('--am-grid-columns')).toBe('3')
-    expect(style(wrapper).getPropertyValue('--am-grid-icon-size')).toBe('32px')
-    expect(style(wrapper).columnGap).toBe('8px')
-    expect(style(wrapper).rowGap).toBe('8px')
+    expect(style(wrapper).getPropertyValue('--am-grid-icon-size')).toBe('calc(32 * var(--am-design-unit))')
+    expect(style(wrapper).columnGap).toBe('calc(8 * var(--am-design-unit))')
+    expect(style(wrapper).rowGap).toBe('calc(8 * var(--am-design-unit))')
     expect(wrapper.classes()).toContain('am-grid-gapped')
 
     const both = mount(Grid, { props: { gap: [0, '1rem'] } })

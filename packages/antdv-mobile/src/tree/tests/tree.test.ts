@@ -638,7 +638,7 @@ describe('Tree', () => {
 
     it('only mounts the rows around the viewport when height is set', () => {
       const wrapper = mount(Tree, { props: { treeData: big, defaultExpandAll: true, height: 220 } })
-      expect(css(wrapper).height).toBe('220px')
+      expect(css(wrapper).height).toBe('calc(220 * var(--am-design-unit))')
       const count = rows(wrapper).length
       expect(count).toBeGreaterThan(4)
       expect(count).toBeLessThan(20)
@@ -649,7 +649,7 @@ describe('Tree', () => {
       const virtual = mount(Tree, { props: { treeData: big, defaultExpandedKeys: ['n0'], height: 220 } })
       const plain = mount(Tree, { props: { treeData: big, defaultExpandedKeys: ['n0'], height: 220, virtual: false } })
       expect(rows(plain)).toHaveLength(210)
-      expect(css(plain).height).toBe('220px')
+      expect(css(plain).height).toBe('calc(220 * var(--am-design-unit))')
       const structure = (wrapper: VueWrapper<any>) => {
         const first = row(wrapper, 'n0-0')
         return {
@@ -669,12 +669,12 @@ describe('Tree', () => {
 
     it('listHeight / listItemHeight are aliases, the pc names win', () => {
       const alias = mount(Tree, { props: { treeData: big, listHeight: 300, listItemHeight: 50 } })
-      expect(css(alias).height).toBe('300px')
-      expect(css(alias).getPropertyValue('--am-tree-item-height')).toBe('50px')
+      expect(css(alias).height).toBe('calc(300 * var(--am-design-unit))')
+      expect(css(alias).getPropertyValue('--am-tree-item-height')).toBe('calc(50 * var(--am-design-unit))')
       expect(css(alias.find('.am-virtual-list-holder')).height).toBe(`${200 * 50}px`)
       const pc = mount(Tree, { props: { treeData: big, height: 200, listHeight: 300, itemHeight: 60, listItemHeight: 50 } })
-      expect(css(pc).height).toBe('200px')
-      expect(css(pc).getPropertyValue('--am-tree-item-height')).toBe('60px')
+      expect(css(pc).height).toBe('calc(200 * var(--am-design-unit))')
+      expect(css(pc).getPropertyValue('--am-tree-item-height')).toBe('calc(60 * var(--am-design-unit))')
     })
 
     it('scrollTo scrolls to a key, an offset or a number', async () => {

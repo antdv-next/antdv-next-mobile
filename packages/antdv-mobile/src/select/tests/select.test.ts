@@ -378,8 +378,8 @@ describe('Select virtual', () => {
     await nextTick()
     expect(optionEls()).toHaveLength(300)
     const panel = document.querySelector<HTMLElement>('.am-select-panel')!
-    expect(panel.style.getPropertyValue('--am-select-list-max-height')).toBe('240px')
-    expect(panel.style.getPropertyValue('--am-select-option-height')).toBe('40px')
+    expect(panel.style.getPropertyValue('--am-select-list-max-height')).toBe('calc(240 * var(--am-design-unit))')
+    expect(panel.style.getPropertyValue('--am-select-option-height')).toBe('calc(40 * var(--am-design-unit))')
   })
 
   it('listItemHeight without descriptions uses fixed rows', async () => {

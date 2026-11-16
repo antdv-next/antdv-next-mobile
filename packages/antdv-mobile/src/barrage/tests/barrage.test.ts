@@ -22,7 +22,7 @@ describe('Barrage', () => {
     expect(wrapper.classes()).toContain('am-barrage')
     expect(wrapper.classes()).not.toContain('am-barrage-paused')
     expect(wrapper.find('.media').exists()).toBe(true)
-    expect(trackVar(wrapper.find('.am-barrage-wrapper').element, '--am-barrage-offset')).toBe('10px')
+    expect(trackVar(wrapper.find('.am-barrage-wrapper').element, '--am-barrage-offset')).toBe('calc(10 * var(--am-unit))')
     const bullets = wrapper.findAll('.am-barrage-item')
     expect(bullets.map(b => b.text())).toEqual(['Text 1', 'Text 2'])
   })
@@ -41,7 +41,7 @@ describe('Barrage', () => {
     expect(tracks.map(t => trackVar(t, '--am-barrage-row'))).toEqual(['0', '1', '0', '1', '0'])
     expect(tracks.map(t => trackVar(t, '--am-barrage-delay'))).toEqual(['100ms', '200ms', '300ms', '400ms', '500ms'])
     expect(trackVar(tracks[0], '--am-barrage-duration')).toBe('2000ms')
-    expect(trackVar(wrapper.find('.am-barrage-wrapper').element, '--am-barrage-offset')).toBe('20px')
+    expect(trackVar(wrapper.find('.am-barrage-wrapper').element, '--am-barrage-offset')).toBe('calc(20 * var(--am-design-unit))')
   })
 
   it('falls back to one row for an invalid `rows`', () => {

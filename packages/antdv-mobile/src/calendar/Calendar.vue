@@ -11,11 +11,12 @@ import type {
 } from './interface'
 import dayjs from 'dayjs'
 import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, useAttrs, watch } from 'vue'
-import { cls, toArray } from '../_util'
+import { addUnit, cls, toArray } from '../_util'
 import { useControlled, useVirtualRange } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import Button from '../button/Button.vue'
 import { useConfig } from '../config-provider/context'
+import { useUnit } from '../config-provider/unit'
 import { toDayjs } from '../date-picker/util'
 import { useLocale } from '../locale'
 import PickerTrigger from '../picker/PickerTrigger.vue'
@@ -35,7 +36,6 @@ const props = withDefaults(defineProps<CalendarProps>(), {
   showTitle: true,
   showMark: true,
   showConfirm: true,
-  rowHeight: 64,
   cellRender: undefined,
   poppable: true,
   open: undefined,
@@ -55,6 +55,7 @@ const emit = defineEmits<CalendarEmits>()
 const slots = defineSlots<CalendarSlots>()
 
 /** must match `.am-calendar-month-title` height: month offsets are computed, not measured */
+/** height of a month title, in units (same as `.am-calendar-month-title`) */
 const MONTH_TITLE_HEIGHT = 44
 /** used until the body is measured (and in non-browser environments) */
 const FALLBACK_VIEW_HEIGHT = 480
@@ -117,13 +118,20 @@ interface MonthMeta {
   height: number
 }
 
+/** default `rowHeight`, in units (same as `--am-calendar-row-height`) */
+const DEFAULT_ROW_HEIGHT = 64
+// the title height is a unit, `rowHeight` a number on the design of the user; the month list scrolls in real pixels
+const { toPx, designToPx } = useUnit()
+const titleSize = computed(() => toPx(MONTH_TITLE_HEIGHT))
+const rowSize = computed(() => (props.rowHeight !== undefined ? designToPx(props.rowHeight) : toPx(DEFAULT_ROW_HEIGHT)))
+
 const months = computed<MonthMeta[]>(() => {
   const list: MonthMeta[] = []
   const last = maxDate.value.startOf('month')
   let cursor = minDate.value.startOf('month')
   while (!cursor.isAfter(last)) {
     const offset = (cursor.day() - props.weekStartsOn + 7) % 7
-    const height = MONTH_TITLE_HEIGHT + Math.ceil((offset + cursor.daysInMonth()) / 7) * props.rowHeight
+    const height = titleSize.value + Math.ceil((offset + cursor.daysInMonth()) / 7) * rowSize.value
     list.push({ key: cursor.format('YYYY-MM'), date: cursor, title: cursor.format(locale.value.monthFormat), offset, height })
     cursor = cursor.add(1, 'month')
   }
@@ -235,7 +243,7 @@ function scrollToDate(target: CalendarDate) {
   const monthTop = range.offsetOf(index)
   // keep the row of the day in view for long months
   const row = month.key === key ? Math.floor((month.offset + date.date() - 1) / 7) : 0
-  const top = row > 2 ? monthTop + MONTH_TITLE_HEIGHT + (row - 1) * props.rowHeight : monthTop
+  const top = row > 2 ? monthTop + titleSize.value + (row - 1) * rowSize.value : monthTop
   scrollTop.value = top
   if (bodyRef.value)
     bodyRef.value.scrollTop = top
@@ -433,7 +441,7 @@ defineExpose({ scrollToDate, reset, toggle })
         poppable ? undefined : rootClass,
         classes?.root,
       ]"
-      :style="[{ '--am-calendar-row-height': `${rowHeight}px` }, styles?.root]"
+      :style="[{ '--am-calendar-row-height': addUnit(rowHeight) }, styles?.root]"
     >
       <div class="am-calendar-header" :class="classes?.header" :style="styles?.header">
         <div v-if="showTitle" class="am-calendar-title">

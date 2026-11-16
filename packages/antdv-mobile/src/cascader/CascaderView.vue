@@ -7,6 +7,7 @@ import { Spinner } from '../_base'
 import { addUnit, isPromise } from '../_util'
 import { useControlled } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
+import { useUnit } from '../config-provider/unit'
 import { useLocale } from '../locale'
 import VirtualList from '../virtual-list/VirtualList.vue'
 import { getSelectedOptions, resolveFieldNames } from './util'
@@ -76,7 +77,9 @@ function setActiveTab(index: number) {
 
 // ---------- list (virtualized, one VirtualList per level) ----------
 /** fallback of `--am-cascader-view-option-height`, the estimate used before a row is measured */
+/** in units; `listItemHeight` is a number on the design of the user */
 const DEFAULT_ITEM_HEIGHT = 48
+const { unitsToDesign } = useUnit()
 
 const listRef = ref<VirtualListExpose>()
 /** rows are measured unless every row is known to be exactly `listItemHeight` tall */
@@ -205,7 +208,7 @@ defineExpose({ scrollToSelected })
       :item-key="names.value"
       :virtual="virtual"
       :height="listHeight"
-      :item-height="listItemHeight ?? DEFAULT_ITEM_HEIGHT"
+      :item-height="listItemHeight ?? unitsToDesign(DEFAULT_ITEM_HEIGHT)"
       :fixed="fixedHeight"
     >
       <template #default="{ item: option }">

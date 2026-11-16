@@ -2,7 +2,9 @@
 import type { PickerValue, PickerViewEmits, PickerViewProps, PickerViewSlots } from './interface'
 import { computed } from 'vue'
 import { Spinner } from '../_base'
+import { addUnit } from '../_util'
 import { useControlled } from '../_util/hooks'
+import { useUnit } from '../config-provider/unit'
 import PickerViewColumn from './PickerViewColumn.vue'
 import { resolvePicker } from './util'
 import '../style'
@@ -11,7 +13,6 @@ import './style/index.css'
 defineOptions({ name: 'AmPickerView', inheritAttrs: false })
 
 const props = withDefaults(defineProps<PickerViewProps>(), {
-  itemHeight: 40,
   visibleItemCount: 5,
   loading: false,
   virtual: true,
@@ -35,9 +36,15 @@ function onColumnChange(columnIndex: number, value: PickerValue) {
   emit('change', result.value, { items: result.items, columnIndex })
 }
 
+/** default `itemHeight`, in units (same as `--am-picker-view-item-height`) */
+const DEFAULT_ITEM_HEIGHT = 40
+// `itemHeight` is a number on the design of the user; the wheel of every column computes with real pixels
+const { toPx, designToPx } = useUnit()
+const itemSize = computed(() => (props.itemHeight !== undefined ? designToPx(props.itemHeight) : toPx(DEFAULT_ITEM_HEIGHT)))
+
 const rootStyle = computed(() => [
   {
-    '--am-picker-view-item-height': `${props.itemHeight}px`,
+    '--am-picker-view-item-height': addUnit(props.itemHeight),
     '--am-picker-view-visible-count': String(props.visibleItemCount),
   },
   props.styles?.root,
@@ -67,7 +74,7 @@ const rootStyle = computed(() => [
           :options="column"
           :value="resolved.value[index]"
           :column-index="index"
-          :item-height="itemHeight"
+          :item-height="itemSize"
           :visible-item-count="visibleItemCount"
           :option-render="optionRender"
           :virtual="virtual"

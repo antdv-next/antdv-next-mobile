@@ -141,7 +141,7 @@ describe('QRCode', () => {
     expect(wrapper.find('canvas.am-qrcode-canvas').exists()).toBe(true)
     expect(wrapper.find('svg').exists()).toBe(false)
     expect(wrapper.find('.am-qrcode-cover').exists()).toBe(false)
-    expect((wrapper.element as HTMLElement).style.width).toBe('160px')
+    expect((wrapper.element as HTMLElement).style.width).toBe('calc(160 * var(--am-unit))')
   })
 
   it('draws the modules on the canvas with the device pixel ratio', async () => {

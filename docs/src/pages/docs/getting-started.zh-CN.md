@@ -115,7 +115,7 @@ AntdvNextMobileResolver({
 />
 ```
 
-组件默认以 `px` 为单位、按 375 设计稿绘制。需要等比缩放时，可使用 `postcss-px-to-viewport` 之类的插件转换，或者直接调整尺寸类变量（见[定制主题](/docs/customize-theme)）。
+组件按 375 设计稿绘制，所有长度都跟随 `--am-unit`（默认 `1px`）。需要等比缩放或对接 750 设计稿、rem 方案时，只要改这一个变量，见[设计稿适配](/docs/adaptation)。
 
 ## 静态方法 {#static-api}
 

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
+import { unitPlugin } from './build/unit'
 
 const root = fileURLToPath(new URL('.', import.meta.url))
 
@@ -35,7 +36,7 @@ function fullCss() {
 }
 
 export default defineConfig({
-  plugins: [vue(), libInjectCss(), fullCss()],
+  plugins: [unitPlugin(), vue(), libInjectCss(), fullCss()],
   build: {
     target: 'es2020',
     cssCodeSplit: true,

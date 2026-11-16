@@ -1,4 +1,5 @@
 import type { BorderBeamColor, BorderBeamGradient } from './interface'
+import { toDesignUnit } from '../_util/unit'
 
 /** top, right, bottom, left */
 export type BorderWidth = readonly [number, number, number, number]
@@ -33,7 +34,13 @@ export function isSameBorderWidth(left: BorderWidth, right: BorderWidth): boolea
   return left[0] === right[0] && left[1] === right[1] && left[2] === right[2] && left[3] === right[3]
 }
 
-/** `2` -> `-2px`, `'0.5rem'` -> `calc(-1 * 0.5rem)` */
-export function getInset(width: number | string): string {
-  return typeof width === 'string' ? `calc(-1 * ${width})` : `-${width}px`
+/**
+ * Negative inset of a beam. A number is the `outset` prop (a length on the design of the user):
+ * `2` -> `calc(-2 * var(--am-design-unit))`, `'0.5rem'` -> `calc(-1 * 0.5rem)`.
+ * `measured` numbers are border widths read from the DOM, i.e. real pixels: `2` -> `-2px`.
+ */
+export function getInset(width: number | string, measured = false): string {
+  if (typeof width === 'string')
+    return `calc(-1 * ${width})`
+  return measured ? `-${width}px` : toDesignUnit(-width)
 }
