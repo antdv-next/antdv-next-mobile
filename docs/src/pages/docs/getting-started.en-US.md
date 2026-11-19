@@ -57,10 +57,20 @@ import { Button, message } from '@antdv-next/mobile'
 </template>
 ```
 
-If your build pipeline does not handle CSS imports inside packages (some SSR setups, for example), import the full stylesheet manually instead:
+To load the full stylesheet independently, import it in your client entry:
 
 ```ts
 import '@antdv-next/mobile/style.css'
+```
+
+Vite SSR leaves dependencies for Node to load by default. The component modules import CSS, so the server build also needs to process the library. Add this option to `vite.config.ts` to render components with `renderToString`:
+
+```ts
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  ssr: { noExternal: ['@antdv-next/mobile'] },
+})
 ```
 
 ## Auto import {#auto-import}

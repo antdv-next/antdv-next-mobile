@@ -2,16 +2,11 @@
 import { ExportOutlined, ReloadOutlined } from '@antdv-next/icons'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useMessages } from '../../shared/locale'
-import { simulator } from '../state'
+import { simulator, simulatorUrl } from '../state'
 
 const t = useMessages()
 const frameRef = ref<HTMLIFrameElement>()
-const base = `${import.meta.env.BASE_URL}mobile.html`
-
-const url = computed(() => {
-  const query = simulator.demo ? `?demo=${encodeURIComponent(simulator.demo)}` : ''
-  return `${base}#/${simulator.page}${query}`
-})
+const url = computed(() => simulatorUrl(simulator.page, simulator.demo))
 // only the first url is used as `src`; later navigations replace the iframe location so the
 // parent history (back button) is not polluted by the simulator.
 const initialUrl = url.value

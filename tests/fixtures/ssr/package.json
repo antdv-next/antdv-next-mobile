@@ -1,0 +1,5 @@
+{
+  "name": "mobile-ssr-smoke",
+  "type": "module",
+  "private": true
+}

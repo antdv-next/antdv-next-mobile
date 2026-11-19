@@ -53,11 +53,23 @@ export function normalizeAlgorithms(algorithm: ThemeConfig['algorithm']): ThemeA
   return Array.from(new Set(names))
 }
 
-export function mergeTheme(parent: ThemeConfig | undefined, theme: ThemeConfig | undefined): ThemeConfig | undefined {
+// Custom tokens have no declaration in tokens.css. Remember which inherited variables
+// to clear on isolated providers and on their teleported roots.
+const isolatedVariables = Symbol('isolatedThemeVariables')
+type ScopedTheme = ThemeConfig & { [isolatedVariables]?: string[] }
+
+export function mergeTheme(parent: ScopedTheme | undefined, theme: ScopedTheme | undefined): ScopedTheme | undefined {
   if (!theme)
     return parent
-  if (!parent || theme.inherit === false)
+  if (!parent)
     return theme
+  if (theme.inherit === false) {
+    const variables = new Set(parent[isolatedVariables])
+    Object.keys(parent.token ?? {}).forEach(key => variables.add(tokenToCssVarName(key)))
+    for (const [name, tokens] of Object.entries(parent.components ?? {}))
+      Object.keys(tokens ?? {}).forEach(key => variables.add(tokenToCssVarName(key, name)))
+    return { ...theme, [isolatedVariables]: [...variables] }
+  }
   const components: Record<string, any> = { ...parent.components }
   Object.keys(theme.components ?? {}).forEach((name) => {
     components[name] = { ...components[name], ...theme.components![name] }
@@ -65,6 +77,8 @@ export function mergeTheme(parent: ThemeConfig | undefined, theme: ThemeConfig |
   return {
     ...parent,
     ...theme,
+    // A child inherits the already isolated theme, including when it teleports to body.
+    inherit: parent.inherit === false ? false : theme.inherit ?? parent.inherit,
     algorithm: theme.algorithm ?? parent.algorithm,
     token: { ...parent.token, ...theme.token },
     components,
@@ -75,9 +89,11 @@ export function mergeTheme(parent: ThemeConfig | undefined, theme: ThemeConfig |
  * Turns a `ThemeConfig` into the class names + inline CSS variables of a theme scope element.
  * `scope` is a unique class name for that element; it is required for component tokens to apply.
  */
-export function resolveTheme(theme?: ThemeConfig, scope?: string): ResolvedTheme {
+export function resolveTheme(theme?: ScopedTheme, scope?: string): ResolvedTheme {
   const algorithms = normalizeAlgorithms(theme?.algorithm)
   const className = ['am-theme']
+  if (theme?.inherit === false)
+    className.push('am-theme-isolated')
   const isDark = algorithms.includes('dark')
   if (isDark)
     className.push('am-theme-dark')
@@ -98,8 +114,8 @@ export function resolveTheme(theme?: ThemeConfig, scope?: string): ResolvedTheme
     // not a css variable of its own: it defines the length of the numbers given by the user
     if (key === 'designWidth') {
       const width = Number(value)
-      if (width > 0 && width !== BASE_DESIGN_WIDTH)
-        style[DESIGN_UNIT_VAR] = `calc(var(${UNIT_VAR}) * ${BASE_DESIGN_WIDTH} / ${width})`
+      if (width > 0 && Number.isFinite(width))
+        style[DESIGN_UNIT_VAR] = width === BASE_DESIGN_WIDTH ? `var(${UNIT_VAR})` : `calc(var(${UNIT_VAR}) * ${BASE_DESIGN_WIDTH} / ${width})`
       return
     }
     style[tokenToCssVarName(key)] = tokenValue(key, value)
@@ -108,6 +124,12 @@ export function resolveTheme(theme?: ThemeConfig, scope?: string): ResolvedTheme
   let css = ''
   const components = theme?.components ?? {}
   if (scope) {
+    if (theme?.[isolatedVariables]?.length) {
+      // Zero specificity lets the library's seed and map declarations restore their
+      // defaults. Any variable with no library default gets its initial (unset) value.
+      const resets = theme[isolatedVariables].map(variable => `${variable}:initial;`).join('')
+      css = `:where(.${scope}){${resets}}`
+    }
     Object.keys(components).forEach((name) => {
       const componentToken = components[name] ?? {}
       const declarations = Object.keys(componentToken)
@@ -119,8 +141,12 @@ export function resolveTheme(theme?: ThemeConfig, scope?: string): ResolvedTheme
       const root = `.${CSS_VAR_PREFIX}-${toKebab(name)}`
       // `:where()` keeps the specificity of a single class: later in the document than the
       // library css, so it wins over the component defaults without `!important`.
-      const selector = [`${root}`, `${root}-root`]
-        .flatMap(sel => [`:where(.${scope}) ${sel}`, `${sel}:where(.${scope})`])
+      // The same scope can also be on a teleported root. Stop descendant rules at a
+      // nested isolated scope, including a root that is itself the themed component.
+      const boundary = `.${scope} .am-theme-isolated:not(.${scope})`
+      const withinScope = `:not(:where(${boundary}, ${boundary} *))`
+      const selector = [root, `${root}-root`]
+        .flatMap(sel => [`:where(.${scope}) ${sel}${withinScope}`, `${sel}:where(.${scope})`])
         .join(',')
       css += `${selector}{${declarations}}`
     })

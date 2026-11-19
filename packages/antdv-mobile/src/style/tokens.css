@@ -11,6 +11,7 @@
  * - algorithms (dark / compact) only override seeds, so they compose and nest freely.
  */
 :root,
+.am-theme-isolated,
 .am-theme-light {
   /* ---------- seed: brand & functional colors ---------- */
   --am-color-primary: #1677ff;
@@ -46,7 +47,8 @@
 }
 
 /* ---------- seed: unit, font family, motion ---------- */
-:root {
+:root,
+.am-theme-isolated {
   /*
    * Length of one unit. Stylesheets are written in px on a 375 wide design and every length is
    * compiled to `calc(N * var(--am-unit))`, so this single variable adapts the whole library:
@@ -87,6 +89,7 @@
  * Must stay above the compact algorithm so that one still wins.
  */
 :root,
+.am-theme-isolated,
 .am-theme-unit {
   /* length of the numbers given by the user (props, theme tokens), see `theme.token.designWidth` */
   --am-design-unit: var(--am-unit);
