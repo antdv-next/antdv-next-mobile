@@ -15,7 +15,13 @@ export interface PopupSemanticStyles {
   body?: CSSProperties
 }
 
-export interface PopupProps {
+export interface PopupAriaProps {
+  ariaLabel?: string
+  ariaLabelledby?: string
+  ariaDescribedby?: string
+}
+
+export interface PopupProps extends PopupAriaProps {
   /** Whether the popup is visible. Supports `v-model:open`. */
   open?: boolean
   placement?: PopupPlacement

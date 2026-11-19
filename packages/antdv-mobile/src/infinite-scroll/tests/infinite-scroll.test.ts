@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 import InfiniteScroll from '..'
 import ConfigProvider from '../../config-provider'
@@ -19,8 +19,17 @@ function mockRect() {
 }
 
 describe('InfiniteScroll', () => {
+  // jsdom has no layout engine. A displayed root owns a box, even for an empty list.
+  beforeEach(() => {
+    vi.spyOn(HTMLElement.prototype, 'getClientRects').mockImplementation(function (this: HTMLElement) {
+      const boxes = this.closest('[hidden]') || this.style.display === 'none' ? [] : [this.getBoundingClientRect()]
+      return boxes as unknown as DOMRectList
+    })
+  })
+
   afterEach(() => {
     vi.restoreAllMocks()
+    vi.unstubAllGlobals()
     sentinelBottom = 0
     sentinelTop = 0
   })
@@ -152,6 +161,32 @@ describe('InfiniteScroll', () => {
     const wrapper = mount(InfiniteScroll, { attrs: { style: 'display: none' }, attachTo: document.body })
     await flushPromises()
     expect(wrapper.emitted('load')).toBeUndefined()
+  })
+
+  it('rechecks a formerly hidden list when its ancestor becomes visible', async () => {
+    let resize!: () => void
+    const disconnect = vi.fn()
+    vi.stubGlobal('ResizeObserver', class {
+      constructor(callback: () => void) { resize = callback }
+      observe() {}
+      disconnect = disconnect
+    })
+    const panel = document.createElement('div')
+    panel.hidden = true
+    document.body.appendChild(panel)
+    const wrapper = mount(InfiniteScroll, { attachTo: panel, props: { loading: true } })
+    await wrapper.setProps({ loading: false })
+    await flushPromises()
+    expect(wrapper.emitted('load')).toBeUndefined()
+    panel.hidden = false
+    resize()
+    await flushPromises()
+    expect(wrapper.emitted('load')).toHaveLength(1)
+    resize()
+    await flushPromises()
+    expect(wrapper.emitted('load')).toHaveLength(1)
+    wrapper.unmount()
+    expect(disconnect).toHaveBeenCalled()
   })
 
   it('slots win over text props, text props win over locale', async () => {

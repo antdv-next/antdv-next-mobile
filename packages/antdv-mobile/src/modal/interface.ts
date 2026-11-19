@@ -1,6 +1,7 @@
 import type { AppContext, Component, CSSProperties } from 'vue'
 import type { GetContainer, Key, Numeric, VueNode } from '../_util/type'
 import type { ButtonProps } from '../button/interface'
+import type { PopupAriaProps } from '../popup/interface'
 
 export type ModalOkType = 'default' | 'primary' | 'danger' | 'dashed' | 'link' | 'text'
 
@@ -37,7 +38,7 @@ export interface ModalSemanticStyles {
   close?: CSSProperties
 }
 
-export interface ModalProps {
+export interface ModalProps extends PopupAriaProps {
   /** Whether the dialog is visible. Supports `v-model:open`. */
   open?: boolean
   title?: VueNode
@@ -110,7 +111,7 @@ export interface ModalSlots {
 export type ModalFuncType = 'info' | 'success' | 'error' | 'warn' | 'warning' | 'confirm'
 
 /** Config of the static methods (`Modal.confirm` ...) */
-export interface ModalFuncProps {
+export interface ModalFuncProps extends PopupAriaProps {
   type?: ModalFuncType
   title?: VueNode
   content?: VueNode

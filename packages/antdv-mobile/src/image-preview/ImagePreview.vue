@@ -3,6 +3,7 @@ import type { ImagePreviewEmits, ImagePreviewImage, ImagePreviewProps, ImagePrev
 import { CloseOutlined } from '@antdv-next/icons'
 import { computed, nextTick, ref, watch } from 'vue'
 import { Portal } from '../_base'
+import { useDialogLayer } from '../_base/useDialogLayer'
 import { clamp, inBrowser } from '../_util'
 import { nextZIndex, useControlled, useEventListener, useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
@@ -121,9 +122,15 @@ function onBeforeChange(_: number, next: number) {
     setCurrent(next)
 }
 
-useEventListener('keydown', (event: KeyboardEvent) => {
-  if (open.value && event.key === 'Escape')
-    close()
+useDialogLayer({
+  element: rootRef,
+  open: () => !!open.value,
+  zIndex: () => zIndex.value,
+  modal: () => true,
+  onKeydown(event) {
+    if (event.key === 'Escape')
+      close()
+  },
 })
 
 defineExpose({
@@ -146,6 +153,7 @@ defineExpose({
         :dir="theme.dir"
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
       >
         <div class="am-image-preview-backdrop" :style="dragProgress ? { opacity: 1 - dragProgress, transitionDuration: '0s' } : undefined" />
         <Carousel

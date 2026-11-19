@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DrawerClosableConfig, DrawerEmits, DrawerProps, DrawerSlots } from './interface'
 import { CloseOutlined } from '@antdv-next/icons'
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, useId, watch } from 'vue'
 import { Spinner } from '../_base'
 import { addUnit, cls, isRenderable, preventDefault } from '../_util'
 import { useTouch } from '../_util/hooks'
@@ -38,6 +38,7 @@ const emit = defineEmits<DrawerEmits>()
 const slots = defineSlots<DrawerSlots>()
 
 const commonLocale = useLocale('common')
+const titleId = useId()
 const popupRef = ref<InstanceType<typeof Popup>>()
 
 const isVertical = computed(() => props.placement === 'top' || props.placement === 'bottom')
@@ -210,6 +211,9 @@ defineExpose({
   <Popup
     ref="popupRef"
     v-bind="$attrs"
+    :aria-label="ariaLabel"
+    :aria-labelledby="ariaLabelledby ?? (hasTitle && !ariaLabel ? titleId : undefined)"
+    :aria-describedby="ariaDescribedby"
     :open="open"
     :placement="placement"
     :mask="mask"
@@ -253,7 +257,7 @@ defineExpose({
       @touchend="onTouchEnd"
       @touchcancel="onTouchEnd"
     >
-      <div v-if="hasTitle" class="am-drawer-title" :class="classes?.title" :style="styles?.title">
+      <div v-if="hasTitle" :id="titleId" class="am-drawer-title" :class="classes?.title" :style="styles?.title">
         <slot name="title">
           <RenderNode :node="title" />
         </slot>

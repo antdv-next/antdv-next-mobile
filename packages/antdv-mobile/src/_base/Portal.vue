@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType, SlotsType } from 'vue'
 import type { GetContainer } from '../_util/type'
-import { computed, defineComponent, h, Teleport } from 'vue'
+import { computed, defineComponent, getCurrentInstance, h, onMounted, ref, Teleport } from 'vue'
 import { resolveContainer } from '../_util'
 import { useConfig, usePopupTheme } from '../config-provider/context'
 import { provideNoCompact } from './compact'
@@ -44,17 +44,25 @@ export default defineComponent({
   setup(props, { slots }) {
     const config = useConfig()
     const popupTheme = usePopupTheme()
+    // Vue sets vnode.el to the existing DOM node before setting up a hydrating
+    // component. Adopt the server's inline children before moving them.
+    const hydrating = ref(!!getCurrentInstance()?.vnode.el)
+    if (hydrating.value) {
+      onMounted(() => {
+        hydrating.value = false
+      })
+    }
     // a popup opened from a field inside Space.Compact is not part of that group
     provideNoCompact()
 
     const container = computed(() => {
-      if (props.getContainer === false)
+      if (hydrating.value || props.getContainer === false)
         return null
       if (props.getContainer !== undefined)
         return resolveContainer(props.getContainer)
       if (props.fallback === 'inline')
         return null
-      return config.getPopupContainer.value?.() ?? resolveContainer()
+      return resolveContainer(config.getPopupContainer.value) ?? resolveContainer()
     })
 
     return () => {

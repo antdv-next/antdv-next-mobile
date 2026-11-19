@@ -39,6 +39,9 @@ group:
 | safeArea | 底部弹出时是否预留底部安全区 | `boolean` | `true` |
 | lockScroll | 打开时是否锁定页面滚动 | `boolean` | `true` |
 | keyboard | 是否支持按 ESC 关闭 | `boolean` | `true` |
+| aria-label | 弹窗的无障碍名称，用于没有可见标题时 | `string` | - |
+| aria-labelledby | 提供弹窗名称的元素 ID，多个 ID 用空格分隔 | `string` | - |
+| aria-describedby | 提供弹窗补充描述的元素 ID，多个 ID 用空格分隔 | `string` | - |
 | destroyOnHidden | 关闭后销毁内容 | `boolean` | `false` |
 | forceRender | 首次打开前预渲染内容 | `boolean` | `false` |
 | getContainer | 挂载节点，`false` 为挂载在当前位置 | `string \| HTMLElement \| (() => HTMLElement) \| false` | `document.body` |

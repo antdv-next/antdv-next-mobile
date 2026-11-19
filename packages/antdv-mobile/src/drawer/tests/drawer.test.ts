@@ -18,6 +18,7 @@ describe('Drawer', () => {
     expect(section.classList.contains('am-drawer-bottom')).toBe(true)
     expect(section.classList.contains('am-popup-round')).toBe(true)
     expect(section.querySelector('.am-drawer-title')!.textContent).toBe('Title')
+    expect(document.getElementById(section.getAttribute('aria-labelledby')!)?.textContent).toBe('Title')
     expect(section.querySelector('.am-drawer-body')!.textContent).toBe('content')
     expect(section.querySelector('.am-drawer-footer')).toBeNull()
   })

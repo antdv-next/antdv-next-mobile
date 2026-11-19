@@ -2,7 +2,7 @@
 import type { ButtonColorType } from '../button/interface'
 import type { ModalAction, ModalEmits, ModalProps, ModalSlots } from './interface'
 import { CloseOutlined } from '@antdv-next/icons'
-import { computed, reactive } from 'vue'
+import { computed, reactive, useId } from 'vue'
 import { cls, isPromise, isRenderable } from '../_util'
 import RenderNode from '../_util/RenderNode'
 import Button from '../button/Button.vue'
@@ -40,6 +40,7 @@ const slots = defineSlots<ModalSlots>()
 
 const locale = useLocale('Modal')
 const commonLocale = useLocale('common')
+const titleId = useId()
 
 const hasTitle = computed(() => !!slots.title || isRenderable(props.title))
 const hasBody = computed(() => !!slots.default || isRenderable(props.content))
@@ -119,6 +120,9 @@ function onAfterOpenChange(open: boolean) {
 <template>
   <Popup
     v-bind="$attrs"
+    :aria-label="ariaLabel"
+    :aria-labelledby="ariaLabelledby ?? (hasTitle && !ariaLabel ? titleId : undefined)"
+    :aria-describedby="ariaDescribedby"
     :open="open"
     placement="center"
     :mask="mask"
@@ -156,7 +160,7 @@ function onAfterOpenChange(open: boolean) {
           <img class="am-modal-image" :src="image" alt="">
         </slot>
       </div>
-      <div v-if="hasTitle" class="am-modal-title" :class="classes?.title" :style="styles?.title">
+      <div v-if="hasTitle" :id="titleId" class="am-modal-title" :class="classes?.title" :style="styles?.title">
         <slot name="title">
           <RenderNode :node="title" />
         </slot>
