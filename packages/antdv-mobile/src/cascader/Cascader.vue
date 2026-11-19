@@ -83,7 +83,7 @@ function onViewChange(next: CascaderValue[]) {
 
 function onFinish(next: CascaderValue[]) {
   // without `changeOnSelect` a leaf completes the selection, no confirm button needed
-  if (!props.changeOnSelect)
+  if (open.value && !props.changeOnSelect)
     finish(next)
 }
 

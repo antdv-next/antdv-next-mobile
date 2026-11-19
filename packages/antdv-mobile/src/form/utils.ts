@@ -50,8 +50,10 @@ function isPlainObject(value: any): value is Record<string, any> {
   return proto === Object.prototype || proto === null
 }
 
-/** Deep clone of plain objects / arrays; class instances (Date, dayjs, File ...) are kept by reference. */
+/** Clone mutable dates, plain objects and arrays; keep opaque values such as File and dayjs by reference. */
 export function cloneValue<T>(value: T): T {
+  if (value instanceof Date)
+    return new Date(value.getTime()) as T
   if (Array.isArray(value))
     return value.map(cloneValue) as unknown as T
   if (isPlainObject(value)) {
@@ -67,11 +69,13 @@ export function cloneValue<T>(value: T): T {
 export function isEqualValue(a: any, b: any): boolean {
   if (Object.is(a, b))
     return true
+  if (a instanceof Date && b instanceof Date)
+    return Object.is(a.getTime(), b.getTime())
   if (Array.isArray(a) && Array.isArray(b))
     return a.length === b.length && a.every((item, i) => isEqualValue(item, b[i]))
   if (isPlainObject(a) && isPlainObject(b)) {
     const keys = Object.keys(a)
-    return keys.length === Object.keys(b).length && keys.every(key => isEqualValue(a[key], b[key]))
+    return keys.length === Object.keys(b).length && keys.every(key => Object.prototype.hasOwnProperty.call(b, key) && isEqualValue(a[key], b[key]))
   }
   return false
 }
@@ -254,16 +258,21 @@ export function validateRules(
 
 function finishOnFirstFailed(rulePromises: Promise<FormRuleError>[]): Promise<FormRuleError[]> {
   let count = 0
+  const warnings: FormRuleError[] = []
   return new Promise((resolve) => {
     if (!rulePromises.length)
       resolve([])
     rulePromises.forEach((promise) => {
       promise.then((ruleError) => {
-        if (ruleError.errors.length)
-          resolve([ruleError])
+        if (ruleError.errors.length) {
+          if (ruleError.rule.warningOnly)
+            warnings.push(ruleError)
+          else
+            resolve([ruleError, ...warnings])
+        }
         count += 1
         if (count === rulePromises.length)
-          resolve([])
+          resolve(warnings)
       })
     })
   })

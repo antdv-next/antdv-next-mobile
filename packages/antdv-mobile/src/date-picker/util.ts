@@ -297,6 +297,14 @@ export function dateToValues(ctx: DateContext, date: Dayjs): number[] {
   return ctx.types.map(type => getValue(ctx, type, date))
 }
 
+/** A wheel can stay on an unavailable month while the user navigates to another one. */
+export function isDateSelectable(ctx: DateContext, date: Dayjs): boolean {
+  return ctx.types.every((type) => {
+    const value = getValue(ctx, type, date)
+    return getColumn(ctx, type, date).some(option => option.value === value && !option.disabled)
+  })
+}
+
 /** Applies wheel values on top of `base`, keeping the result a real date (e.g. Jan 31 -> Feb 29). */
 export function valuesToDate(ctx: DateContext, values: (number | string | undefined)[], base: Dayjs): Dayjs {
   const get = (type: DatePickerColumnType) => {

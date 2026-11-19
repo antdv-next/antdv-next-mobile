@@ -28,6 +28,27 @@ function clickOption(text: string, root: ParentNode = document) {
 }
 
 describe('CascaderView', () => {
+  it.each(['throw', 'reject'])('allows retry after loadData fails (%s)', async (failure) => {
+    const data = reactive([{ label: 'Province', value: 'p', isLeaf: false, children: [] as typeof options }])
+    const loadData = vi.fn(() => {
+      if (loadData.mock.calls.length === 1) {
+        if (failure === 'throw')
+          throw new Error('offline')
+        return Promise.reject(new Error('offline'))
+      }
+      data[0].children = [{ label: 'City', value: 'c' }]
+    })
+    const wrapper = mount(Cascader, { props: { defaultOpen: true, options: data, loadData } })
+    await clickOption('Province')
+    await nextTick()
+    expect(wrapper.emitted('confirm')).toBeUndefined()
+    expect(wrapper.emitted('change')).toBeUndefined()
+    expect(document.querySelector('.am-cascader-view-option .am-spin-icon')).toBeNull()
+    await clickOption('Province')
+    await clickOption('City')
+    expect(wrapper.emitted('confirm')![0][0]).toEqual(['p', 'c'])
+  })
+
   it('renders a placeholder tab and the first level', () => {
     const wrapper = mount(CascaderView, { props: { options } })
     expect(wrapper.classes()).toContain('am-cascader-view')

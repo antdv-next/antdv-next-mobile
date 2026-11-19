@@ -108,6 +108,7 @@ describe('Upload', () => {
     await wrapper.find('.am-upload-item').trigger('click')
     await flushPromises()
     expect(customRequest).toHaveBeenCalledTimes(2)
+    expect(calls[1].file).toBe(calls[0].file)
     calls[1].onSuccess({ url: 'ok' })
     await nextTick()
     const success = (last(wrapper.emitted('change'))[0] as any).file
@@ -128,6 +129,84 @@ describe('Upload', () => {
     const options = customRequest.mock.calls[0][0]
     expect(options.action).toBe('/upload/a.png')
     expect(options.data.uid).toBe(options.file.uid)
+  })
+
+  it('retries with the same transformed body after a controlled file list update', async () => {
+    const transformed = new Blob(['small'])
+    const customRequest = vi.fn((_options: UploadRequestOption) => {})
+    const wrapper = mount(Upload, { props: { fileList: [], beforeUpload: () => transformed, customRequest } })
+    await pick(wrapper, [makeFile()])
+    const first = customRequest.mock.calls[0][0]
+    first.onError(new Error('offline'))
+    const list = last(wrapper.emitted('update:fileList'))[0] as UploadFile[]
+    await wrapper.setProps({ fileList: list.map(file => ({ ...file })) })
+    await wrapper.get('.am-upload-item').trigger('click')
+    expect(first.file).toBe(transformed)
+    expect(customRequest.mock.calls[1][0].file).toBe(transformed)
+    first.onSuccess('late')
+    await nextTick()
+    expect(wrapper.get('.am-upload-item').classes()).toContain('am-upload-item-uploading')
+  })
+
+  it.each(['beforeUpload', 'action', 'data'] as const)('cancels a pending %s on unmount', async (stage) => {
+    let complete!: () => void
+    const wait = new Promise<void>((resolve) => {
+      complete = resolve
+    })
+    const customRequest = vi.fn()
+    const wrapper = mount(Upload, {
+      props: {
+        customRequest,
+        beforeUpload: () => stage === 'beforeUpload' ? wait : undefined,
+        action: () => stage === 'action' ? wait.then(() => '/upload') : '/upload',
+        data: () => stage === 'data' ? wait.then(() => ({})) : {},
+      },
+    })
+    await pick(wrapper, [makeFile()])
+    wrapper.unmount()
+    complete()
+    await flushPromises()
+    expect(customRequest).not.toHaveBeenCalled()
+  })
+
+  it('reserves capacity during preprocessing and checks the latest controlled list before adding', async () => {
+    let complete!: () => void
+    const wait = new Promise<void>((resolve) => {
+      complete = resolve
+    })
+    const customRequest = vi.fn()
+    const wrapper = mount(Upload, {
+      props: { maxCount: 2, multiple: true, fileList: [], beforeUpload: () => wait, customRequest },
+    })
+    await pick(wrapper, [makeFile('a'), makeFile('b')])
+    await pick(wrapper, [makeFile('c')])
+    await wrapper.setProps({ fileList: [done] })
+    complete()
+    await flushPromises()
+    const list = last(wrapper.emitted('update:fileList'))[0] as UploadFile[]
+    expect(list.map(file => file.name)).toEqual(['done.png', 'a'])
+    expect(wrapper.emitted('exceed')!.map(([files]) => (files as File[]).map(file => file.name))).toEqual([['c'], ['b']])
+    expect(customRequest).toHaveBeenCalledTimes(1)
+  })
+
+  it('cancels file preparation when abort is called and allows a fresh attempt', async () => {
+    let complete!: (url: string) => void
+    const action = vi.fn(() => new Promise<string>((resolve) => {
+      complete = resolve
+    }))
+    const customRequest = vi.fn()
+    const wrapper = mount(Upload, { props: { action, customRequest } })
+    await pick(wrapper, [makeFile()])
+    const file = (last(wrapper.emitted('change'))[0] as { file: UploadFile }).file
+    wrapper.vm.abort(file)
+    complete('/cancelled')
+    await flushPromises()
+    expect(customRequest).not.toHaveBeenCalled()
+    wrapper.vm.upload(file)
+    complete('/new')
+    await flushPromises()
+    expect(customRequest).toHaveBeenCalledTimes(1)
+    expect(customRequest.mock.calls[0][0].action).toBe('/new')
   })
 
   it('default request posts FormData with XHR and reports progress', async () => {
@@ -235,6 +314,24 @@ describe('Upload', () => {
     await pick(wrapper, [makeFile('new.png')])
     const fileList = last(wrapper.emitted('update:fileList'))[0] as UploadFile[]
     expect(fileList.map(f => f.name)).toEqual(['new.png'])
+  })
+
+  it('keeps the newer replacement when single-file preprocessing completes out of order', async () => {
+    const finish: Array<() => void> = []
+    const beforeUpload = () => new Promise<void>((resolve) => {
+      finish.push(resolve)
+    })
+    const customRequest = vi.fn()
+    const wrapper = mount(Upload, { props: { maxCount: 1, beforeUpload, customRequest } })
+    await pick(wrapper, [makeFile('old')])
+    await pick(wrapper, [makeFile('new')])
+    finish[1]()
+    await flushPromises()
+    finish[0]()
+    await flushPromises()
+    expect(customRequest).toHaveBeenCalledTimes(1)
+    const list = last(wrapper.emitted('update:fileList'))[0] as UploadFile[]
+    expect(list.map(file => file.name)).toEqual(['new'])
   })
 
   it('removes a file, guarded by beforeRemove', async () => {

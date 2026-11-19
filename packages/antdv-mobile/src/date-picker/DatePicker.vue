@@ -9,7 +9,7 @@ import PickerPopup from '../picker/PickerPopup.vue'
 import PickerTrigger from '../picker/PickerTrigger.vue'
 import { usePickerField } from '../picker/usePickerField'
 import DatePickerView from './DatePickerView.vue'
-import { createDateContext, formatDate, settleDate, toDayjs, toValue } from './util'
+import { createDateContext, formatDate, isDateSelectable, settleDate, toDayjs, toValue } from './util'
 import '../style'
 import './style/index.css'
 
@@ -54,6 +54,8 @@ const label = computed(() => formatDate(ctx.value, valueDate.value))
 /** date of the wheels while the popup is open */
 const pending = shallowRef<Dayjs>()
 const initialDate = () => settleDate(ctx.value, valueDate.value ?? parse(props.defaultPickerValue) ?? dayjs())
+const confirmDate = computed(() => pending.value && settleDate(ctx.value, pending.value))
+const canConfirm = computed(() => !!confirmDate.value && isDateSelectable(ctx.value, confirmDate.value))
 
 watch(open, (val) => {
   if (val)
@@ -79,7 +81,9 @@ function onSelect(next: DatePickerValue) {
 }
 
 function onConfirm() {
-  const date = settleDate(ctx.value, pending.value ?? initialDate())
+  const date = confirmDate.value
+  if (!date || !canConfirm.value)
+    return
   if (!valueDate.value || !valueDate.value.isSame(date))
     update(date)
   emit('confirm', toValue(ctx.value, date), formatDate(ctx.value, date))
@@ -127,6 +131,7 @@ defineExpose({ toggle })
   </PickerTrigger>
   <PickerPopup
     :open="open"
+    :confirm-disabled="!canConfirm"
     :title="title"
     :ok-text="okText"
     :cancel-text="cancelText"

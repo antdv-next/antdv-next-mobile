@@ -2,7 +2,7 @@
 import type { VirtualListExpose } from '../virtual-list/interface'
 import type { CascaderOption, CascaderValue, CascaderViewEmits, CascaderViewProps, CascaderViewSlots } from './interface'
 import { CheckOutlined } from '@antdv-next/icons'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, shallowRef, watch } from 'vue'
 import { Spinner } from '../_base'
 import { addUnit, isPromise } from '../_util'
 import { useControlled } from '../_util/hooks'
@@ -57,11 +57,20 @@ const tabs = computed(() => levels.value.map((_, index) => {
 const lastLevel = () => Math.min(selectedOptions.value.length, levels.value.length - 1)
 const activeTab = ref(lastLevel())
 
+interface LazyLoad {
+  path: CascaderValue[]
+  level: number
+  waitForOptions: boolean
+}
+const loading = shallowRef<LazyLoad>()
+
 watch(value, (val) => {
   const same = val.length === path.value.length && val.every((item, index) => item === path.value[index])
   path.value = val.slice()
-  if (!same)
+  if (!same) {
+    loading.value = undefined
     activeTab.value = lastLevel()
+  }
 })
 watch(() => levels.value.length, (length) => {
   if (activeTab.value > length - 1)
@@ -112,20 +121,20 @@ function commit(next: CascaderValue[], selected: CascaderOption[]) {
 }
 
 // ---------- lazy loading ----------
-const loading = ref<{ path: CascaderValue[], level: number }>()
 function isLoading(option: CascaderOption, level: number) {
   return !!loading.value && loading.value.level === level && loading.value.path[level] === option[names.value.value]
 }
 
-function finishLoading() {
-  const current = loading.value
-  if (!current)
+function finishLoading(current: LazyLoad) {
+  if (loading.value !== current)
     return
   loading.value = undefined
   // the user may have gone elsewhere... but taps are blocked while loading, so the path is still ours
   const selected = getSelectedOptions(props.options, current.path, props.fieldNames)
   const option = selected[current.level]
-  if (option?.[names.value.children]?.length) {
+  if (!option)
+    return
+  if (option[names.value.children]?.length) {
     setActiveTab(current.level + 1)
   }
   else {
@@ -138,12 +147,12 @@ function finishLoading() {
 
 watch(() => props.options, () => {
   const current = loading.value
-  if (!current)
+  if (!current || !current.waitForOptions)
     return
   const option = getSelectedOptions(props.options, current.path, props.fieldNames)[current.level]
   // `loadData` without a promise: done as soon as the option got children (or turned into a leaf)
   if (!option || option[names.value.children]?.length || option.isLeaf !== false)
-    finishLoading()
+    finishLoading(current)
 }, { deep: true })
 
 function onSelect(option: CascaderOption, level: number) {
@@ -165,10 +174,22 @@ function onSelect(option: CascaderOption, level: number) {
     setActiveTab(level + 1)
   }
   else if (lazy) {
-    loading.value = { path: next, level }
-    const result = props.loadData!(selected)
-    if (isPromise(result))
-      result.then(finishLoading, finishLoading)
+    const current: LazyLoad = { path: next, level, waitForOptions: true }
+    loading.value = current
+    const fail = () => {
+      if (loading.value === current)
+        loading.value = undefined
+    }
+    try {
+      const result = props.loadData!(selected)
+      if (isPromise(result)) {
+        current.waitForOptions = false
+        result.then(() => finishLoading(current), fail)
+      }
+    }
+    catch {
+      fail()
+    }
   }
   else {
     emit('finish', next, selected)
