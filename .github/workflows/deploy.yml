@@ -1,180 +1,107 @@
 name: deploy-site
 
-# Deploys the documentation site (https://m.antdv-next.com, with the phone simulator)
-# to our servers after the Test workflow passed on `main`. Same flow as antdv-next:
-# build once, upload the artifact, then scp it to each server and swap it into place
-# (the previous version is kept in `index.bak`).
-#
-# Required secrets:
-#   DEPLOY_HOST, DEPLOY_USERNAME, DEPLOY_PASSWORD, DEPLOY_PORT, DEPLOY_TARGET_PATH
-#   DEPLOY_HOST_CN, DEPLOY_USERNAME_CN, DEPLOY_PASSWORD_CN, DEPLOY_PORT_CN, DEPLOY_TARGET_PATH_CN
-#
-# The server must fall back to `index.html` for unknown paths (history-mode routes).
-
+# Both docs hosts serve TARGET_DIR/index and retain the previous site in index.bak.
+# Promotion requires Python 3 and Linux renameat2(RENAME_EXCHANGE) on that filesystem.
 on:
   workflow_run:
     workflows: [Test]
     types: [completed]
-  # manual re-deploy of the current `main`
+    branches: [main]
   workflow_dispatch: {}
 
-concurrency:
-  group: deploy-site-main
-  cancel-in-progress: true
+permissions:
+  contents: read
 
 jobs:
   build:
-    # Test 绿 + main 分支才部署
     if: >
-      ${{
-        github.repository == 'antdv-next/antdv-next-mobile' &&
-        (
-          github.event_name == 'workflow_dispatch' ||
-          (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
-        )
-      }}
-
+      github.repository == 'antdv-next/antdv-next-mobile' &&
+      (
+        (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+        (github.event_name == 'workflow_run' &&
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.event == 'push' &&
+          github.event.workflow_run.head_repository.full_name == github.repository &&
+          github.event.workflow_run.head_branch == 'main')
+      )
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
     steps:
       - uses: actions/checkout@v7
         with:
-          # 确保部署的是“通过测试的那次提交”
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          run_install: false
-
-      - name: Setup Node
-        uses: actions/setup-node@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
 
-      - name: Build site
+      - name: Build and package site
         run: |
           pnpm build:site
-          rm -rf dist
-          cp -r docs/dist dist
+          mkdir site-release
+          tar -czf site-release/site.tar.gz -C docs/dist .
+          cp scripts/deploy_docs.py site-release/
+          cd site-release
+          sha256sum site.tar.gz > site.sha256
 
-      - name: Upload site artifact
-        uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7
         with:
           name: site-dist
-          path: dist
+          path: site-release
+          if-no-files-found: error
 
   deploy:
     needs: build
-
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - region: global
+            suffix: ''
+          - region: cn
+            suffix: _CN
+    concurrency:
+      group: deploy-site-${{ matrix.region }}
+      cancel-in-progress: false
+    env:
+      TARGET_DIR: ${{ secrets[format('DEPLOY_TARGET_PATH{0}', matrix.suffix)] }}
+      RELEASE_ID: ${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-      - name: Download site artifact
-        uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@v8
         with:
           name: site-dist
-          path: dist
 
-      - name: Inspect downloaded site artifact
-        run: ls -R dist
-
-      - name: Scp dir to server
+      - name: Stage the verified revision
         uses: appleboy/scp-action@v1
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
-          password: ${{ secrets.DEPLOY_PASSWORD }}
-          port: ${{ secrets.DEPLOY_PORT }}
-          source: dist
-          target: ${{ secrets.DEPLOY_TARGET_PATH }}
+          host: ${{ secrets[format('DEPLOY_HOST{0}', matrix.suffix)] }}
+          username: ${{ secrets[format('DEPLOY_USERNAME{0}', matrix.suffix)] }}
+          password: ${{ secrets[format('DEPLOY_PASSWORD{0}', matrix.suffix)] }}
+          port: ${{ secrets[format('DEPLOY_PORT{0}', matrix.suffix)] }}
+          source: site.tar.gz,site.sha256,deploy_docs.py
+          target: ${{ env.TARGET_DIR }}/.deploy/${{ env.RELEASE_ID }}
 
-      - name: ssh command
+      - name: Verify and activate staged site
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
-          password: ${{ secrets.DEPLOY_PASSWORD }}
-          port: ${{ secrets.DEPLOY_PORT }}
+          host: ${{ secrets[format('DEPLOY_HOST{0}', matrix.suffix)] }}
+          username: ${{ secrets[format('DEPLOY_USERNAME{0}', matrix.suffix)] }}
+          password: ${{ secrets[format('DEPLOY_PASSWORD{0}', matrix.suffix)] }}
+          port: ${{ secrets[format('DEPLOY_PORT{0}', matrix.suffix)] }}
+          envs: TARGET_DIR,RELEASE_ID
           script: |
-            set -e
-            TARGET="${{ secrets.DEPLOY_TARGET_PATH }}"
-
-            mkdir -p "$TARGET/index" "$TARGET/index.bak"
-
-            if [ "$(ls -A "$TARGET/index" 2>/dev/null)" ]; then
-              rm -rf "$TARGET/index.bak"/*
-              mv "$TARGET/index"/* "$TARGET/index.bak"/
-            fi
-
-            if [ ! -d "$TARGET/dist" ] || [ -z "$(ls -A "$TARGET/dist" 2>/dev/null)" ]; then
-              echo "No dist files uploaded; abort."
-              exit 1
-            fi
-
-            rm -rf "$TARGET/index"/*
-            mv "$TARGET/dist"/* "$TARGET/index"/
-
-      - name: Deployment completed
-        run: echo "Deployment to server completed successfully."
-
-  deploy-cn:
-    needs: build
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download site artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: site-dist
-          path: dist
-
-      - name: Inspect downloaded site artifact
-        run: ls -R dist
-
-      - name: Scp dir to CN server
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.DEPLOY_HOST_CN }}
-          username: ${{ secrets.DEPLOY_USERNAME_CN }}
-          password: ${{ secrets.DEPLOY_PASSWORD_CN }}
-          port: ${{ secrets.DEPLOY_PORT_CN }}
-          source: dist
-          target: ${{ secrets.DEPLOY_TARGET_PATH_CN }}
-
-      - name: ssh command on CN server
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.DEPLOY_HOST_CN }}
-          username: ${{ secrets.DEPLOY_USERNAME_CN }}
-          password: ${{ secrets.DEPLOY_PASSWORD_CN }}
-          port: ${{ secrets.DEPLOY_PORT_CN }}
-          script: |
-            set -e
-            TARGET="${{ secrets.DEPLOY_TARGET_PATH_CN }}"
-
-            mkdir -p "$TARGET/index" "$TARGET/index.bak"
-
-            if [ "$(ls -A "$TARGET/index" 2>/dev/null)" ]; then
-              rm -rf "$TARGET/index.bak"/*
-              mv "$TARGET/index"/* "$TARGET/index.bak"/
-            fi
-
-            if [ ! -d "$TARGET/dist" ] || [ -z "$(ls -A "$TARGET/dist" 2>/dev/null)" ]; then
-              echo "No dist files uploaded; abort."
-              exit 1
-            fi
-
-            rm -rf "$TARGET/index"/*
-            mv "$TARGET/dist"/* "$TARGET/index"/
-
-      - name: Deployment completed on CN server
-        run: echo "Deployment to CN server completed successfully."
+            set -eu
+            cd "${TARGET_DIR:?}"
+            target=$(pwd -P)
+            stage="$target/.deploy/${RELEASE_ID:?}"
+            cd "$stage"
+            sha256sum --check site.sha256
+            mkdir site
+            tar -xzf site.tar.gz -C site
+            python3 -B deploy_docs.py site "$target"
+            cd "$target"
+            rm -r -- "$stage"

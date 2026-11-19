@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { InfiniteScrollEmits, InfiniteScrollProps, InfiniteScrollSlots } from './interface'
-import { computed, nextTick, onActivated, onMounted, onUpdated, ref, shallowRef, watch } from 'vue'
+import { computed, nextTick, onActivated, onBeforeUnmount, onMounted, onUpdated, ref, shallowRef, watch } from 'vue'
 import { Spinner } from '../_base'
 import { getScrollParent, inBrowser } from '../_util'
 import { useControlled, useEventListener } from '../_util/hooks'
@@ -46,11 +46,9 @@ const [error, setError] = useControlled(props, 'error', {
 
 const isFinished = computed(() => props.finished || !props.hasMore)
 
-function isHidden(el: HTMLElement) {
-  return window.getComputedStyle(el).display === 'none'
-}
-
 let pending = false
+let waitingForLayout: boolean | undefined
+let resizeObserver: ResizeObserver | undefined
 
 function check() {
   // several triggers of the same tick (watchers, updated hook, scroll) result in one check
@@ -65,7 +63,8 @@ function check() {
     if (loading.value || isFinished.value || disabled.value || error.value || !root || !placeholder || !parent)
       return
     // e.g. inside an inactive tab
-    if (isHidden(root))
+    waitingForLayout = !root.getClientRects().length
+    if (waitingForLayout)
       return
 
     const threshold = Number(props.threshold) || 0
@@ -93,9 +92,21 @@ function retry() {
 
 onMounted(() => {
   scrollParent.value = getScrollParent(rootRef.value)
+  if (typeof ResizeObserver !== 'undefined' && rootRef.value) {
+    resizeObserver = new ResizeObserver(() => {
+      if (waitingForLayout === undefined)
+        return
+      if (!rootRef.value?.getClientRects().length)
+        waitingForLayout = true
+      else if (waitingForLayout)
+        check()
+    })
+    resizeObserver.observe(rootRef.value)
+  }
   if (props.immediateCheck)
     check()
 })
+onBeforeUnmount(() => resizeObserver?.disconnect())
 onActivated(check)
 // new content may still not fill the container
 onUpdated(check)

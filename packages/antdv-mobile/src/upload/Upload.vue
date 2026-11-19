@@ -51,10 +51,7 @@ const inputRef = ref<HTMLInputElement>()
 // Kept locally (instead of `useControlled`) because async upload callbacks must always
 // read the latest list synchronously, even before the parent applied `update:fileList`.
 const list = ref<UploadFile[]>(props.fileList ?? props.defaultFileList ?? [])
-watch(() => props.fileList, (value) => {
-  if (value !== undefined)
-    list.value = value
-})
+let disposed = false
 
 function commit(next: UploadFile[], files: UploadFile[], event?: { percent: number }) {
   list.value = next
@@ -103,7 +100,7 @@ function resolvePreviewFile(raw: UploadRawFile) {
   Promise.resolve(props.previewFile(raw)).then(
     (thumbUrl) => {
       const current = findFile(raw.uid)
-      if (current && thumbUrl)
+      if (!disposed && current && thumbUrl)
         updateFile({ ...current, thumbUrl })
     },
     () => {},
@@ -114,35 +111,78 @@ const isImage = (file: UploadFile) => (props.isImageUrl ? props.isImageUrl(file)
 const getThumb = (file: UploadFile) => (isImage(file) ? file.thumbUrl || file.url : undefined)
 
 // ---------- request ----------
-const requests = new Map<string, UploadRequestHandler>()
+interface UploadTask {
+  cancelled: boolean
+  request?: UploadRequestHandler
+}
+const requests = new Map<string, UploadTask>()
+const bodies = new Map<string, Blob>()
+const preparing = new Set<string>()
+
+function cancelRequest(uid: string) {
+  const task = requests.get(uid)
+  if (!task)
+    return
+  requests.delete(uid)
+  task.cancelled = true
+  task.request?.abort()
+}
+
+function releaseFile(uid: string) {
+  cancelRequest(uid)
+  bodies.delete(uid)
+  revokeThumb(uid)
+}
+
+watch(() => props.fileList?.map(file => file.uid), (uids) => {
+  if (!uids || !props.fileList)
+    return
+  const retained = new Set(uids)
+  for (const uid of new Set([...requests.keys(), ...bodies.keys(), ...objectUrls.keys()])) {
+    if (!retained.has(uid))
+      releaseFile(uid)
+  }
+  list.value = props.fileList
+})
 
 function abort(file?: UploadFile) {
-  if (file) {
-    requests.get(file.uid)?.abort()
-    requests.delete(file.uid)
-  }
-  else {
-    requests.forEach(request => request.abort())
-    requests.clear()
+  if (file)
+    preparing.delete(file.uid)
+  else
+    preparing.clear()
+  for (const uid of file ? [file.uid] : [...requests.keys()]) {
+    cancelRequest(uid)
+    const current = findFile(uid)
+    if (current?.status === 'uploading')
+      updateFile({ ...current, status: undefined, percent: undefined })
   }
 }
 
-async function startUpload(uid: string, body?: Blob) {
+async function startUpload(uid: string) {
   const file = findFile(uid)
   const raw = file?.originFileObj
-  if (!file || !raw)
+  if (disposed || !file || !raw || file.status !== 'uploading')
     return
-  const fail = (error: any, response?: any) => {
-    requests.delete(uid)
+  const task: UploadTask = { cancelled: false }
+  requests.set(uid, task)
+  const activeFile = () => {
     const current = findFile(uid)
-    if (current && current.status === 'uploading')
+    return requests.get(uid) === task && current?.status === 'uploading' ? current : undefined
+  }
+  const fail = (error: any, response?: any) => {
+    const current = activeFile()
+    if (current) {
+      requests.delete(uid)
       updateFile({ ...current, status: 'error', error, response })
+    }
   }
 
   let action: string
   let data: Record<string, unknown>
   try {
     action = typeof props.action === 'function' ? await props.action(raw) : props.action ?? ''
+    if (!activeFile())
+      return
     data = typeof props.data === 'function' ? await props.data(file) : props.data ?? {}
   }
   catch (error) {
@@ -150,37 +190,41 @@ async function startUpload(uid: string, body?: Blob) {
     return
   }
   // removed (or restarted) while the action / data were resolved
-  if (findFile(uid)?.status !== 'uploading')
+  if (!activeFile())
     return
 
   const options: UploadRequestOption = {
     action,
     data,
     filename: props.name,
-    file: body ?? raw,
+    file: bodies.get(uid) ?? raw,
     headers: props.headers ?? {},
     withCredentials: props.withCredentials,
     method: props.method,
     onProgress: (event) => {
-      const current = findFile(uid)
-      if (current && current.status === 'uploading') {
+      const current = activeFile()
+      if (current) {
         const percent = Math.min(Math.max(event.percent, 0), 100)
         updateFile({ ...current, percent }, { percent })
       }
     },
     onSuccess: (response, xhr) => {
-      requests.delete(uid)
-      const current = findFile(uid)
-      if (current && current.status === 'uploading')
+      const current = activeFile()
+      if (current) {
+        requests.delete(uid)
         updateFile({ ...current, status: 'done', percent: 100, response, xhr })
+      }
     },
     onError: fail,
   }
 
   try {
     const request = props.customRequest ? props.customRequest(options, { defaultRequest }) : defaultRequest(options)
-    if (request && typeof request.abort === 'function')
-      requests.set(uid, request)
+    if (request && typeof request.abort === 'function') {
+      task.request = request
+      if (task.cancelled)
+        request.abort()
+    }
   }
   catch (error) {
     fail(error)
@@ -192,15 +236,17 @@ function upload(file: UploadFile) {
   const current = findFile(file.uid)
   if (!current?.originFileObj || current.status === 'uploading')
     return
-  abort(current)
+  cancelRequest(current.uid)
   updateFile({ ...current, status: 'uploading', percent: 0, error: undefined, response: undefined })
   startUpload(current.uid)
 }
 
 const hasRequest = computed(() => props.action !== undefined || !!props.customRequest)
+let selection = 0
+let lastReplacement = 0
 
 async function addFiles(picked: File[]) {
-  if (disabled.value || !picked.length)
+  if (disposed || disabled.value || !picked.length)
     return
   let files = picked
 
@@ -212,7 +258,7 @@ async function addFiles(picked: File[]) {
     }
   }
   if (props.maxCount !== undefined) {
-    const remain = props.maxCount === 1 ? 1 : Math.max(props.maxCount - list.value.length, 0)
+    const remain = props.maxCount === 1 ? 1 : Math.max(props.maxCount - list.value.length - preparing.size, 0)
     if (files.length > remain) {
       emit('exceed', files.slice(remain), 'maxCount')
       files = files.slice(0, remain)
@@ -220,10 +266,12 @@ async function addFiles(picked: File[]) {
   }
   if (!files.length)
     return
+  const batch = ++selection
 
   const raws = files.map((file) => {
     const raw = file as UploadRawFile
     raw.uid = genUid()
+    preparing.add(raw.uid)
     return raw
   })
 
@@ -248,12 +296,20 @@ async function addFiles(picked: File[]) {
     }),
   )
 
+  let accepted = raws.map((raw, index) => ({ raw, body: parsed[index] }))
+    .filter(({ raw, body }) => preparing.delete(raw.uid) && body !== null)
+  if (disposed || (props.maxCount === 1 && batch < lastReplacement))
+    return
+  // The parent can replace the controlled list or reduce maxCount during preprocessing.
+  const available = props.maxCount === 1 ? 1 : Math.max((props.maxCount ?? Infinity) - list.value.length, 0)
+  if (accepted.length > available) {
+    emit('exceed', accepted.slice(available).map(({ raw }) => raw), 'maxCount')
+    accepted = accepted.slice(0, available)
+  }
   const added: UploadFile[] = []
-  const uploads: Array<[string, Blob]> = []
-  raws.forEach((raw, index) => {
-    const body = parsed[index]
-    if (body === null)
-      return
+  for (const { raw, body } of accepted) {
+    if (body && body !== raw)
+      bodies.set(raw.uid, body)
     const willUpload = body !== false && hasRequest.value
     added.push({
       uid: raw.uid,
@@ -267,27 +323,23 @@ async function addFiles(picked: File[]) {
       // without a request target the file is simply collected
       status: willUpload ? 'uploading' : body !== false ? 'done' : undefined,
     })
-    if (willUpload)
-      uploads.push([raw.uid, body as Blob])
-  })
+  }
   if (!added.length)
     return
 
   let next: UploadFile[]
   if (props.maxCount === 1) {
-    list.value.forEach((file) => {
-      abort(file)
-      revokeThumb(file.uid)
-    })
-    next = added.slice(-1)
+    lastReplacement = batch
+    list.value.forEach(file => releaseFile(file.uid))
+    next = added
   }
   else {
     next = [...list.value, ...added]
   }
-  commit(next, added.filter(file => next.includes(file)))
+  commit(next, added)
 
   added.forEach(file => file.originFileObj && resolvePreviewFile(file.originFileObj))
-  uploads.forEach(([uid, body]) => startUpload(uid, body))
+  added.forEach(file => file.status === 'uploading' && startUpload(file.uid))
 }
 
 function onInputChange(event: Event) {
@@ -317,10 +369,9 @@ async function removeFile(file: UploadFile) {
     }
   }
   const current = findFile(file.uid)
-  if (!current)
+  if (disposed || !current)
     return
-  abort(current)
-  revokeThumb(current.uid)
+  releaseFile(current.uid)
   const removed: UploadFile = { ...current, status: 'removed' }
   commit(list.value.filter(item => item.uid !== current.uid), [removed])
   emit('remove', removed)
@@ -366,7 +417,10 @@ function getActions(file: UploadFile): UploadItemActions {
 }
 
 onBeforeUnmount(() => {
-  abort()
+  disposed = true
+  preparing.clear()
+  requests.forEach((_, uid) => cancelRequest(uid))
+  bodies.clear()
   objectUrls.forEach(url => URL.revokeObjectURL(url))
   objectUrls.clear()
 })

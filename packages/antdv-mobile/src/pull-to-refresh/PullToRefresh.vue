@@ -136,6 +136,13 @@ function onTouchEnd() {
   }
 }
 
+function onTouchCancel() {
+  reachTop = false
+  dragging.value = false
+  if (status.value === 'pulling' || status.value === 'canRelease')
+    setStatus(0)
+}
+
 watch(refreshing, (value) => {
   clearTimeout(completeTimer)
   if (value) {
@@ -187,7 +194,7 @@ const classNames = computed(() => [
       :style="trackStyle"
       @touchstart.passive="onTouchStart"
       @touchend="onTouchEnd"
-      @touchcancel="onTouchEnd"
+      @touchcancel="onTouchCancel"
     >
       <div class="am-pull-to-refresh-head" :class="classes?.head" :style="[{ height: headHeight === undefined ? toUnit(DEFAULT_HEAD_HEIGHT) : addUnit(headHeight) }, styles?.head]">
         <slot v-if="status === 'pulling'" name="pulling" v-bind="info">

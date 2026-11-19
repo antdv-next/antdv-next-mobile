@@ -57,10 +57,20 @@ import { Button, message } from '@antdv-next/mobile'
 </template>
 ```
 
-如果你的构建链路不处理包内的 CSS 引入（例如部分 SSR 场景），可以改为手动引入完整样式：
+如果需要独立加载完整样式，可以在客户端入口中引入：
 
 ```ts
 import '@antdv-next/mobile/style.css'
+```
+
+Vite SSR 默认将依赖留给 Node 加载。组件的 ESM 文件会引入 CSS，因此服务端构建也需要处理组件库。将以下配置合并到 `vite.config.ts`，即可在服务端使用 `renderToString` 渲染组件：
+
+```ts
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  ssr: { noExternal: ['@antdv-next/mobile'] },
+})
 ```
 
 ## 自动导入 {#auto-import}

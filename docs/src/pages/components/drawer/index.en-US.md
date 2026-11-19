@@ -40,6 +40,8 @@ The API is aligned with `Drawer` of Antdv Next, and it is built on [Popup](/comp
 | mask | Whether to show the mask | `boolean` | `true` |
 | maskClosable | Whether to close when the mask is clicked | `boolean` | `true` |
 | keyboard | Whether pressing ESC closes the drawer | `boolean` | `true` |
+| aria-label | Accessible name that overrides the default title association | `string` | - |
+| aria-labelledby | IDs of elements that label the drawer, taking precedence over aria-label and the default title | `string` | ID of the title element |
 | size | Preset size or custom size. `default`: top / bottom drawers are sized by their content (90% at most), left / right drawers are 80%; `large`: 90% for top / bottom, 100% for left / right | `'default' \| 'large' \| number \| string` | `'default'` |
 | width | Width of left / right drawers, takes precedence over `size` | `number \| string` | - |
 | height | Height of top / bottom drawers, takes precedence over `size` | `number \| string` | - |

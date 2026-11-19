@@ -21,7 +21,7 @@ import PickerTrigger from '../picker/PickerTrigger.vue'
 import { usePickerField } from '../picker/usePickerField'
 import Segmented from '../segmented/Segmented.vue'
 import DatePickerView from './DatePickerView.vue'
-import { createDateContext, formatDate, settleDate, toDayjs, toValue } from './util'
+import { createDateContext, formatDate, isDateSelectable, settleDate, toDayjs, toValue } from './util'
 import '../style'
 import './style/index.css'
 
@@ -167,6 +167,10 @@ const resolved = computed<[Dayjs | null, Dayjs | null]>(() => {
   return [side(0), side(1)]
 })
 const resolvedTexts = computed(() => resolved.value.map(date => formatDate(ctx.value, date ?? undefined)) as [string, string])
+const canConfirm = computed(() => SIDES.every((side) => {
+  const date = resolved.value[side]
+  return !date || isDateSelectable(side === 0 ? startCtx.value : endCtx.value, date)
+}))
 
 const toValues = (dates: [Dayjs | null, Dayjs | null]) => dates.map(date => (date ? toValue(ctx.value, markRaw(date)) : null)) as RangePickerValue
 const toStrings = (dates: [Dayjs | null, Dayjs | null]) => dates.map(date => formatDate(ctx.value, date ?? undefined)) as [string, string]
@@ -198,6 +202,8 @@ function onSelect(next: DatePickerValue) {
 }
 
 function onConfirm() {
+  if (!canConfirm.value)
+    return
   const dates = resolved.value
   const changed = SIDES.some((index) => {
     const prev = valueDates.value[index]
@@ -299,6 +305,7 @@ defineExpose({ toggle })
   </PickerTrigger>
   <PickerPopup
     :open="open"
+    :confirm-disabled="!canConfirm"
     :title="title"
     :ok-text="okText"
     :cancel-text="cancelText"

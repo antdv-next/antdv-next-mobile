@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import { onBeforeUnmount, onDeactivated, watch } from 'vue'
+import { onActivated, onBeforeUnmount, onDeactivated, watch } from 'vue'
 import { getScrollParent, inBrowser, preventDefault } from '../index'
 import { useTouch } from './useTouch'
 
@@ -12,6 +12,7 @@ const BODY_LOCK_CLASS = 'am-overflow-hidden'
 export function useLockScroll(rootRef: Ref<HTMLElement | undefined | null>, shouldLock: () => boolean) {
   const touch = useTouch()
   let locked = false
+  let active = true
 
   const onTouchMove = (event: TouchEvent) => {
     touch.move(event)
@@ -29,7 +30,7 @@ export function useLockScroll(rootRef: Ref<HTMLElement | undefined | null>, shou
   }
 
   const lock = () => {
-    if (!inBrowser || locked)
+    if (!inBrowser || locked || !active)
       return
     locked = true
     document.addEventListener('touchstart', touch.start)
@@ -50,7 +51,15 @@ export function useLockScroll(rootRef: Ref<HTMLElement | undefined | null>, shou
   }
 
   watch(shouldLock, value => (value ? lock() : unlock()), { immediate: true })
-  onDeactivated(unlock)
+  onDeactivated(() => {
+    active = false
+    unlock()
+  })
+  onActivated(() => {
+    active = true
+    if (shouldLock())
+      lock()
+  })
   onBeforeUnmount(unlock)
 
   return { lock, unlock }

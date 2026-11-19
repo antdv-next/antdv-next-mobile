@@ -15,6 +15,7 @@ import type { TourPosition } from './position'
 import { CloseOutlined } from '@antdv-next/icons'
 import { computed, h, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, unref, watch } from 'vue'
 import { Portal } from '../_base'
+import { useDialogLayer } from '../_base/useDialogLayer'
 import { genId, isRenderable } from '../_util'
 import { nextZIndex, useControlled, useEventListener, useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
@@ -318,8 +319,8 @@ function onNext(event: MouseEvent) {
   nextButtonProps?.onClick?.(event)
 }
 
-useEventListener('keydown', (event: KeyboardEvent) => {
-  if (!open.value || !props.keyboard)
+function onKeydown(event: KeyboardEvent) {
+  if (!props.keyboard)
     return
   const target = event.target as HTMLElement | null
   if (target && (/^(?:input|textarea)$/i.test(target.tagName) || target.isContentEditable))
@@ -336,7 +337,9 @@ useEventListener('keydown', (event: KeyboardEvent) => {
     event.preventDefault()
     setCurrent(current.value + 1)
   }
-})
+}
+
+useDialogLayer({ element: panelRef, open: () => !!open.value, zIndex: () => zIndex.value, onKeydown })
 
 function onAfterLeave() {
   // like PC, the layer is destroyed once it is closed

@@ -41,6 +41,8 @@ API 与 Antdv Next 的 `Drawer` 对齐，基于 [Popup](/components/popup) 实�
 | mask | 是否显示遮罩 | `boolean` | `true` |
 | maskClosable | 点击遮罩是否关闭 | `boolean` | `true` |
 | keyboard | 是否支持按 ESC 关闭 | `boolean` | `true` |
+| aria-label | 自定义无障碍名称，覆盖默认的标题关联 | `string` | - |
+| aria-labelledby | 指定用于命名抽屉的元素 ID，优先于 aria-label 和默认标题 | `string` | 标题元素的 ID |
 | size | 预设尺寸或自定义尺寸。`default`：上下方向由内容撑开（最高 90%），左右方向为 80%；`large`：上下方向 90%，左右方向 100% | `'default' \| 'large' \| number \| string` | `'default'` |
 | width | 左右方向抽屉的宽度，优先于 `size` | `number \| string` | - |
 | height | 上下方向抽屉的高度，优先于 `size` | `number \| string` | - |

@@ -3,7 +3,7 @@ import type { Component } from 'vue'
 import { LeftOutlined } from '@antdv-next/icons'
 import { computed, nextTick, onErrorCaptured, ref, shallowRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useDocs, useMessages } from '../../shared/locale'
+import { localizePath, useDocs, useDocsLocale, useMessages } from '../../shared/locale'
 
 const props = defineProps<{ name: string }>()
 const route = useRoute()
@@ -11,6 +11,7 @@ const route = useRoute()
 interface LoadedDemo { id: string, full: boolean, component: Component }
 
 const docs = useDocs()
+const docsLocale = useDocsLocale()
 const t = useMessages()
 const entry = computed(() => docs.value.components.find(c => c.name === props.name))
 // titles come from the current locale, the demo components are shared by both
@@ -19,6 +20,13 @@ const demos = shallowRef<LoadedDemo[]>([])
 const loading = ref(true)
 const focused = ref('')
 const errors = ref<Record<string, string>>({})
+const docsLink = computed(() => {
+  if (route.query.from !== 'docs' || !entry.value)
+    return
+  const page = localizePath(`/components/${encodeURIComponent(props.name)}`, docsLocale.locale)
+  const hash = typeof route.query.demo === 'string' ? `#demo-${encodeURIComponent(route.query.demo)}` : ''
+  return `${import.meta.env.BASE_URL}${page.slice(1)}${hash}`
+})
 
 async function load() {
   loading.value = true
@@ -68,7 +76,10 @@ onErrorCaptured((error, instance) => {
 <template>
   <div class="m-demo-page">
     <header class="m-demo-nav">
-      <RouterLink to="/" class="m-demo-back" :aria-label="t.mobile.back">
+      <a v-if="docsLink" :href="docsLink" class="m-demo-back" :aria-label="t.mobile.back">
+        <LeftOutlined />
+      </a>
+      <RouterLink v-else to="/" class="m-demo-back" :aria-label="t.mobile.back">
         <LeftOutlined />
       </RouterLink>
       {{ entry?.title ?? name }}

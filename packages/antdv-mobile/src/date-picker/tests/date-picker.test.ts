@@ -190,6 +190,24 @@ describe('DatePickerView', () => {
 })
 
 describe('DatePicker', () => {
+  it('requires a selectable day before confirming after navigating an unavailable month', async () => {
+    const wrapper = mount(DatePicker, {
+      props: {
+        defaultOpen: true,
+        virtual: false,
+        valueFormat: 'YYYY-MM-DD',
+        defaultPickerValue: '2025-02-10',
+        disabledDate: date => date.month() === 1,
+      },
+    })
+    await clickButton('confirm')
+    expect(wrapper.emitted('confirm')).toBeUndefined()
+    expect(wrapper.emitted('change')).toBeUndefined()
+    await clickOption(1, '3月')
+    await clickButton('confirm')
+    expect(wrapper.emitted('change')![0][0]).toBe('2025-03-10')
+  })
+
   it('renders the trigger and commits on confirm', async () => {
     const wrapper = mount(DatePicker, { props: { minDate: min, maxDate: max, defaultPickerValue: dayjs('2024-05-06'), title: '选择日期' } })
     const trigger = wrapper.find('.am-picker-trigger')

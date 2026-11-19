@@ -6,6 +6,8 @@ enableAutoUnmount(afterEach)
 
 // Teleport targets and static-API containers live in document.body; clean them between tests.
 afterEach(() => {
+  if (typeof document === 'undefined')
+    return
   document.body.innerHTML = ''
   document.body.removeAttribute('style')
   document.body.className = ''
@@ -13,7 +15,7 @@ afterEach(() => {
 
 config.global.stubs = {}
 
-if (!('ResizeObserver' in globalThis)) {
+if (typeof window !== 'undefined' && !('ResizeObserver' in globalThis)) {
   class ResizeObserver {
     observe() {}
     unobserve() {}
@@ -21,7 +23,7 @@ if (!('ResizeObserver' in globalThis)) {
   }
   ;(globalThis as any).ResizeObserver = ResizeObserver
 }
-if (!('IntersectionObserver' in globalThis)) {
+if (typeof window !== 'undefined' && !('IntersectionObserver' in globalThis)) {
   class IntersectionObserver {
     observe() {}
     unobserve() {}
@@ -30,7 +32,7 @@ if (!('IntersectionObserver' in globalThis)) {
   }
   ;(globalThis as any).IntersectionObserver = IntersectionObserver
 }
-if (!window.matchMedia) {
+if (typeof window !== 'undefined' && !window.matchMedia) {
   window.matchMedia = ((query: string) => ({
     matches: false,
     media: query,
@@ -42,5 +44,7 @@ if (!window.matchMedia) {
     dispatchEvent: () => false,
   })) as any
 }
-Element.prototype.scrollTo = Element.prototype.scrollTo || (() => {})
-Element.prototype.scrollIntoView = Element.prototype.scrollIntoView || (() => {})
+if (typeof Element !== 'undefined') {
+  Element.prototype.scrollTo = Element.prototype.scrollTo || (() => {})
+  Element.prototype.scrollIntoView = Element.prototype.scrollIntoView || (() => {})
+}

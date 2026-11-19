@@ -56,6 +56,30 @@ describe('Tabs', () => {
     expect(wrapper.emitted('change')).toHaveLength(1)
   })
 
+  it('reconciles uncontrolled selection when available tabs change', async () => {
+    const wrapper = mount(Tabs, { props: { items: [], defaultActiveKey: '2' } })
+    await wrapper.setProps({ items })
+    const selected = () => wrapper.find('[aria-selected="true"]').text()
+    expect(selected()).toBe('Tab 2')
+    await wrapper.setProps({ items: [items[2], items[0]] })
+    expect(selected()).toBe('Tab 1')
+    await wrapper.setProps({ items })
+    expect(selected()).toBe('Tab 1')
+    await wrapper.setProps({ items: [items[2]] })
+    expect(wrapper.find('[aria-selected="true"]').exists()).toBe(false)
+    expect(wrapper.emitted('change')).toBeUndefined()
+  })
+
+  it('selects the first enabled async item and respects an absent controlled key', async () => {
+    const wrapper = mount(Tabs, { props: { items: [] } })
+    await wrapper.setProps({ items: [items[2], items[0]] })
+    expect(wrapper.get('[aria-selected="true"]').text()).toBe('Tab 1')
+    expect(wrapper.get('.am-tabs-tabpane-active').text()).toBe('Content 1')
+    await wrapper.setProps({ activeKey: 'elsewhere' })
+    expect(wrapper.find('[aria-selected="true"]').exists()).toBe(false)
+    expect(wrapper.emitted('update:activeKey')).toBeUndefined()
+  })
+
   it('works controlled', async () => {
     const wrapper = mount(Tabs, { props: { items, activeKey: '1' } })
     const tabs = wrapper.findAll('.am-tabs-tab')

@@ -51,6 +51,56 @@ async function type(wrapper: ReturnType<typeof mount>, value: string) {
 }
 
 describe('Form', () => {
+  it('rejects a pending submission as out of date when the field changes', async () => {
+    let finishCheck!: () => void
+    const validator = (_: unknown, value: string) => value === 'good'
+      ? new Promise<void>((resolve) => { finishCheck = resolve })
+      : Promise.reject(new Error('Invalid name'))
+    const { wrapper } = setup({ model: { name: 'good' }, nameProps: { rules: [{ validator }] } })
+    await wrapper.get('form').trigger('submit')
+    await type(wrapper, 'bad')
+    expect(wrapper.text()).toContain('Invalid name')
+    finishCheck()
+    await flushPromises()
+    const form = wrapper.findComponent(Form)
+    expect(form.emitted('finish')).toBeUndefined()
+    expect(form.emitted('finishFailed')![0][0]).toMatchObject({ outOfDate: true, values: { name: 'bad' } })
+  })
+
+  it('waits for blocking rules when a parallel warning finishes first', async () => {
+    let complete!: (pass: boolean) => void
+    const blocking = () => new Promise<void>((resolve, reject) => {
+      complete = pass => pass ? resolve() : reject(new Error('Invalid name'))
+    })
+    const rules = [{ validator: blocking }, { warningOnly: true, validator: () => Promise.reject(new Error('A warning')) }]
+    const { form, wrapper } = setup({ nameProps: { rules, validateFirst: 'parallel' } })
+    const first = form().validateFields()
+    await flushPromises()
+    complete(false)
+    await expect(first).rejects.toMatchObject({ errorFields: [{ errors: ['Invalid name'], warnings: ['A warning'] }] })
+    const second = form().validateFields()
+    await flushPromises()
+    complete(true)
+    await expect(second).resolves.toBeDefined()
+    expect(wrapper.text()).toContain('A warning')
+  })
+
+  it('detects in-place date changes during async validation', async () => {
+    const date = new Date(2025, 0, 10)
+    let complete!: () => void
+    const validator = () => new Promise<void>((resolve) => {
+      complete = resolve
+    })
+    const { form } = setup({
+      model: { name: 'ready', date },
+      extra: () => h(FormItem, { name: 'date', rules: [{ validator }] }, () => h('i')),
+    })
+    const pending = form().validateFields(['date'])
+    date.setDate(11)
+    complete()
+    await expect(pending).rejects.toMatchObject({ outOfDate: true })
+  })
+
   it('renders a form with mobile cells', () => {
     const { wrapper } = setup()
     const form = wrapper.find('form')

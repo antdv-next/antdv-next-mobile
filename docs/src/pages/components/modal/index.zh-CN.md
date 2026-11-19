@@ -54,6 +54,8 @@ API 与 Antdv Next 的 `Modal` 对齐，外观为移动端常见的 iOS 风格�
 | zIndex | 层级 | `number` | 自动递增 |
 | width | 宽度，最大不超过屏幕宽度减 `48px` | `number \| string` | `300` |
 | scrollLock | 打开时是否锁定页面滚动 | `boolean` | `true` |
+| aria-label | 自定义无障碍名称，覆盖默认的标题关联 | `string` | - |
+| aria-labelledby | 指定用于命名对话框的元素 ID，优先于 aria-label 和默认标题 | `string` | 标题元素的 ID |
 | image | 对话框顶部的图片地址 | `string` | - |
 | actions | 操作按钮列表，替代默认的确定取消按钮，超过 2 个时纵向排列 | [ModalAction](#modalaction)[] | - |
 | closeOnAction | 点击操作按钮后是否关闭 | `boolean` | `false` |

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CheckOutlined, CopyOutlined, DownOutlined, MobileOutlined } from '@antdv-next/icons'
 import { computed, ref } from 'vue'
-import { useMessages } from '../../shared/locale'
+import { useDocsLocale, useMessages } from '../../shared/locale'
 import { focusDemo, simulator } from '../state'
 
 const props = defineProps<{
@@ -13,6 +13,7 @@ const props = defineProps<{
 }>()
 
 const t = useMessages()
+const docsLocale = useDocsLocale()
 const copied = ref(false)
 const expanded = ref(false)
 const lines = computed(() => props.code.split('\n').length)
@@ -31,10 +32,10 @@ async function copy() {
 
 <template>
   <section :id="`demo-${id}`" class="demo-block" :class="{ active }">
-    <header class="demo-block-header" @click="focusDemo(id)">
+    <header class="demo-block-header" @click="focusDemo(id, docsLocale.locale)">
       <h3>{{ title }}</h3>
       <div class="demo-block-actions" @click.stop>
-        <button class="icon-btn" :title="t.demo.focus" :aria-label="t.demo.focus" @click="focusDemo(id)">
+        <button class="icon-btn" :title="t.demo.focus" :aria-label="t.demo.focus" @click="focusDemo(id, docsLocale.locale)">
           <MobileOutlined />
         </button>
         <button class="icon-btn" :title="copied ? t.demo.copied : t.demo.copy" :aria-label="t.demo.copy" @click="copy">

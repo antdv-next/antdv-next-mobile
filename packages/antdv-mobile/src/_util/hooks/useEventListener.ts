@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import { isRef, onBeforeUnmount, onMounted, unref, watch } from 'vue'
+import { getCurrentInstance, getCurrentScope, isRef, onMounted, onScopeDispose, unref, watch } from 'vue'
 import { inBrowser } from '../index'
 
 type TargetRef = EventTarget | Ref<EventTarget | undefined | null>
@@ -33,10 +33,26 @@ export function useEventListener(type: string, listener: EventListener, options:
     }
   }
 
-  onMounted(() => add(unref(target)))
-  onBeforeUnmount(remove)
-  if (isRef(target))
-    watch(target, el => add(el))
-
-  return remove
+  let stopped = false
+  let stopWatching: (() => void) | undefined
+  const start = () => {
+    if (stopped)
+      return
+    if (isRef(target))
+      stopWatching = watch(target, add, { immediate: true })
+    else
+      add(unref(target))
+  }
+  const stop = () => {
+    stopped = true
+    stopWatching?.()
+    remove()
+  }
+  if (getCurrentInstance())
+    onMounted(start)
+  else
+    start()
+  if (getCurrentScope())
+    onScopeDispose(stop)
+  return stop
 }

@@ -42,7 +42,8 @@ describe('theme util', () => {
       '--am-line-height': '1.4',
     })
     expect(resolved.className).toContain('am-scope-x')
-    expect(resolved.css).toContain(':where(.am-scope-x) .am-button,.am-button:where(.am-scope-x)')
+    expect(resolved.css).toContain('.am-button:where(.am-scope-x)')
+    expect(resolved.css).toContain('.am-scope-x .am-theme-isolated:not(.am-scope-x)')
     expect(resolved.css).toContain('{--am-button-height:calc(44 * var(--am-design-unit));}')
     expect(resolved.css).toContain(':where(.am-scope-x) .am-nav-bar-root')
     expect(resolved.css).toContain('{--am-nav-bar-height:calc(50 * var(--am-design-unit));}')
@@ -69,8 +70,7 @@ describe('theme util', () => {
       '--am-design-unit': 'calc(var(--am-unit) * 375 / 750)',
       '--am-border-radius': 'calc(16 * var(--am-design-unit))',
     })
-    // the library design itself needs nothing
-    expect(resolveTheme({ token: { designWidth: 375 } }).style).toEqual({})
+    expect(resolveTheme({ token: { designWidth: 375 } }).style).toEqual({ '--am-design-unit': 'var(--am-unit)' })
     expect(resolveTheme({ token: { designWidth: 0 } }).style).toEqual({})
   })
 
@@ -81,7 +81,17 @@ describe('theme util', () => {
     expect(merged.token).toEqual({ colorPrimary: 'red', borderRadius: 10 })
     expect(merged.components!.Button).toEqual({ height: 40, fontSize: 18 })
     expect(mergeTheme(parent, { inherit: false, token: { borderRadius: 10 } })!.token).toEqual({ borderRadius: 10 })
+    expect(resolveTheme({ inherit: false }).className).toContain('am-theme-isolated')
     expect(mergeTheme(parent, undefined)).toBe(parent)
+  })
+
+  it('clears custom properties on an isolated provider and its nested popup scopes', () => {
+    const parent = { token: { brandAccent: 'red' }, components: { Button: { height: 80 } } }
+    const isolated = mergeTheme(parent, { inherit: false })
+    const nested = resolveTheme(mergeTheme(isolated, { inherit: true, token: { colorPrimary: 'blue' } }), 'nested')
+    expect(nested.className).toContain('am-theme-isolated')
+    expect(nested.css).toContain(':where(.nested){--am-brand-accent:initial;--am-button-height:initial;}')
+    expect(nested.style['--am-color-primary']).toBe('blue')
   })
 
   it('applyTheme writes to <html> and can be reverted / replaced', () => {

@@ -2,14 +2,14 @@ import type { AppContext, Component, VNode } from 'vue'
 import type { VueNode } from '../_util/type'
 import type { ModalAction, ModalFuncProps, ModalFuncReturn, ModalHookApi } from './interface'
 import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, InfoCircleFilled } from '@antdv-next/icons'
-import { defineComponent, Fragment, h, ref, shallowRef } from 'vue'
-import { isPromise, isRenderable } from '../_util'
+import { defineComponent, Fragment, getCurrentScope, h, onBeforeUnmount, onScopeDispose, ref, shallowRef } from 'vue'
+import { inBrowser, isPromise, isRenderable } from '../_util'
 import { mountComponent } from '../_util/mount'
 import ModalVue from './Modal.vue'
 
 /** Where a dialog created by a function call is rendered: a detached app (static) or a `contextHolder` (hook). */
 interface DialogHost {
-  add: (render: () => VNode, appContext?: AppContext | null) => () => void
+  add: (render: () => VNode, dispose: () => void, appContext?: AppContext | null) => () => void
 }
 
 interface DialogHandle extends ModalFuncReturn {
@@ -18,7 +18,7 @@ interface DialogHandle extends ModalFuncReturn {
 }
 
 const staticHost: DialogHost = {
-  add(render, appContext) {
+  add(render, _dispose, appContext) {
     return mountComponent(render, appContext).unmount
   },
 }
@@ -37,11 +37,14 @@ function renderNode(node: VueNode) {
 }
 
 function createDialog(initial: ModalFuncProps, host: DialogHost): DialogHandle {
+  if (!inBrowser)
+    return { result: Promise.resolve(false), update() {}, destroy() {} }
   const config = shallowRef<ModalFuncProps>({ ...initial })
   const open = ref(true)
   const okLoading = ref(false)
   const cancelLoading = ref(false)
   let remove: (() => void) | undefined
+  let presented = false
   let settled = false
   let resolveResult!: (value: boolean) => void
   const result = new Promise<boolean>((resolve) => {
@@ -57,7 +60,9 @@ function createDialog(initial: ModalFuncProps, host: DialogHost): DialogHandle {
   }
 
   function destroy() {
-    close(false)
+    close()
+    if (!presented)
+      dispose()
   }
   destroyFns.add(destroy)
 
@@ -94,15 +99,20 @@ function createDialog(initial: ModalFuncProps, host: DialogHost): DialogHandle {
     )
   }
 
-  function onAfterOpenChange(visible: boolean) {
-    if (visible)
+  function dispose() {
+    if (!destroyFns.delete(destroy))
       return
-    destroyFns.delete(destroy)
-    config.value.afterClose?.()
-    remove?.()
+    close()
+    try {
+      config.value.afterClose?.()
+    }
+    finally {
+      remove?.()
+    }
   }
 
   const render = () => {
+    presented ||= open.value
     const c = config.value
     const type = c.type === 'warn' ? 'warning' : c.type
     const okCancel = c.okCancel ?? type === 'confirm'
@@ -117,6 +127,9 @@ function createDialog(initial: ModalFuncProps, host: DialogHost): DialogHandle {
     return h(ModalVue, {
       'open': open.value,
       'title': c.title,
+      'ariaLabel': c.ariaLabel,
+      'ariaLabelledby': c.ariaLabelledby,
+      'ariaDescribedby': c.ariaDescribedby,
       'image': c.image,
       'footer': c.footer,
       'okText': c.okText,
@@ -147,11 +160,14 @@ function createDialog(initial: ModalFuncProps, host: DialogHost): DialogHandle {
         if (c.closeOnAction ?? true)
           close(false)
       },
-      onAfterOpenChange,
+      onAfterOpenChange: (visible: boolean) => {
+        if (!visible)
+          dispose()
+      },
     }, slots)
   }
 
-  remove = host.add(render, initial.appContext)
+  remove = host.add(render, dispose, initial.appContext)
 
   return {
     destroy,
@@ -199,10 +215,21 @@ let holderSeed = 0
  * so they keep the ConfigProvider / provide context of the calling component.
  */
 export function useModal(): [ModalHookApi, Component] {
-  const items = shallowRef<Array<{ id: number, render: () => VNode }>>([])
+  const items = shallowRef<Array<{ id: number, render: () => VNode, dispose: () => void }>>([])
+  let disposed = false
+  function disposeAll() {
+    disposed = true
+    items.value.forEach(item => item.dispose())
+  }
+  if (getCurrentScope())
+    onScopeDispose(disposeAll)
   const host: DialogHost = {
-    add(render) {
-      const item = { id: ++holderSeed, render }
+    add(render, dispose) {
+      if (disposed) {
+        dispose()
+        return () => {}
+      }
+      const item = { id: ++holderSeed, render, dispose }
       items.value = [...items.value, item]
       return () => {
         items.value = items.value.filter(i => i !== item)
@@ -212,6 +239,8 @@ export function useModal(): [ModalHookApi, Component] {
   const ContextHolder = defineComponent({
     name: 'AmModalContextHolder',
     setup() {
+      disposed = false
+      onBeforeUnmount(disposeAll)
       return () => items.value.map(item => h(Fragment, { key: item.id }, [item.render()]))
     },
   })

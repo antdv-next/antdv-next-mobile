@@ -148,6 +148,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test documentation deployment
+        run: python3 -B -m unittest discover -s scripts/tests
+
       - name: Base layer guard
         run: pnpm check:base
 
@@ -156,6 +159,18 @@ jobs:
 
       - name: Build library
         run: pnpm build
+
+      - name: Render the packed library with Vite SSR
+        run: |
+          consumer=$(mktemp -d)
+          cp tests/fixtures/ssr/* "$consumer/"
+          pnpm --filter @antdv-next/mobile pack --pack-destination "$consumer"
+          vite_version=$(node -p 'require("vite/package.json").version')
+          vue_version=$(node -p 'require("vue/package.json").version')
+          cd "$consumer"
+          npm install --no-audit --no-fund ./*.tgz "vite@$vite_version" "vue@$vue_version"
+          npm exec -- vite build --ssr entry.mjs
+          node dist/entry.js
 
       - name: Build site
         run: pnpm build:site

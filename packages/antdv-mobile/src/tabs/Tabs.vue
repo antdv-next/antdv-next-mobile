@@ -29,13 +29,22 @@ const config = useConfig()
 const size = useSize(() => props.size)
 const isRtl = computed(() => config.direction.value === 'rtl')
 
-const [activeKey, setActiveKey] = useControlled<TabsProps, 'activeKey', Key | undefined>(props, 'activeKey', {
-  defaultValue: () => props.defaultActiveKey ?? props.items.find(item => !item.disabled)?.key,
-  onChange: (key) => {
-    emit('update:activeKey', key as Key)
-    emit('change', key as Key)
-  },
+const [activeKey, updateActiveKey] = useControlled<TabsProps, 'activeKey', Key | undefined>(props, 'activeKey', {
+  defaultValue: () => props.defaultActiveKey,
 })
+
+watch([() => props.activeKey, () => props.items.filter(item => !item.disabled).map(item => item.key)], ([controlled, keys]) => {
+  if (controlled !== undefined)
+    return
+  const preferred = activeKey.value ?? props.defaultActiveKey
+  updateActiveKey(preferred !== undefined && keys.includes(preferred) ? preferred : keys[0])
+}, { immediate: true })
+
+function setActiveKey(key: Key) {
+  updateActiveKey(key)
+  emit('update:activeKey', key)
+  emit('change', key)
+}
 
 const activeIndex = computed(() => props.items.findIndex(item => item.key === activeKey.value))
 const placement = computed(() => props.tabPlacement ?? props.tabPosition ?? 'top')

@@ -3,8 +3,9 @@ import type { PopupEmits, PopupProps, PopupSlots } from './interface'
 import { CloseOutlined } from '@antdv-next/icons'
 import { computed, ref, watch } from 'vue'
 import { Portal } from '../_base'
+import { useDialogLayer } from '../_base/useDialogLayer'
 import { addUnit } from '../_util'
-import { nextZIndex, useEventListener, useLockScroll } from '../_util/hooks'
+import { nextZIndex, useLockScroll } from '../_util/hooks'
 import RenderNode from '../_util/RenderNode'
 import { useLocale } from '../locale'
 import Mask from '../mask/Mask.vue'
@@ -82,9 +83,15 @@ function onAfterLeave() {
   emit('afterOpenChange', false)
 }
 
-useEventListener('keydown', (event: KeyboardEvent) => {
-  if (props.open && props.keyboard && event.key === 'Escape')
-    close(event)
+useDialogLayer({
+  element: bodyRef,
+  open: () => props.open,
+  zIndex: () => zIndex.value,
+  modal: () => props.mask,
+  onKeydown(event) {
+    if (props.keyboard && event.key === 'Escape')
+      close(event)
+  },
 })
 
 defineExpose({
@@ -126,7 +133,11 @@ defineExpose({
           ]"
           :style="bodyStyle"
           role="dialog"
-          aria-modal="true"
+          :aria-modal="mask || undefined"
+          :aria-label="ariaLabel"
+          :aria-labelledby="ariaLabelledby"
+          :aria-describedby="ariaDescribedby"
+          :tabindex="mask ? -1 : undefined"
         >
           <button
             v-if="closable"

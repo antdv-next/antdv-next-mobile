@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 import type { MaybeElementRef } from './shared'
 import { computed, ref } from 'vue'
 import { useEventListener, useTouch } from '../_util/hooks'
-import { unrefElement } from './shared'
+import { tryOnScopeDispose, unrefElement } from './shared'
 
 function targetRef(target: MaybeElementRef) {
   return computed(() => unrefElement(target)) as unknown as Ref<EventTarget | undefined>
@@ -57,6 +57,10 @@ export function useLongPress(target: MaybeElementRef, handler: (event: TouchEven
   useEventListener('touchend', end, { target: el, passive: true })
   useEventListener('touchcancel', end, { target: el, passive: true })
 
+  tryOnScopeDispose(() => {
+    clear()
+    pressed.value = false
+  })
   return { pressed, cancel: clear }
 }
 

@@ -24,7 +24,7 @@ const theme = computed(() => resolveTheme(themeConfig.value, scope))
 // a scope that sets its own unit / design width (`theme.token`) measures them with a probe element
 const hasUnit = computed(() => {
   const token = themeConfig.value?.token
-  return isDef(token?.unit) || isDef(token?.designWidth)
+  return themeConfig.value?.inherit === false || isDef(token?.unit) || isDef(token?.designWidth)
 })
 const probeRef = ref<HTMLElement>()
 const ownUnit = ref(parent.unit.value)

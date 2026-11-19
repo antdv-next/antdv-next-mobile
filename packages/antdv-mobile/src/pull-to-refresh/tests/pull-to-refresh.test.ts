@@ -104,6 +104,20 @@ describe('PullToRefresh', () => {
     expect(wrapper.classes()).toContain('am-pull-to-refresh-normal')
   })
 
+  it('bounces back after a canceled pull even beyond the release threshold', async () => {
+    const wrapper = mount(PullToRefresh)
+    await pull(wrapper, 100, false)
+    expect(wrapper.classes()).toContain('am-pull-to-refresh-can-release')
+    fire(wrapper, 'touchcancel', 0, 0)
+    await nextTick()
+    expect(wrapper.classes()).toContain('am-pull-to-refresh-normal')
+    expect(wrapper.emitted('refresh')).toBeUndefined()
+    expect(wrapper.emitted('update:refreshing')).toBeUndefined()
+    await pull(wrapper, 100)
+    await nextTick()
+    expect(wrapper.emitted('refresh')).toHaveLength(1)
+  })
+
   it('a short pull bounces back without refreshing', async () => {
     const wrapper = mount(PullToRefresh)
     await pull(wrapper, 30)

@@ -53,6 +53,8 @@ The API is aligned with `Modal` of Antdv Next, and it looks like the iOS-style d
 | zIndex | z-index | `number` | Auto increment |
 | width | Width, at most the screen width minus `48px` | `number \| string` | `300` |
 | scrollLock | Whether to lock page scrolling while open | `boolean` | `true` |
+| aria-label | Accessible name that overrides the default title association | `string` | - |
+| aria-labelledby | IDs of elements that label the dialog, taking precedence over aria-label and the default title | `string` | ID of the title element |
 | image | URL of the image at the top of the modal | `string` | - |
 | actions | List of action buttons that replaces the default OK and Cancel buttons, stacked vertically when there are more than 2 | [ModalAction](#modalaction)[] | - |
 | closeOnAction | Whether to close after an action button is clicked | `boolean` | `false` |

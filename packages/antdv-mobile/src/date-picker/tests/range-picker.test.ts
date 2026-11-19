@@ -34,6 +34,24 @@ function clickButton(type: 'confirm' | 'cancel') {
 const range = (start: string, end: string): [Dayjs, Dayjs] => [dayjs(start), dayjs(end)]
 
 describe('DatePicker.RangePicker', () => {
+  it('requires selectable dates at both ends', async () => {
+    const wrapper = mount(DateRangePicker, {
+      props: {
+        ...base,
+        defaultOpen: true,
+        valueFormat: 'YYYY-MM-DD',
+        defaultValue: ['2025-01-10', '2025-02-10'],
+        disabledDate: date => date.month() === 1,
+      },
+    })
+    await clickButton('confirm')
+    expect(wrapper.emitted('confirm')).toBeUndefined()
+    await clickTab(1)
+    await clickOption(1, '3月')
+    await clickButton('confirm')
+    expect(wrapper.emitted('change')![0][0]).toEqual(['2025-01-10', '2025-03-10'])
+  })
+
   it('is exposed like antdv-next', () => {
     expect(DatePicker.RangePicker).toBe(DateRangePicker)
     expect(DateRangePicker.name).toBe('AmRangePicker')

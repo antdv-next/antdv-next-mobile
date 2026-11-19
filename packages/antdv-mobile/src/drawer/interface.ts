@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'vue'
 import type { GetContainer, Numeric, VueNode } from '../_util/type'
+import type { PopupAriaProps } from '../popup/interface'
 
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left'
 export type DrawerSize = 'default' | 'large' | number | string
@@ -37,7 +38,7 @@ export interface DrawerSemanticStyles {
   handle?: CSSProperties
 }
 
-export interface DrawerProps {
+export interface DrawerProps extends PopupAriaProps {
   /** Whether the drawer is visible. Supports `v-model:open`. */
   open?: boolean
   title?: VueNode

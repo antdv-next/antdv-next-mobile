@@ -38,6 +38,9 @@ If you need a panel with a title, a close button and a footer, use [Drawer](/com
 | safeArea | Whether to reserve the bottom safe area when popping up from the bottom | `boolean` | `true` |
 | lockScroll | Whether to lock page scrolling while open | `boolean` | `true` |
 | keyboard | Whether to support closing with ESC | `boolean` | `true` |
+| aria-label | Accessible name for a dialog without a visible title | `string` | - |
+| aria-labelledby | Space-separated IDs of elements that name the dialog | `string` | - |
+| aria-describedby | Space-separated IDs of elements that describe the dialog | `string` | - |
 | destroyOnHidden | Destroy the content after it is closed | `boolean` | `false` |
 | forceRender | Pre-render the content before it is first opened | `boolean` | `false` |
 | getContainer | The mount node, `false` mounts it in place | `string \| HTMLElement \| (() => HTMLElement) \| false` | `document.body` |

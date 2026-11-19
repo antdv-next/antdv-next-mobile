@@ -10,6 +10,8 @@ export interface MountResult {
   unmount: () => void
 }
 
+let staticAppId = 0
+
 /**
  * Mounts a root component into a detached holder under `document.body`.
  * Used by static APIs (`Modal.confirm`, `message`, `toast`, `ImagePreview` ...).
@@ -37,8 +39,10 @@ export function mountComponent(render: () => any, appContext?: App['_context'] |
   const app = createApp(Root)
   if (appContext) {
     // share globally registered components / provides of the host app
-    Object.assign(app._context, { ...appContext, app: app._context.app })
+    Object.assign(app._context, { ...appContext, config: { ...appContext.config }, app: app._context.app })
   }
+  // Each detached app shares a document with the host and other static dialogs.
+  app.config.idPrefix = `am-static-${++staticAppId}`
   app.mount(holder)
 
   let unmounted = false

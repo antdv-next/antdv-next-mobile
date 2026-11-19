@@ -20,7 +20,7 @@ import { configContextKey, disabledContextKey, useConfig } from '../config-provi
 import { useLocale } from '../locale'
 import { variantContextKey } from './context'
 import { defaultScrollOptions, formInternalContextKey } from './internal'
-import { allPromiseFinish, cloneValue, getNamePath, getValue, isSameNamePath, mergeMessages, setValue } from './utils'
+import { allPromiseFinish, cloneValue, getNamePath, getValue, isEqualValue, isSameNamePath, mergeMessages, setValue } from './utils'
 import '../style'
 import './style/index.css'
 
@@ -178,12 +178,13 @@ function validateFields(arg1?: FormNamePath[] | FormValidateOptions, arg2?: Form
   const nameList = Array.isArray(arg1) ? arg1 : undefined
   const options = (Array.isArray(arg1) ? arg2 : arg1) ?? {}
   const provideNameList = !!nameList?.length
-  const namePathList: FormInternalNamePath[] = provideNameList ? nameList!.map(getNamePath) : []
+  const requested = provideNameList ? nameList!.map(getNamePath) : undefined
+  const entities = getFieldEntities(requested)
+  const namePathList = requested ?? entities.map(field => field.namePath())
+  const snapshot = pickValues(namePathList)
   const promiseList: Promise<FormFieldError>[] = []
 
-  getFieldEntities(provideNameList ? namePathList : undefined).forEach((field) => {
-    if (!provideNameList)
-      namePathList.push(field.namePath())
+  entities.forEach((field) => {
     if (!field.rules().length)
       return
     if (options.dirty) {
@@ -215,11 +216,12 @@ function validateFields(arg1?: FormNamePath[] | FormValidateOptions, arg2?: Form
 
   const summaryPromise = allPromiseFinish(promiseList)
   lastValidatePromise = summaryPromise
+  const isOutOfDate = () => lastValidatePromise !== summaryPromise || !isEqualValue(snapshot, pickValues(namePathList))
 
   const returnPromise = summaryPromise
     .then(() => {
-      if (lastValidatePromise === summaryPromise)
-        return getFieldsValue(namePathList)
+      if (!isOutOfDate())
+        return snapshot
       // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject<Record<string, any>>([])
     })
@@ -229,7 +231,7 @@ function validateFields(arg1?: FormNamePath[] | FormValidateOptions, arg2?: Form
         message: errorFields[0]?.errors?.[0],
         values: getFieldsValue(namePathList),
         errorFields,
-        outOfDate: lastValidatePromise !== summaryPromise,
+        outOfDate: isOutOfDate(),
       }
 
       return Promise.reject<Record<string, any>>(errorInfo)

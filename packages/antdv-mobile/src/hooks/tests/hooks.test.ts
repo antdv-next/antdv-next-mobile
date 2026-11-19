@@ -10,6 +10,7 @@ import {
   useCountTo,
   useDebounceFn,
   useElementSize,
+  useEventListener,
   useIntervalFn,
   useLoadMore,
   useLongPress,
@@ -39,6 +40,44 @@ function withSetup<T>(composable: (el: ReturnType<typeof ref<HTMLElement>>) => T
 }
 
 const touch = (x: number, y: number) => ({ touches: [{ clientX: x, clientY: y }] })
+
+describe('useEventListener', () => {
+  it('attaches fixed and changing targets in an effect scope and stops both', async () => {
+    const first = document.createElement('button')
+    const second = document.createElement('button')
+    const target = ref(first)
+    const fixed = vi.fn()
+    const changing = vi.fn()
+    const scope = effectScope()
+    scope.run(() => {
+      useEventListener('click', fixed, { target: first })
+      useEventListener('click', changing, { target })
+    })
+    first.click()
+    target.value = second
+    await nextTick()
+    first.click()
+    second.click()
+    expect(fixed).toHaveBeenCalledTimes(2)
+    expect(changing).toHaveBeenCalledTimes(2)
+    scope.stop()
+    first.click()
+    second.click()
+    expect(fixed).toHaveBeenCalledTimes(2)
+    expect(changing).toHaveBeenCalledTimes(2)
+  })
+
+  it('keeps a manually stopped listener detached when its target changes', async () => {
+    const target = ref(document.createElement('button'))
+    const listener = vi.fn()
+    const stop = useEventListener('click', listener, { target })
+    stop()
+    target.value = document.createElement('button')
+    await nextTick()
+    target.value.click()
+    expect(listener).not.toHaveBeenCalled()
+  })
+})
 
 describe('state', () => {
   it('useBoolean', () => {
@@ -293,6 +332,16 @@ describe('dom', () => {
 describe('gesture', () => {
   beforeEach(() => vi.useFakeTimers())
   afterEach(() => vi.useRealTimers())
+
+  it('useLongPress cancels a pending press when its component unmounts', async () => {
+    const handler = vi.fn()
+    const { wrapper, result } = withSetup(el => useLongPress(el, handler, { delay: 300 }))
+    await wrapper.trigger('touchstart', touch(10, 10))
+    wrapper.unmount()
+    vi.advanceTimersByTime(300)
+    expect(handler).not.toHaveBeenCalled()
+    expect(result.pressed.value).toBe(false)
+  })
 
   it('useLongPress fires after the delay, not after a move or early release', async () => {
     const handler = vi.fn()

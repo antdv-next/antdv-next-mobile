@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { defineComponent, h, ref } from 'vue'
+import { createSSRApp, defineComponent, h, nextTick, ref } from 'vue'
+import { renderToString } from 'vue/server-renderer'
 import { BaseBadge, Portal, Spinner } from '..'
 import { isRenderable } from '../../_util'
 import { useClickAway, useVirtualRange } from '../../_util/hooks'
@@ -39,6 +40,21 @@ describe('base layer', () => {
     })
     expect(target.querySelector('.x')).not.toBeNull()
     wrapper.unmount()
+  })
+
+  it('adopts the server-rendered inline content before teleporting it on hydration', async () => {
+    const holder = document.createElement('div')
+    const target = document.createElement('div')
+    document.body.append(holder, target)
+    const content = () => h('button', 'Content')
+    holder.innerHTML = await renderToString(createSSRApp(() => h(Portal, { getContainer: false }, { default: content })))
+    const button = holder.querySelector('button')!
+    const app = createSSRApp(() => h(Portal, { getContainer: () => target }, { default: content }))
+    app.mount(holder)
+    await nextTick()
+    expect(target.querySelector('button')).toBe(button)
+    expect(holder.querySelector('button')).toBeNull()
+    app.unmount()
   })
 
   it('Spinner renders the shared spinning icon', () => {
